@@ -10,7 +10,7 @@ import net.arrav.world.locale.Position;
 
 /**
  * An {@link MobUpdateBlock} implementation that handles the {@code TRANSFORM} update block.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class MobForceMovementUpdateBlock extends MobUpdateBlock {
 	

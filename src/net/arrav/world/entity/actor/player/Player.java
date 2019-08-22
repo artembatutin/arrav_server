@@ -105,6 +105,7 @@ import net.arrav.world.locale.Position;
 import net.arrav.world.locale.loc.Location;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -114,7 +115,7 @@ import static com.google.common.base.Preconditions.checkState;
  * The character implementation that represents a node that is operated by an
  * actual person. This type of node functions solely through communication with
  * the client, by reading data from and writing data to non-blocking sockets.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class Player extends Actor {
 	
@@ -132,6 +133,21 @@ public final class Player extends Actor {
 	 * The player credentials on login.
 	 */
 	public final PlayerCredentials credentials;
+	
+	/**
+	 * The initial map update flag.
+	 */
+	public final AtomicBoolean initialUpdate = new AtomicBoolean();
+	
+	/**
+	 * The combat instance of this {@link Player}.
+	 */
+	private final Combat<Player> combat = new Combat<>(this);
+	
+	/**
+	 * The exchange session manager of this {@link Player}.
+	 */
+	public final _ExchangeSessionManager exchange_manager = new _ExchangeSessionManager(this);
 	
 	/**
 	 * Determines if this player is playing in iron man mode.
@@ -152,24 +168,6 @@ public final class Player extends Actor {
 	public BarChair sitting;
 	String lastKiller = null;
 	private int[] godwarsKillcount = new int[4];
-	
-	/**
-	 * The cached achievement progress.
-	 */
-	public Object2IntArrayMap<Achievement> achievements = new Object2IntArrayMap<Achievement>(Achievement.VALUES.size()) {
-		{
-			for(final Achievement achievement : Achievement.VALUES) {
-				put(achievement, 0);
-			}
-		}
-	};
-	
-	/**
-	 * The cached player's farming patches progress.
-	 */
-	public Object2ObjectArrayMap<PatchType, Patch> patches = new Object2ObjectArrayMap<>(PatchType.VALUES.size());
-	
-	public final _ExchangeSessionManager exchange_manager = new _ExchangeSessionManager(this);
 	
 	/**
 	 * Uniquely spawned mob/npcs for this player.
@@ -316,8 +314,14 @@ public final class Player extends Actor {
 	 */
 	private OverloadEffectTask overloadEffect;
 	
+	/**
+	 * The curse effect manager of this player.
+	 */
 	public CurseManager curseManager = new CurseManager();
 	
+	/**
+	 * Immutable map of different stopwatches regarding consumables..
+	 */
 	public final ImmutableMap<String, Stopwatch> consumeDelay = ImmutableMap.of("SPECIAL", new Stopwatch().reset(), "FOOD", new Stopwatch().reset(), "DRINKS", new Stopwatch().reset());
 	
 	/**
@@ -325,6 +329,9 @@ public final class Player extends Actor {
 	 */
 	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(), specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch().reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
 	
+	/**
+	 * Leech delay stopwatch.
+	 */
 	public final Stopwatch leechDelay = new Stopwatch().reset();
 	
 	/**
@@ -516,8 +523,32 @@ public final class Player extends Actor {
 	 */
 	public Optional<Multicannon> cannon = Optional.empty();
 	
+	/**
+	 * The ranged weapon definition of the player.
+	 */
 	public RangedWeaponDefinition rangedDefinition;
+	
+	/**
+	 * The ranged ammunition definition of the player.
+	 */
 	public RangedAmmunition rangedAmmo;
+	
+	/**
+	 * The cached achievement progress.
+	 */
+	public Object2IntArrayMap<Achievement> achievements = new Object2IntArrayMap<Achievement>(Achievement.VALUES.size()) {
+		{
+			for(final Achievement achievement : Achievement.VALUES) {
+				put(achievement, 0);
+			}
+		}
+	};
+	
+	/**
+	 * The cached player's farming patches progress.
+	 */
+	public Object2ObjectArrayMap<PatchType, Patch> patches = new Object2ObjectArrayMap<>(PatchType.VALUES.size());
+	
 	
 	/**
 	 * Creates a new {@link Player}.
@@ -561,6 +592,30 @@ public final class Player extends Actor {
 	}
 	
 	@Override
+	public Combat<Player> getCombat() {
+		return combat;
+	}
+	
+	@Override
+	public int getBonus(int index) {
+		return getEquipment().getBonuses()[index];
+	}
+	
+	@Override
+	public void appendBonus(int index, int bonus) {
+		getEquipment().getBonuses()[index] += bonus;
+	}
+	
+	public void setBonus(int index, int bonus) {
+		getEquipment().getBonuses()[index] = bonus;
+	}
+	
+	@Override
+	public int getSkillLevel(int skill) {
+		return skills[skill].getLevel();
+	}
+	
+	@Override
 	public void register() {
 		boolean bot = false;
 		if(Arrav.DEBUG && getFormatUsername().startsWith("Bot")) {
@@ -570,7 +625,6 @@ public final class Player extends Actor {
 		setUpdates(true, false);
 		setUpdateRegion(true);
 		write(new SendSlot());
-		write(new SendMapRegion(getLastRegion().copy()));
 		write(new SendCameraReset());
 		super.getFlags().flag(UpdateFlag.APPEARANCE);
 		Smelting.clearInterfaces(this);
@@ -641,12 +695,13 @@ public final class Player extends Actor {
 			int y = RandomUtils.inclusive(0, 16);
 			setPosition(new Position(3078 + x, 3494 + y));
 			int t = RandomUtils.inclusive(2, 5);
+			this.getMovementQueue().setRunning(true);
 			final Player p = this;
 			new Task(t, false) {
 				@Override
 				protected void execute() {
-					if(!p.getMovementQueue().isMovementDone())
-						return;
+					//if(!p.getMovementQueue().isMovementDone())
+					//	return;
 					/*if(p.combat.inCombat())
 						return;
 					if(p.wildernessWidget && !p.combat.inCombat()) {
@@ -673,8 +728,8 @@ public final class Player extends Actor {
 						}
 						return;
 					}*/
-					int xx = RandomUtils.inclusive(-5, 5);
-					int yy = RandomUtils.inclusive(-5, 5);
+					int xx = RandomUtils.inclusive(-10, 10);
+					int yy = RandomUtils.inclusive(-10, 10);
 					p.getMovementQueue().smartWalk(getPosition().move(xx, yy));
 					if(true)
 						return;
@@ -785,16 +840,17 @@ public final class Player extends Actor {
 	
 	@Override
 	public void update() {
-		write(new SendPlayerUpdate());
+		session.writeUpdate(new SendPlayerUpdate());
 		write(new SendMobUpdate());
-		session.pollOutgoingPackets();
+		if(session != null) {
+			session.pollIncomingMessages();
+		}
 	}
 	
 	@Override
 	public void postUpdate() {
-		if(getSession() != null)
-			getSession().flushQueue();
 		super.postUpdate();
+		session.flush();
 		cachedUpdateBlock = null;
 	}
 	
@@ -1197,7 +1253,7 @@ public final class Player extends Actor {
 	 */
 	public void out(OutgoingPacket packet) {
 		if(packet.onSent(this))
-			getSession().enqueue(packet);
+			getSession().write(packet);
 	}
 	
 	/**
@@ -2222,30 +2278,11 @@ public final class Player extends Actor {
 		return mobs;
 	}
 	
-	private final Combat<Player> combat = new Combat<>(this);
-	
-	@Override
-	public Combat<Player> getCombat() {
-		return combat;
-	}
-	
-	@Override
-	public int getBonus(int index) {
-		return getEquipment().getBonuses()[index];
-	}
-	
-	@Override
-	public void appendBonus(int index, int bonus) {
-		getEquipment().getBonuses()[index] += bonus;
-	}
-	
-	public void setBonus(int index, int bonus) {
-		getEquipment().getBonuses()[index] = bonus;
-	}
-	
-	@Override
-	public int getSkillLevel(int skill) {
-		return skills[skill].getLevel();
+	/**
+	 * The initial map update flag.
+	 */
+	public AtomicBoolean getInitialUpdate() {
+		return initialUpdate;
 	}
 	
 }

@@ -78,7 +78,7 @@ public enum Portals {
 				Portal portal = it.next();
 				if(portal.getRoomX() == myTiles[0] - 1 && portal.getRoomY() == myTiles[1] - 1 && portal.getRoomZ() == (house.get().isDungeon() ? 4 : p.getPosition().getZ())
 					//&& portal.getId() == house.get().getPortal()
-						) {
+				) {
 					it.remove();
 					found = true;
 					break;

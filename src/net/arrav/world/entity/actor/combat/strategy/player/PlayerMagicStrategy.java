@@ -22,17 +22,17 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class PlayerMagicStrategy extends MagicStrategy<Player> {
-
+	
 	/**
 	 * The magic spell definition.
 	 */
 	private final CombatSpell spell;
-
+	
 	/**
 	 * The spell splash graphic.
 	 */
 	private static final Graphic SPLASH = new Graphic(85);
-
+	
 	/**
 	 * Constructs a new {@code SpellStrategy} from a {@link CombatSpell}.
 	 * @param spell the magic spell spell to be used.
@@ -40,7 +40,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 	public PlayerMagicStrategy(CombatSpell spell) {
 		this.spell = spell;
 	}
-
+	
 	@Override
 	public boolean canAttack(Player attacker, Actor defender) {
 		if(attacker.getRights().equals(Rights.ADMINISTRATOR) || spell.canCast(attacker, defender)) {
@@ -50,7 +50,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 		attacker.getCombat().reset(false, true);
 		return false;
 	}
-
+	
 	@Override
 	public void start(Player attacker, Actor defender, Hit[] hits) {
 		if(attacker.getCombat().getDefender() == defender) {
@@ -58,7 +58,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 			attacker.animation(animation);
 			spell.getStart().ifPresent(attacker::graphic);
 			spell.sendProjectile(attacker, defender);
-
+			
 			if(spell.getEffect().isPresent()) {
 				List<Hit> extra = new LinkedList<>();
 				for(Hit hit : hits) {
@@ -75,7 +75,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 			} else {
 				addCombatExperience(attacker, spell.getBaseExperience(), hits);
 			}
-
+			
 			if(attacker.isSingleCast()) {
 				attacker.facePosition(defender.getPosition());
 				attacker.setSingleCast(null);
@@ -83,14 +83,14 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 			}
 		}
 	}
-
+	
 	@Override
 	public void attack(Player attacker, Actor defender, Hit hit) {
 		if(attacker.getCombat().getDefender() == defender) {
 			MagicRune.remove(attacker, spell.getRunes());
 		}
 	}
-
+	
 	@Override
 	public void hit(Player attacker, Actor defender, Hit hit) {
 		if(!hit.isAccurate()) {
@@ -99,21 +99,21 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 			spell.getEnd().ifPresent(defender::graphic);
 		}
 	}
-
+	
 	@Override
 	public void finishOutgoing(Player attacker, Actor defender) {
 		if(!attacker.isAutocast()) {
 			attacker.getCombat().reset(false, true);
 		}
 	}
-
+	
 	@Override
 	public CombatHit[] getHits(Player attacker, Actor defender) {
 		int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
 		int hitsplatDelay = CombatUtil.getHitsplatDelay(getCombatType());
 		return new CombatHit[]{nextMagicHit(attacker, defender, spell.getMaxHit(), spell.getHitDelay().orElse(hitDelay), spell.getHitsplatDelay().orElse(hitsplatDelay))};
 	}
-
+	
 	@Override
 	public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
 		if(attacker.getPosition().getDistance(defender.getPosition()) > 4) {
@@ -121,12 +121,12 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 		}
 		return 5;
 	}
-
+	
 	@Override
 	public int getAttackDistance(Player attacker, FightType fightType) {
 		return 10;
 	}
-
+	
 	@Override
 	public Animation getAttackAnimation(Player attacker, Actor defender) {
 		if(attacker.getWeaponAnimation() != null && attacker.getWeaponAnimation().getAttacking()[0] != 422) {
@@ -134,12 +134,12 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 		}
 		return new Animation(attacker.getCombat().getFightType().getAnimation(), Animation.AnimationPriority.HIGH);
 	}
-
+	
 	@Override
 	public CombatType getCombatType() {
 		return CombatType.MAGIC;
 	}
-
+	
 	public CombatSpell getSpell() {
 		return spell;
 	}

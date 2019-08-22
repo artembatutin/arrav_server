@@ -7,7 +7,7 @@ import static net.arrav.content.skill.construction.furniture.HotSpots.*;
 
 /**
  * Enumeration of all possible rooms.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum RoomData {
 	

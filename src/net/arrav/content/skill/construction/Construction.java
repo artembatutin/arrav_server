@@ -19,7 +19,7 @@ import net.arrav.world.locale.Position;
 
 /**
  * Handling the main construction skill.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class Construction {
 	

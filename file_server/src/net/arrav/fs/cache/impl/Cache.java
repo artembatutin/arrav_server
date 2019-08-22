@@ -11,7 +11,7 @@ import io.netty.buffer.Unpooled;
 
 /**
  * Represents a {@link CacheSector} and {@link CacheIndex} cache.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Cache {

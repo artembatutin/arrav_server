@@ -6,9 +6,9 @@ import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 
 public final class SendMoveComponent implements OutgoingPacket {
-
+	
 	private final int id, x, y;
-
+	
 	public SendMoveComponent(int id, int x, int y) {
 		this.id = id;
 		this.x = x;

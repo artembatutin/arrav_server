@@ -12,7 +12,7 @@ import java.util.Optional;
 
 /**
  * Holds functionality for creating pouch items..
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class PouchCreation extends ProducingSkillAction {
 	

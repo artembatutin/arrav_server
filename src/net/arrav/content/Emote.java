@@ -7,7 +7,7 @@ import net.arrav.world.entity.actor.player.Player;
 
 /**
  * An enumeration of emotes.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum Emote {
 	

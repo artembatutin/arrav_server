@@ -4,7 +4,7 @@ import net.arrav.world.entity.actor.player.Player;
 
 /**
  * An {@link UpdateBlock} implementation specific to {@link Player}s contained within an {@link UpdateManager} and sent.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public abstract class PlayerUpdateBlock extends UpdateBlock<Player> {
 	

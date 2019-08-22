@@ -26,7 +26,8 @@ public enum PetData {
 	WYRMY(0, new PetPolicy(3910, 3170, null), PetType.WYRMY),
 	KRAA(0, new PetPolicy(3912, 3177, null), PetType.KRAA),
 	GRARY(0, new PetPolicy(3914, 3178, null), PetType.GRARY),
-	ZILZY(0, new PetPolicy(3918, 3180, null), PetType.ZILZY),;
+	ZILZY(0, new PetPolicy(3918, 3180, null), PetType.ZILZY),
+	;
 	
 	/**
 	 * Caches our enum values.

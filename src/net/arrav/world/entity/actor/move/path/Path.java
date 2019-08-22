@@ -6,7 +6,7 @@ import java.util.Deque;
 
 /**
  * Represents a single path in the path finding system.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class Path {
 	

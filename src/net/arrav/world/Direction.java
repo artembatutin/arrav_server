@@ -10,7 +10,7 @@ import java.util.Optional;
 
 /**
  * The enumerated type whose elements represent the movement directions.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum Direction {
 	

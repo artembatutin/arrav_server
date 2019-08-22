@@ -248,34 +248,34 @@ public enum CombatSpecial {
 				player.out(new SendMessage("You do not have enough special energy left!"));
 				return;
 			}
-
+			
 			player.setSpecialActivated(true);
 			player.out(new SendConfig(301, 1));
-
+			
 			Combat<Player> combat = player.getCombat();
 			Actor defender = combat.getLastDefender();
-
+			
 			if(combat.isAttacking(defender)) {
 				combat.submitStrategy(defender, GraniteMaul.get());
 			}
 		}
 	};
-
+	
 	/**
 	 * The identifiers for the weapons that perform this special.
 	 */
 	private final int[] ids;
-
+	
 	/**
 	 * The amount of special energy drained by this attack.
 	 */
 	private final int amount;
-
+	
 	/**
 	 * The strength bonus added when performing this special attack.
 	 */
 	private final CombatStrategy<Player> strategy;
-
+	
 	/**
 	 * Creates a new {@link CombatSpecial}.
 	 * @param ids the identifiers for the weapons that perform this special.
@@ -286,7 +286,7 @@ public enum CombatSpecial {
 		this.amount = amount;
 		this.strategy = strategy;
 	}
-
+	
 	/**
 	 * Drains the special bar for {@code player}.
 	 * @param player the player who's special bar will be drained.
@@ -296,7 +296,7 @@ public enum CombatSpecial {
 		updateSpecialAmount(player);
 		disable(player);
 	}
-
+	
 	/**
 	 * Restores the special bar for {@code player}.
 	 * @param player the player who's special bar will be restored.
@@ -306,7 +306,7 @@ public enum CombatSpecial {
 		player.getSpecialPercentage().incrementAndGet(amount, 100);
 		updateSpecialAmount(player);
 	}
-
+	
 	/**
 	 * Updates the special bar with the amount of special energy {@code player}
 	 * has.
@@ -316,17 +316,17 @@ public enum CombatSpecial {
 		if(player.getWeapon().getSpecialBar() == -1 || player.getWeapon().getSpecialMeter() == -1) {
 			return;
 		}
-
+		
 		int specialCheck = 10;
 		int specialBar = player.getWeapon().getSpecialMeter();
 		int specialAmount = player.getSpecialPercentage().get() / 10;
-
+		
 		for(int i = 0; i < 10; i++) {
 			player.out(new SendUpdateSpecial(--specialBar, specialAmount >= specialCheck ? 500 : 0));
 			specialCheck--;
 		}
 	}
-
+	
 	/**
 	 * Updates the weapon interface with a special bar if needed.
 	 * @param player the player to update the interface for.
@@ -339,7 +339,7 @@ public enum CombatSpecial {
 			player.setCombatSpecial(null);
 			return;
 		}
-
+		
 		Item item = player.getEquipment().get(Equipment.WEAPON_SLOT);
 		if(item == null) {
 			if(player.getCombatSpecial() != null) {
@@ -348,45 +348,45 @@ public enum CombatSpecial {
 			player.setCombatSpecial(null);
 			return;
 		}
-
+		
 		Optional<CombatSpecial> special = Arrays.stream(CombatSpecial.values()).filter(c -> Arrays.stream(c.getIds()).anyMatch(id -> item.getId() == id)).findFirst();
 		if(special.isPresent()) {
 			if(player.getCombatSpecial() != null) {
 				player.getCombatSpecial().disable(player);
 			}
-
+			
 			player.out(new SendInterfaceLayer(player.getWeapon().getSpecialBar(), false));
 			player.setCombatSpecial(special.get());
 			return;
 		}
-
+		
 		player.out(new SendInterfaceLayer(player.getWeapon().getSpecialBar(), true));
 		player.setCombatSpecial(null);
-
+		
 		if(player.getCombatSpecial() != null) {
 			player.getCombatSpecial().disable(player);
 		}
 	}
-
+	
 	public void enable(Player player) {
 		if(!player.isSpecialActivated()) {
 			if(player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
 				player.out(new SendMessage("You do not have enough special energy left!"));
 				return;
 			}
-
+			
 			player.out(new SendConfig(301, 1));
 			player.setSpecialActivated(true);
 		}
 	}
-
+	
 	public void disable(Player player) {
 		if(player.isSpecialActivated()) {
 			player.out(new SendConfig(301, 0));
 			player.setSpecialActivated(false);
 		}
 	}
-
+	
 	/**
 	 * Gets the identifiers for the weapons that perform this special.
 	 * @return the identifiers for the weapons.
@@ -394,7 +394,7 @@ public enum CombatSpecial {
 	public final int[] getIds() {
 		return ids;
 	}
-
+	
 	/**
 	 * Gets the amount of special energy drained by this attack.
 	 * @return the amount of special energy drained.
@@ -402,9 +402,9 @@ public enum CombatSpecial {
 	public final int getAmount() {
 		return amount;
 	}
-
+	
 	public CombatStrategy<Player> getStrategy() {
 		return strategy;
 	}
-
+	
 }

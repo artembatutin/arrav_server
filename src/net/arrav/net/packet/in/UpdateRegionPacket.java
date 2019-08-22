@@ -12,7 +12,7 @@ import net.arrav.world.entity.region.Region;
 /**
  * The message sent from the client when a player sends the load tool.mapviewer region
  * message.
- * @author Artem Batutin <artembatutin@gmail.com></artembatutin@gmail.com>
+ * @author Artem Batutin</artembatutin@gmail.com>
  * @author lare96 <http://github.com/lare96>
  */
 public final class UpdateRegionPacket implements IncomingPacket {

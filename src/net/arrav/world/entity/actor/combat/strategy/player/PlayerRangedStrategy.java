@@ -25,19 +25,19 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class PlayerRangedStrategy extends RangedStrategy<Player> {
-
+	
 	private static final PlayerRangedStrategy INSTANCE = new PlayerRangedStrategy();
-
+	
 	protected PlayerRangedStrategy() {
 	}
-
+	
 	@Override
 	public boolean canAttack(Player attacker, Actor defender) {
 		if(!Requirement.canEquip(attacker, attacker.getEquipment().get(Equipment.WEAPON_SLOT))) {
 			attacker.getCombat().reset(false, true);
 			return false;
 		}
-
+		
 		Item ammo = attacker.getEquipment().get(attacker.rangedDefinition.getSlot());
 		if(ammo != null) {
 			if(attacker.rangedDefinition.isValid(attacker.rangedAmmo)) {
@@ -50,7 +50,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 		attacker.getCombat().reset(false, true);
 		return false;
 	}
-
+	
 	@Override
 	public void start(Player attacker, Actor defender, Hit[] hits) {
 		if(attacker.getCombat().getDefender() == defender) {
@@ -81,12 +81,12 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 			}
 		}
 	}
-
+	
 	@Override
 	public void attack(Player attacker, Actor defender, Hit hit) {
 		removeAmmunition(attacker, defender, attacker.rangedDefinition.getType());
 	}
-
+	
 	@Override
 	public void hit(Player attacker, Actor defender, Hit hit) {
 		attacker.rangedAmmo.getEnd().ifPresent(defender::graphic);
@@ -96,7 +96,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 			}
 		});
 	}
-
+	
 	@Override
 	public Animation getAttackAnimation(Player attacker, Actor defender) {
 		if(attacker.getWeaponAnimation() != null && attacker.getWeaponAnimation().getAttacking()[0] != 422) {
@@ -104,12 +104,12 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 		}
 		return new Animation(attacker.getCombat().getFightType().getAnimation(), Animation.AnimationPriority.HIGH);
 	}
-
+	
 	@Override
 	public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
 		return attacker.getAttackDelay();
 	}
-
+	
 	@Override
 	public int getAttackDistance(Player attacker, FightType fightType) {
 		int distance = CombatUtil.getRangedDistance(attacker.getWeapon());
@@ -125,41 +125,41 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 		}
 		return distance;
 	}
-
+	
 	@Override
 	public CombatHit[] getHits(Player attacker, Actor defender) {
 		Item arrows = attacker.getEquipment().get(Equipment.ARROWS_SLOT);
-
+		
 		if(attacker.rangedDefinition.getType() == RangedWeaponType.THROWN && arrows != null) {
 			CombatHit hit = nextRangedHit(attacker, defender, RangedWeaponType.THROWN);
 			return new CombatHit[]{hit};
 		}
-
+		
 		return new CombatHit[]{nextRangedHit(attacker, defender, RangedWeaponType.SHOT)};
 	}
-
+	
 	@Override
 	public CombatType getCombatType() {
 		return CombatType.RANGED;
 	}
-
+	
 	private void removeAmmunition(Player attacker, Actor defender, RangedWeaponType type) {
 		Item next = attacker.getEquipment().get(type.getSlot());
-
+		
 		next.decrementAmount();
 		attacker.getEquipment().set(type.getSlot(), next, true);
-
+		
 		if(attacker.rangedAmmo.isDroppable()) {
 			GroundItem groundItem = new GroundItem(new Item(next.getId(), attacker.rangedAmmo.getRemoval()), defender.getPosition(), attacker);
 			groundItem.create(true);
 		}
-
+		
 		if(next.getAmount() == 0) {
 			attacker.out(new SendMessage("That was the last of your attacker.ammunition!"));
 			attacker.getEquipment().unequip(type.getSlot(), null, true, -1);
 		}
 	}
-
+	
 	private static String getInvalidAmmunitionMessage(RangedWeaponType type) {
 		if(type == RangedWeaponType.SHOT) {
 			return "You can't use this attacker.ammunition with this weapon.";
@@ -169,7 +169,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 		}
 		return null;
 	}
-
+	
 	private static String getNoAmmunitionMessage(RangedWeaponType type) {
 		if(type == RangedWeaponType.SHOT) {
 			return "You need some attacker.ammunition to use this weapon!";
@@ -179,11 +179,11 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 		}
 		return null;
 	}
-
+	
 	public static PlayerRangedStrategy get() {
 		return INSTANCE;
 	}
-
+	
 	public boolean disableAnimations() {
 		return false;
 	}

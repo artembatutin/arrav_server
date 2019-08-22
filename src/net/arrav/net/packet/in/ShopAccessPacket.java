@@ -8,7 +8,7 @@ import net.arrav.world.locale.Position;
 
 /**
  * The message sent from the client which depends on the Mob Information panel integration.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class ShopAccessPacket implements IncomingPacket {
 	

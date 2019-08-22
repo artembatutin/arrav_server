@@ -2,7 +2,7 @@ package net.arrav.content.skill.construction;
 
 /**
  * Represents a player's {@link Construction} house dungeon.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class HouseDungeon {
 	

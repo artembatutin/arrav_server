@@ -18,7 +18,7 @@ import java.util.Optional;
 /**
  * The class which manages clans on the world.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class ClanManager {
 	

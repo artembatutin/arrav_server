@@ -2,7 +2,7 @@ package net.arrav.world.entity.actor.mob;
 
 /**
  * Enumeration of several types of Mobs.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum MobType {
 	
@@ -19,7 +19,8 @@ public enum MobType {
 	/*
 	 * Hunting
 	 */
-	HUNTING_MAMMAL(false), HUNTING_BIRD(false),;
+	HUNTING_MAMMAL(false), HUNTING_BIRD(false),
+	;
 	
 	private final boolean aggressive;
 	

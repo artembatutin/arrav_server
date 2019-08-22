@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * The enumerated type whose elements represent functionality for the quest tab.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum PlayerPanel {

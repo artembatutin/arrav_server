@@ -84,7 +84,7 @@ public abstract class MinotaurFamiliar extends Familiar {
 	
 	/**
 	 * Represents the steel minotaur familiar.
-	 * @author Artem Batutin <artembatutin@gmail.com>
+	 * @author Artem Batutin
 	 */
 	public static final class SteelMinotaur extends MinotaurFamiliar {
 		
@@ -99,7 +99,7 @@ public abstract class MinotaurFamiliar extends Familiar {
 	
 	/**
 	 * Represents the mithril minotaur familiar.
-	 * @author Artem Batutin <artembatutin@gmail.com>
+	 * @author Artem Batutin
 	 */
 	public static final class MithrilMinotaur extends MinotaurFamiliar {
 		
@@ -114,7 +114,7 @@ public abstract class MinotaurFamiliar extends Familiar {
 	
 	/**
 	 * Represents the adamant minotaur familiar.
-	 * @author Artem Batutin <artembatutin@gmail.com>
+	 * @author Artem Batutin
 	 */
 	public static final class AdamantMinotaur extends MinotaurFamiliar {
 		
@@ -129,7 +129,7 @@ public abstract class MinotaurFamiliar extends Familiar {
 	
 	/**
 	 * Represents the rune minotaur familiar.
-	 * @author Artem Batutin <artembatutin@gmail.com>
+	 * @author Artem Batutin
 	 */
 	public static final class RuneMinotaur extends MinotaurFamiliar {
 		

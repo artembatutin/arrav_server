@@ -9,7 +9,7 @@ import static net.arrav.content.skill.mining.RockType.*;
  * The enumerated type which elements represents the data required for the
  * process of mining rocks.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 enum RockData {
 	CLAY(new TransformableObject[]{new TransformableObject(2108, 450), new TransformableObject(2109, 451), big(47769, TYPE1), small(47770, TYPE1), big(44111, TYPE2), crushed(44112, TYPE2), big(53192, TYPE7), small(53193, TYPE7), crushed(53194, TYPE7), big(52580, TYPE8), small(52581, TYPE8), crushed(52582, TYPE8), big(74432, TYPE9), small(74433, TYPE9), crushed(74434, TYPE9), big(57506, TYPE10), small(57507, TYPE10), crushed(57508, TYPE10), big(52951, TYPE11), small(52952, TYPE11), big(56907, TYPE12), small(56908, TYPE12), big(51714, TYPE13), crushed(51716, TYPE13)}, 434, 1, 5.0, 2, 1, 5, 0.3),

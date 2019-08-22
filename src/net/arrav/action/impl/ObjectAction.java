@@ -28,7 +28,7 @@ import net.arrav.world.entity.object.GameObject;
 
 /**
  * Action handling object action clicks.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public abstract class ObjectAction extends Action {
 	

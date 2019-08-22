@@ -23,7 +23,7 @@ import java.util.Optional;
 
 /**
  * The introduction cutscene for the player when he logs into the game for the first time.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class IntroductionCutscene extends Cutscene {
@@ -112,7 +112,7 @@ public final class IntroductionCutscene extends Cutscene {
 	
 	@Override
 	public void onCancel() {
-
+	
 	}
 	
 	private Dialogue complete() {

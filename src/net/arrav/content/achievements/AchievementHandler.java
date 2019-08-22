@@ -6,7 +6,7 @@ import net.arrav.world.entity.item.Item;
 
 /**
  * Handles the achievements.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class AchievementHandler {
 	

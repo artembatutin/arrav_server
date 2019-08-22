@@ -24,7 +24,7 @@ import java.util.Optional;
 
 /**
  * The message sent from the client when a player uses an item on an object.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class ItemOnObjectPacket implements IncomingPacket {
 	

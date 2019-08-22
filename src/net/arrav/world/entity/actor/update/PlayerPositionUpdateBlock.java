@@ -7,7 +7,7 @@ import net.arrav.world.entity.actor.player.Player;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the {@code FACE_COORDINATE} update block.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class PlayerPositionUpdateBlock extends PlayerUpdateBlock {
 	

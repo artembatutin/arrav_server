@@ -157,7 +157,6 @@ public final class PlayerSerialization {
 	public LoginCode loginCheck(String password) {
 		try {
 			if(!cf.exists()) {
-				player.getSession().initGame();
 				return NORMAL;
 			}
 			cf.setReadable(true);
@@ -180,7 +179,6 @@ public final class PlayerSerialization {
 				if(player.banned) {
 					return ACCOUNT_DISABLED;
 				}
-				player.getSession().initGame();
 				for(Token token : TOKENS) {
 					Any tokenData = data.get(token.getName());
 					if(tokenData != null) {

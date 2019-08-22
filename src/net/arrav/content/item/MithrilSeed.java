@@ -22,7 +22,7 @@ import static net.arrav.content.achievements.Achievement.POKER_FLOWER;
 /**
  * The class which is responsible for mithril seeds.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  * @since 27-6-2017.
  */
 public final class MithrilSeed {

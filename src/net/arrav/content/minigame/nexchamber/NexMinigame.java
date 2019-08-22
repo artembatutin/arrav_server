@@ -17,7 +17,7 @@ import java.util.Optional;
 
 /**
  * The nex chamber acting as a {@link Minigame}.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class NexMinigame extends Minigame {
 

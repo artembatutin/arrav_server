@@ -9,7 +9,7 @@ import net.arrav.world.entity.actor.player.Player;
 
 /**
  * Action handling button clicks.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public abstract class ButtonAction extends Action {
 	

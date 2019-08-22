@@ -3,7 +3,7 @@ package net.arrav.world;
 /**
  * The container class that represents an graphic.
  * @author lare96 <http://github.com/lare96>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class Graphic {
 	

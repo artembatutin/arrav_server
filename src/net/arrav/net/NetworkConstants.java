@@ -10,6 +10,7 @@ import java.math.BigInteger;
  * The class that contains a collection of constants related to the net.
  * This class serves no other purpose than to hold constants.
  * @author lare96 <http://github.org/lare96>
+ * @author Artem Batutin
  */
 public final class NetworkConstants {
 	
@@ -17,6 +18,11 @@ public final class NetworkConstants {
 	 * The online port that this server will bind to.
 	 */
 	public static final int PORT_ONLINE = 43594;
+	
+	/**
+	 * Maximum allowance of messages per tick.
+	 */
+	public static final int MESSAGES_PER_TICK = 25;
 	
 	/**
 	 * Number of skippable cycles without any incoming data.
@@ -43,7 +49,7 @@ public final class NetworkConstants {
 	/**
 	 * An array of message opcodes mapped to their respective sizes.
 	 */
-	public static final int MESSAGE_SIZES[] = new int[256];
+	public static final int[] MESSAGE_SIZES = new int[256];
 	
 	/**
 	 * The {@link AttributeKey} value that is used to retrieve the session
@@ -65,6 +71,11 @@ public final class NetworkConstants {
 	 * The list of exceptions that are ignored and discarded by the {@link ArravChannelHandler}.
 	 */
 	static final ImmutableList<String> IGNORED_NETWORK_EXCEPTIONS = ImmutableList.of("An existing connection was forcibly closed by the remote host", "An established connection was aborted by the software in your host machine");
+	
+	/**
+	 * Invalid constants of an unknown mac address.
+	 */
+	public final static String INVALID_MAC = "0";
 	
 	/**
 	 * The default constructor.

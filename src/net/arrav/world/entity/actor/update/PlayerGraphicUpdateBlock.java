@@ -7,7 +7,7 @@ import net.arrav.world.entity.actor.player.Player;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the {@link Graphic} update block.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class PlayerGraphicUpdateBlock extends PlayerUpdateBlock {
 	

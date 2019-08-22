@@ -2,7 +2,7 @@ package net.arrav.content.skill.construction;
 
 /**
  * Represents a {@link Palette} which contains several tiles for a region chunk update.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class Palette {
 	

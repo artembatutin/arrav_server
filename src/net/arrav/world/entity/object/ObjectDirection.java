@@ -7,7 +7,7 @@ import java.util.Optional;
 /**
  * The enumerated type whose elements represent the directions for objects.
  * @author lare96 <http://github.com/lare96>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum ObjectDirection {
 	/**

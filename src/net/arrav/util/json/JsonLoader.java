@@ -71,13 +71,13 @@ public abstract class JsonLoader implements Runnable {
 	 * A method called on the start of this loading.
 	 */
 	public void start() {
-
+	
 	}
 	
 	/**
 	 * A method called on the end of this loading.
 	 */
 	public void end() {
-
+	
 	}
 }

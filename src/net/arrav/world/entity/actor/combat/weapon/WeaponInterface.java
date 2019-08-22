@@ -40,7 +40,7 @@ public enum WeaponInterface {
 	JAVELIN(4446, 4449, 6, new FightType[]{FightType.JAVELIN_ACCURATE, FightType.JAVELIN_RAPID, FightType.JAVELIN_LONGRANGE}, 7649, 7661),
 	CHINCHOMPA(24055, 24056, 4, new FightType[]{FightType.SHORT_FUSE, FightType.MEDIUM_FUSE, FightType.LONG_FUSE}),
 	SALAMANDER(24074, 24075, 5, new FightType[]{FightType.SCORCH, FightType.FLARE, FightType.BLAZE});
-
+	
 	/**
 	 * The hash collection of weapon interfaces.
 	 */
@@ -130,7 +130,7 @@ public enum WeaponInterface {
 				return false;
 		}
 	}
-
+	
 	/**
 	 * The method executed when weapon {@code item} is equipped or unequipped
 	 * that assigns a weapon interface to {@code player}.

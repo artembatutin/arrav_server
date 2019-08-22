@@ -19,7 +19,7 @@ import static net.arrav.content.achievements.Achievement.DROP_A_SUG;
 
 /**
  * The message sent from the client which depends on the Mob Information panel integration.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class MobInformationPacket implements IncomingPacket {
 	

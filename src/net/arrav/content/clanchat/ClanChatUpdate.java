@@ -103,14 +103,14 @@ public enum ClanChatUpdate {
 	};
 	
 	public void update(ClanChat clan, ClanMember member) {
-	
+
 	}
 	
 	public void update(ClanMember member) {
-	
+
 	}
 	
 	public void update(ClanChat clan) {
-	
+
 	}
 }

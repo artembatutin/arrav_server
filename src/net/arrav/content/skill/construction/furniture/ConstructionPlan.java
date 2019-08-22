@@ -2,7 +2,7 @@ package net.arrav.content.skill.construction.furniture;
 
 /**
  * Represents a plan to build a furniture, caching values to avoid loops.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class ConstructionPlan {
 	

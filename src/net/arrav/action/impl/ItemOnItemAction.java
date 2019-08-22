@@ -9,7 +9,7 @@ import net.arrav.world.entity.item.Item;
 
 /**
  * Action handling item on object actions.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public abstract class ItemOnItemAction extends Action {
 	

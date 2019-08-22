@@ -11,7 +11,7 @@ import static net.arrav.content.achievements.Achievement.WILD_ONE;
 
 /**
  * Handles some parts of wilderness activity.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class WildernessActivity {
 	

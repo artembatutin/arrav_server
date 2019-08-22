@@ -8,7 +8,7 @@ import java.util.Optional;
 
 /**
  * An implementation of {@link GameObject} that is in a static state.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class StaticObject extends GameObject {
 	

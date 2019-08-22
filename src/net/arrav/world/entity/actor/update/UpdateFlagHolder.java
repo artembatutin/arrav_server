@@ -6,7 +6,7 @@ import java.util.EnumSet;
 
 /**
  * A container backed by an {@link EnumSet} that manages all of the {@link UpdateFlag}s for {@link Actor}s.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class UpdateFlagHolder {
 	

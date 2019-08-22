@@ -18,7 +18,7 @@ import net.arrav.world.World;
 
 /**
  * A {@link ChannelInboundHandlerAdapter} implementation that handles upstream messages from Netty.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 @Sharable
 public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
@@ -36,7 +36,6 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	
 	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) {
-		String address = Session.address(ctx);
 		if(World.get().getPlayers().remaining() < 1) {
 			Session.write(ctx, LoginCode.WORLD_FULL);
 			return;
@@ -49,6 +48,7 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 			Session.write(ctx, LoginCode.SERVER_STARTING);
 			return;
 		}
+		String address = Session.address(ctx);
 		if(HostManager.contains(address, HostListType.BANNED_IP)) {
 			Session.write(ctx, LoginCode.ACCOUNT_DISABLED);
 			return;
@@ -66,10 +66,9 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) {
 		Session session = ctx.channel().attr(NetworkConstants.SESSION_KEY).get();
-		if(session == null) {
-			throw new IllegalStateException("session == null");
+		if(session != null) {
+			session.unregister();
 		}
-		session.unregister();
 	}
 	
 	@Override
@@ -89,10 +88,9 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 		try {
 			Session session = ctx.channel().attr(NetworkConstants.SESSION_KEY).get();
-			if(session == null) {
-				throw new IllegalStateException("session == null");
+			if(session != null) {
+				session.handleMessage(ctx, msg);
 			}
-			session.handleMessage(ctx, msg);
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}

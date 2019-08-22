@@ -235,11 +235,11 @@ public final class Equipment extends ItemContainer {
 		if(type == EquipmentType.SHIELD) {
 			ShieldAnimation.execute(player, equipItem);
 		}
-
+		
 		if(type == EquipmentType.ARROWS) {
 			player.getCombat().reset(false, false);
 		}
-
+		
 		if(type == WEAPON && def.isWeapon()) {
 			WeaponInterface.execute(player, equipItem);
 			WeaponAnimation.execute(player, equipItem);

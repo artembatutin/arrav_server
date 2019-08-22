@@ -19,7 +19,7 @@ import net.arrav.world.entity.region.Region;
 
 /**
  * A {@link Task} handling the {@link Multicannon} shooting.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class MulticannonTask extends Task {
 	

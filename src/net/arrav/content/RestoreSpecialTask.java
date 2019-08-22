@@ -9,7 +9,7 @@ import net.arrav.world.entity.actor.player.assets.Rights;
 
 /**
  * The class that handles the restoration special percentages.
- * @author Artem Batutin <artembatutin@gmail.com></artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class RestoreSpecialTask extends Task {
 	

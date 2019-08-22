@@ -12,7 +12,7 @@ import static net.arrav.content.teleport.TeleportType.DOOR;
 
 /**
  * Handles the interaction of the doors in the world.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class DoorHandler {
 	

@@ -6,7 +6,7 @@ import net.arrav.world.locale.Position;
 
 /**
  * An algorithm used to find a path between two {@link Position}s.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public abstract class PathFinder {
 	/**

@@ -22,7 +22,7 @@ import java.util.Optional;
 
 /**
  * An enumeration of skill cape emotes.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum Skillcape {
 	ATTACK_CAPE(9747, 9749, 4959, 823, Skills.ATTACK, 4288),

@@ -22,12 +22,12 @@ public enum LoginCode {
 	MEMBERS_ONLY_AREA(17),
 	WRONG_BUILD_NUMBER(18),
 	SERVER_STARTING(19);
-
+	
 	/**
 	 * The response code that the protocol recognizes.
 	 */
 	private final int code;
-
+	
 	/**
 	 * Creates a new {@link LoginCode}.
 	 * @param code the response code that the protocol recognizes.
@@ -35,7 +35,7 @@ public enum LoginCode {
 	LoginCode(int code) {
 		this.code = code;
 	}
-
+	
 	/**
 	 * Gets the response code that the protocol recognizes.
 	 * @return the response code.

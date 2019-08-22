@@ -9,7 +9,7 @@ import net.arrav.world.locale.Position;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the {@link ForcedMovement} update block.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class PlayerForceMovementUpdateBlock extends PlayerUpdateBlock {
 	

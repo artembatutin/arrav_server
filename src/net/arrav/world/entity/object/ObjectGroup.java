@@ -5,7 +5,7 @@ import java.util.Optional;
 
 /**
  * The group of an object, which indicates its general class (e.g. if it's a wall, or a floor decoration).
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  * @author Major
  * @author Scu11
  */

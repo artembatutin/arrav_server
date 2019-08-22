@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  * A class which parses static object definitions, which include tool.mapviewer tiles and
  * landscapes.
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class RegionDecoder implements Runnable {
 	

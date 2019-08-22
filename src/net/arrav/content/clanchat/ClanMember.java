@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Represents a single clan chat member in a {@link ClanChat}.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class ClanMember {
 	

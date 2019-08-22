@@ -15,7 +15,7 @@ import static net.arrav.content.skill.construction.HouseController.State.*;
 
 /**
  * Represents a {@link Construction} player's house.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class House {
 	

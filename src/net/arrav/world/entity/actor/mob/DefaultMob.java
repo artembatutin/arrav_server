@@ -4,7 +4,7 @@ import net.arrav.world.locale.Position;
 
 /**
  * Represents an single {@link Mob} with default npc behavior in the {@link World}.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class DefaultMob extends Mob {
 	

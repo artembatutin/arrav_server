@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 /**
  * The instance manager for this world.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class InstanceManager {
 	

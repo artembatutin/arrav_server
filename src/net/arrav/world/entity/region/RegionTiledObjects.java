@@ -12,7 +12,7 @@ import static net.arrav.world.entity.object.ObjectGroup.WALL;
 
 /**
  * A class acting as a container for objects on a single tile.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class RegionTiledObjects {
 	

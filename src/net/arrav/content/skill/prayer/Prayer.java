@@ -247,7 +247,7 @@ public enum Prayer {
 			player.curseManager.reset(this);
 			return true;
 		}
-
+		
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SAP_WARRIOR, TURMOIL});
@@ -258,7 +258,7 @@ public enum Prayer {
 			player.curseManager.reset(this);
 			return true;
 		}
-
+		
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SAP_RANGER, TURMOIL});
@@ -269,7 +269,7 @@ public enum Prayer {
 			player.curseManager.reset(this);
 			return true;
 		}
-
+		
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SAP_MAGE, TURMOIL});
@@ -280,7 +280,7 @@ public enum Prayer {
 			player.curseManager.reset(this);
 			return true;
 		}
-
+		
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{TURMOIL});
@@ -291,7 +291,7 @@ public enum Prayer {
 			player.curseManager.reset(this);
 			return true;
 		}
-
+		
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{TURMOIL});
@@ -340,12 +340,12 @@ public enum Prayer {
 	 * The type of this prayer.
 	 */
 	private final PrayerBook type;
-
+	
 	/**
 	 * The prayer's modifier to combat formula.
 	 */
 	private final CombatListener<Player> formulaModifier;
-
+	
 	/**
 	 * The button identification for this prayer.
 	 */
@@ -400,7 +400,7 @@ public enum Prayer {
 	Prayer(PrayerBook type, int buttonId, double drainRate, int headIcon, int level, int config, int quickPrayer, int checkmark) {
 		this(type, null, buttonId, drainRate, headIcon, level, config, quickPrayer, checkmark);
 	}
-
+	
 	/**
 	 * Creates a new {@link Prayer}.
 	 * @param buttonId the identification for this prayer.
@@ -422,7 +422,7 @@ public enum Prayer {
 		this.quickPrayer = quickPrayer;
 		this.checkmark = checkmark;
 	}
-
+	
 	@Override
 	public String toString() {
 		return TextUtils.capitalize(name().toLowerCase().replaceAll("_", " "));
@@ -655,19 +655,19 @@ public enum Prayer {
 	public static boolean isActivated(Player player, Prayer prayer) {
 		return player.getPrayerActive().contains(prayer);
 	}
-
+	
 	public static Prayer[] getActivatedPrayers(Player player, Prayer... prayers) {
 		List<Prayer> active_prayers = new ArrayList<>();
-
+		
 		for(Prayer prayer : prayers) {
 			if(isActivated(player, prayer)) {
 				active_prayers.add(prayer);
 			}
 		}
-
+		
 		return active_prayers.toArray(new Prayer[active_prayers.size()]);
 	}
-
+	
 	/**
 	 * Determines if any of the specified prayers are activated.
 	 * @param player the player's prayers to check.

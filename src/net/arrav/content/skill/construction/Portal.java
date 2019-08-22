@@ -4,7 +4,7 @@ import net.arrav.content.skill.construction.room.Room;
 
 /**
  * Represents a portal located in a {@link Room}.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class Portal {
 	

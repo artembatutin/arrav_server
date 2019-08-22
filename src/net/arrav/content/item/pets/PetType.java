@@ -18,7 +18,8 @@ public enum PetType {
 	WYRMY("Whim"),
 	KRAA("Wsss"),
 	GRARY("Babadum"),
-	ZILZY("Leader"),;
+	ZILZY("Leader"),
+	;
 	
 	/**
 	 * The growth rate for this pet.

@@ -5,7 +5,7 @@ import net.arrav.world.entity.actor.player.Player;
 
 /**
  * The enumerated type whose elements represent a prayer type.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum PrayerBook {
 	NORMAL(5608), CURSES(21356);

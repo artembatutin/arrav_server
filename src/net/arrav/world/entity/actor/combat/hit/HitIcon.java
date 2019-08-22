@@ -2,7 +2,7 @@ package net.arrav.world.entity.actor.combat.hit;
 
 /**
  * The enumerated type whose elements represent the hit icon of a {@link Hit}.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum HitIcon {
 	

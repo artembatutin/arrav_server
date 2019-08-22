@@ -7,6 +7,7 @@ import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
 
 public final class SendMapRegion implements OutgoingPacket {
+	
 	private final Position position;
 	
 	public SendMapRegion(Position position) {

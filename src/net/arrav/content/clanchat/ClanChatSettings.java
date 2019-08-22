@@ -4,7 +4,7 @@ import java.util.Optional;
 
 /**
  * Represents the settings parameters in a single clan.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class ClanChatSettings {
 	

@@ -15,7 +15,7 @@ import net.arrav.world.entity.item.Item;
 /**
  * Action handling item action clicks.
  * Can be both interface and action wise.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public abstract class ItemAction extends Action {
 	

@@ -12,7 +12,7 @@ import net.arrav.world.locale.Position;
 
 /**
  * An implementation of a {@link Task} that handles randomized {@link Mob} movements.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class MobMovementTask extends Task {
 	

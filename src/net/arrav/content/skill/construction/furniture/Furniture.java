@@ -10,7 +10,7 @@ import java.util.EnumSet;
 
 /**
  * Enumeration of all {@link Construction} furniture.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum Furniture {
 	EMPTY(-1, 6951, 0, 0, 0, null),

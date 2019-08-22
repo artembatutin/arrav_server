@@ -154,7 +154,8 @@ public final class GemCutting extends ProducingSkillAction {
 		DRAGONSTONE_BOLT_TIPS(new Item(ItemIdentifiers.DRAGONSTONE), new Item(ItemIdentifiers.DRAGON_BOLT_TIPS, 12), 71, 8.2, 6702, true),
 		ONYX_BOLT_TIPS(new Item(ItemIdentifiers.ONYX), new Item(ItemIdentifiers.ONYX_BOLT_TIPS, 24), 73, 9.4, 6702, true),
 		KEBBIT_BOLT(new Item(ItemIdentifiers.KEBBIT_SPIKE), new Item(ItemIdentifiers.KEBBIT_BOLTS, 6), 32, 5.8, 6702, true),
-		LONG_KEBBIT_BOLT(new Item(ItemIdentifiers.LONG_KEBBIT_SPIKE), new Item(ItemIdentifiers.LONG_KEBBIT_BOLTS, 6), 83, 7.89, 6702, true),;
+		LONG_KEBBIT_BOLT(new Item(ItemIdentifiers.LONG_KEBBIT_SPIKE), new Item(ItemIdentifiers.LONG_KEBBIT_BOLTS, 6), 83, 7.89, 6702, true),
+		;
 		
 		/**
 		 * Caches our enum values.

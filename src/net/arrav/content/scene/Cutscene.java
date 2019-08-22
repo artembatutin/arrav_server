@@ -7,7 +7,7 @@ import java.util.Optional;
 
 /**
  * Holds functionality for cutscenes.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public abstract class Cutscene {

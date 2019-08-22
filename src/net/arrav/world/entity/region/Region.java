@@ -35,7 +35,7 @@ import static net.arrav.world.entity.EntityState.INACTIVE;
 /**
  * A location on the tool.mapviewer that is {@code 64x64} in size. Used primarily for caching various types of {@link Entity}s and
  * {@link RegionTile}s. There is a reason that the {@link Entity}s are not being cached together.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class Region extends Entity {
 	

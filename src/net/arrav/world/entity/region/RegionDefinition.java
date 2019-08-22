@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Represents a single region definition.
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class RegionDefinition {
 	

@@ -9,7 +9,7 @@ import java.util.*;
  * Represents a {@code PathFinder} which uses the A* search algorithm(by passing obstacles).
  * @author Graham
  * @author Major | Suggestions, discussion
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class AStarPathFinder extends PathFinder {

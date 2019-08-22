@@ -65,7 +65,7 @@ public abstract class Quest {
 	 * @param player the player this quest is for.
 	 */
 	public void onStart(Player player) {
-	
+
 	}
 	
 	/**

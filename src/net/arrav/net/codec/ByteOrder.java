@@ -2,7 +2,7 @@ package net.arrav.net.codec;
 
 /**
  * An enumerated type whose elements represent the possible endianness of game messages.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum ByteOrder {
 	/**

@@ -7,7 +7,7 @@ import net.arrav.world.Direction;
 
 /**
  * The container class that represents a coordinate anywhere in the world.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  * @author lare96 <http://github.com/lare96>
  * @author blakeman8192
  */

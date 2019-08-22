@@ -11,7 +11,7 @@ import java.util.Optional;
 
 /**
  * The dialogue chain entry that request the player an item.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class RequestItemDialogue extends Dialogue {
 	

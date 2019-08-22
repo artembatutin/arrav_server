@@ -56,7 +56,7 @@ public abstract class ActorDeath<T extends Actor> extends Task {
 	public final void execute() {
 		Hit lastHit = getActor().getCombat().getDamageCache().getLastHit();
 		Optional<Player> killer = getActor().getCombat().getDamageCache().getPlayerKiller();
-
+		
 		switch(counter++) {
 			case 0:
 				getActor().setDead(true);

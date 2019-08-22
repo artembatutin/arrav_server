@@ -6,7 +6,7 @@ import net.arrav.world.locale.Position;
 
 /**
  * Represents a {@link House} servant.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class Servant extends DefaultMob {
 	

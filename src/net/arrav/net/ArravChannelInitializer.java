@@ -2,11 +2,14 @@ package net.arrav.net;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
+import net.arrav.net.codec.login.LoginDecoder;
 
 /**
  * The {@link ChannelInitializer} implementation that will initialize {@link SocketChannel}s before they are registered.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class ArravChannelInitializer extends ChannelInitializer<SocketChannel> {
 	
@@ -18,6 +21,9 @@ public final class ArravChannelInitializer extends ChannelInitializer<SocketChan
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
 		ch.attr(NetworkConstants.SESSION_KEY).setIfAbsent(new Session(ch));
-		ch.pipeline().addLast("upstream-handler", HANDLER);
+		ChannelPipeline pipeline = ch.pipeline();
+		pipeline.addLast("login_decoder", new LoginDecoder());
+		pipeline.addLast("timeout", new IdleStateHandler(NetworkConstants.SESSION_TIMEOUT, 0, 0));
+		pipeline.addLast("handler", HANDLER);
 	}
 }

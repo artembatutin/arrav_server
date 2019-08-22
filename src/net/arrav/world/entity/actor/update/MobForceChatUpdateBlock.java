@@ -6,7 +6,7 @@ import net.arrav.world.entity.actor.player.Player;
 
 /**
  * An {@link MobUpdateBlock} implementation that handles the {@code FORCE_CHAT} update block.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 final class MobForceChatUpdateBlock extends MobUpdateBlock {
 	

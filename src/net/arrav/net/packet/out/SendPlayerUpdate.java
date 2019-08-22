@@ -17,12 +17,24 @@ import java.util.Iterator;
 
 /**
  * An implementation that sends an update message containing the underlying {@link Player} and other {@code Player}s surrounding them.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class SendPlayerUpdate implements OutgoingPacket {
 	
 	@Override
+	public boolean onSent(Player player) {
+		return true;
+	}
+	
+	@Override
 	public ByteBuf write(Player player, ByteBuf buf) {
+		//ensuring the player receives a map update first.
+		if(!player.getInitialUpdate().get()) {
+			new SendMapRegion(player.getLastRegion().copy()).write(player, buf);
+			player.getInitialUpdate().set(true);
+		}
+		
+		//writing the update block.
 		ByteBufAllocator alloc = player.getSession().alloc();
 		buf.message(81, GamePacketType.VARIABLE_SHORT);
 		ByteBuf blockMsg = alloc.buffer(64);

@@ -6,7 +6,7 @@ import net.arrav.world.entity.actor.player.Player;
 /**
  * The slayer currency based on the {@link Player#slayerPoints} value.
  * It is recommended that this be used rather than {@link GeneralCurrency}.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class SlayerCurrency implements GeneralCurrency {
 

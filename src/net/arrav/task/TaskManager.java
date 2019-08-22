@@ -8,7 +8,7 @@ import java.util.Objects;
 
 /**
  * Handles the processing and execution of {@link Task}s.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class TaskManager {
 	

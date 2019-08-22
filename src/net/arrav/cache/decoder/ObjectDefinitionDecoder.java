@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 /**
  * A class which parses object definitions.
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class ObjectDefinitionDecoder implements Runnable {
 	

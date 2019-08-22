@@ -30,7 +30,7 @@ import io.netty.buffer.Unpooled;
 /**
  * Represents a file system of {@link Cache}s and {@link CacheArchive}s.
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  * @editor Professor Oak
  */
 public class CacheLoader {

@@ -16,7 +16,7 @@ import static net.arrav.content.skill.construction.furniture.Furniture.*;
 
 /**
  * Enumeration of all of the {@link Construction} hotspots.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum HotSpots {
 	/**

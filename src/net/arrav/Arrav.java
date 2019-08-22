@@ -51,7 +51,7 @@ import static io.netty.util.ResourceLeakDetector.Level.PARANOID;
 
 /**
  * The main class that will register and bind the server effectively.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  * @author lare96 <http://github.com/lare96>
  */
 public final class Arrav {
@@ -171,10 +171,10 @@ public final class Arrav {
 			bootstrap.channel(EpollServerSocketChannel.class);
 		} else {
 			loopGroup = new NioEventLoopGroup();
+			bootstrap.channel(NioServerSocketChannel.class);
 		}
-		ResourceLeakDetector.setLevel(DEBUG ? PARANOID : DISABLED);
 		bootstrap.group(loopGroup);
-		bootstrap.channel(NioServerSocketChannel.class);
+		ResourceLeakDetector.setLevel(DEBUG ? PARANOID : DISABLED);
 		bootstrap.childHandler(new ArravChannelInitializer());
 		bootstrap.bind(NetworkConstants.PORT_ONLINE).syncUninterruptibly();
 		

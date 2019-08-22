@@ -19,7 +19,7 @@ import java.util.Optional;
 /**
  * The node implementation that represents an item on the ground.
  * @author lare96 <http://github.com/lare96>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class GroundItem extends Entity {
 	

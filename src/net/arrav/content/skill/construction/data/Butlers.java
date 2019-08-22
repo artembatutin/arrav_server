@@ -4,14 +4,15 @@ import net.arrav.content.skill.construction.Construction;
 
 /**
  * Enumeration of {@link Construction} butlers.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum Butlers {
 	JACK(4235, 20, 500, 6, 60),
 	MAID(4237, 25, 1000, 10, 30),
 	COOK(4239, 30, 3000, 16, 17),
 	BUTLER(4241, 40, 5000, 20, 12),
-	DEMON_BUTLER(4243, 50, 10000, 26, 7),;
+	DEMON_BUTLER(4243, 50, 10000, 26, 7),
+	;
 
 	private int npcId, consLevel, loanCost, inventory;
 	private double tripSeconds;

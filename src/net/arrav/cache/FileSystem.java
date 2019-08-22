@@ -16,7 +16,7 @@ import java.util.Objects;
 /**
  * Represents a file system of {@link Cache}s and {@link Archive}s.
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class FileSystem {
 	

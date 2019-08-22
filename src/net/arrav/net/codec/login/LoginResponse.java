@@ -7,25 +7,25 @@ import net.arrav.world.entity.actor.player.assets.Rights;
 
 /**
  * The login response given as {@link ByteBuf} to the client.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class LoginResponse {
-
+	
 	/**
 	 * The actual login response.
 	 */
 	private final LoginCode response;
-
+	
 	/**
 	 * The {@link Player}s authority level.
 	 */
 	private final Rights rights;
-
+	
 	/**
 	 * If the player is iron man.
 	 */
 	private final boolean iron;
-
+	
 	/**
 	 * Creates a new {@link LoginResponse}.
 	 * @param response The actual login response.
@@ -37,7 +37,7 @@ public final class LoginResponse {
 		this.rights = rights;
 		this.iron = iron;
 	}
-
+	
 	/**
 	 * Creates a new {@link LoginResponse} with an authority level of {@code PLAYER} and a {@code flagged} value of
 	 * {@code false}.
@@ -59,21 +59,21 @@ public final class LoginResponse {
 		}
 		return out;
 	}
-
+	
 	/**
 	 * @return The actual login response.
 	 */
 	public LoginCode getResponse() {
 		return response;
 	}
-
+	
 	/**
 	 * @return The {@link Player}s authority level.
 	 */
 	public Rights getRights() {
 		return rights;
 	}
-
+	
 	/**
 	 * If the player is iron man.
 	 * @return iron man.
@@ -81,5 +81,5 @@ public final class LoginResponse {
 	public boolean isIron() {
 		return iron;
 	}
-
+	
 }

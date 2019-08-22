@@ -88,7 +88,7 @@ public abstract class MinigameLobby {
 	 * @param t the task running for this lobby.
 	 */
 	public void onCountdown(int current, Task t) {
-	
+
 	}
 	
 	/**

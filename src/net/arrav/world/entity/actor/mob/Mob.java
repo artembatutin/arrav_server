@@ -51,7 +51,7 @@ import java.util.function.Supplier;
 /**
  * The character implementation that represents a node that is operated by the server.
  * This type of node functions solely through the server executing functions.
- * @author Artem batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class Mob extends Actor {
@@ -68,47 +68,24 @@ public abstract class Mob extends Actor {
 	/**
 	 * Defined {@link Mob} {@link CombatStrategy}s.
 	 */
-	private static final Int2ObjectArrayMap<Supplier<CombatStrategy<Mob>>> STRATEGIES = new Int2ObjectArrayMap<>(
-			ImmutableMap.<Integer, Supplier<CombatStrategy<Mob>>>builder()
-					.put(50, KingBlackDragonStrategy::new)
-					.put(6260, GeneralGraardorStrategy::new)
-					.put(6263, SergeantSteelwillStrategy::new)
-					.put(6261, SergeantStrongstackStrategy::new)
-					.put(6265, SergeantGrimspikeStrategy::new)
-					.put(6222, KreeArraStrategy::new)
-					.put(6227, FlightKilisaStrategy::new)
-					.put(6225, FlockleaderGeerinStrategy::new)
-					.put(6223, WingmanSkreeStrategy::new)
-					.put(1158, KalphiteQueenStrategy::new)
-					.put(2881, DagannothSupremeStrategy::new)
-					.put(2882, DagannothPrimeStrategy::new)
-					.put(2883, DagannothRexStrategy::new)
-					.put(8349, TormentedDemonStrategy::new)
-					.put(8350, TormentedDemonStrategy::new)
-					.put(8351, TormentedDemonStrategy::new)
-					.put(3340, GiantMoleStrategy::new)
-					.build());
+	private static final Int2ObjectArrayMap<Supplier<CombatStrategy<Mob>>> STRATEGIES = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, Supplier<CombatStrategy<Mob>>>builder().put(50, KingBlackDragonStrategy::new).put(6260, GeneralGraardorStrategy::new).put(6263, SergeantSteelwillStrategy::new).put(6261, SergeantStrongstackStrategy::new).put(6265, SergeantGrimspikeStrategy::new).put(6222, KreeArraStrategy::new).put(6227, FlightKilisaStrategy::new).put(6225, FlockleaderGeerinStrategy::new).put(6223, WingmanSkreeStrategy::new).put(1158, KalphiteQueenStrategy::new).put(2881, DagannothSupremeStrategy::new).put(2882, DagannothPrimeStrategy::new).put(2883, DagannothRexStrategy::new).put(8349, TormentedDemonStrategy::new).put(8350, TormentedDemonStrategy::new).put(8351, TormentedDemonStrategy::new).put(3340, GiantMoleStrategy::new).build());
 	
 	/**
 	 * A mapping which contains all the custom npcs by their id.
 	 */
-	public static final Int2ObjectArrayMap<Function<Position, Mob>> CUSTOM_MOBS = new Int2ObjectArrayMap<>(
-			ImmutableMap.<Integer, Function<Position, Mob>>builder()
-					.put(6260, s -> new GeneralGraardor())
-					.put(6222, s -> new KreeArra())
-					.put(1158, KalphiteQueen::new)
-					/*.put(13447, s -> new Nex())
-					.put(6247, s -> new CommanderZilyana())
-					.put(6260, s -> new GeneralGraardor())
-					.put(6222, s -> new KreeArra())
-					.put(9177, s -> new SkeletalHorror())
-					.put(8133, s -> new CorporealBeast())
-					.put(8549, Phoenix::new)
-					.put(3847, SeaTrollQueen::new)
-					.put(1158, KalphiteQueen::new)
-					.put(3340, GiantMole::new)
-					.put(14301, Glacor::new
-					)*/.build());
+	public static final Int2ObjectArrayMap<Function<Position, Mob>> CUSTOM_MOBS = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, Function<Position, Mob>>builder().put(6260, s -> new GeneralGraardor()).put(6222, s -> new KreeArra()).put(1158, KalphiteQueen::new)
+			/*.put(13447, s -> new Nex())
+			.put(6247, s -> new CommanderZilyana())
+			.put(6260, s -> new GeneralGraardor())
+			.put(6222, s -> new KreeArra())
+			.put(9177, s -> new SkeletalHorror())
+			.put(8133, s -> new CorporealBeast())
+			.put(8549, Phoenix::new)
+			.put(3847, SeaTrollQueen::new)
+			.put(1158, KalphiteQueen::new)
+			.put(3340, GiantMole::new)
+			.put(14301, Glacor::new
+			)*/.build());
 	
 	/**
 	 * Gets a certain npc by the specified {@code id} and supplies it's position.

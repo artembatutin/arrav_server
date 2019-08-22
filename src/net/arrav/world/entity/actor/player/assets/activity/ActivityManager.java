@@ -224,82 +224,108 @@ public final class ActivityManager {
 		/**
 		 * Stops the player from facing a position
 		 */
-		FACE_POSITION, /**
+		FACE_POSITION,
+		/**
 		 * Stops the player from using magic on items
 		 */
-		MAGIC_ON_ITEM, /**
+		MAGIC_ON_ITEM,
+		/**
 		 * Stops the player from walking.
 		 */
-		WALKING, /**
+		WALKING,
+		/**
 		 * Stops the player from attacking others
 		 */
-		ATTACK_PLAYER, /**
+		ATTACK_PLAYER,
+		/**
 		 * Blocks the player from accepting his looks
 		 */
-		CHARACTER_SELECTION, /**
+		CHARACTER_SELECTION,
+		/**
 		 * Blocks sending messages on the global chat
 		 */
-		CHAT_MESSAGE, /**
+		CHAT_MESSAGE,
+		/**
 		 * Blocks interface button interactions
 		 */
-		CLICK_BUTTON, /**
+		CLICK_BUTTON,
+		/**
 		 * Blocks logging out
 		 */
-		LOG_OUT, /**
+		LOG_OUT,
+		/**
 		 * Blocks command executing
 		 */
-		COMMAND_MESSAGE, /**
+		COMMAND_MESSAGE,
+		/**
 		 * Blocks private messaging
 		 */
-		PRIVATE_MESSAGE, /**
+		PRIVATE_MESSAGE,
+		/**
 		 * Blocks item dropping
 		 */
-		DROP_ITEM, /**
+		DROP_ITEM,
+		/**
 		 * Blocks the enter input packet
 		 */
-		ENTER_INPUT, /**
+		ENTER_INPUT,
+		/**
 		 * Blocks player following
 		 */
-		FOLLOW_PLAYER, /**
+		FOLLOW_PLAYER,
+		/**
 		 * Blocks player from closing interfaces
 		 */
-		INTERFACE_CLICK, /**
+		INTERFACE_CLICK,
+		/**
 		 * Blocks player from interface actions.
 		 */
-		INTERFACE_ACTION, /**
+		INTERFACE_ACTION,
+		/**
 		 * Blocks player from interacting with items
 		 */
-		ITEM_ACTION, /**
+		ITEM_ACTION,
+		/**
 		 * Blocks player from equiping items and other kind of item interface clicks
 		 */
-		ITEM_INTERFACE, /**
+		ITEM_INTERFACE,
+		/**
 		 * Blocks item on item interactions
 		 */
-		ITEM_ON_ITEM, /**
+		ITEM_ON_ITEM,
+		/**
 		 * Blocks item on npc interactions
 		 */
-		ITEM_ON_NPC, /**
+		ITEM_ON_NPC,
+		/**
 		 * Blocks item on object interactions
 		 */
-		ITEM_ON_OBJECT, /**
+		ITEM_ON_OBJECT,
+		/**
 		 * Blocks item on player interactions
 		 */
-		ITEM_ON_PLAYER, /**
+		ITEM_ON_PLAYER,
+		/**
 		 * Blocks npc interactions
 		 */
-		NPC_ACTION, /**
+		NPC_ACTION,
+		/**
 		 * Blocks object interactions
 		 */
-		OBJECT_ACTION, /**
+		OBJECT_ACTION,
+		/**
 		 * Blocks pickup item from ground
 		 */
-		PICKUP_ITEM, /**
+		PICKUP_ITEM,
+		/**
 		 * Blocks dialogue interactions
 		 */
-		DIALOGUE_INTERACTION, /**
+		DIALOGUE_INTERACTION,
+		/**
 		 * Blocks request messages (Trade / duel)
 		 */
-		REQUEST_MESSAGE, /**
+		REQUEST_MESSAGE,
+		/**
 		 * Blocks teleporting
 		 */
 		TELEPORT;

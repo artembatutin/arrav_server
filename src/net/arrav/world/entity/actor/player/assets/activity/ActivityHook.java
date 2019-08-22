@@ -6,10 +6,10 @@ package net.arrav.world.entity.actor.player.assets.activity;
  */
 @FunctionalInterface
 public interface ActivityHook {
-
+	
 	/**
 	 * Attempts to execute the specified function
 	 */
 	void attempt();
-
+	
 }

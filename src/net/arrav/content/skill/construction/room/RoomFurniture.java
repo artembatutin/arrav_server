@@ -5,7 +5,7 @@ import net.arrav.content.skill.construction.furniture.Furniture;
 
 /**
  * Represents a single house furniture.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class RoomFurniture {
 	

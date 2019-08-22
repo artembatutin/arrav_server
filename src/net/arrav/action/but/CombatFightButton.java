@@ -7,7 +7,7 @@ import net.arrav.world.entity.actor.combat.weapon.WeaponInterface;
 import net.arrav.world.entity.actor.player.Player;
 
 public class CombatFightButton extends ActionInitializer {
-
+	
 	@Override
 	public void init() {
 		//FIGHT TYPES
@@ -281,7 +281,7 @@ public class CombatFightButton extends ActionInitializer {
 		};
 		e.register(9126);
 	}
-
+	
 	public void register(int button, FightType type) {
 		ButtonAction e = new ButtonAction() {
 			@Override
@@ -292,5 +292,5 @@ public class CombatFightButton extends ActionInitializer {
 		};
 		e.register(button);
 	}
-
+	
 }

@@ -8,7 +8,7 @@ import net.arrav.world.locale.Position;
 /**
  * The class that contains a collection of constants related to the game. This
  * class serves no other purpose than to hold constants.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class GameConstants {
 	

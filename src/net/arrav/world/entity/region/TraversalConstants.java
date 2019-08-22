@@ -3,7 +3,7 @@ package net.arrav.world.entity.region;
 /**
  * Represents flags for each of the traversals.
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class TraversalConstants {
 	

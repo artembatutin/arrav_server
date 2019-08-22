@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 /**
  * An abstracted class which handles the connection pool usages.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public abstract class ConnectionUse {
 	

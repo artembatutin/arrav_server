@@ -5,7 +5,7 @@ import net.arrav.world.entity.actor.player.Player;
 
 /**
  * Represents a packet reader which returns a message.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 @FunctionalInterface
 public interface IncomingPacket {

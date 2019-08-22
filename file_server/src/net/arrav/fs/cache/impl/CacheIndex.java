@@ -7,7 +7,7 @@ import net.arrav.fs.util.Misc;
 /**
  * Represents an index within some {@link Cache}.
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class CacheIndex {
 

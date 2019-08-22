@@ -10,7 +10,7 @@ import static net.arrav.world.entity.actor.player.assets.Rights.PLAYER;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the chat update block.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class PlayerChatUpdateBlock extends PlayerUpdateBlock {
 	

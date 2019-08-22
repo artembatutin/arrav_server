@@ -488,10 +488,12 @@ public abstract class Minigame {
 		/**
 		 * This safety is similar to when a player dies while he is skulled.
 		 */
-		DANGEROUS, /**
+		DANGEROUS,
+		/**
 		 * Indicates the default safety is applied
 		 */
-		DEFAULT, /**
+		DEFAULT,
+		/**
 		 * Indicates the minigame is fully safe and no items will be lost on death
 		 */
 		SAFE

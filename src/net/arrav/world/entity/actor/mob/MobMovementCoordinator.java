@@ -7,7 +7,7 @@ import net.arrav.world.locale.Boundary;
  * The movement coordinator that makes all {@link Mob}s pseudo-randomly move
  * within a radius of their original positions.
  * @author lare96 <http://github.com/lare96>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class MobMovementCoordinator {
 	

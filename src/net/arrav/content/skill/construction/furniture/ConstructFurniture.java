@@ -18,7 +18,7 @@ import java.util.Optional;
 
 /**
  * Represents the process for building {@link Furniture}.
- * @author Artem Batutin <artembatutin@gmail.com></artembatutin@gmail.com>
+ * @author Artem Batutin</artembatutin@gmail.com>
  */
 public final class ConstructFurniture extends ProducingSkillAction {
 	

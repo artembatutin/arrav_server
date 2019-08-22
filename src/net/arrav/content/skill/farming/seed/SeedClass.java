@@ -34,7 +34,8 @@ public enum SeedClass {
 		public SeedType getInstance(String name) {
 			return MushroomSeed.valueOf(name);
 		}
-	}, FRUIT_TREES, HOPS, SPECIAL_PLANTS,;
+	}, FRUIT_TREES, HOPS, SPECIAL_PLANTS,
+	;
 	
 	public SeedType getInstance(String name) {
 		return null;

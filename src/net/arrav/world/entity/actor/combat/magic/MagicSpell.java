@@ -31,7 +31,7 @@ public abstract class MagicSpell {
 	 * @param victim the victim hit by the spell.
 	 */
 	public void effect(Actor caster, Optional<Actor> victim) {
-	
+
 	}
 	
 	public Optional<Item[]> equipmentRequired() {

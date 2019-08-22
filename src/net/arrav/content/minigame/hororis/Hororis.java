@@ -28,7 +28,7 @@ import static net.arrav.content.achievements.Achievement.HORRORIFIC;
 
 /**
  * A custom "Horroris" minigame.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class Hororis extends Minigame {
 	

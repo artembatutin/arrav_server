@@ -12,31 +12,31 @@ import java.util.Objects;
  * @since 8-2-2018.
  */
 public final class _ExchangeSessionManager {
-
+	
 	public final Player player;
-
+	
 	public _ExchangeSessionManager(Player player) {
 		this.player = player;
 	}
-
+	
 	public _ExchangeSession session;
-
+	
 	public Player last_requested;
-
+	
 	public boolean request(_ExchangeSession session) {
 		Player player = session.player;
 		Player requested = session.other;
-
+		
 		if(requested == null) {
 			player.message("Couldn't request the session.");
 			return false;
 		}
-
+		
 		if(Objects.equals(player, requested)) {
 			player.message("You cannot start an exchange session with yourself.");
 			return false;
 		}
-
+		
 		if(player.getRights().less(Rights.SENIOR_MODERATOR) && requested.getRights().less(Rights.SENIOR_MODERATOR)) {
 			if(HostManager.same(player, requested)) {
 				player.message("You can't trade over the same network.");
@@ -57,12 +57,12 @@ public final class _ExchangeSessionManager {
 				}
 			}
 		}
-
+		
 		if(inAnySession(player)) {
 			reset();
 			return false;
 		}
-
+		
 		if(inAnySession(requested)) {
 			player.message("This player is currently in a session with another player.");
 			return false;
@@ -75,7 +75,7 @@ public final class _ExchangeSessionManager {
 			player.message("You cannot send a trade request while the other player is teleporting.");
 			return false;
 		}
-
+		
 		if(player.exchange_manager.last_requested == requested && requested.exchange_manager.last_requested == player) {
 			session.forEach(p -> {
 				p.exchange_manager.session = session;
@@ -84,23 +84,23 @@ public final class _ExchangeSessionManager {
 			});
 			return true;
 		}
-
+		
 		player.message("Sending duel request...");
 		requested.message(player.getFormatUsername() + ":duelreq:");
-
+		
 		player.exchange_manager.last_requested = requested;
 		session.onRequest(player, requested);
 		return true;
 	}
-
+	
 	public boolean inAnySession(Player other) {
 		return session != null;
 	}
-
+	
 	public void reset() {
 		Player player = session.player;
 		Player other = session.other;
-
+		
 		session.finalize(ExchangeSessionActionType.RESTORE_ITEMS);
 		session.forEach(Player::closeWidget);
 	}

@@ -4,7 +4,7 @@ import net.arrav.world.entity.actor.Actor;
 
 /**
  * An enumerated type that holds all of the values representing update flags for {@link Actor}s.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum UpdateFlag {
 	APPEARANCE(0),

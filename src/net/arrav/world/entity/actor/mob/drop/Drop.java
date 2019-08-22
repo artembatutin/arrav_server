@@ -11,7 +11,7 @@ import static net.arrav.util.rand.Chance.*;
 
 /**
  * A model representing an item within a rational item table that can be dropped.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class Drop {
 	

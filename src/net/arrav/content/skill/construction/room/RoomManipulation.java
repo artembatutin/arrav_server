@@ -16,7 +16,7 @@ import static net.arrav.content.skill.construction.furniture.Furniture.OAK_STAIR
 
 /**
  * Handles room manipulations.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class RoomManipulation {
 	

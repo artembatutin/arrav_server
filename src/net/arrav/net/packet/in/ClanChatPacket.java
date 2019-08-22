@@ -9,7 +9,7 @@ import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
 /**
  * The message that is sent from the client when the player chats anything
  * beginning with '/'.
- * @author Artem batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class ClanChatPacket implements IncomingPacket {
 	

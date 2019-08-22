@@ -4,7 +4,7 @@ import net.arrav.world.entity.item.Item;
 
 /**
  * Represents a slayer boss task for the slayer skill
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum SlayerBoss {
 	

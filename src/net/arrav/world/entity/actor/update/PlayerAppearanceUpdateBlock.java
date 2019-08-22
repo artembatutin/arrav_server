@@ -9,7 +9,7 @@ import net.arrav.world.entity.item.container.impl.Equipment;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the updating of the appearance of {@link Player}s.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 	

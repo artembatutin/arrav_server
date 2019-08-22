@@ -10,7 +10,7 @@ import java.util.Set;
 
 /**
  * Punished list defining all punishments for a certain {@link HostListType}.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class HostList {
 	

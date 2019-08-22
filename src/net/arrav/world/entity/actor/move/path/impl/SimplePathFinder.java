@@ -14,7 +14,7 @@ import static net.arrav.world.Direction.*;
 /**
  * Represents a simple path finder which determines a straight path to the first blocked tile or it's destination.
  * Mostly used by {@link Mob} following and movement.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class SimplePathFinder extends PathFinder {
 	/**

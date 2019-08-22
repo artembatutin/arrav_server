@@ -16,7 +16,7 @@ import net.arrav.world.entity.object.GameObject;
 
 /**
  * Action handling item on object actions.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public abstract class ItemOnObjectAction extends Action {
 	

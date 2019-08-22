@@ -2,7 +2,7 @@ package net.arrav.world.entity.object;
 
 /**
  * Represents the definition of some game object.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class ObjectDefinition {
 	

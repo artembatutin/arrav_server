@@ -436,7 +436,7 @@ public final class Enchanting extends ProducingSkillAction {
 		 * @param slot the slot that this item is in.
 		 */
 		public void onCast(Player player, Item item, int slot) {
-
+		
 		}
 		
 		/**

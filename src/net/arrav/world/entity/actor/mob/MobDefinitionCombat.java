@@ -2,7 +2,7 @@ package net.arrav.world.entity.actor.mob;
 
 /**
  * The container that represents an Mob combat definition.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class MobDefinitionCombat {
 	

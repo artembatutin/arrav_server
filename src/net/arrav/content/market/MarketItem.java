@@ -11,7 +11,7 @@ import net.arrav.world.entity.item.ItemDefinition;
 
 /**
  * The container that represents an item definition.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class MarketItem {
 	

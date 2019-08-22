@@ -17,7 +17,7 @@ import java.util.Optional;
 
 /**
  * The container that represents an Mob definition.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class MobDefinition {
 	

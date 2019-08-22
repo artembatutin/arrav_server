@@ -13,7 +13,7 @@ import net.arrav.world.entity.actor.player.Player;
 
 /**
  * Action handling npc action clicks.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public abstract class MobAction extends Action {
 	

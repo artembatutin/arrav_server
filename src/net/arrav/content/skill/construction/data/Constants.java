@@ -8,7 +8,7 @@ import net.arrav.world.entity.object.ObjectDefinition;
 
 /**
  * Constants declared for {@link Construction}.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class Constants {
 	

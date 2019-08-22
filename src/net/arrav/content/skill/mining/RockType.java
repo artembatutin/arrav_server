@@ -2,7 +2,7 @@ package net.arrav.content.skill.mining;
 
 /**
  * The enumerated type which elements ore color types.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 enum RockType {
 	TYPE1(47766, 47768, 47767),

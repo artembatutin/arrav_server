@@ -23,7 +23,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * A container that holds the unique and common drop tables.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class DropTable {
 	

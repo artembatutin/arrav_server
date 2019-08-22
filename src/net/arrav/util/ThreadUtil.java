@@ -77,7 +77,7 @@ public final class ThreadUtil {
 	 * Sole private constructor to prevent instantiation.
 	 */
 	private ThreadUtil() {
-	
+
 	}
 	
 }

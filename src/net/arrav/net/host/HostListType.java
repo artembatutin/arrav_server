@@ -2,7 +2,7 @@ package net.arrav.net.host;
 
 /**
  * An enumeration of possible host list types.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum HostListType {
 	BANNED_MAC(0, "banned_macs"),

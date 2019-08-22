@@ -17,7 +17,7 @@ public class RangedWeaponDefinition {
 	public RangedWeaponType getType() {
 		return type;
 	}
-
+	
 	public boolean isValid(RangedAmmunition ammunition) {
 		if(ammunition == null)
 			return false;

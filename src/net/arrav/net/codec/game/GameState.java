@@ -2,7 +2,7 @@ package net.arrav.net.codec.game;
 
 /**
  * An enumerated type whose elements represent all of the possible states of game protocol encoding.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum GameState {
 	

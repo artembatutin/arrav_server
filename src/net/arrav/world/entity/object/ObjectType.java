@@ -9,7 +9,7 @@ import java.util.Optional;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Maxi <http://www.rune-server.org/members/maxi/>
  * @author lare96 <http://github.com/lare96>
- * @author Artem batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum ObjectType {
 	

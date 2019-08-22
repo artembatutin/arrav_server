@@ -40,7 +40,7 @@ import static net.arrav.world.entity.EntityState.IDLE;
 
 /**
  * The static utility class that contains functions to manage and process game characters.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class World extends AbstractScheduledService {
 	
@@ -137,7 +137,6 @@ public final class World extends AbstractScheduledService {
 			dequeueLogins();
 			registerActors();
 			taskManager.sequence();
-			handleIncomingPackets();
 			sync.preUpdate(players, mobs);
 			sync.update(players);
 			sync.postUpdate(players, mobs);
@@ -158,26 +157,12 @@ public final class World extends AbstractScheduledService {
 		} else if(UPDATE_LIMIT < 200) {
 			UPDATE_LIMIT += 20;
 		}
-		System.out.println("took: " + millis + " - players: " + players.size() + " - mobs: " + mobs.size() + " - logins: " + logs);
+		//System.out.println("took: " + millis + " - players: " + players.size() + " - mobs: " + mobs.size() + " - logins: " + logs);
 	}
 	
 	@Override
 	protected Scheduler scheduler() {
 		return Scheduler.newFixedDelaySchedule(600, 600, TimeUnit.MILLISECONDS);
-	}
-	
-	/**
-	 * Handles incoming packets for players.
-	 */
-	private void handleIncomingPackets() {
-		for(Player player : players) {
-			if(player != null) {
-				Session session = player.getSession();
-				if(session != null) {
-					session.pollIncomingPackets();
-				}
-			}
-		}
 	}
 	
 	/**
@@ -291,7 +276,6 @@ public final class World extends AbstractScheduledService {
 					continue;
 				}
 				if(!logout(player)) {
-					player.getSession().setActive(false);
 					logouts.offer(player);
 				}
 			}

@@ -16,7 +16,7 @@ import static net.arrav.world.entity.object.ObjectType.*;
 
 /**
  * Contains traversal data for a set of regions.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class TraversalMap {

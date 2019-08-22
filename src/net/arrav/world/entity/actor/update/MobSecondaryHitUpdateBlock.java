@@ -7,7 +7,7 @@ import net.arrav.world.entity.actor.player.Player;
 
 /**
  * An {@link MobUpdateBlock} implementation that handles the {@code SECONDARY_HIT} update block.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class MobSecondaryHitUpdateBlock extends MobUpdateBlock {
 	

@@ -4,7 +4,7 @@ import net.arrav.util.rand.Chance;
 
 /**
  * A suggested drop from a player.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class SuggestedDrop extends Drop {
 	

@@ -5,7 +5,7 @@ import net.arrav.action.impl.ButtonAction;
 import net.arrav.world.entity.actor.player.Player;
 
 public class ViewingOrbButton extends ActionInitializer {
-
+	
 	@Override
 	public void init() {
 		ButtonAction e = new ButtonAction() {
@@ -65,5 +65,5 @@ public class ViewingOrbButton extends ActionInitializer {
 		};
 		e.register(17111);
 	}
-
+	
 }

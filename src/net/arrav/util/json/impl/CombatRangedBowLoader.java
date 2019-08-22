@@ -26,7 +26,7 @@ public final class CombatRangedBowLoader extends JsonLoader {
 	}
 	
 	public static Int2ObjectArrayMap<RangedWeaponDefinition> DEFINITIONS;
-
+	
 	@Override
 	protected void initialize(int size) {
 		DEFINITIONS = new Int2ObjectArrayMap<>(size);

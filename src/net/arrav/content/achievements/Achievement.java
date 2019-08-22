@@ -6,7 +6,7 @@ import net.arrav.world.entity.actor.player.Player;
 
 /**
  * Holds all the achievements
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum Achievement {
 	//MISC
@@ -55,7 +55,8 @@ public enum Achievement {
 	PRICELESS_GEM("Cut %s gems", 20, 50, 500, 1000),
 	GOLD_AND_RIGNS("Create %s jewellery", 20, 50, 100, 500),
 	QUALITY_HIDES("Carve %s hide items", 20, 50, 500, 500),
-	POTTERY("Create %s pottery items", 20, 50, 500, 5000),;
+	POTTERY("Create %s pottery items", 20, 50, 500, 5000),
+	;
 	
 	//COMPLETE_TUTORIAL("Complete the tutorial", 1),//TODO
 	//SETUP_PRELOADING_GEAR("Setup your first gear preset", 1),//TODO

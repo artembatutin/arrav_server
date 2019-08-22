@@ -7,7 +7,7 @@ import net.arrav.world.entity.item.ItemIdentifiers;
 
 /**
  * Armour sets box opening.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public enum ArmourSet {
 	

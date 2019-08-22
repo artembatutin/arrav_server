@@ -26,7 +26,7 @@ import static net.arrav.content.market.currency.Currency.COINS;
 
 /**
  * Represents a single market shop.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class MarketShop {
 	

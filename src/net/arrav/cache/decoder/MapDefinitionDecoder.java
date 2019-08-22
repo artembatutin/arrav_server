@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 /**
  * A class which parses {@link RegionDefinition}s
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class MapDefinitionDecoder implements Runnable {
 	

@@ -36,7 +36,7 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
 			}
 		});
 	}
-
+	
 	@Override
 	public CombatHit[] getHits(Player attacker, Actor defender) {
 		return new CombatHit[]{nextMeleeHit(attacker, defender)};
@@ -70,9 +70,9 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
 	public CombatType getCombatType() {
 		return CombatType.MELEE;
 	}
-
+	
 	public static PlayerMeleeStrategy get() {
 		return INSTANCE;
 	}
-
+	
 }

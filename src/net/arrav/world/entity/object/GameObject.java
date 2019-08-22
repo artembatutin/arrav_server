@@ -18,7 +18,7 @@ import static net.arrav.world.entity.object.ObjectDirection.*;
 
 /**
  * The node that represents an object anywhere in the world.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public abstract class GameObject {
 	
@@ -313,7 +313,6 @@ public abstract class GameObject {
 	public ObjectDefinition getDefinition() {
 		return ObjectDefinition.DEFINITIONS[id];
 	}
-	
 	
 	@Override
 	public String toString() {

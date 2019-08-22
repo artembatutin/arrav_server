@@ -41,7 +41,8 @@ public enum PatchType {
 	FALADOR_HERB_PATCH(515, 8150, HerbSeed.values()),
 	CATHERBY_HERB_PATCH(515, 8151, HerbSeed.values()),
 	ARDOUGNE_HERB_PATCH(515, 8152, HerbSeed.values()),
-	CANIFIS_HERB_PATCH(515, 8153, HerbSeed.values()),;
+	CANIFIS_HERB_PATCH(515, 8153, HerbSeed.values()),
+	;
 	
 	/**
 	 * Caches our enum values.

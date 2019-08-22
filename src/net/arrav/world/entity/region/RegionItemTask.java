@@ -9,7 +9,7 @@ import java.util.Optional;
 
 /**
  * A {@link Region} item sequencing task.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class RegionItemTask extends Task {
 	

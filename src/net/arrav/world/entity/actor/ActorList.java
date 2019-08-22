@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * An {@link Iterable} implementation acting as a repository that holds instances of {@link Actor}s. Indexes are
  * cached to avoid expensive lookups whenever a new entity is added.
  * @param <E> The specific type of {@code Actor} being managed within this list.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  * @author lare96 <http://github.org/lare96>
  */
 public class ActorList<E extends Actor> implements Iterable<E> {
@@ -30,7 +30,7 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 	/**
 	 * An {@link Iterator} implementation designed specifically {@link ActorList}s.
 	 * @param <E> The specific type of {@link Actor} being managed within this {@code Iterator}.
-	 * @author Artem Batutin <artembatutin@gmail.com>
+	 * @author Artem Batutin
 	 */
 	public final class EntityListIterator<E extends Actor> implements Iterator<E> {
 		

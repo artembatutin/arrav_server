@@ -17,7 +17,7 @@ import java.util.Iterator;
 
 /**
  * An implementation that sends an update message containing the underlying {@link Player} and {@link Mob}s surrounding them.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class SendMobUpdate implements OutgoingPacket {
 	

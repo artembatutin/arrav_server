@@ -2,7 +2,7 @@ package net.arrav.world.locale;
 
 /**
  * Represents a single boundary check.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public class Boundary {
 	

@@ -7,7 +7,7 @@ import net.arrav.world.entity.actor.player.Player;
  * The net security that handles and validates all incoming connections
  * received by the server to ensure that the server does not fall victim to
  * attacks by a socket flooder or a connection from a banned host.
- * @author Artem Batutin <artembatutin@gmail.com>
+ * @author Artem Batutin
  */
 public final class HostManager {
 	
