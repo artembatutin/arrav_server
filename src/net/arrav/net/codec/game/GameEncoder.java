@@ -35,10 +35,10 @@ public class GameEncoder extends MessageToByteEncoder<OutgoingPacket> {
 	@Override
 	protected void encode(ChannelHandlerContext ctx, OutgoingPacket out, ByteBuf buf) {
 		try {
-			buf.setEncryptor(this.encryptor);
-			out.write(this.player, buf);
-			System.out.println("encoding packet: " + out.getClass() + " size: " + buf.readableBytes());
-			//buf.writeBytes(outgoing);
+			ByteBuf outBuf = ctx.channel().alloc().buffer(out.size()).setEncryptor(encryptor);
+			outBuf = out.write(this.player, outBuf);
+			System.out.println("encoding packet: " + out.getClass() + " size: " + outBuf.readableBytes());
+			buf.writeBytes(outBuf);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

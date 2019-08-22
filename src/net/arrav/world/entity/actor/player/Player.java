@@ -624,8 +624,6 @@ public final class Player extends Actor {
 		setLastRegion(getPosition().copy());
 		setUpdates(true, false);
 		setUpdateRegion(true);
-		write(new SendSlot());
-		write(new SendCameraReset());
 		super.getFlags().flag(UpdateFlag.APPEARANCE);
 		Smelting.clearInterfaces(this);
 		if(getAttr().get("introduction_stage").getInt() == 3) {
@@ -840,10 +838,9 @@ public final class Player extends Actor {
 	
 	@Override
 	public void update() {
-		session.writeUpdate(new SendPlayerUpdate());
-		write(new SendMobUpdate());
 		if(session != null) {
 			session.pollIncomingMessages();
+			session.writeUpdate(new SendPlayerUpdate(), new SendMobUpdate());
 		}
 	}
 	

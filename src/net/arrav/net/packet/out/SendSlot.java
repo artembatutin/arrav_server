@@ -13,6 +13,8 @@ public final class SendSlot implements OutgoingPacket {
 		buf.message(249);
 		buf.put(1, ByteTransform.A);
 		buf.putShort(player.getSlot(), ByteTransform.A, ByteOrder.LITTLE);
+		
+		System.out.println("slot: " + player.getSlot());
 		return buf;
 	}
 }

@@ -235,8 +235,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 */
 	private int bitIndex = -1;
 	
-	public void setEncryptor(IsaacRandom encryptor) {
+	public ByteBuf setEncryptor(IsaacRandom encryptor) {
 		this.encryptor = encryptor;
+		return this;
 	}
 	
 	/**

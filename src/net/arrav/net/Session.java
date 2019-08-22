@@ -166,9 +166,10 @@ public class Session {
 	/**
 	 * Writes the given {@link OutgoingPacket} to the stream.
 	 */
-	public void writeUpdate(OutgoingPacket update) {
+	public void writeUpdate(OutgoingPacket playerUpdate, OutgoingPacket mobUpdate) {
 		if(channel.isActive() && channel.isOpen()) {
-			channel.write(update);
+			channel.write(playerUpdate);
+			channel.write(mobUpdate);
 			while(!outgoing.isEmpty()) {
 				OutgoingPacket packet = outgoing.poll();
 				ChannelFuture future = channel.write(packet);
@@ -218,10 +219,11 @@ public class Session {
 			return;
 		}
 		
-		future.awaitUninterruptibly();
+		//future.awaitUninterruptibly();
 		
 		ctx.pipeline().addFirst("encoder", new GameEncoder(request.getEncryptor(), player));
 		ctx.pipeline().addBefore("handler", "decoder", new GameDecoder(request.getDecryptor()));
+		
 		World.get().queueLogin(player);
 	}
 	

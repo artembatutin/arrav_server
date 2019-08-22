@@ -30,7 +30,9 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 	public ByteBuf write(Player player, ByteBuf buf) {
 		//ensuring the player receives a map update first.
 		if(!player.getInitialUpdate().get()) {
+			new SendSlot().write(player, buf);
 			new SendMapRegion(player.getLastRegion().copy()).write(player, buf);
+			new SendCameraReset().write(player, buf);
 			player.getInitialUpdate().set(true);
 		}
 		
