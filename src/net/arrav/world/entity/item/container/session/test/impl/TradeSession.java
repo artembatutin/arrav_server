@@ -10,11 +10,11 @@ import net.arrav.world.entity.item.container.session.test._ExchangeSession;
  * @since 13-2-2018.
  */
 public final class TradeSession extends _ExchangeSession {
-
+	
 	public TradeSession(Player player, Player other) {
 		super(player, other, ExchangeSessionType.TRADE);
 	}
-
+	
 	/**
 	 * Checks if the item can be added to the container.
 	 * @param player the player who's attempting to add an item.
@@ -26,7 +26,7 @@ public final class TradeSession extends _ExchangeSession {
 	public boolean canAddItem(Player player, Item item, int slot) {
 		return false;
 	}
-
+	
 	/**
 	 * Checks if the item can be removed from the container.
 	 * @param item the item that was attempted to being removed.
@@ -36,7 +36,7 @@ public final class TradeSession extends _ExchangeSession {
 	public boolean canRemoveItem(Player player, Item item) {
 		return false;
 	}
-
+	
 	/**
 	 * Any functionality that should be dealth with when a player sends a request
 	 * should be handled in here.
@@ -45,9 +45,9 @@ public final class TradeSession extends _ExchangeSession {
 	 */
 	@Override
 	public void onRequest(Player player, Player requested) {
-
+	
 	}
-
+	
 	/**
 	 * Any functionality that should be dealth when a player clicks a button
 	 * should be handled in here.
@@ -56,9 +56,9 @@ public final class TradeSession extends _ExchangeSession {
 	 */
 	@Override
 	public void onClickButton(Player player, int button) {
-
+	
 	}
-
+	
 	/**
 	 * Accepts the new {@code stage}.
 	 * @param player the player who accepted the stage.
@@ -70,31 +70,31 @@ public final class TradeSession extends _ExchangeSession {
 			forEach(p -> p.message("Yay!"));
 		}
 	}
-
+	
 	/**
 	 * Updates the main components of the interface.
 	 */
 	@Override
 	public void updateMainComponents() {
-
+	
 	}
-
+	
 	/**
 	 * Updates the offer components of the interface.
 	 */
 	@Override
 	public void updateOfferComponents() {
-
+	
 	}
-
+	
 	/**
 	 * Any functionality that should be handled when the interface closes.
 	 */
 	@Override
 	public void onReset() {
-
+	
 	}
-
+	
 	public enum _TradeStage {
 		REQUEST, CONFIRMATION;
 	}

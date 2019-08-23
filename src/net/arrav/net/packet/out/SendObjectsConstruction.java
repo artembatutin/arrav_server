@@ -1,6 +1,5 @@
 package net.arrav.net.packet.out;
 
-
 import net.arrav.content.skill.construction.furniture.Furniture;
 import net.arrav.content.skill.construction.furniture.HotSpots;
 import net.arrav.net.codec.game.GamePacket;

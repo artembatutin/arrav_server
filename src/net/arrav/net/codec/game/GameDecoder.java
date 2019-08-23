@@ -2,26 +2,12 @@ package net.arrav.net.codec.game;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
-import net.arrav.GameConstants;
 import net.arrav.net.NetworkConstants;
 import net.arrav.net.codec.crypto.IsaacRandom;
-import net.arrav.net.codec.login.LoginCode;
-import net.arrav.net.codec.login.LoginRequest;
-import net.arrav.net.codec.login.LoginResponse;
-import net.arrav.net.codec.login.LoginState;
-import net.arrav.net.host.HostListType;
-import net.arrav.net.host.HostManager;
 import net.arrav.util.StatefulFrameDecoder;
-import net.arrav.util.TextUtils;
-import net.arrav.world.World;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Logger;
 
 /**

@@ -12,10 +12,10 @@ import net.arrav.content.skill.agility.obstacle.impl.Steppable;
 import net.arrav.content.skill.agility.obstacle.impl.Walkable;
 import net.arrav.net.packet.out.SendObjectAnimation;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
 import net.arrav.world.entity.object.ObjectDirection;
 import net.arrav.world.entity.object.ObjectType;
+import net.arrav.world.locale.Position;
 
 import java.util.Optional;
 

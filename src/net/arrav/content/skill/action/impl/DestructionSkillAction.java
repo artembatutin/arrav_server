@@ -67,7 +67,7 @@ public abstract class DestructionSkillAction extends SkillAction {
 	 * @param success determines if the destruction was successful or not.
 	 */
 	public void onDestruct(Task t, boolean success) {
-
+	
 	}
 	
 	/**

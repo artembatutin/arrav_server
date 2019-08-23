@@ -5,8 +5,8 @@ import net.arrav.action.impl.ObjectAction;
 import net.arrav.content.dialogue.impl.OptionDialogue;
 import net.arrav.content.skill.Skill;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.locale.Position;
 
 import static net.arrav.content.teleport.TeleportType.LADDER;
 

@@ -1,7 +1,5 @@
 package net.arrav.net.packet.out;
 
-
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.arrav.net.codec.game.GamePacket;

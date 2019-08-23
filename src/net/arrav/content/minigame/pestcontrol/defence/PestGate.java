@@ -6,8 +6,8 @@ import net.arrav.util.rand.RandomUtils;
 import net.arrav.world.Animation;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.locale.Position;
 
 public class PestGate {
 

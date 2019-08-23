@@ -43,7 +43,7 @@ public abstract class ExchangeSession {
 	 * that will be attached when they have confirmed a certain stage.
 	 */
 	private Object attachment;
-
+	
 	/**
 	 * The stage of this exchange session.
 	 */

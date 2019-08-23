@@ -4,8 +4,6 @@ import net.arrav.world.World;
 import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Position;
 
-import java.util.Optional;
-
 /**
  * An implementation of {@link GameObject} that is in a static state.
  * @author Artem Batutin

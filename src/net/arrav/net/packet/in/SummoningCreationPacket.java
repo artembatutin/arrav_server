@@ -1,8 +1,8 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.skill.summoning.PouchCreation;
 import net.arrav.content.skill.summoning.SummoningData;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.entity.actor.player.Player;
 

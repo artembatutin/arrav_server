@@ -1,9 +1,9 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.Arrav;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.entity.actor.player.Player;
 

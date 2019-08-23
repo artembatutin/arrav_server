@@ -20,8 +20,8 @@ import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.ItemCache;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.locale.Position;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;

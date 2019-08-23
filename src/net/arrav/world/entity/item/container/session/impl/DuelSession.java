@@ -28,17 +28,17 @@ import java.util.stream.IntStream;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class DuelSession extends ExchangeSession {
-
+	
 	/**
 	 * The last time in milliseconds a player modified a rule.
 	 */
 	private Stopwatch lastRuleModification = new Stopwatch();
-
+	
 	/**
 	 * The set which holds all the rules a duel session can have.
 	 */
 	private final EnumSet<DuelingRules> rules = EnumSet.noneOf(DuelingRules.class);
-
+	
 	/**
 	 * Constructs a new {@link DuelSession}.
 	 * @param player the player that controls this duel session.
@@ -48,7 +48,7 @@ public final class DuelSession extends ExchangeSession {
 	public DuelSession(Player player, Player other, int stage) {
 		super(Arrays.asList(player, other), stage, ExchangeSessionType.DUEL);
 	}
-
+	
 	@Override
 	public void onRequest(Player player, Player requested) {
 		if(!Location.inDuelArena(player)) {
@@ -63,9 +63,9 @@ public final class DuelSession extends ExchangeSession {
 			player.message("Please finish, what you're doing before challenging players.");
 			return;
 		}
-
+		
 		DuelSession session = (DuelSession) ExchangeSessionManager.get().isAvailable(player, requested, ExchangeSessionType.DUEL).orElse(null);
-
+		
 		if(session != null) {
 			session.setStage(OFFER_ITEMS);
 			session.updateMainComponents();
@@ -79,13 +79,13 @@ public final class DuelSession extends ExchangeSession {
 			ExchangeSessionManager.get().add(session);
 		}
 	}
-
+	
 	@Override
 	public void onClickButton(Player player, int button) {
 		if(toggleRule(player, this, button)) {
 			return;
 		}
-
+		
 		switch(button) {
 			case 148022:
 				this.accept(player, OFFER_ITEMS);
@@ -98,7 +98,7 @@ public final class DuelSession extends ExchangeSession {
 				return;
 		}
 	}
-
+	
 	/**
 	 * Attempts to toggle a rule for the specified {@code player} and the specified {@code session}
 	 * the player is in.
@@ -109,13 +109,13 @@ public final class DuelSession extends ExchangeSession {
 	 */
 	private static boolean toggleRule(Player player, DuelSession session, int buttonId) {
 		Optional<DuelingRules> has_rule = DuelingRules.getRules(buttonId);
-
+		
 		if(!has_rule.isPresent()) {
 			return false;
 		}
-
+		
 		DuelingRules rule = has_rule.get();
-
+		
 		if(session.rules.contains(rule)) {
 			session.getPlayers().forEach(p -> {
 				session.rules.remove(rule);
@@ -126,12 +126,12 @@ public final class DuelSession extends ExchangeSession {
 			});
 			return true;
 		}
-
+		
 		if(!rule.meets(player, session)) {
 			player.out(new SendConfig(780 + rule.ordinal(), 0));
 			return false;
 		}
-
+		
 		session.getPlayers().forEach(p -> {
 			session.rules.add(rule);
 			session.setAttachment(null);
@@ -141,17 +141,17 @@ public final class DuelSession extends ExchangeSession {
 		session.lastRuleModification.reset();
 		return true;
 	}
-
+	
 	@Override
 	public boolean canAddItem(Player player, Item item, int slot) {
 		return true;
 	}
-
+	
 	@Override
 	public boolean canRemoveItem(Player player, Item item) {
 		return true;
 	}
-
+	
 	@Override
 	public void accept(Player player, int stage) {
 		Player other = this.getOther(player);
@@ -170,18 +170,18 @@ public final class DuelSession extends ExchangeSession {
 					player.message("You don't have enough free slots for this many items.");
 					return;
 				}
-
+				
 				if(!other.getInventory().hasCapacityFor(getExchangeSession().get(player).getItems())) {
 					String username = other.getFormatUsername();
 					player.message(username + " doesn't have enough free slots for this many items");
 					return;
 				}
-
+				
 				if(!player.getInventory().hasCapacityFor(getEquipmentCount(player))) {
 					player.message("You don't have enough space to remove the disabled equipped items.");
 					return;
 				}
-
+				
 				if(!other.getInventory().hasCapacityFor(getEquipmentCount(other))) {
 					String username = other.getFormatUsername();
 					player.message(username + " doesn't have enough space to remove the disabled equipped items.");
@@ -215,7 +215,7 @@ public final class DuelSession extends ExchangeSession {
 				break;
 		}
 	}
-
+	
 	@Override
 	public void updateMainComponents() {
 		if(getStage() == OFFER_ITEMS) {
@@ -225,10 +225,10 @@ public final class DuelSession extends ExchangeSession {
 						player.out(new SendItemOnInterfaceSlot(13824, player.getEquipment().get(order), order));
 					}
 				});
-
+				
 				Player recipient = getOther(player);
 				int remaining = recipient.getInventory().remaining();
-
+				
 				recipient.out(new SendContainer(6669, getExchangeSession().get(player)));
 				recipient.out(new SendContainer(6670, getExchangeSession().get(player)));
 				player.out(new SendContainer(6669, getExchangeSession().get(player)));
@@ -245,18 +245,18 @@ public final class DuelSession extends ExchangeSession {
 			boolean worn = false;
 			for(Player player : getPlayers()) {
 				Player recipient = getOther(player);
-
+				
 				player.text(6571, "");
 				player.text(8240, "");
 				player.text(8241, "");
-
+				
 				for(int i = 0; i < DuelingRules.VALUES.size(); i++) {
 					if(rules.contains(collection.get(i))) {
 						player.text(interfaceIndex, collection.get(i).getInterfaceMessage());
 						interfaceIndex++;
 					}
 				}
-
+				
 				for(int i = DuelingRules.HELM.ordinal(); i < DuelingRules.VALUES.size(); i++) {
 					if(rules.contains(collection.get(i))) {
 						player.text(interfaceIndex, collection.get(i).getInterfaceMessage());
@@ -264,7 +264,7 @@ public final class DuelSession extends ExchangeSession {
 						worn = true;
 					}
 				}
-
+				
 				if(worn) {
 					player.text(8238, "Some worn items will be taken off.");
 					player.text(8250, "Combat statistics will be restored.");
@@ -274,7 +274,7 @@ public final class DuelSession extends ExchangeSession {
 					player.text(8238, "Combat statistics will be restored.");
 					player.text(8239, "");
 				}
-
+				
 				if(interfaceIndex < 8254) {
 					for(int i = interfaceIndex; i < 8254; i++) {
 						if(i != 8250) {
@@ -289,7 +289,7 @@ public final class DuelSession extends ExchangeSession {
 			}
 		}
 	}
-
+	
 	/**
 	 * Determines and returns the text for {@code items} that will be displayed
 	 * on the confirm trade screen.
@@ -312,7 +312,7 @@ public final class DuelSession extends ExchangeSession {
 		}
 		return tradeItems;
 	}
-
+	
 	@Override
 	public void updateOfferComponents() {
 		for(Player player : getExchangeSession().keySet()) {
@@ -326,7 +326,7 @@ public final class DuelSession extends ExchangeSession {
 			player.text(6671, "Dueling with: " + name(recipient) + " (level-" + recipient.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots");
 		}
 	}
-
+	
 	@Override
 	public void onReset() {
 		this.rules.clear();
@@ -335,7 +335,7 @@ public final class DuelSession extends ExchangeSession {
 			this.getPlayers().forEach(p -> p.out(new SendConfig(780 + r.ordinal(), 0)));
 		}
 	}
-
+	
 	/**
 	 * Gets the amount of inventory items to unequip.
 	 * @return the numerical value for the amount of items to unequip.
@@ -352,7 +352,7 @@ public final class DuelSession extends ExchangeSession {
 		}
 		return items.toArray(new Item[items.size()]);
 	}
-
+	
 	/**
 	 * Determines and returns the duel display name for {@code player}.
 	 * @param player the player to determine this display name for.
@@ -361,7 +361,7 @@ public final class DuelSession extends ExchangeSession {
 	private String name(Player player) {
 		return player.getFormatUsername();
 	}
-
+	
 	/**
 	 * @return the rules
 	 */

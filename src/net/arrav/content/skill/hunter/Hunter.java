@@ -15,9 +15,9 @@ import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.entity.item.Item;
+import net.arrav.world.entity.object.GameObject;
 import net.arrav.world.entity.region.TraversalMap;
 import net.arrav.world.locale.Position;
-import net.arrav.world.entity.object.GameObject;
 
 import java.util.Arrays;
 import java.util.Optional;

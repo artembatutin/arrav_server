@@ -12,8 +12,8 @@ import net.arrav.content.skill.agility.obstacle.impl.Climbable;
 import net.arrav.content.skill.agility.obstacle.impl.Movable;
 import net.arrav.content.skill.agility.obstacle.impl.Walkable;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.locale.Position;
 
 import java.util.Optional;
 

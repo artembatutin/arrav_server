@@ -31,26 +31,26 @@ public enum MagicImpact {
 	VULNERABILITY((attacker, defender, hit, extra) -> lowerSkill(defender, Skills.DEFENCE, 10)),
 	ENFEEBLE((attacker, defender, hit, extra) -> lowerSkill(defender, Skills.STRENGTH, 10)),
 	STUN((attacker, defender, hit, extra) -> lowerSkill(defender, Skills.ATTACK, 10)),
-
+	
 	MAGIC_DART((attacker, defender, hit, extra) -> {
 		if(attacker.isPlayer() && hit.isAccurate()) {
 			Player player = attacker.toPlayer();
 			int damage = 10 + player.getSkills()[Skills.MAGIC].getLevel() / 10;
-
+			
 			if(defender.isMob() && player.getSlayer().isPresent()) {
 				Mob mob = defender.toMob();
 				Slayer slayer = player.getSlayer().get();
 				String key = mob.getDefinition().getSlayerKey();
-
+				
 				if(key != null && slayer.getKey().equals(key)) {
 					damage = 13 + player.getSkills()[Skills.MAGIC].getLevel() / 6;
 				}
 			}
-
+			
 			hit.setDamage(RandomUtils.inclusive(damage));
 		}
 	}),
-
+	
 	SMOKE_RUSH((attacker, defender, hit, extra) -> poison(attacker, defender, hit, PoisonType.DEFAULT_MAGIC)),
 	SMOKE_BURST((attacker, defender, hit, extra) -> CombatUtil.areaAction(attacker, defender, a -> smokeBurst(attacker, defender, a, hit, extra))),
 	SMOKE_BLITZ((attacker, defender, hit, extra) -> poison(attacker, defender, hit, PoisonType.SUPER_MAGIC)),
@@ -247,7 +247,7 @@ public enum MagicImpact {
 			freeze(actor, 20);
 		}
 	}
-
+	
 	private static CombatHit hitEvent(Actor attacker, Actor defender, Actor actor, int max, List<Hit> extra) {
 		if(!defender.same(actor)) {
 			int hitDelay = CombatUtil.getHitDelay(attacker, defender, CombatType.MAGIC);

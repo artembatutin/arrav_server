@@ -11,7 +11,7 @@ import net.arrav.world.entity.actor.player.Player;
 import static net.arrav.world.Animation.AnimationPriority.HIGH;
 
 public class LeechMagicListener extends SimplifiedListener<Player> {
-
+	
 	@Override
 	public void start(Player attacker, Actor defender, Hit[] hits) {
 		if(attacker.curseManager.isActivated(Prayer.LEECH_MAGIC)) {
@@ -21,10 +21,10 @@ public class LeechMagicListener extends SimplifiedListener<Player> {
 			attacker.curseManager.deactivate(Prayer.LEECH_MAGIC);
 		}
 	}
-
+	
 	@Override
 	public int modifyMagicLevel(Player attacker, Actor defender, int level) {
 		return attacker.curseManager.modifyOutgoingLevel(level, 5, 10, Prayer.LEECH_MAGIC);
 	}
-
+	
 }

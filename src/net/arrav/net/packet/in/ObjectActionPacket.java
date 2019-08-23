@@ -1,20 +1,20 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.Arrav;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.ObjectAction;
 import net.arrav.content.minigame.MinigameHandler;
 import net.arrav.content.object.star.ShootingStarManager;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.World;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.Rights;
 import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
+import net.arrav.world.entity.object.*;
 import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Boundary;
 import net.arrav.world.locale.Position;
-import net.arrav.world.entity.object.*;
 
 import java.util.Optional;
 

@@ -164,7 +164,7 @@ public class LoginDecoder extends StatefulFrameDecoder<LoginState> {
 	/**
 	 * Reads a series of byte data terminated by a null value, casted to a {@link String}.
 	 */
-	public String getCString(ByteBuf payload) {
+	private String getCString(ByteBuf payload) {
 		byte temp;
 		StringBuilder b = new StringBuilder();
 		while(payload.isReadable() && (temp = (byte) payload.readUnsignedByte()) != TERMINATOR_VALUE) {

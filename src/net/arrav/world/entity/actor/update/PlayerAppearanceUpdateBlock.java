@@ -1,7 +1,6 @@
 package net.arrav.world.entity.actor.update;
 
 import com.google.common.collect.ImmutableMap;
-import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.ByteTransform;
 import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;

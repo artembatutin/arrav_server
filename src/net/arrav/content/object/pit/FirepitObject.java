@@ -3,10 +3,10 @@ package net.arrav.content.object.pit;
 import net.arrav.content.skill.firemaking.LogType;
 import net.arrav.util.TextUtils;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.DynamicObject;
 import net.arrav.world.entity.object.ObjectDirection;
 import net.arrav.world.entity.object.ObjectType;
+import net.arrav.world.locale.Position;
 
 import java.util.Optional;
 

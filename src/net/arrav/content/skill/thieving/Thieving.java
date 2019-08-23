@@ -47,7 +47,7 @@ public abstract class Thieving extends SkillAction {
 	 * @param success determines whether the theft was a success or not.
 	 */
 	public void onStop(boolean success) {
-
+	
 	}
 	
 	/**

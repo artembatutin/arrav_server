@@ -36,22 +36,22 @@ public enum ObstacleType {
 	CLIMB_UP_WALL(10023, "You climb-up the wall...", null),
 	SPRING_DEVICE(4189, "You walk-up to the tip of the spring device...", "... and successfully land."),
 	WILDERNESS_GATE(762, "You go through the gate and try to arrav over the ridge...", "...You skillfully balance across the ridge.");
-
+	
 	/**
 	 * The animation played upon passing this obstacle.
 	 */
 	private final Animation animation;
-
+	
 	/**
 	 * The message sent prior passing this obstacle.
 	 */
 	private final String prior;
-
+	
 	/**
 	 * The message sent following after passing this obstacle.
 	 */
 	private final Optional<String> following;
-
+	
 	/**
 	 * Constructs a new {@link ObstacleType}.
 	 * @param animation {@link #animation}.
@@ -63,28 +63,28 @@ public enum ObstacleType {
 		this.prior = prior;
 		this.following = Optional.ofNullable(following);
 	}
-
+	
 	/**
 	 * @return {@link #animation}.
 	 */
 	public Animation getAnimation() {
 		return animation;
 	}
-
+	
 	/**
 	 * @return {@link #animation}.
 	 */
 	public int getAnimationId() {
 		return animation.getId();
 	}
-
+	
 	/**
 	 * @return {@link #prior}.
 	 */
 	public String getMessage() {
 		return prior;
 	}
-
+	
 	/**
 	 * @return {@link #following}.
 	 */

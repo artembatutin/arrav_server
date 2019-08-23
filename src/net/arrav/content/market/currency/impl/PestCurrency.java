@@ -9,7 +9,7 @@ import net.arrav.world.entity.actor.player.Player;
  * @author Artem Batutin
  */
 public final class PestCurrency implements GeneralCurrency {
-
+	
 	@Override
 	public boolean takeCurrency(Player player, int amount) {
 		if(player.getPest() >= amount) {
@@ -21,24 +21,24 @@ public final class PestCurrency implements GeneralCurrency {
 			return false;
 		}
 	}
-
+	
 	@Override
 	public void recieveCurrency(Player player, int amount) {
 		player.updatePest(amount);
 		player.message("You received " + amount + " pest points!");
 		player.text(37007, player.getPest() + " points");
 	}
-
+	
 	@Override
 	public int currencyAmount(Player player) {
 		return player.getPest();
 	}
-
+	
 	@Override
 	public boolean canRecieveCurrency(Player player) {
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "points";

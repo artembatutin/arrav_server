@@ -11,22 +11,22 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class ShopLog extends LogDetails {
-
+	
 	/**
 	 * The store title.
 	 */
 	private final String store;
-
+	
 	/**
 	 * The item that the user sold.
 	 */
 	private final Item sold;
-
+	
 	/**
 	 * The item that the user bought.
 	 */
 	private final Item bought;
-
+	
 	/**
 	 * Constructs a new {@link ShopLog}.
 	 * @param player {@link #getUsername()}.
@@ -39,7 +39,7 @@ public final class ShopLog extends LogDetails {
 		this.sold = sold;
 		this.bought = bought;
 	}
-
+	
 	@Override
 	public Optional<String> formatInformation() {
 		StringBuilder builder = new StringBuilder();

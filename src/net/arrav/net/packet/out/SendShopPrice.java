@@ -1,6 +1,5 @@
 package net.arrav.net.packet.out;
 
-
 import net.arrav.content.market.MarketItem;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.ByteTransform;

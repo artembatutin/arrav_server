@@ -12,14 +12,14 @@ import java.util.function.Function;
  * @author Michael | Chex
  */
 public final class CombatHit extends Hit {
-
+	
 	private int hitDelay;
-
+	
 	/**
 	 * The hitsplat delay.
 	 */
 	private final int hitsplatDelay;
-
+	
 	/**
 	 * Constructs a new {@link CombatHit} object.
 	 * @param hit the hit to wrap
@@ -32,7 +32,7 @@ public final class CombatHit extends Hit {
 		this.setHitDelay(hitDelay);
 		this.hitsplatDelay = hitsplatDelay;
 	}
-
+	
 	/**
 	 * Copies and modifies this combat hit.
 	 * @param modifier the damage modification
@@ -43,7 +43,7 @@ public final class CombatHit extends Hit {
 		next.modifyDamage(modifier);
 		return next;
 	}
-
+	
 	/**
 	 * Gets the hit delay.
 	 * @return the hit delay.
@@ -51,11 +51,11 @@ public final class CombatHit extends Hit {
 	public int getHitDelay() {
 		return hitDelay;
 	}
-
+	
 	public void setHitDelay(int hitDelay) {
 		this.hitDelay = hitDelay;
 	}
-
+	
 	/**
 	 * Gets the hitsplat delay.
 	 * @return the hitsplat delay
@@ -63,5 +63,5 @@ public final class CombatHit extends Hit {
 	public int getHitsplatDelay() {
 		return hitsplatDelay;
 	}
-
+	
 }

@@ -5,17 +5,17 @@ package net.arrav.content.skill.runecrafting;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class RunecraftingMultiplier {
-
+	
 	/**
 	 * The requirement to craft multiple runes.
 	 */
 	private final int requirement;
-
+	
 	/**
 	 * The amount to multipy by.
 	 */
 	private final int multiply;
-
+	
 	/**
 	 * Constructs a new {@link RunecraftingMultiplier}.
 	 * @param requirement {@link #requirement}.
@@ -25,14 +25,14 @@ public final class RunecraftingMultiplier {
 		this.requirement = requirement;
 		this.multiply = multiply;
 	}
-
+	
 	/**
 	 * @return {@link #requirement}.
 	 */
 	public int getRequirement() {
 		return requirement;
 	}
-
+	
 	/**
 	 * @return {@link #multiply}.
 	 */

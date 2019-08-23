@@ -20,44 +20,44 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Magpie extends Familiar {
-
+	
 	/**
 	 * Constructs a new {@link Magpie}.
 	 */
 	public Magpie() {
 		super(SummoningData.MAGPIE);
 	}
-
+	
 	private final ForagerPassiveAbility ability = new ForagerPassiveAbility(1625, 1627, 1629, 1623, 1621);
-
+	
 	@Override
 	public FamiliarAbility getAbilityType() {
 		return ability;
 	}
-
+	
 	@Override
 	public Optional<PassiveAbility> getPassiveAbility() {
 		return Optional.empty();
 	}
-
+	
 	@Override
 	public boolean isCombatic() {
 		return false;
 	}
-
+	
 	@Override
 	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
 			player.getDialogueBuilder().send(RandomUtils.random(CONVERSATION));
 		}
 	}
-
+	
 	private static final Conversation[] CONVERSATION = new Conversation[]{new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-
+		
 		}
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender app = new DialogueAppender(player);
@@ -69,9 +69,9 @@ public final class Magpie extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-
+		
 		}
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender app = new DialogueAppender(player);
@@ -82,9 +82,9 @@ public final class Magpie extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-
+		
 		}
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender app = new DialogueAppender(player);
@@ -95,9 +95,9 @@ public final class Magpie extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-
+		
 		}
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender app = new DialogueAppender(player);

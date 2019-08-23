@@ -5,9 +5,9 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.arrav.util.rand.RandomUtils;
 import net.arrav.world.Direction;
 import net.arrav.world.World;
+import net.arrav.world.entity.object.*;
 import net.arrav.world.locale.Boundary;
 import net.arrav.world.locale.Position;
-import net.arrav.world.entity.object.*;
 
 import java.util.Optional;
 import java.util.function.Consumer;

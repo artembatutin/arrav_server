@@ -1,8 +1,8 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.net.packet.out.SendMobDrop;
 import net.arrav.util.rand.Chance;

@@ -1,12 +1,12 @@
 package net.arrav.content.object.door;
 
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.entity.region.Region;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.DynamicObject;
 import net.arrav.world.entity.object.GameObject;
 import net.arrav.world.entity.object.ObjectDirection;
 import net.arrav.world.entity.object.ObjectType;
+import net.arrav.world.entity.region.Region;
+import net.arrav.world.locale.Position;
 
 import java.util.Optional;
 

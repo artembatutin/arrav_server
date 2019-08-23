@@ -1,7 +1,7 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.quest.QuestManager;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;

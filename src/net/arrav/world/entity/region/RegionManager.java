@@ -7,10 +7,8 @@ import net.arrav.net.packet.out.SendObject;
 import net.arrav.net.packet.out.SendObjectRemoval;
 import net.arrav.world.entity.actor.Actor;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
-
-import java.util.Optional;
+import net.arrav.world.locale.Position;
 
 /**
  * Manages all of the cached {@link Region}s and the {@link Actor}s contained within them.

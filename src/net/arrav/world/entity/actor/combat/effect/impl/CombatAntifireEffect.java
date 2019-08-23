@@ -13,12 +13,12 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class CombatAntifireEffect extends CombatEffect {
-
+	
 	/**
 	 * The type of antifire this player has drunk.
 	 */
 	private final AntifireType type;
-
+	
 	/**
 	 * Constructs a new {@link CombatAntifireEffect}.
 	 * @param type {@link #type}.
@@ -27,15 +27,15 @@ public final class CombatAntifireEffect extends CombatEffect {
 		super(1);
 		this.type = type;
 	}
-
+	
 	@Override
 	public boolean apply(Actor c) {
 		if(!c.isPlayer()) {
 			return false;
 		}
-
+		
 		Player player = c.toPlayer();
-
+		
 		if(player.getAntifireDetails().isPresent()) {
 			player.setAntifireDetail(new AntifireDetails(type));
 			return false;
@@ -43,21 +43,21 @@ public final class CombatAntifireEffect extends CombatEffect {
 		player.setAntifireDetail(new AntifireDetails(type));
 		return true;
 	}
-
+	
 	@Override
 	public boolean removeOn(Actor c) {
 		if(c.isPlayer()) {
 			Player player = c.toPlayer();
-
+			
 			if(!player.getAntifireDetails().isPresent()) {
 				return true;
 			}
-
+			
 			return false;
 		}
 		return true;
 	}
-
+	
 	@Override
 	public void process(Actor c) {
 		if(c.isPlayer() && c.toPlayer().getAntifireDetails().isPresent()) {
@@ -73,10 +73,10 @@ public final class CombatAntifireEffect extends CombatEffect {
 			}
 		}
 	}
-
+	
 	@Override
 	public boolean onLogin(Actor c) {
 		return c.isPlayer() && c.toPlayer().getAntifireDetails().isPresent();
 	}
-
+	
 }

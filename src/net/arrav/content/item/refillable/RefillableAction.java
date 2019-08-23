@@ -16,17 +16,17 @@ public final class RefillableAction extends ProducingSkillAction {
 	 * Represents the refillable
 	 */
 	private Refillable refillable;
-
+	
 	/**
 	 * Represents the game object
 	 */
 	private GameObject gameObject;
-
+	
 	/**
 	 * Represents the refill animation
 	 */
 	private static final Animation ANIMATION = new Animation(832);
-
+	
 	public static void action() {
 		for(Refillable refillable : Refillable.values()) {
 			ItemOnObjectAction a = new ItemOnObjectAction() {
@@ -40,7 +40,7 @@ public final class RefillableAction extends ProducingSkillAction {
 			a.registerItem(refillable.getNeeded());
 		}
 	}
-
+	
 	/**
 	 * Checks if able to execute action.
 	 */
@@ -57,58 +57,58 @@ public final class RefillableAction extends ProducingSkillAction {
 		}
 		return false;
 	}
-
+	
 	public RefillableAction(Player player, Refillable refillable, GameObject object) {
 		super(player, Optional.of(object.getPosition()));
 		this.refillable = refillable;
 		this.gameObject = object;
 	}
-
+	
 	@Override
 	public int delay() {
 		return 2;
 	}
-
+	
 	@Override
 	public boolean instant() {
 		return true;
 	}
-
+	
 	@Override
 	public boolean init() {
 		return check();
 	}
-
+	
 	@Override
 	public boolean canExecute() {
 		return check();
 	}
-
+	
 	@Override
 	public double experience() {
 		return 0;
 	}
-
+	
 	@Override
 	public SkillData skill() {
 		return SkillData.HERBLORE;
 	}
-
+	
 	@Override
 	public Optional<Item[]> removeItem() {
 		return Optional.of(new Item[]{new Item(refillable.getNeeded())});
 	}
-
+	
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.of(new Item[]{new Item(refillable.getProduced())});
 	}
-
+	
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			getPlayer().animation(ANIMATION);
 		}
 	}
-
+	
 }

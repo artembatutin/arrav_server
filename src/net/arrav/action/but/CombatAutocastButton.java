@@ -11,7 +11,7 @@ import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.container.impl.Equipment;
 
 public class CombatAutocastButton extends ActionInitializer {
-
+	
 	@Override
 	public void init() {
 		//AUTOCASTING
@@ -60,7 +60,7 @@ public class CombatAutocastButton extends ActionInitializer {
 		register(CombatSpell.ENFEEBLE, 6007);
 		register(CombatSpell.ENTANGLE, 6056);
 		register(CombatSpell.STUN, 6026);
-
+		
 		ButtonAction e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
@@ -101,14 +101,14 @@ public class CombatAutocastButton extends ActionInitializer {
 							player.message("You can only autocast ancient magics with this staff.");
 							return true;
 						}
-
+						
 						TabInterface.ATTACK.sendInterface(player, 1689);
 					} else {
 						if(!player.getSpellbook().equals(Spellbook.NORMAL)) {
 							player.message("You can only autocast standard magics with this staff.");
 							return true;
 						}
-
+						
 						TabInterface.ATTACK.sendInterface(player, 1829);
 					}
 				}
@@ -119,7 +119,7 @@ public class CombatAutocastButton extends ActionInitializer {
 		e.register(1094);
 		e.register(1097);
 	}
-
+	
 	public void register(CombatSpell spell, int... buttons) {
 		ButtonAction e = new ButtonAction() {
 			@Override
@@ -134,5 +134,5 @@ public class CombatAutocastButton extends ActionInitializer {
 			e.register(b);
 		}
 	}
-
+	
 }

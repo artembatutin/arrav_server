@@ -14,17 +14,17 @@ import java.util.concurrent.Callable;
  * @author Whis
  */
 public final class HikariPool implements ConnectionPool {
-
+	
 	/**
 	 * The {@link ListeningExecutorService} to submit tasks to.
 	 */
 	private final ListeningExecutorService service;
-
+	
 	/**
 	 * The {@link HikariDataSource} to obtain {@link Connection}s from.
 	 */
 	private final HikariDataSource dataSource;
-
+	
 	/**
 	 * Creates a new {@link HikariPool} using the given {@link HikariConfig}.
 	 */
@@ -32,20 +32,20 @@ public final class HikariPool implements ConnectionPool {
 		this.service = service;
 		this.dataSource = dataSource;
 	}
-
+	
 	@Override
 	public ListenableFuture<Connection> obtainConnection() throws Exception {
 		return service.submit((Callable<Connection>) dataSource::getConnection);
 	}
-
+	
 	@Override
 	public ListenableFuture<?> terminate() throws Exception {
 		return service.submit(dataSource::close);
 	}
-
+	
 	@Override
 	public Connection getConnection() throws SQLException {
 		return dataSource.getConnection();
 	}
-
+	
 }

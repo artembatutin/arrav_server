@@ -41,7 +41,7 @@ public final class CombatProjectile {
 			projectile.send(attacker, defender, magic);
 		}
 	}
-
+	
 	public static CombatProjectile getDefinition(String name) {
 		return DEFINITIONS.get(name);
 	}
@@ -83,5 +83,5 @@ public final class CombatProjectile {
 		}
 		return OptionalInt.of(hitsplatDelay);
 	}
-
+	
 }

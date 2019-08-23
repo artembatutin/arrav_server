@@ -13,8 +13,8 @@ import net.arrav.world.entity.actor.move.ForcedMovement;
 import net.arrav.world.entity.actor.move.ForcedMovementManager;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.locale.Position;
 
 import java.util.Optional;
 
@@ -75,7 +75,7 @@ public abstract class AgilityCourse extends SkillAction {
 	public abstract Optional<String> crossedMessage();
 	
 	public void onSuccess() {
-
+	
 	}
 	
 	@Override

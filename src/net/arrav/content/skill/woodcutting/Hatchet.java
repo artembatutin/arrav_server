@@ -24,32 +24,32 @@ public enum Hatchet {
 	RUNE(1359, 41, 867, 0.75),
 	INFERNO_ADZE(13661, 61, 10251, 0.80),
 	DRAGON(6739, 61, 2846, 0.85);
-
+	
 	/**
 	 * Caches our enum values.
 	 */
 	private static final ImmutableSet<Hatchet> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Hatchet.class));
-
+	
 	/**
 	 * The identifier for this hatchet.
 	 */
 	private final Item item;
-
+	
 	/**
 	 * The requirement for this hatchet.
 	 */
 	private final int requirement;
-
+	
 	/**
 	 * The animation for this hatchet.
 	 */
 	private final Animation animation;
-
+	
 	/**
 	 * The speed of this hatchet.
 	 */
 	private final double speed;
-
+	
 	/**
 	 * Constructs a new {@link Hatchet} enumerator.
 	 * @param item {@link #item}.
@@ -63,35 +63,35 @@ public enum Hatchet {
 		this.animation = new Animation(animation);
 		this.speed = speed;
 	}
-
+	
 	/**
 	 * @return {@link #item}.
 	 */
 	public Item getHatchet() {
 		return item;
 	}
-
+	
 	/**
 	 * @return {@link #requirement}.
 	 */
 	public int getRequirement() {
 		return requirement;
 	}
-
+	
 	/**
 	 * @return {@link #animation}.
 	 */
 	public Animation getAnimation() {
 		return animation;
 	}
-
+	
 	/**
 	 * @return {@link #speed}.
 	 */
 	public double getSpeed() {
 		return speed;
 	}
-
+	
 	/**
 	 * Gets the definition for this hatchet.
 	 * @param player Player using the hatchet.

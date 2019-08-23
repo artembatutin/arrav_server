@@ -1,8 +1,8 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.skill.magic.Enchanting;
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.util.Stopwatch;
 import net.arrav.world.entity.actor.combat.magic.lunars.LunarSpells;

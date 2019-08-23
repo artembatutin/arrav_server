@@ -19,8 +19,8 @@ import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.entity.item.GroundItemPolicy;
 import net.arrav.world.entity.item.GroundItemStatic;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.locale.Position;
 
 import java.util.Optional;
 

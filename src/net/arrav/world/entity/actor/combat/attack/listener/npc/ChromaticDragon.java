@@ -41,7 +41,7 @@ public class ChromaticDragon extends SimplifiedListener<Mob> {
 		}
 		return attacker.getStrategy().canAttack(attacker, defender);
 	}
-
+	
 	@Override
 	public void start(Mob attacker, Actor defender, Hit[] hits) {
 		if(!NpcMeleeStrategy.get().withinDistance(attacker, defender)) {

@@ -5,8 +5,8 @@ import net.arrav.content.minigame.warriorsguild.impl.AnimationRoom;
 import net.arrav.content.minigame.warriorsguild.impl.CyclopsRoom;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.locale.Position;
 
 /**
  * The class which is responsible for executing minigame rooms of

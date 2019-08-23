@@ -1,6 +1,5 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.ItemOnItemAction;
 import net.arrav.content.item.ItemCombine;
@@ -17,6 +16,7 @@ import net.arrav.content.skill.herblore.Grinding;
 import net.arrav.content.skill.herblore.TarCreation;
 import net.arrav.content.skill.herblore.UnfinishedPotion;
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;

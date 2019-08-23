@@ -1,6 +1,5 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.Arrav;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.MobAction;
@@ -10,6 +9,7 @@ import net.arrav.content.skill.slayer.Slayer;
 import net.arrav.content.skill.summoning.Summoning;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.World;
 import net.arrav.world.entity.actor.combat.magic.CombatSpell;

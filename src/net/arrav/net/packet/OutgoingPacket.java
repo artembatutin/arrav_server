@@ -1,6 +1,5 @@
 package net.arrav.net.packet;
 
-import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.game.GamePacket;
 import net.arrav.world.entity.actor.player.Player;
 

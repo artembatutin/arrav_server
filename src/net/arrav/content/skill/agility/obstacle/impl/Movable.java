@@ -91,7 +91,7 @@ public class Movable extends ObstacleActivity {
 	 * @param player the player we need to execute this functionality for.
 	 */
 	public void prerequisites(Player player) {
-
+	
 	}
 	
 	@Override

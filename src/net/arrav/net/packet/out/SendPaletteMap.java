@@ -1,6 +1,5 @@
 package net.arrav.net.packet.out;
 
-
 import net.arrav.content.skill.construction.Palette;
 import net.arrav.net.codec.ByteTransform;
 import net.arrav.net.codec.game.GamePacket;

@@ -23,10 +23,10 @@ import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.container.impl.EquipmentType;
 import net.arrav.world.entity.item.container.session.impl.DuelSession;
+import net.arrav.world.entity.object.GameObject;
 import net.arrav.world.entity.region.TraversalMap;
 import net.arrav.world.locale.Position;
 import net.arrav.world.locale.loc.SquareLocation;
-import net.arrav.world.entity.object.GameObject;
 
 import java.util.EnumSet;
 import java.util.Optional;

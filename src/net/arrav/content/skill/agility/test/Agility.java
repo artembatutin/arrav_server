@@ -17,24 +17,24 @@ import java.util.Optional;
  * @since 4-8-2017.
  */
 public abstract class Agility extends SkillAction {
-
+	
 	/**
 	 * Determines if the player was running.
 	 */
 	public final boolean running;
-
+	
 	/**
 	 * The obstacle the player is crossing.
 	 */
 	protected final Obstacle crossing;
-
+	
 	/**
 	 * The object that we're crossing.
 	 */
 	public final GameObject object;
-
+	
 	public final boolean travelback;
-
+	
 	/**
 	 * Constructs a new {@link SkillAction}.
 	 * @param player {@link #player}.
@@ -48,11 +48,11 @@ public abstract class Agility extends SkillAction {
 		this.object = object;
 		this.travelback = travelback;
 	}
-
+	
 	public Agility(Player player, GameObject object, Obstacle crossing) {
 		this(player, object, crossing, false);
 	}
-
+	
 	/**
 	 * The delay intervals of this skill action in ticks.
 	 * @return the delay intervals.
@@ -61,7 +61,7 @@ public abstract class Agility extends SkillAction {
 	public final int delay() {
 		return crossing.delay;
 	}
-
+	
 	/**
 	 * The priority determines if this skill can be overriden by another skill.
 	 * @return <true> if the skill can be overriden by other skills, <false> otherwise.
@@ -70,7 +70,7 @@ public abstract class Agility extends SkillAction {
 	public final boolean isPrioritized() {
 		return true;
 	}
-
+	
 	/**
 	 * The skill that this skill action is for.
 	 * @return the skill data.
@@ -79,17 +79,17 @@ public abstract class Agility extends SkillAction {
 	public final SkillData skill() {
 		return SkillData.AGILITY;
 	}
-
+	
 	@Override
 	public final boolean instant() {
 		return crossing.instant;
 	}
-
+	
 	@Override
 	public final boolean canExecute() {
 		return true;
 	}
-
+	
 	@Override
 	public final boolean init() {
 		if(!getPlayer().getSkills()[Skills.AGILITY].reqLevel(crossing.requirement)) {
@@ -98,18 +98,18 @@ public abstract class Agility extends SkillAction {
 		}
 		return crossing.crossable(player);
 	}
-
+	
 	@Override
 	public final void onSubmit() {
 		if(running) {
 			player.getMovementQueue().setRunning(false);
 		}
-
+		
 		crossing.initialize(player);
-
+		
 		player.getActivityManager().setAllExcept(ActivityManager.ActivityType.LOG_OUT);
 	}
-
+	
 	/**
 	 * The method executed when the delay has elapsed.
 	 * @param t the task executing this skill action.
@@ -123,24 +123,24 @@ public abstract class Agility extends SkillAction {
 			t.cancel();
 			return;
 		}
-
+		
 		crossing.execute(player, t);
 	}
-
+	
 	@Override
 	public void onStop() {
 		if(getPlayer().getState() == EntityState.INACTIVE) {
 			getPlayer().move(crossing.start[0]);
 			return;
 		}
-
+		
 		crossing.onStop(player);
 		Skills.experience(getPlayer(), crossing.experience, skill().getId());
-
+		
 		if(running) {
 			player.getMovementQueue().setRunning(true);
 		}
-
+		
 		player.getActivityManager().enable();
 	}
 }

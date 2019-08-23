@@ -144,7 +144,7 @@ public abstract class SkillAction {
 	 * The method executed when this skill action is submitted.
 	 */
 	public void onSubmit() {
-
+	
 	}
 	
 	/**
@@ -152,21 +152,21 @@ public abstract class SkillAction {
 	 * @param other other skill action.
 	 */
 	public void onSkillAction(SkillAction other) {
-
+	
 	}
 	
 	/**
 	 * The method executed each periodical sequence of this skill action.
 	 */
 	public void onSequence(Task t) {
-
+	
 	}
 	
 	/**
 	 * The method executed when this skill action is stopped.
 	 */
 	public void onStop() {
-
+	
 	}
 	
 	/**

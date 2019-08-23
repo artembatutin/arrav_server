@@ -1,8 +1,8 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.dialogue.impl.StatementDialogue;
 import net.arrav.content.market.MarketShop;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.util.TextUtils;
 import net.arrav.world.entity.actor.player.Player;
@@ -12,7 +12,7 @@ import net.arrav.world.entity.actor.player.Player;
  * @author Artem Batutin
  */
 public final class MarketPacket implements IncomingPacket {
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		String search = TextUtils.hashToName(buf.getLong());

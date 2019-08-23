@@ -1,6 +1,5 @@
 package net.arrav.net.packet.out;
 
-
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;

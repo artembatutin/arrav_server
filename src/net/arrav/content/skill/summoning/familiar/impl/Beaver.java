@@ -20,31 +20,31 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Beaver extends Familiar {
-
+	
 	/**
 	 * Constructs a new {@link Beaver}.
 	 */
 	public Beaver() {
 		super(SummoningData.BEAVER);
 	}
-
+	
 	private final ForagerPassiveAbility ability = new ForagerPassiveAbility(1511, 1515, 1517, 1519, 1521, 960, 8778);
-
+	
 	@Override
 	public FamiliarAbility getAbilityType() {
 		return ability;
 	}
-
+	
 	@Override
 	public Optional<PassiveAbility> getPassiveAbility() {
 		return Optional.empty();
 	}
-
+	
 	@Override
 	public boolean isCombatic() {
 		return false;
 	}
-
+	
 	@Override
 	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
@@ -53,13 +53,13 @@ public final class Beaver extends Familiar {
 			Summoning.openBeastOfBurden(player, mob);
 		}
 	}
-
+	
 	@Override
 	public boolean itemOnNpc(Player player, Mob mob, Item item) {
 		BowCarving.openInterface(player, item, item, true);
 		return true;
 	}
-
+	
 	private final String[][] RANDOM_DIALOGUE = new String[][]{{"Vot are we doing 'ere when we could be logging", "and building mighty dams, alors?"}, {"Pardonnez-moi - you call yourself a lumberjack?",}};
-
+	
 }

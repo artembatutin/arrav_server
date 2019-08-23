@@ -82,19 +82,20 @@ public final class FakeClient {
 							loggedIn = true;
 						} else {
 							int pktId = in.readUnsignedByte();
-							System.out.println("received pkt id: " + pktId);
+							//System.out.println("received pkt id: " + pktId);
 						}
 					}
 				});
 			}
 		});
-		for (int i = 0; i < 400; i++) {
+		for (int i = 0; i < 2000; i++) {
 			// Start the client.
 			System.out.println("connecting bot " + i);
 			Channel f = b.connect("127.0.0.1", 43594).sync().channel(); //(5)
 			ByteBuf buffer = f.alloc().buffer();
 			buffer.writeByte(37);
 			f.writeAndFlush(buffer, f.voidPromise());
+			Thread.sleep(3l);
 		}
 	}
 

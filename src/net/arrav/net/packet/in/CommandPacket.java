@@ -1,8 +1,8 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.commands.CommandDispatcher;
 import net.arrav.content.skill.prayer.PrayerBook;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.World;
 import net.arrav.world.entity.actor.combat.hit.Hit;
@@ -18,16 +18,16 @@ import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
  * @author lare96 <http://github.com/lare96>
  */
 public final class CommandPacket implements IncomingPacket {
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.COMMAND_MESSAGE)) {
 			return;
 		}
-
+		
 		String command = buf.getCString();
 		String[] parts = command.toLowerCase().split(" ");
-
+		
 		if(player.getRights() == Rights.ADMINISTRATOR) {
 			if(parts[0].equalsIgnoreCase("spec")) {
 				CombatSpecial.restore(player, 100);
@@ -58,7 +58,7 @@ public final class CommandPacket implements IncomingPacket {
 				return;
 			}
 		}
-
+		
 		CommandDispatcher.execute(player, parts, command);
 		player.getActivityManager().execute(ActivityManager.ActivityType.COMMAND_MESSAGE);
 	}

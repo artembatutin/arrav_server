@@ -16,17 +16,17 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class PieCreation extends ProducingSkillAction {
-
+	
 	/**
 	 * A constant representing the pie shell item.
 	 */
 	private static final Item PIE_SHELL = new Item(2315);
-
+	
 	/**
 	 * The data this skill action is dependent of.
 	 */
 	private final PieData data;
-
+	
 	/**
 	 * Constructs a new {@link PieCreation}.
 	 * @param player {@link #getPlayer()}.
@@ -36,7 +36,7 @@ public final class PieCreation extends ProducingSkillAction {
 		super(player, Optional.empty());
 		this.data = data;
 	}
-
+	
 	/**
 	 * Attempts to register a pie.
 	 * @param player the player to register this for.
@@ -46,63 +46,63 @@ public final class PieCreation extends ProducingSkillAction {
 	 */
 	public static boolean create(Player player, Item used, Item usedOn) {
 		PieData data = PieData.getDefinition(used.getId(), usedOn.getId()).orElse(null);
-
+		
 		if(data == null) {
 			return false;
 		}
-
+		
 		PieCreation creation = new PieCreation(player, data);
 		creation.start();
 		return true;
 	}
-
+	
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			t.cancel();
 		}
 	}
-
+	
 	@Override
 	public Optional<Item[]> removeItem() {
 		return Optional.of(new Item[]{data.shell, data.ingredient});
 	}
-
+	
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.of(new Item[]{data.produced});
 	}
-
+	
 	@Override
 	public int delay() {
 		return 3;
 	}
-
+	
 	@Override
 	public boolean instant() {
 		return true;
 	}
-
+	
 	@Override
 	public boolean init() {
 		return true;
 	}
-
+	
 	@Override
 	public boolean canExecute() {
 		return true;
 	}
-
+	
 	@Override
 	public double experience() {
 		return 0;
 	}
-
+	
 	@Override
 	public SkillData skill() {
 		return SkillData.COOKING;
 	}
-
+	
 	/**
 	 * The enumerated type whose elements represent a set of constants used to
 	 * register unbaked pies with.
@@ -111,10 +111,10 @@ public final class PieCreation extends ProducingSkillAction {
 	private enum PieData {
 		POT_OF_FLOUR(1931, 1946, 1933),
 		PIE_SHELL_CREATION(1953, 2313, PIE_SHELL.getId()),
-
+		
 		INCOMPLETE_PIZZA(1982, 2283, 2285),
 		UNCOOKED_PIZZA(2285, 1985, 2287),
-
+		
 		REDBERRY_PIE(1951, PIE_SHELL.getId(), 2321),
 		MEAT_PIE(2140, PIE_SHELL.getId(), 2319),
 		MUD_PIE_PART_ONE(6032, PIE_SHELL.getId(), 7164),
@@ -136,27 +136,27 @@ public final class PieCreation extends ProducingSkillAction {
 		SUMMER_PIE_PART_ONE(5504, PIE_SHELL.getId(), 7212),
 		SUMMER_PIE_PART_TWO(5982, 7212, 7214),
 		SUMMER_PIE(1955, 7214, 7216);
-
+		
 		/**
 		 * Caches our enum values.
 		 */
 		private static final ImmutableSet<PieData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(PieData.class));
-
+		
 		/**
 		 * The ingredients required.
 		 */
 		private final Item ingredient;
-
+		
 		/**
 		 * The shell the pie can be created on.
 		 */
 		private final Item shell;
-
+		
 		/**
 		 * The item produced.
 		 */
 		private final Item produced;
-
+		
 		/**
 		 * Constructs a new {@link PieData}.
 		 * @param ingredient {@link #ingredient}.
@@ -168,7 +168,7 @@ public final class PieCreation extends ProducingSkillAction {
 			this.shell = new Item(shell);
 			this.produced = new Item(produced);
 		}
-
+		
 		/**
 		 * Gets the definition for this pie data.
 		 * @param ingredient the ingredient to check for.

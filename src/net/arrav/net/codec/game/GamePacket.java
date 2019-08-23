@@ -93,7 +93,6 @@ public class GamePacket {
 		}
 	}
 	
-	
 	/**
 	 * Ends the building of a message where the size may vary.
 	 */
@@ -838,7 +837,7 @@ public class GamePacket {
 	
 	static {
 		// Initialize bit masks.
-		for (int i = 0; i < BIT_MASK.length; i++) {
+		for(int i = 0; i < BIT_MASK.length; i++) {
 			BIT_MASK[i] = (1 << i) - 1;
 		}
 	}

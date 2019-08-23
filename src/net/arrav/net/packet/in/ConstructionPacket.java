@@ -1,10 +1,10 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.skill.construction.furniture.ConstructFurniture;
 import net.arrav.content.skill.construction.furniture.Furniture;
 import net.arrav.content.skill.construction.room.RoomData;
 import net.arrav.content.skill.construction.room.RoomManipulation;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.entity.actor.player.Player;
 

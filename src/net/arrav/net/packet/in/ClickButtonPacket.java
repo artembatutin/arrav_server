@@ -1,6 +1,5 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.Arrav;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.ButtonAction;
@@ -17,6 +16,7 @@ import net.arrav.content.skill.prayer.Prayer;
 import net.arrav.content.skill.slayer.Slayer;
 import net.arrav.content.skill.smithing.Smelting;
 import net.arrav.content.skill.summoning.Summoning;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.net.packet.out.SendEnterName;
 import net.arrav.world.entity.actor.combat.magic.lunars.LunarSpells;
@@ -32,7 +32,7 @@ import net.arrav.world.entity.item.container.session.ExchangeSessionManager;
  * @author lare96 <http://github.com/lare96>
  */
 public final class ClickButtonPacket implements IncomingPacket {
-
+	
 	/**
 	 * Buttons {@link ActionContainer} instance.
 	 */
@@ -167,7 +167,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 			case 7212:
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				break;
-
+			
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.CLICK_BUTTON);
 	}

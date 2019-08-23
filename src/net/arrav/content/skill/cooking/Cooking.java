@@ -9,8 +9,8 @@ import net.arrav.world.Graphic;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.ItemDefinition;
-import net.arrav.world.entity.region.Region;
 import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.entity.region.Region;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static net.arrav.content.achievements.Achievement.BON_APETITE;
 
 public final class Cooking extends ProducingSkillAction {
-
+	
 	static final Item BURNT_PIE = new Item(2329);
 	private static final double COOKING_BURN_RATE = 50.0;
 	private final CookingData data;
@@ -28,7 +28,7 @@ public final class Cooking extends ProducingSkillAction {
 	private boolean burned;
 	private final boolean spell;
 	private final ThreadLocalRandom random = ThreadLocalRandom.current();
-
+	
 	public Cooking(Player player, GameObject object, CookingData data, boolean cookStove, int counter, boolean spell) {
 		super(player, spell ? Optional.empty() : Optional.of(object.getPosition()));
 		this.data = data;
@@ -37,21 +37,21 @@ public final class Cooking extends ProducingSkillAction {
 		this.counter = counter;
 		this.spell = spell;
 	}
-
+	
 	public Cooking(Player player, GameObject object, CookingData data, boolean cookStove, int counter) {
 		this(player, object, data, cookStove, counter, false);
 	}
-
+	
 	@Override
 	public void onStop() {
 		player.getAttr().get("cooking_data").set(null);
-
+		
 		if(!spell) {
 			player.getAttr().get("cooking_object").set(null);
 			player.getAttr().get("cooking_usingStove").set(false);
 		}
 	}
-
+	
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success) {
@@ -69,7 +69,7 @@ public final class Cooking extends ProducingSkillAction {
 				BON_APETITE.inc(player);
 		}
 	}
-
+	
 	@Override
 	public boolean canExecute() {
 		if(!checkCooking()) {
@@ -79,43 +79,43 @@ public final class Cooking extends ProducingSkillAction {
 		burned = !determineBurn();
 		return true;
 	}
-
+	
 	@Override
 	public boolean init() {
 		player.closeWidget();
 		return checkCooking();
 	}
-
+	
 	@Override
 	public Optional<Item[]> removeItem() {
 		return Optional.of(new Item[]{new Item(data.getRawId())});
 	}
-
+	
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.of(new Item[]{burned ? new Item(data.getBurntId()) : new Item(data.getCookedId())});
 	}
-
+	
 	@Override
 	public double experience() {
 		return burned ? 0 : data.getExperience();
 	}
-
+	
 	@Override
 	public int delay() {
 		return 4;
 	}
-
+	
 	@Override
 	public boolean instant() {
 		return true;
 	}
-
+	
 	@Override
 	public SkillData skill() {
 		return SkillData.COOKING;
 	}
-
+	
 	private boolean determineBurn() {
 		if(player.getSkills()[skill().getId()].getLevel() >= data.getMasterLevel() || spell) {
 			return true;
@@ -131,7 +131,7 @@ public final class Cooking extends ProducingSkillAction {
 		double randNum = random.nextDouble() * 100.0;
 		return burn_chance <= randNum;
 	}
-
+	
 	private boolean checkCooking() {
 		if(counter == 0)
 			return false;
@@ -151,7 +151,7 @@ public final class Cooking extends ProducingSkillAction {
 		}
 		return true;
 	}
-
+	
 	public static void action() {
 		ItemOnObjectAction a = new ItemOnObjectAction() {
 			@Override

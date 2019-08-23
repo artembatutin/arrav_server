@@ -2,9 +2,13 @@ package net.arrav.net;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.*;
-import net.arrav.net.codec.game.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import net.arrav.net.codec.game.GameDecoder;
+import net.arrav.net.codec.game.GameEncoder;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.login.LoginCode;
 import net.arrav.net.codec.login.LoginRequest;
 import net.arrav.net.codec.login.LoginResponse;
@@ -84,14 +88,14 @@ public class Session {
 	 * @throws Exception exception
 	 */
 	void handleMessage(ChannelHandlerContext ctx, Object msg) throws Exception {
-		if(msg instanceof LoginRequest) {
-			handleRequest(ctx, (LoginRequest) msg);
-		}
 		if(msg instanceof GamePacket) {
 			GamePacket packet = (GamePacket) msg;
 			if(incoming.size() < NetworkConstants.MESSAGES_PER_TICK) {
 				incoming.add(packet);
 			}
+		}
+		if(msg instanceof LoginRequest) {
+			handleRequest(ctx, (LoginRequest) msg);
 		}
 	}
 	
@@ -154,22 +158,22 @@ public class Session {
 		if(channel.isActive() && channel.isOpen()) {
 			channel.write(playerUpdate.write(player));
 			channel.write(mobUpdate.write(player));
-			while(!outgoing.isEmpty()) {
-				OutgoingPacket packet = outgoing.poll();
-				ChannelFuture future = channel.write(packet.write(player));
-				if(packet.getClass() == SendLogout.class) {
-					future.addListener(ChannelFutureListener.CLOSE);
-				}
-			}
+			//while(!outgoing.isEmpty()) {
+			//	OutgoingPacket packet = outgoing.poll();
+			//	ChannelFuture future = channel.write(packet.write(player));
+			//	if(packet.getClass() == SendLogout.class) {
+			//		future.addListener(ChannelFutureListener.CLOSE);
+			//	}
+			//}
+			channel.flush();
 		}
 	}
 	
 	public void write(OutgoingPacket packet) {
-		outgoing.add(packet);
-	}
-	
-	public void flush() {
-		channel.flush();
+		if(channel.isActive() && channel.isOpen()) {
+			channel.writeAndFlush(packet.write(player), channel.voidPromise());
+		}
+		//outgoing.add(packet);
 	}
 	
 	/**

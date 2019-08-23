@@ -1,6 +1,5 @@
 package net.arrav.world.entity.actor.update;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.game.GamePacket;

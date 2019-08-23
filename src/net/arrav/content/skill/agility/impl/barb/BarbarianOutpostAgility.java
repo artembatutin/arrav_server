@@ -18,10 +18,10 @@ import net.arrav.world.Animation;
 import net.arrav.world.entity.actor.move.ForcedMovement;
 import net.arrav.world.entity.actor.move.ForcedMovementManager;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
 import net.arrav.world.entity.object.ObjectDirection;
 import net.arrav.world.entity.object.ObjectType;
+import net.arrav.world.locale.Position;
 
 import java.util.Optional;
 

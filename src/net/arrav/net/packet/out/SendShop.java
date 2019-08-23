@@ -1,6 +1,5 @@
 package net.arrav.net.packet.out;
 
-
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.arrav.content.market.MarketItem;
 import net.arrav.net.codec.ByteOrder;

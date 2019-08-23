@@ -5,8 +5,8 @@ import net.arrav.action.impl.ObjectAction;
 import net.arrav.task.LinkedTaskSequence;
 import net.arrav.world.Animation;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.locale.Position;
 
 public class Dragannoth extends ActionInitializer {
 	@Override

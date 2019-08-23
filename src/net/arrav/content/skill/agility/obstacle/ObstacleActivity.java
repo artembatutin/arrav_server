@@ -110,7 +110,7 @@ public abstract class ObstacleActivity {
 	 * Holds functionality for submitting to the task.
 	 */
 	public void onSubmit(Player player) {
-
+	
 	}
 	
 	/**
@@ -119,14 +119,14 @@ public abstract class ObstacleActivity {
 	 * @param t the task for this obstacle action.
 	 */
 	public void execute(Player player, Task t) {
-
+	
 	}
 	
 	/**
 	 * Holds functionality for cancelling the task.
 	 */
 	public void onCancel(Player player) {
-
+	
 	}
 	
 	/**

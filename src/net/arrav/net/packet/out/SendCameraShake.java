@@ -1,7 +1,6 @@
 package net.arrav.net.packet.out;
 
 import com.google.common.base.Preconditions;
-
 import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;

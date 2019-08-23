@@ -741,7 +741,7 @@ public enum SummoningData {
 			
 			@Override
 			public void interact(Player player, Mob mob, int id) {
-
+			
 			}
 		};
 	}

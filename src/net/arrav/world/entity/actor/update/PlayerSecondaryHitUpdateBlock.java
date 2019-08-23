@@ -1,6 +1,5 @@
 package net.arrav.world.entity.actor.update;
 
-import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.game.GamePacket;
 import net.arrav.world.entity.actor.combat.hit.Hit;
 import net.arrav.world.entity.actor.combat.hit.Hitsplat;

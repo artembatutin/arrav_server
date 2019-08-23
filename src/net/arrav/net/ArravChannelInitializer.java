@@ -4,7 +4,6 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.timeout.IdleStateHandler;
 import net.arrav.net.codec.login.LoginDecoder;
 
 /**
@@ -23,7 +22,7 @@ public final class ArravChannelInitializer extends ChannelInitializer<SocketChan
 		ch.attr(NetworkConstants.SESSION_KEY).setIfAbsent(new Session(ch));
 		ChannelPipeline pipeline = ch.pipeline();
 		pipeline.addLast("login_decoder", new LoginDecoder());
-		pipeline.addLast("timeout", new IdleStateHandler(NetworkConstants.SESSION_TIMEOUT, 0, 0));
+		//pipeline.addLast("timeout", new IdleStateHandler(NetworkConstants.SESSION_TIMEOUT, 0, 0));
 		pipeline.addLast("handler", HANDLER);
 	}
 }

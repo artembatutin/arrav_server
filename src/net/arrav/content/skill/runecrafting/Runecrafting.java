@@ -25,42 +25,42 @@ import static net.arrav.content.teleport.TeleportType.NORMAL;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Runecrafting extends ProducingSkillAction {
-
+	
 	/**
 	 * The altar this player is producing his runes from.
 	 */
 	private final Altar altar;
-
+	
 	/**
 	 * The amount of essences this player sacrificed.
 	 */
 	private int count;
-
+	
 	/**
 	 * Represents the pure essence item identification.
 	 */
 	private static final Item PURE_ESSENCE = new Item(7936);
-
+	
 	/**
 	 * Represents the rune essence item identification.
 	 */
 	private static final Item RUNE_ESSENCE = new Item(1436);
-
+	
 	/**
 	 * Represents the crafting graphic identification.
 	 */
 	private static final Graphic RUNECRAFTING_GRAPHIC = new Graphic(186);
-
+	
 	/**
 	 * Represents the crafting animation identification.
 	 */
 	private static final Animation RUNECRAFTING_ANIMATION = new Animation(791);
-
+	
 	/**
 	 * Represents the a mapping for the Pouches
 	 */
 	private static Map<PouchType, Pouch> pouches = new HashMap<>(3);
-
+	
 	/**
 	 * Constructs a new {@link Runecrafting}
 	 * @param player {@link #player}.
@@ -70,7 +70,7 @@ public final class Runecrafting extends ProducingSkillAction {
 		super(player, Optional.of(object.getPosition()));
 		this.altar = altar;
 	}
-
+	
 	public static void action() {
 		for(Altar a : Altar.values()) {
 			ObjectAction rc = new ObjectAction() {
@@ -92,7 +92,7 @@ public final class Runecrafting extends ProducingSkillAction {
 			action.register(a.getTalisman());
 		}
 	}
-
+	
 	@Override
 	public Optional<String> message() {
 		String message;
@@ -103,7 +103,7 @@ public final class Runecrafting extends ProducingSkillAction {
 		}
 		return Optional.of(message);
 	}
-
+	
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success) {
@@ -113,18 +113,18 @@ public final class Runecrafting extends ProducingSkillAction {
 			RUNE_CRAFTER.inc(player, count);
 		}
 	}
-
+	
 	@Override
 	public Optional<Item[]> removeItem() {
 		List<Item> remove = new ArrayList<>();
 		Inventory inventory = player.getInventory();
-
+		
 		if(altar.isDiverse() && !inventory.containsAny(PURE_ESSENCE.getId(), RUNE_ESSENCE.getId())) {
 			return Optional.of(new Item[]{PURE_ESSENCE, RUNE_ESSENCE});
 		} else if(!altar.isDiverse() && !inventory.contains(PURE_ESSENCE)) {
 			return Optional.of(new Item[]{PURE_ESSENCE});
 		}
-
+		
 		if(altar.isDiverse()) {
 			int pure = inventory.computeAmountForId(PURE_ESSENCE.getId());
 			int rune = inventory.computeAmountForId(RUNE_ESSENCE.getId());
@@ -142,44 +142,44 @@ public final class Runecrafting extends ProducingSkillAction {
 		}
 		return Optional.of(remove.toArray(new Item[remove.size()]));
 	}
-
+	
 	@Override
 	public Optional<Item[]> produceItem() {
 		Optional<RunecraftingMultiplier> m = altar.getRune().getBestMultiplier(player);
 		int amount = m.map(RunecraftingMultiplier::getMultiply).orElse(1);
 		return Optional.of(new Item[]{new Item(altar.getRune().getItem().getId(), count * amount)});
 	}
-
+	
 	@Override
 	public int delay() {
 		return 0;
 	}
-
+	
 	@Override
 	public boolean instant() {
 		return true;
 	}
-
+	
 	@Override
 	public boolean init() {
 		return checkRunecrafting();
 	}
-
+	
 	@Override
 	public boolean canExecute() {
 		return checkRunecrafting();
 	}
-
+	
 	@Override
 	public double experience() {
 		return altar.getExperience() * count;
 	}
-
+	
 	@Override
 	public SkillData skill() {
 		return SkillData.RUNECRAFTING;
 	}
-
+	
 	private boolean checkRunecrafting() {
 		if(altar == null) {
 			getPlayer().message("There is no altar.");
@@ -191,7 +191,7 @@ public final class Runecrafting extends ProducingSkillAction {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * gets the essence id the player is using, we check for pure essence first
 	 * @param player The player checking for essence
@@ -206,67 +206,67 @@ public final class Runecrafting extends ProducingSkillAction {
 			return -1;
 		}
 	}
-
+	
 	public static void fill(Player player, PouchType type) {
-
+		
 		int amount = player.getInventory().computeAmountForId(getEssenceId(player));
-
+		
 		if(amount <= 0) {
 			player.message("You have no essence to store in the pouch.");
 			return;
 		}
-
+		
 		amount = amount < type.getMaxAmount() ? amount : type.getMaxAmount();
-
+		
 		Optional<Pouch> originalPouch = Optional.ofNullable(pouches.get(type));
-
+		
 		if(originalPouch.isPresent()) {
-
+			
 			if(originalPouch.get().getAmount() >= type.getMaxAmount()) {
 				player.message("Your pouch is already full.");
 				return;
 			}
-
+			
 			amount -= originalPouch.get().getAmount();
 		}
-
+		
 		Pouch pouch = new Pouch(getEssenceId(player), originalPouch.isPresent() ? originalPouch.get().getAmount() + amount : amount);
-
+		
 		pouches.put(type, pouch);
-
+		
 		IntStream.range(0, amount).forEach(i -> player.getInventory().remove(new Item(pouch.getId())));
-
+		
 		player.message("You fill the " + amount + " essence.");
-
+		
 	}
-
+	
 	public static void examine(Player player, PouchType type) {
-
+		
 		Optional<Pouch> pouch = Optional.ofNullable(pouches.get(type));
-
+		
 		if(!pouch.isPresent()) {
 			player.message("This pouch does not contain any essence.");
 			return;
 		}
-
+		
 		player.message("This pouch contains " + pouch.get().getAmount() + (pouch.get().getId() == PURE_ESSENCE.getId() ? " pure" : " rune") + " essence.");
-
+		
 	}
-
+	
 	public static void empty(Player player, PouchType type) {
-
+		
 		Optional<Pouch> pouch = Optional.ofNullable(pouches.get(type));
-
+		
 		if(!pouch.isPresent()) {
 			player.message("This pouch does not contain any essence.");
 			return;
 		}
-
+		
 		pouches.remove(type);
-
+		
 		IntStream.range(0, pouch.get().getAmount()).forEach(i -> player.getInventory().add(new Item(pouch.get().getId())));
 		player.message("You empty the " + pouch.get().getAmount() + " essence left in the pouch.");
-
+		
 	}
-
+	
 }

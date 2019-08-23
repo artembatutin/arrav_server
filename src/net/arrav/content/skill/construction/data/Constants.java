@@ -3,8 +3,8 @@ package net.arrav.content.skill.construction.data;
 import net.arrav.content.skill.construction.Construction;
 import net.arrav.content.skill.construction.furniture.HotSpots;
 import net.arrav.content.skill.construction.room.RoomData;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.ObjectDefinition;
+import net.arrav.world.locale.Position;
 
 /**
  * Constants declared for {@link Construction}.

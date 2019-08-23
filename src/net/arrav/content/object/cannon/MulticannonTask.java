@@ -129,7 +129,7 @@ public class MulticannonTask extends Task {
 				break;
 		}
 	}
-
+	
 	/**
 	 * Applies damage to the victim.
 	 * 4* exp multiplier is based on:
@@ -145,13 +145,13 @@ public class MulticannonTask extends Task {
 		new Projectile(cannon.getPosition().move(1, 1), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), 53, 60, 20, 35, 30, cannon.player.getInstance(), CombatType.RANGED).sendProjectile();
 		//Hit data = CombatUtil.calculateSoaking(victim, CombatType.RANGED, new Hit(damage, Hitsplat.NORMAL, HitIcon.CANNON, true, cannon.player.getSlot()));
 		Hit data = new Hit(damage, Hitsplat.NORMAL, HitIcon.CANNON);
-
+		
 		int exp = 0;
 		exp += damage;
 		exp = Math.round(exp / 10F);
 		exp *= 4;
 		Skills.experience(cannon.player, exp / 2, Skills.RANGED);
-
+		
 		new Task(2, false) {
 			@Override
 			protected void execute() {

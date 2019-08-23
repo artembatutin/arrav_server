@@ -17,13 +17,13 @@ import net.arrav.world.entity.actor.player.Player;
 public class BandosGodsword extends PlayerMeleeStrategy {
 	private static final Animation ANIMATION = new Animation(11991, Animation.AnimationPriority.HIGH);
 	private static final Graphic GRAPHIC = new Graphic(2114);
-
+	
 	@Override
 	public void start(Player attacker, Actor defender, Hit[] hits) {
 		super.start(attacker, defender, hits);
 		attacker.graphic(GRAPHIC);
 	}
-
+	
 	@Override
 	public void attack(Player attacker, Actor defender, Hit h) {
 		super.attack(attacker, defender, h);
@@ -51,25 +51,25 @@ public class BandosGodsword extends PlayerMeleeStrategy {
 			}
 		}
 	}
-
+	
 	@Override
 	public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
 		return 4;
 	}
-
+	
 	@Override
 	public Animation getAttackAnimation(Player attacker, Actor defender) {
 		return ANIMATION;
 	}
-
+	
 	@Override
 	public int modifyAccuracy(Player attacker, Actor defender, int roll) {
 		return roll * 2;
 	}
-
+	
 	@Override
 	public int modifyDamage(Player attacker, Actor defender, int damage) {
 		return (int) (damage * 1.21);
 	}
-
+	
 }

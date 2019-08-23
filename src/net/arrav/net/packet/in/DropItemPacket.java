@@ -1,10 +1,10 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.GameConstants;
 import net.arrav.content.item.pets.Pet;
 import net.arrav.content.minigame.MinigameHandler;
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.net.packet.out.SendItemOnInterfaceSlot;
 import net.arrav.world.entity.actor.player.Player;

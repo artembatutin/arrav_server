@@ -1,9 +1,9 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.clanchat.ClanChatRank;
 import net.arrav.content.clanchat.ClanChatUpdate;
 import net.arrav.content.clanchat.ClanManager;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.net.packet.out.SendEnterName;
 import net.arrav.util.TextUtils;

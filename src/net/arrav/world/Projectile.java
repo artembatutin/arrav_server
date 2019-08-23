@@ -5,7 +5,6 @@ import net.arrav.net.packet.out.SendProjectile;
 import net.arrav.world.entity.actor.Actor;
 import net.arrav.world.entity.actor.combat.CombatType;
 import net.arrav.world.entity.region.Region;
-import net.arrav.world.entity.region.RegionManager;
 import net.arrav.world.locale.Position;
 
 /**

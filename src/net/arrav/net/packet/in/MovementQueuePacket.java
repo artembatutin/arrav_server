@@ -1,11 +1,11 @@
 package net.arrav.net.packet.in;
 
-import net.arrav.net.codec.game.GamePacket;
 import net.arrav.Arrav;
 import net.arrav.content.market.MarketShop;
 import net.arrav.content.minigame.MinigameHandler;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.Rights;
@@ -46,7 +46,7 @@ public final class MovementQueuePacket implements IncomingPacket {
 				reset = true;
 			}
 		} else if(opcode == 98) {
-
+		
 		}
 		
 		if(player.isFrozen()) {

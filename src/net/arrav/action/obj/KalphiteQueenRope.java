@@ -5,8 +5,8 @@ import net.arrav.action.ActionInitializer;
 import net.arrav.action.impl.ObjectAction;
 import net.arrav.content.teleport.TeleportType;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.locale.Position;
 
 public class KalphiteQueenRope extends ActionInitializer {
 	@Override

@@ -3,8 +3,8 @@ package net.arrav.world.entity;
 import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.GroundItem;
-import net.arrav.world.entity.region.Region;
 import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.entity.region.Region;
 
 /**
  * The enumerated type whose elements represent the different types of {@link Entity} implementations.

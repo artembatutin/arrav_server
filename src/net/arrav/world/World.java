@@ -6,7 +6,6 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.arrav.GameConstants;
 import net.arrav.content.PlayerPanel;
 import net.arrav.content.commands.impl.UpdateCommand;
-import net.arrav.net.Session;
 import net.arrav.net.database.Database;
 import net.arrav.net.database.pool.ConnectionPool;
 import net.arrav.net.packet.out.SendLogout;

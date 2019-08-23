@@ -11,7 +11,6 @@ import net.arrav.world.entity.region.TraversalMap;
 import net.arrav.world.locale.Position;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 import static net.arrav.world.entity.object.ObjectDirection.*;

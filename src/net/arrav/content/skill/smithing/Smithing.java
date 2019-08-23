@@ -15,8 +15,8 @@ import net.arrav.util.TextUtils;
 import net.arrav.world.Animation;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.locale.Position;
 
 import java.util.Optional;
 
@@ -125,26 +125,26 @@ public final class Smithing extends ProducingSkillAction {
 					
 					new StatementDialogue("You set to work, trying to attach the ancient draconic visage to your", "anti-dragonbreath shield. It's not easy to work with the ancient artifact", "and it takes all of your skill as a master smith."), new PlayerDialogue("Here goes nothing...").attach(() -> {
 						player.getActivityManager().disable();
-
+						
 						player.closeWidget();
-
+						
 						player.animation(new Animation(898));
 						SendGraphic.local(player, 2123, object.getPosition().copy(), 50);
 						LinkedTaskSequence seq = new LinkedTaskSequence();
 						seq.connect(3, () -> {
-
+							
 							player.getInventory().removeAll(new Item(1540), new Item(11286));
-
+							
 							player.getInventory().add(new Item(11283));
-
+							
 							Skills.experience(player, 2_000, Skills.SMITHING);
-
+							
 							player.getActivityManager().enable();
-
+							
 							player.getDialogueBuilder().append(
-
+									
 									new StatementDialogue("Even for an expert armourer it is not an easy task, but eventually it", "is ready. You have crafted the draconic visage and anti-dragonbreath", "shield into a dragonfire shield.")
-
+							
 							);
 						});
 						seq.start();

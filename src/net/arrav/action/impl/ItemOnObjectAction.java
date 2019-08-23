@@ -38,7 +38,7 @@ public abstract class ItemOnObjectAction extends Action {
 		PrayerBoneAltar.action();
 		Spinning.action();
 		RefillableAction.action();
-
+		
 		ItemOnObjectAction a = new ItemOnObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, Item item, int container, int slot) {

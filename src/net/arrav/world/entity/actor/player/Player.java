@@ -1,8 +1,6 @@
 package net.arrav.world.entity.actor.player;
 
 import com.google.common.collect.ImmutableMap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
@@ -551,7 +549,6 @@ public final class Player extends Actor {
 	 */
 	public Object2ObjectArrayMap<PatchType, Patch> patches = new Object2ObjectArrayMap<>(PatchType.VALUES.size());
 	
-	
 	/**
 	 * Creates a new {@link Player}.
 	 */
@@ -695,7 +692,7 @@ public final class Player extends Actor {
 			int y = RandomUtils.inclusive(0, 16);
 			setPosition(new Position(3078 + x, 3494 + y));
 			int t = RandomUtils.inclusive(2, 5);
-			this.getMovementQueue().setRunning(true);
+			//this.getMovementQueue().setRunning(true);
 			final Player p = this;
 			new Task(t, false) {
 				@Override
@@ -728,24 +725,23 @@ public final class Player extends Actor {
 						}
 						return;
 					}*/
-					int xx = RandomUtils.inclusive(-10, 10);
-					int yy = RandomUtils.inclusive(-10, 10);
+					int xx = RandomUtils.inclusive(-5, 5);
+					int yy = RandomUtils.inclusive(-5, 5);
 					p.getMovementQueue().smartWalk(getPosition().move(xx, yy));
-					if(true)
-						return;
+					//if(true)
+					//	return;
 					switch(RandomUtils.inclusive(0, 3)) {
 						case 0:
 							p.animation(2108);
 							break;
 						case 1:
-							p.forceChat("sis");
+							p.forceChat("dope");
 							break;
 						case 2:
-							p.getMovementQueue().smartWalk(getPosition().move(xx, yy));
+							//p.getMovementQueue().smartWalk(getPosition().move(xx, yy));
 							break;
 						case 3:
 							p.graphic(60);
-							p.forceChat("bro");
 							break;
 					}
 				}
@@ -820,6 +816,9 @@ public final class Player extends Actor {
 	
 	@Override
 	public void preUpdate() {
+		if(session != null) {
+			session.pollIncomingMessages();
+		}
 		getMovementQueue().sequence();
 		MobAggression.sequence(this);
 		restoreRunEnergy();
@@ -841,7 +840,6 @@ public final class Player extends Actor {
 	@Override
 	public void update() {
 		if(session != null) {
-			session.pollIncomingMessages();
 			//ensuring the player receives a map update first.
 			if(!getInitialUpdate().get()) {
 				session.getChannel().write(new SendSlot().write(this));
@@ -856,7 +854,6 @@ public final class Player extends Actor {
 	@Override
 	public void postUpdate() {
 		super.postUpdate();
-		session.flush();
 		cachedUpdateBlock = null;
 	}
 	

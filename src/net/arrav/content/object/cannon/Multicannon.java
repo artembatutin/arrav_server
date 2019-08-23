@@ -10,13 +10,13 @@ import net.arrav.world.entity.EntityState;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.container.impl.Inventory;
-import net.arrav.world.entity.region.Region;
-import net.arrav.world.entity.region.TraversalConstants;
-import net.arrav.world.locale.loc.Location;
 import net.arrav.world.entity.object.DynamicObject;
 import net.arrav.world.entity.object.GameObject;
 import net.arrav.world.entity.object.ObjectDirection;
 import net.arrav.world.entity.object.ObjectType;
+import net.arrav.world.entity.region.Region;
+import net.arrav.world.entity.region.TraversalConstants;
+import net.arrav.world.locale.loc.Location;
 
 import java.util.Optional;
 

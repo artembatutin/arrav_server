@@ -92,7 +92,7 @@ public abstract class ProducingSkillAction extends SkillAction {
 	 * @param success determines if the production was successful or not.
 	 */
 	public void onProduce(Task t, boolean success) {
-
+	
 	}
 	
 	/**
