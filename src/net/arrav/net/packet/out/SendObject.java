@@ -1,7 +1,8 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.Rights;
@@ -38,12 +39,17 @@ public final class SendObject implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		new SendCoordinates(object.getPosition()).write(player, buf);
-		buf.message(151);
-		buf.put(0, ByteTransform.S);
-		buf.putInt(object.getId());
-		buf.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.S);
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(151);
+		out.put(0, ByteTransform.S);
+		out.putInt(object.getId());
+		out.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.S);
+		return out;
+	}
+	
+	@Override
+	public GamePacket coordinatePacket(Player player) {
+		return new SendCoordinates(object.getPosition()).write(player);
 	}
 }

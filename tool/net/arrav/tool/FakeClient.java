@@ -12,6 +12,8 @@ import java.security.SecureRandom;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static net.arrav.net.codec.game.GamePacket.TERMINATOR_VALUE;
+
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  * @since 6-7-2017.
@@ -60,8 +62,8 @@ public final class FakeClient {
 							rsa.writeInt(0); // uid
 
 							//buffer.writeLong(encryptName("Bot" + count.get()));
-							rsa.putCString("Bot" + count.incrementAndGet());
-							rsa.putCString("123456");
+							putCString(rsa, "Bot" + count.incrementAndGet());
+							putCString(rsa,"123456");
 
 							byte[] rsaBytes = new byte[rsa.readableBytes()];
 							rsa.readBytes(rsaBytes);
@@ -114,5 +116,16 @@ public final class FakeClient {
 		while(l % 37L == 0L && l != 0L)
 			l /= 37L;
 		return l;
+	}
+	
+	/**
+	 * Writes a RuneScape {@code String} value.
+	 * @param string The string to write.
+	 */
+	public static void putCString(ByteBuf out, String string) {
+		for(byte value : string.getBytes()) {
+			out.writeByte(value);
+		}
+		out.writeByte((byte) TERMINATOR_VALUE);
 	}
 }

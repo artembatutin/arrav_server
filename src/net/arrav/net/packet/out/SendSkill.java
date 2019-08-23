@@ -1,7 +1,8 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
 import net.arrav.net.codec.ByteOrder;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 
@@ -16,11 +17,12 @@ public final class SendSkill implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(134);
-		buf.put(id);
-		buf.putInt(exp, ByteOrder.MIDDLE);
-		buf.putInt(level);
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(134);
+		out.put(id);
+		out.putInt(exp, ByteOrder.MIDDLE);
+		out.putInt(level);
+		return out;
 	}
 }

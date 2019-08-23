@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.Arrav;
 import net.arrav.content.market.MarketShop;
 import net.arrav.content.minigame.MinigameHandler;
@@ -20,7 +20,7 @@ import net.arrav.world.locale.Position;
 public final class MovementQueuePacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.WALKING)) {
 			return;
 		}

@@ -1,7 +1,8 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
@@ -19,12 +20,13 @@ public final class SendContextMenu implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(104, GamePacketType.VARIABLE_BYTE);
-		buf.put(slot, ByteTransform.C);
-		buf.put(top ? 1 : 0, ByteTransform.A);
-		buf.putCString(option);
-		buf.endVarSize();
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(104, GamePacketType.VARIABLE_BYTE);
+		out.put(slot, ByteTransform.C);
+		out.put(top ? 1 : 0, ByteTransform.A);
+		out.putCString(option);
+		out.endVarSize();
+		return out;
 	}
 }

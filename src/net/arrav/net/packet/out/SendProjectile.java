@@ -1,6 +1,7 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
@@ -22,20 +23,25 @@ public final class SendProjectile implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		new SendCoordinates(position).write(player, buf);
-		buf.message(117);
-		buf.put(0);
-		buf.put(offset.getX());
-		buf.put(offset.getY());
-		buf.putShort(lockon);
-		buf.putShort(gfxMoving);
-		buf.put(startHeight);
-		buf.put(endHeight);
-		buf.putShort(time);
-		buf.putShort(speed);
-		buf.put(16);
-		buf.put(64);
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(117);
+		out.put(0);
+		out.put(offset.getX());
+		out.put(offset.getY());
+		out.putShort(lockon);
+		out.putShort(gfxMoving);
+		out.put(startHeight);
+		out.put(endHeight);
+		out.putShort(time);
+		out.putShort(speed);
+		out.put(16);
+		out.put(64);
+		return out;
+	}
+	
+	@Override
+	public GamePacket coordinatePacket(Player player) {
+		return new SendCoordinates(position).write(player);
 	}
 }

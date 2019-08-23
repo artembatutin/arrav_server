@@ -1,6 +1,7 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.util.ActionListener;
@@ -26,10 +27,11 @@ public final class SendEnterName implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(187, GamePacketType.VARIABLE_BYTE);
-		buf.putCString(title);
-		buf.endVarSize();
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(187, GamePacketType.VARIABLE_BYTE);
+		out.putCString(title);
+		out.endVarSize();
+		return out;
 	}
 }

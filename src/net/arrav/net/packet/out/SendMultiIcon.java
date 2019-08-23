@@ -1,6 +1,7 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 
@@ -13,9 +14,10 @@ public final class SendMultiIcon implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(61);
-		buf.put(hide ? 0 : 1);
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(61);
+		out.put(hide ? 0 : 1);
+		return out;
 	}
 }

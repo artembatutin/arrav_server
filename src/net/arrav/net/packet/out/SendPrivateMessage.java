@@ -1,6 +1,7 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
@@ -19,13 +20,14 @@ public final class SendPrivateMessage implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(196, GamePacketType.VARIABLE_BYTE);
-		buf.putLong(name);
-		buf.putInt(player.getPrivateMessage().getLastMessage().getAndIncrement());
-		buf.put(rights);
-		buf.putBytes(message, size);
-		buf.endVarSize();
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(196, GamePacketType.VARIABLE_BYTE);
+		out.putLong(name);
+		out.putInt(player.getPrivateMessage().getLastMessage().getAndIncrement());
+		out.put(rights);
+		out.putBytes(message, size);
+		out.endVarSize();
+		return out;
 	}
 }

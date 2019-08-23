@@ -1,8 +1,9 @@
 package net.arrav.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
+import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.Direction;
@@ -27,34 +28,26 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		//ensuring the player receives a map update first.
-		if(!player.getInitialUpdate().get()) {
-			new SendSlot().write(player, buf);
-			new SendMapRegion(player.getLastRegion().copy()).write(player, buf);
-			new SendCameraReset().write(player, buf);
-			player.getInitialUpdate().set(true);
-		}
-		
+	public GamePacket write(Player player) {
 		//writing the update block.
-		ByteBufAllocator alloc = player.getSession().alloc();
-		buf.message(81, GamePacketType.VARIABLE_SHORT);
-		ByteBuf blockMsg = alloc.buffer(64);
+		GamePacket out = new GamePacket(this);
+		out.message(81, GamePacketType.VARIABLE_SHORT);
+		GamePacket blockMsg = new GamePacket(-1, Unpooled.buffer(64), GamePacketType.RAW);
 		try {
-			buf.startBitAccess();
-			handleMovement(player, buf);
+			out.startBitAccess();
+			handleMovement(player, out);
 			UpdateManager.encode(player, player, blockMsg, UpdateState.UPDATE_SELF);
 			
-			buf.putBits(8, player.getLocalPlayers().size());
+			out.putBits(8, player.getLocalPlayers().size());
 			Iterator<Player> $it = player.getLocalPlayers().iterator();
 			while($it.hasNext()) {
 				Player other = $it.next();
 				if(other.isVisible() && other.getInstance() == player.getInstance() && other.getPosition().isViewableFrom(player.getPosition()) && other.getState() == EntityState.ACTIVE && !other.isNeedsPlacement()) {
-					handleMovement(other, buf);
+					handleMovement(other, out);
 					UpdateManager.encode(player, other, blockMsg, UpdateState.UPDATE_LOCAL);
 				} else {
-					buf.putBit(true);
-					buf.putBits(2, 3);
+					out.putBit(true);
+					out.putBits(2, 3);
 					$it.remove();
 				}
 			}
@@ -62,35 +55,35 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 			int added = 0;
 			Region r = player.getRegion();
 			if(r != null) {
-				processPlayers(r, player, blockMsg, buf, added);
+				processPlayers(r, player, blockMsg, out, added);
 				ObjectList<Region> surrounding = r.getSurroundingRegions();
 				if(surrounding != null) {
 					for(Region s : surrounding) {
-						processPlayers(s, player, blockMsg, buf, added);
+						processPlayers(s, player, blockMsg, out, added);
 					}
 				}
 			}
 			
-			if(blockMsg.writerIndex() > 0) {
-				buf.putBits(11, 2047);
-				buf.endBitAccess();
-				buf.putBytes(blockMsg);
+			if(blockMsg.getPayload().writerIndex() > 0) {
+				out.putBits(11, 2047);
+				out.endBitAccess();
+				out.putBytes(blockMsg);
 			} else {
-				buf.endBitAccess();
+				out.endBitAccess();
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			blockMsg.release();
+			blockMsg.getPayload().release();
 		}
-		buf.endVarSize();
-		return buf;
+		out.endVarSize();
+		return out;
 	}
 	
 	/**
 	 * Processing the addition of player from a region.
 	 */
-	private void processPlayers(Region region, Player player, ByteBuf blockMsg, ByteBuf msg, int added) {
+	private void processPlayers(Region region, Player player, GamePacket blockMsg, GamePacket msg, int added) {
 		if(region != null) {
 			if(!region.getPlayers().isEmpty()) {
 				for(Player other : region.getPlayers()) {
@@ -120,7 +113,7 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 	 * @param player The {@link Player} this update message is being sent for.
 	 * @param addPlayer The {@code Player} being added.
 	 */
-	private void addPlayer(ByteBuf msg, Player player, Player addPlayer) {
+	private void addPlayer(GamePacket msg, Player player, Player addPlayer) {
 		msg.putBits(11, addPlayer.getSlot());
 		msg.putBit(true);
 		msg.putBit(true);
@@ -135,7 +128,7 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 	 * @param player The {@link Player} to handle running and walking for.
 	 * @param msg The main update message.
 	 */
-	private void handleMovement(Player player, ByteBuf msg) {
+	private void handleMovement(Player player, GamePacket msg) {
 		boolean needsUpdate = !player.getFlags().isEmpty();
 		if(player.isNeedsPlacement()) {
 			Position position = player.getPosition();

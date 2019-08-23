@@ -1,8 +1,10 @@
 package net.arrav.net.packet.out;
 
+
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
+import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.Direction;
@@ -21,22 +23,22 @@ import java.util.Iterator;
  */
 public final class SendMobUpdate implements OutgoingPacket {
 	
-	public ByteBuf write(Player player, ByteBuf buf) {
-		ByteBufAllocator alloc = player.getSession().alloc();
-		buf.message(65, GamePacketType.VARIABLE_SHORT);
-		ByteBuf blockMsg = alloc.buffer(64);
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(65, GamePacketType.VARIABLE_SHORT);
+		GamePacket blockMsg = new GamePacket(-1, Unpooled.buffer(64), GamePacketType.RAW);
 		try {
-			buf.startBitAccess();
-			buf.putBits(8, player.getLocalMobs().size());
+			out.startBitAccess();
+			out.putBits(8, player.getLocalMobs().size());
 			Iterator<Mob> $it = player.getLocalMobs().iterator();
 			while($it.hasNext()) {
 				Mob mob = $it.next();
 				if(mob.getState() == EntityState.ACTIVE && mob.isVisible() && player.getInstance() == mob.getInstance() && mob.getPosition().isViewableFrom(player.getPosition()) && !mob.isNeedsPlacement()) {
-					handleMovement(mob, buf);
+					handleMovement(mob, out);
 					UpdateManager.encode(player, mob, blockMsg, UpdateState.UPDATE_LOCAL);
 				} else {
-					buf.putBit(true);
-					buf.putBits(2, 3);
+					out.putBit(true);
+					out.putBits(2, 3);
 					$it.remove();
 				}
 			}
@@ -44,36 +46,36 @@ public final class SendMobUpdate implements OutgoingPacket {
 			int added = 0;
 			Region r = player.getRegion();
 			if(r != null) {
-				processMobs(r, player, blockMsg, buf, added);
+				processMobs(r, player, blockMsg, out, added);
 				ObjectList<Region> surrounding = r.getSurroundingRegions();
 				if(surrounding != null) {
 					for(Region s : surrounding) {
-						processMobs(s, player, blockMsg, buf, added);
+						processMobs(s, player, blockMsg, out, added);
 					}
 				}
 			}
 			
-			if(blockMsg.writerIndex() > 0) {
-				buf.putBits(14, 16383);
-				buf.endBitAccess();
-				buf.putBytes(blockMsg);
+			if(blockMsg.getPayload().writerIndex() > 0) {
+				out.putBits(14, 16383);
+				out.endBitAccess();
+				out.putBytes(blockMsg);
 			} else {
-				buf.endBitAccess();
+				out.endBitAccess();
 			}
 		} catch(Exception e) {
-			buf.release();
+			out.getPayload().release();
 			throw e;
 		} finally {
-			blockMsg.release();
+			blockMsg.getPayload().release();
 		}
-		buf.endVarSize();
-		return buf;
+		out.endVarSize();
+		return out;
 	}
 	
 	/**
 	 * Processing the addition of npc from a region.
 	 */
-	private void processMobs(Region region, Player player, ByteBuf blockMsg, ByteBuf msg, int added) {
+	private void processMobs(Region region, Player player, GamePacket blockMsg, GamePacket msg, int added) {
 		if(region != null) {
 			if(!region.getMobs().isEmpty()) {
 				for(Mob mob : region.getMobs()) {
@@ -103,7 +105,7 @@ public final class SendMobUpdate implements OutgoingPacket {
 	 * @param player The {@link Player} this update message is being sent for.
 	 * @param addMob The {@link Mob} being added.
 	 */
-	private void addNpc(Player player, Mob addMob, ByteBuf msg) {
+	private void addNpc(Player player, Mob addMob, GamePacket msg) {
 		boolean updateRequired = !addMob.getFlags().isEmpty();
 		int deltaX = addMob.getPosition().getX() - player.getPosition().getX();
 		int deltaY = addMob.getPosition().getY() - player.getPosition().getY();
@@ -121,7 +123,7 @@ public final class SendMobUpdate implements OutgoingPacket {
 	 * @param mob The {@link Player} to handle running and walking for.
 	 * @param msg The main update message.
 	 */
-	private void handleMovement(Mob mob, ByteBuf msg) {
+	private void handleMovement(Mob mob, GamePacket msg) {
 		boolean updateRequired = !mob.getFlags().isEmpty();
 		if(mob.getPrimaryDirection() == Direction.NONE) {
 			if(updateRequired) {

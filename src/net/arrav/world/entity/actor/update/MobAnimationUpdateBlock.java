@@ -2,6 +2,7 @@ package net.arrav.world.entity.actor.update;
 
 import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.ByteOrder;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.player.Player;
 
@@ -19,7 +20,7 @@ final class MobAnimationUpdateBlock extends MobUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Mob mob, ByteBuf buf) {
+	public int write(Player player, Mob mob, GamePacket buf) {
 		buf.putShort(mob.getAnimation().getId(), ByteOrder.LITTLE);
 		buf.put(mob.getAnimation().getDelay());
 		return -1;

@@ -12,7 +12,7 @@ import net.arrav.world.entity.actor.player.Player;
  * A {@link MessageToByteEncoder} implementation to encode game packets.
  * @author Artem Batutin
  */
-public class GameEncoder extends MessageToByteEncoder<OutgoingPacket> {
+public class GameEncoder extends MessageToByteEncoder<GamePacket> {
 	
 	/**
 	 * The player instance.
@@ -33,12 +33,9 @@ public class GameEncoder extends MessageToByteEncoder<OutgoingPacket> {
 	}
 	
 	@Override
-	protected void encode(ChannelHandlerContext ctx, OutgoingPacket out, ByteBuf buf) {
+	protected void encode(ChannelHandlerContext ctx, GamePacket packet, ByteBuf buf) {
 		try {
-			ByteBuf outBuf = ctx.channel().alloc().buffer(out.size()).setEncryptor(encryptor);
-			outBuf = out.write(this.player, outBuf);
-			System.out.println("encoding packet: " + out.getClass() + " size: " + outBuf.readableBytes());
-			buf.writeBytes(outBuf);
+			packet.writePacket(buf, encryptor);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

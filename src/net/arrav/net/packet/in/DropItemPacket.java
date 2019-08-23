@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.GameConstants;
 import net.arrav.content.item.pets.Pet;
 import net.arrav.content.minigame.MinigameHandler;
@@ -21,7 +21,7 @@ import net.arrav.world.entity.item.container.ItemContainer;
 public final class DropItemPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(GameConstants.DROP_DISABLED) {
 			player.message("Dropping items has temporary been disabled!");
 			return;

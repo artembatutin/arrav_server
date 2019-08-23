@@ -1,6 +1,7 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
@@ -18,12 +19,13 @@ public final class SendYell implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(210, GamePacketType.VARIABLE_BYTE);
-		buf.putCString(author);
-		buf.putCString(message);
-		buf.putShort(rank.getProtocolValue());
-		buf.endVarSize();
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(210, GamePacketType.VARIABLE_BYTE);
+		out.putCString(author);
+		out.putCString(message);
+		out.putShort(rank.getProtocolValue());
+		out.endVarSize();
+		return out;
 	}
 }

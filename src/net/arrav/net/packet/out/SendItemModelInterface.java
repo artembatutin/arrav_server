@@ -1,7 +1,8 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
 import net.arrav.net.codec.ByteOrder;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 
@@ -16,11 +17,12 @@ public final class SendItemModelInterface implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(246);
-		buf.putShort(id, ByteOrder.LITTLE);
-		buf.putShort(zoom);
-		buf.putShort(model);
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(246);
+		out.putShort(id, ByteOrder.LITTLE);
+		out.putShort(zoom);
+		out.putShort(model);
+		return out;
 	}
 }

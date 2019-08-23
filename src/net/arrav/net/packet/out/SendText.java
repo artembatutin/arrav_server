@@ -1,7 +1,8 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
@@ -17,12 +18,13 @@ public final class SendText implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(126, GamePacketType.VARIABLE_SHORT);
-		buf.putCString(text);
-		buf.putShort(id, ByteTransform.A);
-		buf.endVarSize();
-		buf.endVarSize();
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(126, GamePacketType.VARIABLE_SHORT);
+		out.putCString(text);
+		out.putShort(id, ByteTransform.A);
+		out.endVarSize();
+		out.endVarSize();
+		return out;
 	}
 }

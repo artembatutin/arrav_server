@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.arrav.net.packet.IncomingPacket;
@@ -26,7 +26,7 @@ public final class MobInformationPacket implements IncomingPacket {
 	public static final ObjectList<SuggestedDrop> SUGGESTED = new ObjectArrayList<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(opcode == 19) {
 			Chance chance = Chance.values()[buf.get()];
 			int mob = player.getAttr().get("npcInformation").getInt();

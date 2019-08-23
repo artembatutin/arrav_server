@@ -2,6 +2,7 @@ package net.arrav.world.entity.actor.update;
 
 import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.ByteOrder;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.world.Graphic;
 import net.arrav.world.entity.actor.player.Player;
 
@@ -19,7 +20,7 @@ public final class PlayerGraphicUpdateBlock extends PlayerUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Player other, ByteBuf buf) {
+	public int write(Player player, Player other, GamePacket buf) {
 		buf.putShort(other.getGraphic().getId(), ByteOrder.LITTLE);
 		buf.putInt(other.getGraphic().getDelay() | other.getGraphic().getHeight() << 16);
 		return -1;

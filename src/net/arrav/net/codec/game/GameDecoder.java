@@ -164,7 +164,7 @@ public class GameDecoder extends StatefulFrameDecoder<GameState> {
 	 */
 	private void queueMessage(ByteBuf payload, List<Object> out) {
 		try {
-			ByteBuf packet = payload.incoming(opcode, type);
+			GamePacket packet = new GamePacket(opcode, payload, type);
 			if(packet.getOpcode() != 0) {
 				//todo: out message
 				//if(packet.getOpcode() == 41) {

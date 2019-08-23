@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.World;
@@ -14,7 +14,7 @@ import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
 public final class FollowPlayerPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.FOLLOW_PLAYER))
 			return;
 		int index = buf.getShort(false, ByteOrder.LITTLE);

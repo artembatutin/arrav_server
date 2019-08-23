@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.GameConstants;
 import net.arrav.content.minigame.MinigameHandler;
 import net.arrav.net.codec.ByteOrder;
@@ -20,7 +20,7 @@ import net.arrav.world.entity.item.container.session.impl.DuelSession;
 public final class RequestPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.REQUEST_MESSAGE))
 			return;
 		
@@ -40,7 +40,7 @@ public final class RequestPacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void tradeRequest(Player player, ByteBuf buf) {
+	private void tradeRequest(Player player, GamePacket buf) {
 		int index = buf.getShort(true, ByteOrder.LITTLE);
 		Player other = World.get().getPlayers().get(index - 1);
 		if(GameConstants.TRADE_DISABLED) {
@@ -59,7 +59,7 @@ public final class RequestPacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void duelRequest(Player player, ByteBuf buf) {
+	private void duelRequest(Player player, GamePacket buf) {
 		int index = buf.getShort(false);
 		Player other = World.get().getPlayers().get(index - 1);
 		if(GameConstants.DUEL_DISABLED) {

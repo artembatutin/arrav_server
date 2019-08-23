@@ -1,8 +1,9 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
@@ -31,49 +32,50 @@ public final class SendContainer implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(53, GamePacketType.VARIABLE_SHORT);
-		buf.putShort(id);
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(53, GamePacketType.VARIABLE_SHORT);
+		out.putShort(id);
 		if(container.getItems() == null) {
-			buf.putShort(0);
-			buf.putShort(0);
-			buf.put(0);
-			buf.putShort(0, ByteTransform.A, ByteOrder.LITTLE);
+			out.putShort(0);
+			out.putShort(0);
+			out.put(0);
+			out.putShort(0, ByteTransform.A, ByteOrder.LITTLE);
 		} else {
 			int count = container.size();
-			buf.putShort(container.capacity());
-			buf.putShort(count);
+			out.putShort(container.capacity());
+			out.putShort(count);
 			for(Item item : container.getItems()) {
 				if(count == 0)
 					break;
 				if(item != null) {
 					count--;
 					if(item.getAmount() > 254) {
-						buf.put(255);
-						buf.putInt(item.getAmount(), ByteOrder.INVERSE_MIDDLE);
+						out.put(255);
+						out.putInt(item.getAmount(), ByteOrder.INVERSE_MIDDLE);
 					} else {
-						buf.put(item.getAmount());
+						out.put(item.getAmount());
 					}
 					boolean noted = (id >= 270 && id <= 279) || (id == 3900);
-					buf.putShort(item.getId() + (noted ? 0 : 1), ByteTransform.A, ByteOrder.LITTLE);
+					out.putShort(item.getId() + (noted ? 0 : 1), ByteTransform.A, ByteOrder.LITTLE);
 					if(id == 3900) {
 						if(item.getValue().getPrice() > 254) {
-							buf.put(255);
-							buf.putInt(item.getValue().getPrice(), ByteOrder.INVERSE_MIDDLE);
+							out.put(255);
+							out.putInt(item.getValue().getPrice(), ByteOrder.INVERSE_MIDDLE);
 						} else {
-							buf.put(item.getValue().getPrice());
+							out.put(item.getValue().getPrice());
 						}
 					}
 				} else {
-					buf.put(0);
-					buf.putShort(0, ByteTransform.A, ByteOrder.LITTLE);
+					out.put(0);
+					out.putShort(0, ByteTransform.A, ByteOrder.LITTLE);
 					if(id == 3900) {
-						buf.put(0);
+						out.put(0);
 					}
 				}
 			}
 		}
-		buf.endVarSize();
-		return buf;
+		out.endVarSize();
+		return out;
 	}
 }

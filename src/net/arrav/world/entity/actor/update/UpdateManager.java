@@ -3,6 +3,8 @@ package net.arrav.world.entity.actor.update;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.arrav.net.codec.ByteOrder;
+import net.arrav.net.codec.game.GamePacket;
+import net.arrav.net.codec.game.GamePacketType;
 import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.player.Player;
 
@@ -23,7 +25,7 @@ public final class UpdateManager {
 			return;
 		}
 		int mask = 0;
-		ByteBuf encodedBlock = Unpooled.buffer(64);
+		GamePacket encodedBlock = new GamePacket(-1, Unpooled.buffer(64), GamePacketType.RAW);
 		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
 			mask |= 0x100;
 		}
@@ -86,7 +88,7 @@ public final class UpdateManager {
 		other.setCachedUpdateBlock(encodedBlock);
 	}
 	
-	public static void encode(Player player, Player other, ByteBuf msg, UpdateState state) {
+	public static void encode(Player player, Player other, GamePacket msg, UpdateState state) {
 		if(other.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
 		}
@@ -95,7 +97,7 @@ public final class UpdateManager {
 			//msg.putBytes(other.getCachedUpdateBlock().array());
 			//return;
 		}
-		ByteBuf encodedBlock = Unpooled.buffer(64);
+		GamePacket encodedBlock = new GamePacket(-1, Unpooled.buffer(64), GamePacketType.RAW);
 		int mask = 0;
 		if(other.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
 			mask |= 0x400;
@@ -173,11 +175,11 @@ public final class UpdateManager {
 		}
 	}
 	
-	public static void encode(Player player, Mob mob, ByteBuf msg, UpdateState state) {
+	public static void encode(Player player, Mob mob, GamePacket msg, UpdateState state) {
 		if(mob.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
 		}
-		ByteBuf encodedBlock = player.getSession().alloc().buffer(64);
+		GamePacket encodedBlock = new GamePacket(-1, Unpooled.buffer(64), GamePacketType.RAW);
 		int mask = 0;
 		
 		if(mob.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
@@ -243,7 +245,7 @@ public final class UpdateManager {
 			NPC_BLOCKS[8].write(player, mob, encodedBlock);
 		}
 		msg.putBytes(encodedBlock);
-		encodedBlock.release();
+		encodedBlock.getPayload().release();
 	}
 	
 }

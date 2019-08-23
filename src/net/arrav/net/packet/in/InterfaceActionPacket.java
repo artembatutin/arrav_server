@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.clanchat.ClanChatRank;
 import net.arrav.content.clanchat.ClanChatUpdate;
 import net.arrav.content.clanchat.ClanManager;
@@ -19,7 +19,7 @@ import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
 public final class InterfaceActionPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.INTERFACE_ACTION))
 			return;
 		int interfaceId = buf.getInt();

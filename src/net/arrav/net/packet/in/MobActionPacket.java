@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.Arrav;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.MobAction;
@@ -36,7 +36,7 @@ public final class MobActionPacket implements IncomingPacket {
 	public static final ActionContainer<MobAction> FOURTH = new ActionContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.NPC_ACTION))
 			return;
 		switch(opcode) {
@@ -67,7 +67,7 @@ public final class MobActionPacket implements IncomingPacket {
 	 * @param player the player this will be handled for.
 	 * @param buf the payload buffer that will read the sent data.
 	 */
-	private void attackOther(Player player, ByteBuf buf) {
+	private void attackOther(Player player, GamePacket buf) {
 		int index = buf.getShort(false, ByteTransform.A);
 		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null || !checkAttack(player, mob))
@@ -81,7 +81,7 @@ public final class MobActionPacket implements IncomingPacket {
 	 * @param player the player this will be handled for.
 	 * @param buf the payload buffer that will read the sent data.
 	 */
-	private void attackMagic(Player player, ByteBuf buf) {
+	private void attackMagic(Player player, GamePacket buf) {
 		int index = buf.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int spellId = buf.getShort(true, ByteTransform.A);
 		Mob mob = World.get().getMobs().get(index - 1);
@@ -99,7 +99,7 @@ public final class MobActionPacket implements IncomingPacket {
 	 * @param player the player this will be handled for.
 	 * @param buf the payload buffer that will read the sent data.
 	 */
-	private void firstClick(Player player, ByteBuf buf) {
+	private void firstClick(Player player, GamePacket buf) {
 		int index = buf.getShort(true, ByteOrder.LITTLE);
 		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null)
@@ -136,7 +136,7 @@ public final class MobActionPacket implements IncomingPacket {
 	 * @param player the player this will be handled for.
 	 * @param buf the payload buffer that will read the sent data.
 	 */
-	private void secondClick(Player player, ByteBuf buf) {
+	private void secondClick(Player player, GamePacket buf) {
 		int index = buf.getShort(false, ByteTransform.A, ByteOrder.LITTLE);
 		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null)
@@ -167,7 +167,7 @@ public final class MobActionPacket implements IncomingPacket {
 	 * @param player the player this will be handled for.
 	 * @param buf the payload buffer that will read the sent data.
 	 */
-	private void thirdClick(Player player, ByteBuf buf) {
+	private void thirdClick(Player player, GamePacket buf) {
 		int index = buf.getShort(true);
 		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null)
@@ -195,7 +195,7 @@ public final class MobActionPacket implements IncomingPacket {
 	 * @param player the player this will be handled for.
 	 * @param buf the payload buffer that will read the sent data.
 	 */
-	private void fourthClick(Player player, ByteBuf buf) {
+	private void fourthClick(Player player, GamePacket buf) {
 		int index = buf.getShort(true, ByteOrder.LITTLE);
 		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null)

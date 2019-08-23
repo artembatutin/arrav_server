@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.Arrav;
 import net.arrav.net.codec.ByteTransform;
 import net.arrav.net.packet.IncomingPacket;
@@ -22,7 +22,7 @@ public class OperateEquipmentPacket implements IncomingPacket {
 	 * @param buf the data contained within this message.
 	 */
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		int option = buf.getShort(ByteTransform.A);
 		int slot = buf.getShort(ByteTransform.A);
 		Item item = player.getEquipment().get(slot);

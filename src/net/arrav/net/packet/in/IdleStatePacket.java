@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.entity.actor.player.Player;
 
@@ -11,7 +11,7 @@ import net.arrav.world.entity.actor.player.Player;
 public final class IdleStatePacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 
 	}
 }

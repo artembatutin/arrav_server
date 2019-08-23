@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.World;
@@ -18,7 +18,7 @@ import net.arrav.world.entity.region.Region;
 public final class UpdateRegionPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.isUpdateRegion()) {
 			World.getRegions().updateRegionObjects(player);
 			player.sendInterfaces();

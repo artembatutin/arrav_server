@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.dialogue.impl.StatementDialogue;
 import net.arrav.content.market.MarketShop;
 import net.arrav.net.packet.IncomingPacket;
@@ -14,7 +14,7 @@ import net.arrav.world.entity.actor.player.Player;
 public final class MarketPacket implements IncomingPacket {
 
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		String search = TextUtils.hashToName(buf.getLong());
 		if(player.isIronMan() && !player.isIronMaxed()) {
 			player.getDialogueBuilder().append(new StatementDialogue("You are in iron man mode.", "Therefore you can't search the global market.", "Once you max-out you will be able to."));

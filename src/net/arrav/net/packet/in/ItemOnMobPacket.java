@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.item.pets.Pet;
 import net.arrav.content.skill.crafting.Tanning;
 import net.arrav.content.skill.summoning.Summoning;
@@ -16,7 +16,7 @@ import net.arrav.world.entity.item.Item;
 public final class ItemOnMobPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ON_NPC)) {
 			return;
 		}

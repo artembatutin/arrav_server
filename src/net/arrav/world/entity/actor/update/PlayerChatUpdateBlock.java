@@ -3,6 +3,7 @@ package net.arrav.world.entity.actor.update;
 import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.world.entity.actor.player.Player;
 
 import static net.arrav.world.entity.actor.player.assets.Rights.IRON_MAN;
@@ -22,7 +23,7 @@ public final class PlayerChatUpdateBlock extends PlayerUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Player other, ByteBuf buf) {
+	public int write(Player player, Player other, GamePacket buf) {
 		buf.putShort(((other.getChatColor() & 0xff) << 8) + (other.getChatEffects() & 0xff), ByteOrder.LITTLE);
 		buf.put(other.getRights() == PLAYER && other.isIronMan() ? IRON_MAN.getProtocolValue() : other.getRights().getProtocolValue());
 		buf.put(other.getChatText().length, ByteTransform.C);

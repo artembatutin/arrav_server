@@ -3,6 +3,7 @@ package net.arrav.world.entity.actor.update;
 import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.world.entity.actor.player.Player;
 
 /**
@@ -19,7 +20,7 @@ public final class PlayerPositionUpdateBlock extends PlayerUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Player other, ByteBuf buf) {
+	public int write(Player player, Player other, GamePacket buf) {
 		buf.putShort(other.getFacePosition().getX(), ByteTransform.A, ByteOrder.LITTLE);
 		buf.putShort(other.getFacePosition().getY(), ByteOrder.LITTLE);
 		return -1;

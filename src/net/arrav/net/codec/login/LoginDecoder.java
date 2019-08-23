@@ -19,6 +19,8 @@ import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
 
+import static net.arrav.net.codec.game.GamePacket.TERMINATOR_VALUE;
+
 /**
  * A {@link StatefulFrameDecoder} implementation of all login fragments.
  * @author Artem Batutin
@@ -63,7 +65,7 @@ public class LoginDecoder extends StatefulFrameDecoder<LoginState> {
 	 */
 	private void decodeHandshake(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 		if(in.readableBytes() >= 1) {
-			int build = in.get();
+			int build = in.readByte();
 			if(build != GameConstants.CLIENT_BUILD) {
 				write(ctx, LoginCode.WRONG_BUILD_NUMBER);
 				return;
@@ -127,8 +129,8 @@ public class LoginDecoder extends StatefulFrameDecoder<LoginState> {
 					return;
 				}
 				
-				String username = rsaBuffer.getCString().toLowerCase().replaceAll("_", " ").toLowerCase().trim();
-				String password = rsaBuffer.getCString().toLowerCase();
+				String username = getCString(rsaBuffer).toLowerCase().replaceAll("_", " ").toLowerCase().trim();
+				String password = getCString(rsaBuffer).toLowerCase();
 				long usernameHash = TextUtils.nameToHash(username);
 				
 				if(World.get().getPlayer(usernameHash).isPresent()) {
@@ -157,6 +159,18 @@ public class LoginDecoder extends StatefulFrameDecoder<LoginState> {
 			channel.write(initialMessage, channel.voidPromise());
 		}
 		channel.writeAndFlush(message.toBuf(ctx)).addListener(ChannelFutureListener.CLOSE); // Write response message.
+	}
+	
+	/**
+	 * Reads a series of byte data terminated by a null value, casted to a {@link String}.
+	 */
+	public String getCString(ByteBuf payload) {
+		byte temp;
+		StringBuilder b = new StringBuilder();
+		while(payload.isReadable() && (temp = (byte) payload.readUnsignedByte()) != TERMINATOR_VALUE) {
+			b.append((char) temp);
+		}
+		return b.toString();
 	}
 	
 }

@@ -1,6 +1,7 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
@@ -30,13 +31,18 @@ public final class SendGraphic implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		new SendCoordinates(position).write(player, buf);
-		buf.message(4);
-		buf.put(0);
-		buf.putShort(id);
-		buf.put(level);
-		buf.putShort(0);
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(4);
+		out.put(0);
+		out.putShort(id);
+		out.put(level);
+		out.putShort(0);
+		return out;
+	}
+	
+	@Override
+	public GamePacket coordinatePacket(Player player) {
+		return new SendCoordinates(position).write(player);
 	}
 }

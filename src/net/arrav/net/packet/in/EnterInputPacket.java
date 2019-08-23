@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.util.TextUtils;
 import net.arrav.world.entity.actor.player.Player;
@@ -13,7 +13,7 @@ public final class EnterInputPacket implements IncomingPacket {
 	public static final int ENTER_AMOUNT_OPCODE = 208, ENTER_SYNTAX_OPCODE = 60;
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ENTER_INPUT)) {
 			return;
 		}
@@ -34,7 +34,7 @@ public final class EnterInputPacket implements IncomingPacket {
 	 * @param player the player this packet is sent for.
 	 * @param buf the buffer chained to this packet.
 	 */
-	private void enterAmount(Player player, ByteBuf buf) {
+	private void enterAmount(Player player, GamePacket buf) {
 		int amount = buf.getInt();
 		if(amount < 1) {
 			return;
@@ -48,7 +48,7 @@ public final class EnterInputPacket implements IncomingPacket {
 	 * @param player the player this packet is sent for.
 	 * @param buf the buffer chained to this packet.
 	 */
-	private void enterSyntax(Player player, ByteBuf buf) {
+	private void enterSyntax(Player player, GamePacket buf) {
 		String name = TextUtils.hashToName(buf.getLong());
 		if(name.isEmpty()) {
 			return;

@@ -4,37 +4,23 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
-import net.arrav.Arrav;
-import net.arrav.GameConstants;
-import net.arrav.net.codec.crypto.IsaacRandom;
-import net.arrav.net.codec.game.GameDecoder;
-import net.arrav.net.codec.game.GameEncoder;
-import net.arrav.net.codec.game.GamePacketType;
-import net.arrav.net.codec.game.GameState;
+import net.arrav.net.codec.game.*;
 import net.arrav.net.codec.login.LoginCode;
 import net.arrav.net.codec.login.LoginRequest;
 import net.arrav.net.codec.login.LoginResponse;
-import net.arrav.net.codec.login.LoginState;
-import net.arrav.net.host.HostListType;
-import net.arrav.net.host.HostManager;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.net.packet.out.SendLogout;
-import net.arrav.util.TextUtils;
 import net.arrav.world.World;
 import net.arrav.world.entity.EntityState;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.PlayerCredentials;
 import net.arrav.world.entity.actor.player.PlayerSerialization;
 
-import java.math.BigInteger;
 import java.net.InetSocketAddress;
-import java.security.SecureRandom;
 import java.util.Queue;
-import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
 /**
@@ -76,7 +62,7 @@ public class Session {
 	/**
 	 * The queue of {@link ByteBuf}s.
 	 */
-	private BlockingQueue<ByteBuf> messages = new ArrayBlockingQueue<>(NetworkConstants.MESSAGES_PER_TICK);
+	private BlockingQueue<GamePacket> incoming = new ArrayBlockingQueue<>(NetworkConstants.MESSAGES_PER_TICK);
 	
 	/**
 	 * The queue of {@link ByteBuf}s.
@@ -101,12 +87,10 @@ public class Session {
 		if(msg instanceof LoginRequest) {
 			handleRequest(ctx, (LoginRequest) msg);
 		}
-		if(msg instanceof ByteBuf) {
-			ByteBuf buf = (ByteBuf) msg;
-			if(buf.getOpcode() > 0) {
-				if(messages.size() < NetworkConstants.MESSAGES_PER_TICK) {
-					messages.add(buf);
-				}
+		if(msg instanceof GamePacket) {
+			GamePacket packet = (GamePacket) msg;
+			if(incoming.size() < NetworkConstants.MESSAGES_PER_TICK) {
+				incoming.add(packet);
 			}
 		}
 	}
@@ -129,11 +113,11 @@ public class Session {
 	 */
 	void unregister() {
 		terminate();//in case player didn't logged out.
-		if(messages != null) {
-			for(ByteBuf b : messages) {
-				b.release();
+		if(incoming != null) {
+			for(GamePacket b : incoming) {
+				b.getPayload().release();
 			}
-			messages.clear();
+			incoming.clear();
 		}
 		if(player != null) {
 			LOGGER.info("Unregistered session for " + player.getFormatUsername());
@@ -145,11 +129,11 @@ public class Session {
 	 * Handling an incoming packet/message.
 	 * @param packet incoming message.
 	 */
-	public void handle(ByteBuf packet) {
+	public void handle(GamePacket packet) {
 		try {
-			NetworkConstants.MESSAGES[packet.getOpcode()].handle(player, packet.getOpcode(), packet.capacity(), packet);
+			NetworkConstants.MESSAGES[packet.getOpcode()].handle(player, packet.getOpcode(), packet.getPayload().capacity(), packet);
 		} finally {
-			packet.release();
+			packet.getPayload().release();
 		}
 	}
 	
@@ -157,8 +141,8 @@ public class Session {
 	 * Polling all incoming packets.
 	 */
 	public void pollIncomingMessages() {
-		while(!messages.isEmpty()) {
-			ByteBuf msg = messages.poll();
+		while(!incoming.isEmpty()) {
+			GamePacket msg = incoming.poll();
 			handle(msg);
 		}
 	}
@@ -168,11 +152,11 @@ public class Session {
 	 */
 	public void writeUpdate(OutgoingPacket playerUpdate, OutgoingPacket mobUpdate) {
 		if(channel.isActive() && channel.isOpen()) {
-			channel.write(playerUpdate);
-			channel.write(mobUpdate);
+			channel.write(playerUpdate.write(player));
+			channel.write(mobUpdate.write(player));
 			while(!outgoing.isEmpty()) {
 				OutgoingPacket packet = outgoing.poll();
-				ChannelFuture future = channel.write(packet);
+				ChannelFuture future = channel.write(packet.write(player));
 				if(packet.getClass() == SendLogout.class) {
 					future.addListener(ChannelFutureListener.CLOSE);
 				}

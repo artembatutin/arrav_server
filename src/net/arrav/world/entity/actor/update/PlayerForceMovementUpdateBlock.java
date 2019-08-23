@@ -3,6 +3,7 @@ package net.arrav.world.entity.actor.update;
 import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.world.entity.actor.move.ForcedMovement;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
@@ -21,7 +22,7 @@ public final class PlayerForceMovementUpdateBlock extends PlayerUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Player other, ByteBuf buf) {
+	public int write(Player player, Player other, GamePacket buf) {
 		ForcedMovement movement = other.getForcedMovement();
 		Position lastRegion = player.getLastRegion();
 		Position position = other.getPosition();

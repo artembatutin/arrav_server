@@ -1,6 +1,7 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
@@ -18,19 +19,20 @@ public final class SendItemOnInterfaceSlot implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(34, GamePacketType.VARIABLE_SHORT);
-		buf.putShort(id);
-		buf.put(slot);
-		buf.putShort(item == null ? 0 : item.getId() + 1);
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(34, GamePacketType.VARIABLE_SHORT);
+		out.putShort(id);
+		out.put(slot);
+		out.putShort(item == null ? 0 : item.getId() + 1);
 		int am = item == null ? 0 : item.getAmount();
 		if(am > 254) {
-			buf.put(255);
-			buf.putInt(am);
+			out.put(255);
+			out.putInt(am);
 		} else {
-			buf.put(am);
+			out.put(am);
 		}
-		buf.endVarSize();
-		return buf;
+		out.endVarSize();
+		return out;
 	}
 }

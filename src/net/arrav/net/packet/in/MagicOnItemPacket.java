@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.skill.magic.Enchanting;
 import net.arrav.net.codec.ByteTransform;
 import net.arrav.net.packet.IncomingPacket;
@@ -21,7 +21,7 @@ public final class MagicOnItemPacket implements IncomingPacket {
 	private final Stopwatch delay = new Stopwatch().reset();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityType.MAGIC_ON_ITEM)) {
 			return;
 		}

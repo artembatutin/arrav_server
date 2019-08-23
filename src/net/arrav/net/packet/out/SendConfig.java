@@ -1,7 +1,8 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
 import net.arrav.net.codec.ByteOrder;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 
@@ -15,16 +16,17 @@ public final class SendConfig implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
 		if(state < Byte.MIN_VALUE || state > Byte.MAX_VALUE) {
-			buf.message(87);
-			buf.putShort(id, ByteOrder.LITTLE);
-			buf.putInt(state, ByteOrder.MIDDLE);
-			return buf;
+			out.message(87);
+			out.putShort(id, ByteOrder.LITTLE);
+			out.putInt(state, ByteOrder.MIDDLE);
+			return out;
 		}
-		buf.message(36);
-		buf.putShort(id, ByteOrder.LITTLE);
-		buf.put(state);
-		return buf;
+		out.message(36);
+		out.putShort(id, ByteOrder.LITTLE);
+		out.put(state);
+		return out;
 	}
 }

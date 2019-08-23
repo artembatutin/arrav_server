@@ -1,7 +1,8 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
@@ -15,10 +16,11 @@ public final class SendCoordinates implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(85);
-		buf.put(position.getY() - (player.getLastRegion().getRegionY() * 8), ByteTransform.C);
-		buf.put(position.getX() - (player.getLastRegion().getRegionX() * 8), ByteTransform.C);
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(85);
+		out.put(position.getY() - (player.getLastRegion().getRegionY() * 8), ByteTransform.C);
+		out.put(position.getX() - (player.getLastRegion().getRegionX() * 8), ByteTransform.C);
+		return out;
 	}
 }

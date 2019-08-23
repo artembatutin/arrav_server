@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.market.MarketItem;
 import net.arrav.content.minigame.MinigameHandler;
 import net.arrav.net.codec.ByteOrder;
@@ -23,7 +23,7 @@ import java.util.Optional;
 public final class PickupItemPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.PICKUP_ITEM))
 			return;
 		int itemY = buf.getShort(ByteOrder.LITTLE);

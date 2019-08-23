@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.ItemAction;
 import net.arrav.content.Attributes;
@@ -34,7 +34,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	public static final ActionContainer<ItemAction> EQUIP = new ActionContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_INTERFACE))
 			return;
 		
@@ -69,7 +69,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void firstSlot(Player player, ByteBuf buf) {
+	private void firstSlot(Player player, GamePacket buf) {
 		int interfaceId = buf.getShort(ByteTransform.A);
 		int slot = buf.getShort(ByteTransform.A);
 		int itemId = buf.getShort(ByteTransform.A);
@@ -136,7 +136,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void secondSlot(Player player, ByteBuf buf) {
+	private void secondSlot(Player player, GamePacket buf) {
 		int interfaceId = buf.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int itemId = buf.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int slot = buf.getShort(true, ByteOrder.LITTLE);
@@ -192,7 +192,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void thirdSlot(Player player, ByteBuf buf) {
+	private void thirdSlot(Player player, GamePacket buf) {
 		int interfaceId = buf.getShort(ByteOrder.LITTLE);
 		int itemId = buf.getShort(ByteTransform.A);
 		int slot = buf.getShort(ByteTransform.A);
@@ -247,7 +247,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void fourthSlot(Player player, ByteBuf buf) {
+	private void fourthSlot(Player player, GamePacket buf) {
 		int slot = buf.getShort(ByteTransform.A);
 		int interfaceId = buf.getShort();
 		int itemId = buf.getShort(ByteTransform.A);
@@ -297,7 +297,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void equipItem(Player player, ByteBuf buf) {
+	private void equipItem(Player player, GamePacket buf) {
 		int itemId = buf.getShort(false);
 		int slot = buf.getShort(false, ByteTransform.A);
 		int interfaceId = buf.getShort(false, ByteTransform.A);
@@ -337,7 +337,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void swapSlots(Player player, ByteBuf buf) {
+	private void swapSlots(Player player, GamePacket buf) {
 		int interfaceId = buf.getShort(ByteTransform.A, ByteOrder.LITTLE);
 		int fromSlot = buf.getShort(ByteTransform.A, ByteOrder.LITTLE);
 		int toSlot = buf.getShort(ByteOrder.LITTLE);
@@ -371,7 +371,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void bankTab(Player player, ByteBuf buf) {
+	private void bankTab(Player player, GamePacket buf) {
 		int tab = buf.getShort(ByteTransform.A, ByteOrder.LITTLE);
 		int fromSlot = buf.getShort(ByteTransform.A, ByteOrder.LITTLE);
 		int toTab = buf.getShort(ByteTransform.A, ByteOrder.LITTLE);

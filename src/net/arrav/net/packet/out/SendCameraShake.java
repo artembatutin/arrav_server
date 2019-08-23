@@ -1,7 +1,8 @@
 package net.arrav.net.packet.out;
 
 import com.google.common.base.Preconditions;
-import io.netty.buffer.ByteBuf;
+
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 
@@ -18,12 +19,13 @@ public final class SendCameraShake implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(35);
-		buf.put(parameter);
-		buf.put(jitter);
-		buf.put(amplitude);
-		buf.put(frequency);
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(35);
+		out.put(parameter);
+		out.put(jitter);
+		out.put(amplitude);
+		out.put(frequency);
+		return out;
 	}
 }

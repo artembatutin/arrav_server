@@ -2,6 +2,7 @@ package net.arrav.world.entity.actor.player;
 
 import com.google.common.collect.ImmutableMap;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
@@ -57,6 +58,7 @@ import net.arrav.content.teleport.impl.DefaultTeleportSpell;
 import net.arrav.content.trivia.TriviaTask;
 import net.arrav.content.wilderness.WildernessActivity;
 import net.arrav.net.Session;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.net.packet.out.*;
 import net.arrav.task.Task;
@@ -471,7 +473,7 @@ public final class Player extends Actor {
 	/**
 	 * The cached player update block for updating.
 	 */
-	private ByteBuf cachedUpdateBlock;
+	private GamePacket cachedUpdateBlock;
 	
 	/**
 	 * The stand index for this player.
@@ -840,6 +842,13 @@ public final class Player extends Actor {
 	public void update() {
 		if(session != null) {
 			session.pollIncomingMessages();
+			//ensuring the player receives a map update first.
+			if(!getInitialUpdate().get()) {
+				session.getChannel().write(new SendSlot().write(this));
+				session.getChannel().write(new SendMapRegion(this.getLastRegion().copy()).write(this));
+				session.getChannel().write(new SendCameraReset().write(this));
+				getInitialUpdate().set(true);
+			}
 			session.writeUpdate(new SendPlayerUpdate(), new SendMobUpdate());
 		}
 	}
@@ -1913,7 +1922,7 @@ public final class Player extends Actor {
 	 * Gets the cached player update block for updating.
 	 * @return the cached update block.
 	 */
-	public ByteBuf getCachedUpdateBlock() {
+	public GamePacket getCachedUpdateBlock() {
 		return cachedUpdateBlock;
 	}
 	
@@ -1921,7 +1930,7 @@ public final class Player extends Actor {
 	 * Sets the value for {@link Player#cachedUpdateBlock}.
 	 * @param cachedUpdateBlock the new value to set.
 	 */
-	public void setCachedUpdateBlock(ByteBuf cachedUpdateBlock) {
+	public void setCachedUpdateBlock(GamePacket cachedUpdateBlock) {
 		this.cachedUpdateBlock = cachedUpdateBlock;
 	}
 	

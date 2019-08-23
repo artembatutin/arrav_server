@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.Arrav;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.ObjectAction;
@@ -35,7 +35,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 	public static final ActionContainer<ObjectAction> CONSTRUCTION = new ActionContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.OBJECT_ACTION))
 			return;
 		switch(opcode) {
@@ -67,7 +67,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void click(int action, Player player, ByteBuf buf) {
+	private void click(int action, Player player, GamePacket buf) {
 		//Getting data.
 		int objectId = buf.getMedium();
 		int objectX = buf.getShort(false);
@@ -166,7 +166,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void spellObject(Player player, ByteBuf buf) {
+	private void spellObject(Player player, GamePacket buf) {
 		//Getting data.
 		int objectId = buf.getMedium();
 		int objectX = buf.getShort(false);

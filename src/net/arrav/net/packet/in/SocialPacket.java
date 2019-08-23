@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
@@ -13,7 +13,7 @@ import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
 public final class SocialPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.PRIVATE_MESSAGE))
 			return;
 		
@@ -42,7 +42,7 @@ public final class SocialPacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer used for reading sent data.
 	 */
-	private void addFriend(Player player, ByteBuf buf) {
+	private void addFriend(Player player, GamePacket buf) {
 		long name = buf.getLong();
 		if(name < 0)
 			return;
@@ -54,7 +54,7 @@ public final class SocialPacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer used for reading sent data.
 	 */
-	private void removeFriend(Player player, ByteBuf buf) {
+	private void removeFriend(Player player, GamePacket buf) {
 		long name = buf.getLong();
 		if(name < 0)
 			return;
@@ -66,7 +66,7 @@ public final class SocialPacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer used for reading sent data.
 	 */
-	private void addIgnore(Player player, ByteBuf buf) {
+	private void addIgnore(Player player, GamePacket buf) {
 		long name = buf.getLong();
 		if(name < 0)
 			return;
@@ -78,7 +78,7 @@ public final class SocialPacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer used for reading sent data.
 	 */
-	private void removeIgnore(Player player, ByteBuf buf) {
+	private void removeIgnore(Player player, GamePacket buf) {
 		long name = buf.getLong();
 		if(name < 0)
 			return;
@@ -90,7 +90,7 @@ public final class SocialPacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the payload buffer used for reading sent data.
 	 */
-	private void sendMessage(Player player, int size, ByteBuf buf) {
+	private void sendMessage(Player player, int size, GamePacket buf) {
 		long to = buf.getLong();
 		int newSize = size - 8;
 		byte[] message = buf.getBytes(newSize);

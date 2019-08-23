@@ -1,6 +1,7 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.mob.MobDefinition;
@@ -24,34 +25,35 @@ public final class SendMobDrop implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(121, GamePacketType.VARIABLE_SHORT);
-		buf.putInt(id);
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(121, GamePacketType.VARIABLE_SHORT);
+		out.putInt(id);
 		if(id != 0) {
 			if(id > MobDefinition.DEFINITIONS.length)
 				return null;
 			MobDefinition def = MobDefinition.DEFINITIONS[id];
 			if(def == null)
 				return null;
-			buf.putShort(table == null ? 0 : table.getCommon().size() + table.getRare().size());
+			out.putShort(table == null ? 0 : table.getCommon().size() + table.getRare().size());
 			if(table != null && table.getCommon() != null) {
 				for(Drop d : table.getCommon()) {
-					buf.putShort(d.getId());
-					buf.putShort(d.getMinimum());
-					buf.putShort(d.getMaximum());
-					buf.put(d.getChance().ordinal());
+					out.putShort(d.getId());
+					out.putShort(d.getMinimum());
+					out.putShort(d.getMaximum());
+					out.put(d.getChance().ordinal());
 				}
 			}
 			if(table != null && table.getRare() != null) {
 				for(Drop d : table.getRare()) {
-					buf.putShort(d.getId());
-					buf.putShort(d.getMinimum());
-					buf.putShort(d.getMaximum());
-					buf.put(d.getChance().ordinal());
+					out.putShort(d.getId());
+					out.putShort(d.getMinimum());
+					out.putShort(d.getMaximum());
+					out.put(d.getChance().ordinal());
 				}
 			}
 		}
-		buf.endVarSize();
-		return buf;
+		out.endVarSize();
+		return out;
 	}
 }

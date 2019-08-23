@@ -1,6 +1,7 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
@@ -18,13 +19,14 @@ public final class SendCameraAngle implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(177);
-		buf.put(position.getLocalX(player.getPosition()));
-		buf.put(position.getLocalY(player.getPosition()));
-		buf.putShort(height);
-		buf.put(movementSpeed);
-		buf.put(rotationSpeed);
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(177);
+		out.put(position.getLocalX(player.getPosition()));
+		out.put(position.getLocalY(player.getPosition()));
+		out.putShort(height);
+		out.put(movementSpeed);
+		out.put(rotationSpeed);
+		return out;
 	}
 }

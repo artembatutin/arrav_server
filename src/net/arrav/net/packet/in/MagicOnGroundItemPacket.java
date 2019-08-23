@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.Arrav;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.ByteTransform;
@@ -14,7 +14,7 @@ import net.arrav.world.entity.actor.player.Player;
 public class MagicOnGroundItemPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		int x = buf.getShort(false, ByteOrder.LITTLE);
 		int y = buf.getShort(false, ByteOrder.LITTLE);
 		int itemId = buf.getShort(true);

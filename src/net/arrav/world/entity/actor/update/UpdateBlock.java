@@ -1,7 +1,7 @@
 package net.arrav.world.entity.actor.update;
 
 import com.google.common.base.MoreObjects;
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.world.entity.actor.Actor;
 import net.arrav.world.entity.actor.player.Player;
 
@@ -62,7 +62,7 @@ public abstract class UpdateBlock<E extends Actor> {
 	 * @param mob The {@link Actor} this update block is being written for.
 	 * @param buf The buffer to write the data to.
 	 */
-	public abstract int write(Player player, E mob, ByteBuf buf);
+	public abstract int write(Player player, E mob, GamePacket buf);
 	
 	/**
 	 * @return The bit mask for this update block.

@@ -1,6 +1,7 @@
 package net.arrav.world.entity.actor.update;
 
 import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.world.entity.actor.combat.hit.Hit;
 import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.player.Player;
@@ -19,7 +20,7 @@ public final class MobPrimaryHitUpdateBlock extends MobUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Mob mob, ByteBuf buf) {
+	public int write(Player player, Mob mob, GamePacket buf) {
 		Hit hit = mob.getPrimaryHit();
 		//		System.out.println("First hit: " + hit.getDamage());
 		buf.putShort(hit.getDamage());

@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.skill.construction.furniture.ConstructFurniture;
 import net.arrav.content.skill.construction.furniture.Furniture;
 import net.arrav.content.skill.construction.room.RoomData;
@@ -19,7 +19,7 @@ public final class ConstructionPacket implements IncomingPacket {
 	private static final RoomData[] DATA = {GARDEN, PARLOUR, KITCHEN, DINING_ROOM, WORKSHOP, BEDROOM, SKILL_ROOM, QUEST_HALL_DOWN, SKILL_HALL_DOWN, GAMES_ROOM, COMBAT_ROOM, QUEST_ROOM, MENAGERY, STUDY, CUSTOME_ROOM, CHAPEL, PORTAL_ROOM, FORMAL_GARDEN, THRONE_ROOM, OUBLIETTE, PIT, DUNGEON_STAIR_ROOM, CORRIDOR, JUNCTION, TREASURE_ROOM,};
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		int click = buf.get();
 		if(click < 0 || click >= DATA.length) {
 			click -= 40;

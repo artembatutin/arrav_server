@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.Arrav;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.ItemAction;
@@ -23,7 +23,7 @@ public final class ItemActionPacket implements IncomingPacket {
 	public static final ActionContainer<ItemAction> ITEM_ACTION = new ActionContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ACTION))
 			return;
 		
@@ -45,7 +45,7 @@ public final class ItemActionPacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the buffer for reading the sent data.
 	 */
-	private void firstClick(Player player, ByteBuf buf) {
+	private void firstClick(Player player, GamePacket buf) {
 		int container = buf.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int slot = buf.getShort(false, ByteTransform.A);
 		int id = buf.getShort(false, ByteOrder.LITTLE);
@@ -71,7 +71,7 @@ public final class ItemActionPacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the buffer for reading the sent data.
 	 */
-	private void secondClick(Player player, ByteBuf buf) {
+	private void secondClick(Player player, GamePacket buf) {
 		int container = buf.getShort(true, ByteTransform.A);
 		int slot = buf.getShort(true, ByteOrder.LITTLE);
 		int id = buf.getShort(true, ByteTransform.A);
@@ -113,7 +113,7 @@ public final class ItemActionPacket implements IncomingPacket {
 	 * @param player the player to handle this for.
 	 * @param buf the buffer for reading the sent data.
 	 */
-	private void thirdClick(Player player, ByteBuf buf) {
+	private void thirdClick(Player player, GamePacket buf) {
 		int container = buf.getShort(true, ByteTransform.A);
 		int slot = buf.getShort(true, ByteOrder.LITTLE);
 		int id = buf.getShort(true, ByteTransform.A);

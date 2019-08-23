@@ -1,6 +1,7 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
@@ -35,12 +36,13 @@ public final class SendArrowPosition implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
-		buf.message(254);
-		buf.put(direction);
-		buf.putShort(position.getX());
-		buf.putShort(position.getY());
-		buf.put(position.getZ());
-		return buf;
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
+		out.message(254);
+		out.put(direction);
+		out.putShort(position.getX());
+		out.putShort(position.getY());
+		out.put(position.getZ());
+		return out;
 	}
 }

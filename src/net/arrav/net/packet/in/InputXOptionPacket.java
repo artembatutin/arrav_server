@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.skill.summoning.Summoning;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.ByteTransform;
@@ -16,7 +16,7 @@ import net.arrav.world.entity.item.container.session.ExchangeSessionType;
 public final class InputXOptionPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		int slot = buf.getShort(ByteOrder.LITTLE);
 		int interfaceId = buf.getShort(ByteTransform.A);
 		int itemId = buf.getShort(ByteOrder.LITTLE);

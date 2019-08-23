@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.content.minigame.Minigame;
 import net.arrav.content.minigame.MinigameHandler;
 import net.arrav.net.codec.ByteOrder;
@@ -26,7 +26,7 @@ import java.util.Optional;
 public final class AttackPlayerPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ATTACK_PLAYER))
 			return;
 		switch(opcode) {
@@ -45,7 +45,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 	 * @param player the player to attempt to attack.
 	 * @param buf the buffer for reading the sent data.
 	 */
-	private void attackMagic(Player player, ByteBuf buf) {
+	private void attackMagic(Player player, GamePacket buf) {
 		int index = buf.getShort(true, ByteTransform.A);
 		int spellId = buf.getShort(true, ByteOrder.LITTLE);
 		Player victim = World.get().getPlayers().get(index - 1);
@@ -68,7 +68,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 	 * @param player the player to attempt to attack.
 	 * @param buf the buffer for reading the sent data.
 	 */
-	private void attackOther(Player player, ByteBuf buf) {
+	private void attackOther(Player player, GamePacket buf) {
 		int index = buf.getShort(true, ByteOrder.LITTLE);
 		Player victim = World.get().getPlayers().get(index - 1);
 		if(index < 0 || index > World.get().getPlayers().capacity() || !checkAttack(player, victim))

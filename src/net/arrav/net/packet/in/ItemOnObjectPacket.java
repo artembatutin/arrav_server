@@ -1,6 +1,6 @@
 package net.arrav.net.packet.in;
 
-import io.netty.buffer.ByteBuf;
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.Arrav;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.ItemOnObjectAction;
@@ -32,7 +32,7 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 	public static final ActionContainer<ItemOnObjectAction> ITEMS = new ActionContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ON_OBJECT)) {
 			return;
 		}

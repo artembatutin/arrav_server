@@ -3,6 +3,8 @@ package net.arrav.world.entity.actor.update;
 import com.google.common.collect.ImmutableMap;
 import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.game.GamePacket;
+import net.arrav.net.codec.game.GamePacketType;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.PlayerAppearance;
 import net.arrav.world.entity.item.container.impl.Equipment;
@@ -37,9 +39,9 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 			put(456, 619).build();
 	
 	@Override
-	public int write(Player player, Player other, ByteBuf msg) {
+	public int write(Player player, Player other, GamePacket msg) {
 		PlayerAppearance appearance = other.getAppearance();
-		ByteBuf buf = player.getSession().alloc().buffer(32);
+		GamePacket buf = new GamePacket(-1, player.getSession().alloc().buffer(32), GamePacketType.RAW);
 		try {
 			buf.put(appearance.getGender());
 			buf.put(other.headIcon);
@@ -134,12 +136,12 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 			buf.putLong(other.credentials.usernameHash);
 			buf.put(other.determineCombatLevel() < 3 ? 3 : other.determineCombatLevel());
 			buf.put(other.isIronMan() ? 1 : 0);
-			msg.put(buf.writerIndex(), ByteTransform.C);
+			msg.put(buf.getPayload().writerIndex(), ByteTransform.C);
 			msg.putBytes(buf);
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			buf.release();
+			buf.getPayload().release();
 		}
 		return -1;
 	}

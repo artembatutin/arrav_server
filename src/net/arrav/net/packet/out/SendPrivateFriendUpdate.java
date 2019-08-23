@@ -1,6 +1,7 @@
 package net.arrav.net.packet.out;
 
-import io.netty.buffer.ByteBuf;
+
+import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 
@@ -15,13 +16,14 @@ public final class SendPrivateFriendUpdate implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, ByteBuf buf) {
+	public GamePacket write(Player player) {
+		GamePacket out = new GamePacket(this);
 		int value = online ? 1 : 0;
 		if(value != 0)
 			value += 9;
-		buf.message(50);
-		buf.putLong(name);
-		buf.put(value);
-		return buf;
+		out.message(50);
+		out.putLong(name);
+		out.put(value);
+		return out;
 	}
 }
