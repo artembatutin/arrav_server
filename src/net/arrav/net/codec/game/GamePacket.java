@@ -44,8 +44,8 @@ public class GamePacket {
 	/**
 	 * Creates a new outgoing {@link GamePacket} based on recommended {@link OutgoingPacket} size.
 	 */
-	public GamePacket(OutgoingPacket out) {
-		this.payload = Unpooled.buffer(out.size());
+	public GamePacket(OutgoingPacket out, ByteBuf buf) {
+		this.payload = buf;
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public class GamePacket {
 		//this.sizeIndex = buf.writerIndex();
 	}
 	
-	public void writePacket(ByteBuf out, IsaacRandom encryptor) {
+	public ByteBuf writePacket(ByteBuf out, IsaacRandom encryptor) {
 		out.writeByte(opcode + encryptor.nextInt());
 		int size = payload.readableBytes();
 		//System.out.println("Encoding packet: " + opcode + " with size " + size);
@@ -91,6 +91,7 @@ public class GamePacket {
 		if(size > 0) {
 			out.writeBytes(payload);
 		}
+		return out;
 	}
 	
 	/**

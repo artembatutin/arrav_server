@@ -842,9 +842,9 @@ public final class Player extends Actor {
 		if(session != null) {
 			//ensuring the player receives a map update first.
 			if(!getInitialUpdate().get()) {
-				session.getChannel().write(new SendSlot().write(this));
-				session.getChannel().write(new SendMapRegion(this.getLastRegion().copy()).write(this));
-				session.getChannel().write(new SendCameraReset().write(this));
+				session.write(new SendSlot());
+				session.write(new SendMapRegion(this.getLastRegion().copy()));
+				session.write(new SendCameraReset());
 				getInitialUpdate().set(true);
 			}
 			session.writeUpdate(new SendPlayerUpdate(), new SendMobUpdate());
@@ -1256,7 +1256,7 @@ public final class Player extends Actor {
 	 */
 	public void out(OutgoingPacket packet) {
 		if(packet.onSent(this))
-			getSession().write(packet);
+			getSession().queue(packet);
 	}
 	
 	/**

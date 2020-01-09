@@ -1,5 +1,6 @@
 package net.arrav.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.ByteTransform;
 import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
@@ -15,8 +16,8 @@ public final class SendInventoryInterface implements OutgoingPacket {
 	}
 	
 	@Override
-	public GamePacket write(Player player) {
-		GamePacket out = new GamePacket(this);
+	public GamePacket write(Player player, ByteBuf buf) {
+		GamePacket out = new GamePacket(this, buf);
 		out.message(248);
 		out.putShort(open, ByteTransform.A);
 		out.putShort(overlay);

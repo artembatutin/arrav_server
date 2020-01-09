@@ -1,5 +1,6 @@
 package net.arrav.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.ByteTransform;
 import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;
@@ -16,8 +17,8 @@ public final class SendClearText implements OutgoingPacket {
 	}
 	
 	@Override
-	public GamePacket write(Player player) {
-		GamePacket out = new GamePacket(this);
+	public GamePacket write(Player player, ByteBuf buf) {
+		GamePacket out = new GamePacket(this, buf);
 		for(int i = start; i < start + count; i++) {
 			player.interfaceTexts.remove(i);
 		}

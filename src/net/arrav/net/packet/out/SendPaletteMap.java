@@ -1,5 +1,6 @@
 package net.arrav.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.arrav.content.skill.construction.Palette;
 import net.arrav.net.codec.ByteTransform;
 import net.arrav.net.codec.game.GamePacket;
@@ -16,8 +17,8 @@ public final class SendPaletteMap implements OutgoingPacket {
 	}
 	
 	@Override
-	public GamePacket write(Player player) {
-		GamePacket out = new GamePacket(this);
+	public GamePacket write(Player player, ByteBuf buf) {
+		GamePacket out = new GamePacket(this, buf);
 		out.message(241, GamePacketType.VARIABLE_SHORT);
 		out.putShort(player.getPosition().getRegionX() + 6, ByteTransform.A);
 		out.putShort(player.getPosition().getRegionY() + 6);

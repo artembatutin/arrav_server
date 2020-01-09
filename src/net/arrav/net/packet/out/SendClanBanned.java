@@ -1,5 +1,6 @@
 package net.arrav.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;
@@ -15,8 +16,8 @@ public final class SendClanBanned implements OutgoingPacket {
 	}
 	
 	@Override
-	public GamePacket write(Player player) {
-		GamePacket out = new GamePacket(this);
+	public GamePacket write(Player player, ByteBuf buf) {
+		GamePacket out = new GamePacket(this, buf);
 		out.message(52, GamePacketType.VARIABLE_BYTE);
 		out.putShort(bans.size());
 		for(String s : bans) {

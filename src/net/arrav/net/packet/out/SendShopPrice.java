@@ -1,5 +1,6 @@
 package net.arrav.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.arrav.content.market.MarketItem;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.ByteTransform;
@@ -17,8 +18,8 @@ public final class SendShopPrice implements OutgoingPacket {
 	}
 	
 	@Override
-	public GamePacket write(Player player) {
-		GamePacket out = new GamePacket(this);
+	public GamePacket write(Player player, ByteBuf buf) {
+		GamePacket out = new GamePacket(this, buf);
 		out.message(54, GamePacketType.VARIABLE_SHORT);
 		if(item.getPrice() > 254) {
 			out.put(255);

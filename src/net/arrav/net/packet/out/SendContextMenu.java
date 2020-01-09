@@ -1,5 +1,6 @@
 package net.arrav.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.ByteTransform;
 import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.codec.game.GamePacketType;
@@ -19,8 +20,8 @@ public final class SendContextMenu implements OutgoingPacket {
 	}
 	
 	@Override
-	public GamePacket write(Player player) {
-		GamePacket out = new GamePacket(this);
+	public GamePacket write(Player player, ByteBuf buf) {
+		GamePacket out = new GamePacket(this, buf);
 		out.message(104, GamePacketType.VARIABLE_BYTE);
 		out.put(slot, ByteTransform.C);
 		out.put(top ? 1 : 0, ByteTransform.A);

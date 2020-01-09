@@ -2,10 +2,12 @@ package net.arrav.net;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
+import net.arrav.net.codec.crypto.IsaacRandom;
 import net.arrav.net.codec.game.GameDecoder;
 import net.arrav.net.codec.game.GameEncoder;
 import net.arrav.net.codec.game.GamePacket;
@@ -72,6 +74,11 @@ public class Session {
 	 * The queue of {@link ByteBuf}s.
 	 */
 	private Queue<OutgoingPacket> outgoing = new ConcurrentLinkedQueue<>();
+	
+	/**
+	 * A {@link IsaacRandom}
+	 */
+	private IsaacRandom encryptor;
 	
 	/**
 	 * Creates a new {@link Session}.
@@ -156,24 +163,30 @@ public class Session {
 	 */
 	public void writeUpdate(OutgoingPacket playerUpdate, OutgoingPacket mobUpdate) {
 		if(channel.isActive() && channel.isOpen()) {
-			channel.write(playerUpdate.write(player));
-			channel.write(mobUpdate.write(player));
-			//while(!outgoing.isEmpty()) {
-			//	OutgoingPacket packet = outgoing.poll();
-			//	ChannelFuture future = channel.write(packet.write(player));
-			//	if(packet.getClass() == SendLogout.class) {
-			//		future.addListener(ChannelFutureListener.CLOSE);
-			//	}
-			//}
+			channel.write(playerUpdate.write(player, channel.alloc().buffer(playerUpdate.size())));
+			channel.write(mobUpdate.write(player, channel.alloc().buffer(mobUpdate.size())));
+			while(!outgoing.isEmpty()) {
+				OutgoingPacket packet = outgoing.poll();
+				ChannelFuture future = channel.write(packet.write(player, channel.alloc().buffer(packet.size())));
+				if(packet.getClass() == SendLogout.class) {
+					future.addListener(ChannelFutureListener.CLOSE);
+				}
+			}
 			channel.flush();
 		}
 	}
 	
 	public void write(OutgoingPacket packet) {
 		if(channel.isActive() && channel.isOpen()) {
-			channel.writeAndFlush(packet.write(player), channel.voidPromise());
+			channel.write(packet.write(player, channel.alloc().buffer(packet.size())));
 		}
-		//outgoing.add(packet);
+	}
+	
+	public void queue(OutgoingPacket packet) {
+		//if(channel.isActive() && channel.isOpen()) {
+		//	channel.writeAndFlush(packet.write(player), channel.voidPromise());
+		//}
+		outgoing.add(packet);
 	}
 	
 	/**
@@ -182,6 +195,7 @@ public class Session {
 	 */
 	private void handleRequest(ChannelHandlerContext ctx, LoginRequest request) throws Exception {
 		this.macAddress = request.getMacAddress();
+		this.encryptor = request.getEncryptor();
 		player = new Player(new PlayerCredentials(request.getUsername(), request.getPassword()));
 		player.setSession(this);
 		LoginCode code = LoginCode.NORMAL;

@@ -1,5 +1,6 @@
 package net.arrav.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.arrav.content.skill.construction.furniture.Furniture;
 import net.arrav.content.skill.construction.furniture.HotSpots;
 import net.arrav.net.codec.game.GamePacket;
@@ -26,8 +27,8 @@ public final class SendObjectsConstruction implements OutgoingPacket {
 	}
 	
 	@Override
-	public GamePacket write(Player player) {
-		GamePacket out = new GamePacket(this);
+	public GamePacket write(Player player, ByteBuf buf) {
+		GamePacket out = new GamePacket(this, buf);
 		Furniture[] panel = spot.getFurnitures();
 		out.message(130, GamePacketType.VARIABLE_BYTE);
 		out.put(panel.length);

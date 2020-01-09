@@ -1,5 +1,6 @@
 package net.arrav.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.ByteTransform;
 import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.OutgoingPacket;
@@ -15,8 +16,8 @@ public final class SendObjectRemoval implements OutgoingPacket {
 	}
 	
 	@Override
-	public GamePacket write(Player player) {
-		GamePacket out = new GamePacket(this);
+	public GamePacket write(Player player, ByteBuf buf) {
+		GamePacket out = new GamePacket(this, buf);
 		out.message(101);
 		out.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.C);
 		out.put(0);
@@ -24,7 +25,7 @@ public final class SendObjectRemoval implements OutgoingPacket {
 	}
 	
 	@Override
-	public GamePacket coordinatePacket(Player player) {
-		return new SendCoordinates(object.getPosition()).write(player);
+	public OutgoingPacket coordinatePacket(Player player) {
+		return new SendCoordinates(object.getPosition());
 	}
 }

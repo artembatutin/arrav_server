@@ -1,5 +1,6 @@
 package net.arrav.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.arrav.content.wilderness.WildernessActivity;
 import net.arrav.net.codec.game.GamePacket;
@@ -16,8 +17,8 @@ public final class SendWildernessActivity implements OutgoingPacket {
 	}
 	
 	@Override
-	public GamePacket write(Player player) {
-		GamePacket out = new GamePacket(this);
+	public GamePacket write(Player player, ByteBuf buf) {
+		GamePacket out = new GamePacket(this, buf);
 		out.message(150, GamePacketType.VARIABLE_SHORT);
 		int fools = WildernessActivity.getFooledCount(player);
 		out.put(pkers.size() + fools);

@@ -1,5 +1,6 @@
 package net.arrav.net.packet;
 
+import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.game.GamePacket;
 import net.arrav.world.entity.actor.player.Player;
 
@@ -13,7 +14,7 @@ public interface OutgoingPacket {
 		return true;
 	}
 	
-	default GamePacket coordinatePacket(Player player) {
+	default OutgoingPacket coordinatePacket(Player player) {
 		return null;
 	}
 	
@@ -25,6 +26,6 @@ public interface OutgoingPacket {
 		return -1;
 	}
 	
-	GamePacket write(Player player);
+	GamePacket write(Player player, ByteBuf buf);
 	
 }

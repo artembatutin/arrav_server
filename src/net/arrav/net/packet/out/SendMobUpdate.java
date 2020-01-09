@@ -1,5 +1,6 @@
 package net.arrav.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.arrav.net.codec.game.GamePacket;
@@ -21,8 +22,8 @@ import java.util.Iterator;
  */
 public final class SendMobUpdate implements OutgoingPacket {
 	
-	public GamePacket write(Player player) {
-		GamePacket out = new GamePacket(this);
+	public GamePacket write(Player player, ByteBuf buf) {
+		GamePacket out = new GamePacket(this, buf);
 		out.message(65, GamePacketType.VARIABLE_SHORT);
 		GamePacket blockMsg = new GamePacket(-1, Unpooled.buffer(64), GamePacketType.RAW);
 		try {
