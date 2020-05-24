@@ -1,0 +1,78 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.3.21'
+}
+apply plugin:'application'
+apply plugin: 'idea'
+apply plugin: 'java'
+
+mainClassName = "net.arrav.Arrav"
+
+repositories {
+    maven { url 'https://repo.maven.apache.org/maven2/' }
+    jcenter()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+compileJava   {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+dependencies {
+
+
+    compile group: 'org.apache.commons', name: 'commons-compress', version: '1.18'
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.12'
+    compile group: 'it.unimi.dsi', name: 'fastutil', version: '8.2.3'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+    compile group: 'com.zaxxer', name: 'HikariCP', version: '3.3.1'
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    compile group: 'com.jsoniter', name: 'jsoniter', version: '0.9.23'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
+    compile group: 'com.google.guava', name: 'guava', version: '28.0-jre'
+
+    compile group: 'org.apache.ant', name: 'ant-compress', version: '1.5'
+
+
+
+    compile group: 'io.netty', name: 'netty-all', version: '4.1.39.Final'
+
+
+
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+
+}
+
+repositories {
+    jcenter()
+    // Required for OkHTTP 3.13.0-SNAPSHOT
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+}
+
+sourceSets {
+    main.java.srcDirs = ['src', 'file_server']
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'ArravServer',
+                'Main-Class': mainClassName
+    }
+    baseName = 'arrav-w1'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}

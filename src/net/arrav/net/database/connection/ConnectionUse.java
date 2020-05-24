@@ -2,6 +2,7 @@ package net.arrav.net.database.connection;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.MoreExecutors;
 import net.arrav.net.database.pool.ConnectionPool;
 
 import java.sql.Connection;
@@ -54,7 +55,7 @@ public abstract class ConnectionUse {
 						onFailure(e);
 					}
 				}
-			});
+			}, MoreExecutors.directExecutor());
 		} catch(Exception e) {
 			e.printStackTrace();
 			onError();

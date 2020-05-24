@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Set;
 
 public final class Utility {
 	
@@ -50,7 +51,7 @@ public final class Utility {
 		
 		return String.format("%02d:%02d:%02d", h, m, s);
 	}
-	
+
 	/**
 	 * Gets all of the classes in a directory
 	 * @param directory The directory to iterate through
@@ -58,7 +59,7 @@ public final class Utility {
 	 */
 	public static ObjectList<Object> getClassesInDirectory(String directory) {
 		ObjectList<Object> classes = new ObjectArrayList<>();
-		for(File file : new File("./bin/" + directory.replace(".", "/")).listFiles()) {
+		for(File file : new File(directory.replace(".", "/")).listFiles()) {
 			if(file.getName().contains("$")) {
 				continue;
 			}
@@ -71,13 +72,30 @@ public final class Utility {
 		}
 		return classes;
 	}
-	
+
+	/**
+	 * Returns all the classes in a {@link Set} inside a {@link ObjectList}
+	 * @param clazzSet the set of classes
+	 * @return the list of classes
+	 */
+	public static ObjectList<Object> getClassesInSet(Set<Class<?>> clazzSet) {
+		ObjectList<Object> classes = new ObjectArrayList<>();
+		try {
+			for(Class<?> clazz : clazzSet ) {
+				Object obj = clazz.newInstance();
+				classes.add(obj);
+			}
+		} catch (InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return classes;
+	}
+
 	/**
 	 * Gets all of the sub directories of a folder
 	 */
 	public static ObjectList<String> getSubDirectories(Class<?> clazz) {
-		String directory = "./bin/" + clazz.getPackage().getName().replace(".", "/");
-		File file = new File(directory);
+		File file = new File(clazz.getProtectionDomain().getCodeSource().getLocation().getFile());
 		String[] directories = file.list((current, name) -> new File(current, name).isDirectory());
 		return new ObjectArrayList<>(directories);
 	}

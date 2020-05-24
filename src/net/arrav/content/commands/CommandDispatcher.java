@@ -5,6 +5,7 @@ import net.arrav.util.LoggerUtils;
 import net.arrav.util.Utility;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.container.session.ExchangeSessionManager;
+import org.reflections.Reflections;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.IncompleteAnnotationException;
@@ -12,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -108,16 +110,15 @@ public final class CommandDispatcher {
 	 */
 	public static void load() {
 		logger.info("Loading commands...");
-		
-		for(String directory : Utility.getSubDirectories(CommandDispatcher.class)) {
-			List<Command> commands = Utility.getClassesInDirectory(CommandDispatcher.class.getPackage().getName() + "." + directory).stream().map(clazz -> (Command) clazz).collect(Collectors.toList());
-			
-			for(Command command : commands) {
-				if(command.getClass().getAnnotation(CommandSignature.class) == null) {
-					throw new IncompleteAnnotationException(CommandSignature.class, command.getClass().getName() + " has no annotation.");
-				}
-				COMMANDS.put(command.getClass().getAnnotation(CommandSignature.class), command);
+		Set<Class<?>> clazzSet = new Reflections(CommandDispatcher.class.getPackage().getName()).getTypesAnnotatedWith(CommandSignature.class);
+		List<Command> commands = Utility.getClassesInSet(clazzSet).stream().map(clazz -> (Command) clazz).collect(Collectors.toList());
+
+
+		for(Command command : commands) {
+			if(command.getClass().getAnnotation(CommandSignature.class) == null) {
+				throw new IncompleteAnnotationException(CommandSignature.class, command.getClass().getName() + " has no annotation.");
 			}
+			COMMANDS.put(command.getClass().getAnnotation(CommandSignature.class), command);
 		}
 		logger.info("Successfully loaded " + COMMANDS.size() + " commands.");
 	}

@@ -37,8 +37,10 @@ import net.arrav.world.World;
 import net.arrav.world.entity.actor.attribute.AttributeKey;
 import net.arrav.world.entity.actor.combat.attack.listener.CombatListenerDispatcher;
 import net.arrav.world.locale.InstanceManager;
+import org.reflections.Reflections;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -239,16 +241,20 @@ public final class Arrav {
 		MobAction.init();
 		ObjectAction.init();
 	}
-	
+
 	public static void loadEvents() {
-		for(String directory : Utility.getSubDirectories(ActionInitializer.class)) {
+		Set<Class<? extends ActionInitializer>> clazzSet = new Reflections(ActionInitializer.class.getPackage().getName()).getSubTypesOf(ActionInitializer.class);
+		int i = 0;
+		for(Class<?> c : clazzSet) {
 			try {
-				List<ActionInitializer> s = Utility.getClassesInDirectory(ActionInitializer.class.getPackage().getName() + "." + directory).stream().map(clazz -> (ActionInitializer) clazz).collect(Collectors.toList());
-				s.forEach(ActionInitializer::init);
-			} catch(Exception e) {
+				Object clazz = c.newInstance();
+				((ActionInitializer) clazz).init();
+				i++;
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		LOGGER.info("Successfully loaded " + i + " action listeners." );
 	}
 	
 }
