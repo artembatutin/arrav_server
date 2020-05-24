@@ -156,7 +156,7 @@ public final class World extends AbstractScheduledService {
 		} else if(UPDATE_LIMIT < 200) {
 			UPDATE_LIMIT += 20;
 		}
-		System.out.println("took: " + millis + " - players: " + players.size() + " - mobs: " + mobs.size() + " - logins: " + logs);
+		//System.out.println("took: " + millis + " - players: " + players.size() + " - mobs: " + mobs.size() + " - logins: " + logs);
 	}
 	
 	@Override

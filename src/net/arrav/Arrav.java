@@ -95,11 +95,11 @@ public final class Arrav {
 	 * @param args The runtime arguments, none of which are parsed.
 	 */
 	public static void main(String[] args) {
-		boolean online = Boolean.parseBoolean(args[0]);
+		/*boolean online = Boolean.parseBoolean(args[0]);
 		if(online) {
 			Runtime.getRuntime().addShutdownHook(new GameShutdownHook());
 			DEBUG = false;
-		}
+		}*/
 		try {
 			Arrav arrav = new Arrav();
 			arrav.init();
