@@ -26,16 +26,14 @@ public final class InputXOptionPacket implements IncomingPacket {
 			return;
 		}
 		
-		player.getAttr().get("enter_x_item_tab").set(interfaceId);
+		player.getAttr().get("enter_x_item_tab").set(0);//bank tab
 		player.getAttr().get("enter_x_item_slot").set(slot);
-		if(interfaceId >= 0 && interfaceId <= 9) {
-			if(player.getAttr().get("banking").getBoolean()) {
+		if(interfaceId == Bank.BANK_INVENTORY_ID && player.getAttr().get("banking").getBoolean()) {
 				player.out(new SendEnterAmount("How many you would like to withdraw?", s -> () -> {
 					if(player.getAttr().get("banking").getBoolean()) {
 						player.getBank().withdraw(player, player.getAttr().get("enter_x_item_tab").getInt(), player.getAttr().get("enter_x_item_slot").getInt(), Integer.parseInt(s));
 					}
 				}));
-			}
 		}
 		switch(interfaceId) {
 			case 3823:

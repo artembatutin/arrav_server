@@ -345,17 +345,20 @@ public final class ItemInterfacePacket implements IncomingPacket {
 
 		if(interfaceId < 0 || fromSlot < 0 || toSlot < 0)
 			return;
-		if(interfaceId >= 0 && interfaceId <= 9) {
-			if((boolean) player.getAttr().get("insert_item").get()) {
-				player.getBank().swap(interfaceId, fromSlot, toSlot);
-			} else {
-				player.getBank().transfer(interfaceId, fromSlot, toSlot);
-			}
-		}
+
 		switch(interfaceId) {
 			case 3214://inventory
 				player.getInventory().swap(fromSlot, toSlot);
 				break;
+			case Bank.BANK_INVENTORY_ID:
+				if(player.getAttr().get("banking").getBoolean()) {
+					if((boolean) player.getAttr().get("insert_item").get()) {
+						player.getBank().swap(0, fromSlot, toSlot);
+					} else {
+						player.getBank().transfer(0, fromSlot, toSlot);
+					}
+				}
+					break;
 			case Bank.SIDEBAR_INVENTORY_ID://banking inventory
 				if(player.getAttr().get("banking").getBoolean()) {
 					player.getInventory().swap(fromSlot, toSlot);

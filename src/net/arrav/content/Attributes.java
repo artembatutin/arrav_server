@@ -23,11 +23,12 @@ public final class Attributes {
 	 * @return <true> if the action was completed, <false> otherwise.
 	 */
 	public static boolean firstSlot(Player player, int interfaceId, int slot) {
-		if(interfaceId >= 0 && interfaceId <= 9 && player.getAttr().get("banking").getBoolean()) {
-			player.getBank().withdraw(player, interfaceId, slot, 1);
-			return true;
-		}
 		switch(interfaceId) {
+
+			case Bank.BANK_INVENTORY_ID:
+				if(player.getAttr().get("banking").getBoolean())
+					player.getBank().withdraw(player, 0, slot, 1);
+				break;
 
 			case Bank.SIDEBAR_INVENTORY_ID:
 				if(player.getAttr().get("banking").getBoolean())
@@ -56,11 +57,12 @@ public final class Attributes {
 	 * @return <true> if the action was completed, <false> otherwise.
 	 */
 	public static boolean secondSlot(Player player, int interfaceId, int slot) {
-		if(interfaceId >= 0 && interfaceId <= 9 && player.getAttr().get("banking").getBoolean()) {
-			player.getBank().withdraw(player, interfaceId, slot, 5);
-			return true;
-		}
+
 		switch(interfaceId) {
+			case Bank.BANK_INVENTORY_ID:
+				if(player.getAttr().get("banking").getBoolean())
+					player.getBank().withdraw(player, 0, slot, 5);
+				break;
 			case Bank.SIDEBAR_INVENTORY_ID:
 				if(player.getAttr().get("banking").getBoolean())
 					player.getBank().deposit(slot, 5, player.getInventory(), true);
@@ -88,11 +90,14 @@ public final class Attributes {
 	 * @return <true> if the action was completed, <false> otherwise.
 	 */
 	public static boolean thirdSlot(Player player, int interfaceId, int slot) {
-		if(interfaceId >= 0 && interfaceId <= 9 && player.getAttr().get("banking").getBoolean()) {
-			player.getBank().withdraw(player, interfaceId, slot, 10);
-			return true;
-		}
+
 		switch(interfaceId) {
+
+			case Bank.BANK_INVENTORY_ID:
+				if(player.getAttr().get("banking").getBoolean())
+					player.getBank().withdraw(player, 0, slot, 10);
+				break;
+
 			case Bank.SIDEBAR_INVENTORY_ID:
 				if(player.getAttr().get("banking").getBoolean())
 					player.getBank().deposit(slot, 10, player.getInventory(), true);
@@ -120,18 +125,22 @@ public final class Attributes {
 	 * @return <true> if the action was completed, <false> otherwise.
 	 */
 	public static boolean fourthSlot(Player player, int interfaceId, int itemId, int slot) {
-		if(interfaceId >= 0 && interfaceId <= 9 && player.getAttr().get("banking").getBoolean()) {
-			int amount;
-			if(player.getAttr().get("withdraw_as_note").getBoolean()) {
-				amount = player.getBank().amount(itemId);
-			} else {
-				Item itemWithdrew = new Item(itemId, 1);
-				amount = ItemDefinition.DEFINITIONS[itemWithdrew.getId()].isStackable() ? player.getBank().amount(itemId) : 28;
-			}
-			player.getBank().withdraw(player, interfaceId, slot, amount);
-			return true;
-		}
+
 		switch(interfaceId) {
+
+			case Bank.BANK_INVENTORY_ID:
+				if(player.getAttr().get("banking").getBoolean()) {
+					int amount;
+					if(player.getAttr().get("withdraw_as_note").getBoolean()) {
+						amount = player.getBank().amount(itemId);
+					} else {
+						Item itemWithdrew = new Item(itemId, 1);
+						amount = ItemDefinition.DEFINITIONS[itemWithdrew.getId()].isStackable() ? player.getBank().amount(itemId) : 28;
+					}
+					player.getBank().withdraw(player, 0, slot, amount);
+				}
+				break;
+
 			case 5064:
 			case Bank.SIDEBAR_INVENTORY_ID:
 				Item inv = player.getInventory().get(slot);
