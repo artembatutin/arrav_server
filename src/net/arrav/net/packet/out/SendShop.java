@@ -45,7 +45,7 @@ public final class SendShop implements OutgoingPacket {
 							out.put(item.getStock());
 						}
 					}
-					boolean noted = (id >= 270 && id <= 279) || (id == 3900);
+					boolean noted = false;
 					out.putShort(item.getId() + (noted ? 0 : 1), ByteTransform.A, ByteOrder.LITTLE);
 					if(item.getPrice() > 254) {
 						out.put(255);

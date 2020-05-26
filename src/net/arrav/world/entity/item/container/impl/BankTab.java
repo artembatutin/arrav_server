@@ -15,12 +15,7 @@ import java.util.OptionalInt;
  * An implementation of a single{@link ItemContainer} bank tab.
  */
 final class BankTab extends ItemContainer {
-	
-	/**
-	 * The inventory item display widget identifier.
-	 */
-	static final int BANKING_INVENTORY = 5064;
-	
+
 	/**
 	 * The slot of this tab in the bank.
 	 */
@@ -152,8 +147,8 @@ final class BankTab extends ItemContainer {
 				inv.remove(new Item(i.getId(), i.getAmount()), i.getIndex(), false);
 			}
 		}
-		player.out(new SendContainer(5064, inv));
-		player.out(new SendContainer(3214, inv));
+		player.out(new SendContainer(Bank.SIDEBAR_INVENTORY_ID, inv));
+		player.out(new SendContainer(3214, inv));//?
 		forceRefresh(player);
 	}
 	
@@ -193,7 +188,7 @@ final class BankTab extends ItemContainer {
 	 */
 	private void forceRefresh(Player player) {
 		Inventory inventory = player.getInventory();
-		inventory.refreshBulk(player, BANKING_INVENTORY);
+		inventory.refreshBulk(player, Bank.SIDEBAR_INVENTORY_ID);
 		inventory.updateBulk();
 		updateBulk();
 	}
@@ -242,7 +237,7 @@ final class BankTab extends ItemContainer {
 		
 		@Override
 		public int widget() {
-			return 270 + slot;
+			return Bank.BANK_INVENTORY_ID + slot;
 		}
 		
 		@Override

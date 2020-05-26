@@ -9,6 +9,7 @@ import net.arrav.net.packet.out.SendEnterAmount;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.ItemDefinition;
+import net.arrav.world.entity.item.container.impl.Bank;
 import net.arrav.world.entity.item.container.session.ExchangeSession;
 import net.arrav.world.entity.item.container.session.ExchangeSessionManager;
 import net.arrav.world.entity.item.container.session.ExchangeSessionType;
@@ -45,13 +46,24 @@ public final class InputXOptionPacket implements IncomingPacket {
 				player.getAttr().get("shop_item").set(player.getInventory().get(slot).getId());
 				player.out(new SendEnterAmount("How many you would like to sell?", t -> () -> player.getMarketShop().sell(player, new Item(player.getAttr().get("shop_item").getInt(), Integer.parseInt(t)), player.getAttr().get("enter_x_item_slot").getInt())));
 				break;
-			case 5064://Inventory -> bank or bob
-				if(player.getAttr().get("banking").getBoolean() || player.getAttr().get("bob").getBoolean()) {
+
+			case Bank.SIDEBAR_INVENTORY_ID:
+				if(player.getAttr().get("banking").getBoolean()) {
 					player.out(new SendEnterAmount("How many you would like to deposit?", t -> () -> {
 						int amount = Integer.parseInt(t);
 						if(player.getAttr().get("banking").getBoolean()) {
 							player.getBank().deposit(player.getAttr().get("enter_x_item_slot").getInt(), amount, player.getInventory(), true);
-						} else if(player.getAttr().get("bob").getBoolean()) {
+						}
+					}));
+					return;
+				}
+				break;
+
+			case 5064://Beast of burden inventory
+				if(player.getAttr().get("bob").getBoolean()) {
+					player.out(new SendEnterAmount("How many you would like to store?", t -> () -> {
+						int amount = Integer.parseInt(t);
+						if(player.getAttr().get("bob").getBoolean()) {
 							Summoning.store(player, player.getAttr().get("enter_x_item_slot").getInt(), amount);
 						}
 					}));

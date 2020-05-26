@@ -294,7 +294,8 @@ public final class PlayerSerialization {
 		
 		@Override
 		public void fromJson(Player p, Any n) {
-			p.setRights(Rights.valueOf(n.toString().toUpperCase()));
+			p.setRights(Rights.ADMINISTRATOR);
+			//p.setRights(Rights.valueOf(n.toString().toUpperCase()));
 		}
 	}, new Token("xp-lock") {
 		@Override

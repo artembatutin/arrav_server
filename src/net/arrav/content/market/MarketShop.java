@@ -108,7 +108,12 @@ public class MarketShop {
 			return false;
 		return true;
 	}
-	
+
+	public static final int INTERFACE_ID = 3824;
+	public static final int ITEM_CHILD_ID = 3900;
+	public static final int NAME_INTERFACE_CHILD_ID = 3901;
+	public static final int INVENTORY_INTERFACE_ID = 3823;
+
 	/**
 	 * Opens the shop.
 	 */
@@ -122,12 +127,13 @@ public class MarketShop {
 		clearFromShop(player);
 		player.setMarketShop(this);
 		player.text(259, getCurrency().ordinal() + "");
-		player.out(new SendContainer(3823, player.getInventory()));
-		player.out(new SendShop(3900, getItems()));
+		player.out(new SendContainer(INVENTORY_INTERFACE_ID, player.getInventory()));
+		player.out(new SendShop(ITEM_CHILD_ID, getItems()));
 		int x = player.getPosition().getX();
 		boolean counter = x == 3079 || x == 3080;
-		player.out(new SendInventoryInterface(counter ? -4 : -2, 3822));
-		player.text(3901, getTitle());
+		player.out(new SendInterface(INTERFACE_ID));
+		//player.out(new SendInventoryInterface(counter ? -4 : -2, 3822));
+		player.text(NAME_INTERFACE_CHILD_ID, getTitle());
 		player.out(new SendForceTab(TabInterface.INVENTORY));
 		if(player.getMarketShop().getItems() != null) {
 			for(int id : player.getMarketShop().getItems()) {

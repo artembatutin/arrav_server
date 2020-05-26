@@ -5,6 +5,7 @@ import net.arrav.net.packet.in.ItemInterfacePacket;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.ItemDefinition;
+import net.arrav.world.entity.item.container.impl.Bank;
 
 /**
  * The attributes class which holds functionality for actions done
@@ -27,12 +28,15 @@ public final class Attributes {
 			return true;
 		}
 		switch(interfaceId) {
-			case 5064:
-				if(player.getAttr().get("banking").getBoolean()) {
+
+			case Bank.SIDEBAR_INVENTORY_ID:
+				if(player.getAttr().get("banking").getBoolean())
 					player.getBank().deposit(slot, 1, player.getInventory(), true);
-				} else if(player.getAttr().get("bob").getBoolean()) {
+				return true;
+
+			case 5064:
+				if(player.getAttr().get("bob").getBoolean())
 					Summoning.store(player, slot, 1);
-				}
 				return true;
 			case 2702:
 				if(player.getAttr().get("bob").getBoolean()) {
@@ -57,12 +61,14 @@ public final class Attributes {
 			return true;
 		}
 		switch(interfaceId) {
-			case 5064:
-				if(player.getAttr().get("banking").getBoolean()) {
+			case Bank.SIDEBAR_INVENTORY_ID:
+				if(player.getAttr().get("banking").getBoolean())
 					player.getBank().deposit(slot, 5, player.getInventory(), true);
-				} else if(player.getAttr().get("bob").getBoolean()) {
+				return true;
+
+			case 5064:
+				if(player.getAttr().get("bob").getBoolean())
 					Summoning.store(player, slot, 5);
-				}
 				return true;
 			case 2702:
 				if(player.getAttr().get("bob").getBoolean()) {
@@ -87,12 +93,13 @@ public final class Attributes {
 			return true;
 		}
 		switch(interfaceId) {
-			case 5064:
-				if(player.getAttr().get("banking").getBoolean()) {
+			case Bank.SIDEBAR_INVENTORY_ID:
+				if(player.getAttr().get("banking").getBoolean())
 					player.getBank().deposit(slot, 10, player.getInventory(), true);
-				} else if((Boolean) player.getAttr().get("bob").get()) {
+				return true;
+			case 5064:
+				if((Boolean) player.getAttr().get("bob").get())
 					Summoning.store(player, slot, 10);
-				}
 				return true;
 			case 2702:
 				if(player.getAttr().get("bob").getBoolean()) {
@@ -126,6 +133,7 @@ public final class Attributes {
 		}
 		switch(interfaceId) {
 			case 5064:
+			case Bank.SIDEBAR_INVENTORY_ID:
 				Item inv = player.getInventory().get(slot);
 				if(inv == null) {
 					return false;

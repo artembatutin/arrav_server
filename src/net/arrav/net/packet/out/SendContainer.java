@@ -56,7 +56,7 @@ public final class SendContainer implements OutgoingPacket {
 					} else {
 						out.put(item.getAmount());
 					}
-					boolean noted = (id >= 270 && id <= 279) || (id == 3900);
+					boolean noted = false;
 					out.putShort(item.getId() + (noted ? 0 : 1), ByteTransform.A, ByteOrder.LITTLE);
 					if(id == 3900) {
 						if(item.getValue().getPrice() > 254) {

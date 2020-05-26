@@ -9,37 +9,60 @@ import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.container.ItemContainer;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 public final class Bank {
-	
+
+
+	/**
+	 * The bank inventory id.
+	 */
+	public static final int BANK_INVENTORY_ID = 5382;
+
+	/**
+	 * The bank window id.
+	 */
+	public static final int BANK_WINDOW_ID = 5292;
+
+	/**
+	 * The sidebar id.
+	 */
+	public static final int SIDEBAR_ID = 2005;
+
+	/**
+	 * The sidebar inventory id.
+	 */
+	public static final int SIDEBAR_INVENTORY_ID = 2006;
+
+
 	/**
 	 * The tab size.
 	 */
 	public final static int SIZE = 9;
-	
+
 	/**
 	 * The main player to which this bank is associated to.
 	 */
 	private final Player player;
-	
+
 	/**
 	 * Main bank tabs containers array.
 	 */
 	private final BankTab[] tabs = new BankTab[SIZE];
-	
+
 	/**
 	 * Flag if initially all items were sent.
 	 */
 	private boolean bulkStartSent = false;
-	
+
 	/**
 	 * The currently selected tab index.
 	 */
 	private int selectedTab;
-	
+
 	public Optional<Player> viewing = Optional.empty();
-	
+
 	public Bank(Player player) {
 		this.player = player;
 		this.selectedTab = 0;
@@ -47,7 +70,7 @@ public final class Bank {
 			tabs[i] = new BankTab(player, i, i == 0 ? 200 : 60);
 		}
 	}
-	
+
 	/**
 	 * Copies a bank of a player to another one.
 	 * @param player the player leeching the bank.
@@ -61,7 +84,7 @@ public final class Bank {
 		}
 		return b;
 	}
-	
+
 	/**
 	 * Opens and refreshes the bank for {@code player}.
 	 */
@@ -78,56 +101,57 @@ public final class Bank {
 		player.getAttr().get("banking").set(true);
 		player.out(new SendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0));
 		player.out(new SendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0));
-		player.out(new SendInventoryInterface(-3, 5063));
-		player.out(new SendContainer(5064, this.player.getInventory()));
+		player.out(new SendInventoryInterface(BANK_WINDOW_ID, SIDEBAR_ID));
+		player.out(new SendContainer(SIDEBAR_INVENTORY_ID, this.player.getInventory()));
 		if(!bulkStartSent) {
 			refreshAll();
 			bulkStartSent = true;
 		}
 	}
-	
+
 	public void open(Player p) {
 		if(!MinigameHandler.execute(player, m -> m.canBank(player))) {
 			return;
 		}
-		
+
 		Bank bank = p.getBank();
-		
+
 		p.getBank().shiftAll();
-		
 		player.getAttr().get("banking").set(true);
 		player.out(new SendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0));
 		player.out(new SendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0));
-		player.out(new SendInventoryInterface(-3, 5063));
-		player.out(new SendContainer(5064, this.player.getInventory()));
-		
+		player.out(new SendInventoryInterface(BANK_WINDOW_ID, SIDEBAR_ID));
+		player.out(new SendContainer(SIDEBAR_INVENTORY_ID, this.player.getInventory()));
+		player.out(new SendContainer(BANK_INVENTORY_ID, bank.tabs[0]));
 		viewing = Optional.of(p);
-		
+
 		updateViewer(player, bank, false);
 	}
-	
+
 	private void updateViewer(Player viewing, Bank bank, boolean refreshInventory) {
+		System.out.println("ere"+refreshInventory);
 		if(refreshInventory) {
-			viewing.getInventory().refreshBulk(player, BankTab.BANKING_INVENTORY);
+			viewing.getInventory().refreshBulk(player, BANK_INVENTORY_ID);
 			viewing.getInventory().updateBulk();
 		}
-		
+
 		for(int i = 0; i < SIZE; i++) {
 			if(bank.tabs[i] == null) {
 				continue;
 			}
-			
-			viewing.out(new SendContainer(270 + i, bank.tabs[i]));
+
+			//viewing.out(new SendContainer(270 + i, bank.tabs[i]));
+			viewing.out(new SendContainer(BANK_INVENTORY_ID, bank.tabs[i]));
 		}
 	}
-	
+
 	/**
 	 * Deposits a newly created item into the bank.
 	 */
 	public int deposit(Item item) {
 		return tabs[getSelectedTab()].add(item);
 	}
-	
+
 	/**
 	 * Withdraws an item from this banking tab from the {@code bankSlot} slot. This is
 	 * used for when a player is manually withdrawing an item using the banking tab
@@ -147,7 +171,7 @@ public final class Bank {
 		});
 		return withdrawed;
 	}
-	
+
 	/**
 	 * Handles the item tab switching in the bank.
 	 * @param tab the tab being grabbed from.
@@ -168,7 +192,7 @@ public final class Bank {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Transfers the item in {@code slot} to {@code newSlot}. If an item already
 	 * exists in the new slot, the items in this container will be shifted to
@@ -182,7 +206,7 @@ public final class Bank {
 	public boolean transfer(int tab, int slot, int newSlot) {
 		return tabs[tab].transfer(slot, newSlot);
 	}
-	
+
 	/**
 	 * Swaps the positions of two items in this container.
 	 * @param tab the selected tab sent by the client.
@@ -192,7 +216,7 @@ public final class Bank {
 	public void swap(int tab, int slot, int otherSlot) {
 		tabs[tab].swap(slot, otherSlot);
 	}
-	
+
 	/**
 	 * Deposits an item to this bank that currently exists in a specified {@link ItemContainer}.
 	 * This is used for when a player is manually depositing an item using the banking tab interface.
@@ -205,7 +229,7 @@ public final class Bank {
 	public boolean deposit(int slot, int amount, ItemContainer from, boolean refresh) {
 		return from.get(slot) != null && tabs[getSelectedTab()].deposit(player, slot, amount, refresh, from);
 	}
-	
+
 	/**
 	 * Attemps to add an item to the selected tab.
 	 * @param slot the tab slot to be added to.
@@ -215,7 +239,7 @@ public final class Bank {
 	public int add(int slot, Item item) {
 		return tabs[slot].add(item);
 	}
-	
+
 	/**
 	 * Seeks to find if an item exists in a tab.
 	 * @param item the item looking for.
@@ -229,7 +253,7 @@ public final class Bank {
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * Seeks to find if an item exists in a tab.
 	 * @param item the item id looking for.
@@ -242,14 +266,14 @@ public final class Bank {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Refreshes the contents of this bank tab container to the interface.
 	 */
 	public void refresh() {
 		tabs[getSelectedTab()].updateBulk();
 	}
-	
+
 	/**
 	 * Refreshes the contents of this bank tab container to the interface.
 	 */
@@ -258,14 +282,14 @@ public final class Bank {
 			t.updateBulk();
 		}
 	}
-	
+
 	/**
 	 * Shifts all items in this container to the left to fill any {@code null} slots.
 	 */
 	public void shift() {
 		tabs[getSelectedTab()].shift();
 	}
-	
+
 	/**
 	 * Shifts all items in this container to the left to fill any {@code null} slots.
 	 */
@@ -277,7 +301,7 @@ public final class Bank {
 		}
 		player.getAttr().get("shifting_req").set(false);
 	}
-	
+
 	/**
 	 * Refreshes the contents of this bank container to the interface.
 	 */
@@ -285,7 +309,7 @@ public final class Bank {
 		for(BankTab t : tabs)
 			t.clear();
 	}
-	
+
 	/**
 	 * Gets the total quantity of all items with {@code id}.
 	 * @param id the item identifier to retrieve the total quantity of.
@@ -295,7 +319,7 @@ public final class Bank {
 	public int amount(int id) {
 		return tabs[getSelectedTab()].computeAmountForId(id);
 	}
-	
+
 	/**
 	 * Sets the container of items to {@code items}. The container will not hold
 	 * any references to the array, nor the item instances in the array.
@@ -306,7 +330,7 @@ public final class Bank {
 	public final void setItems(int i, Item[] items) {
 		tabs[i].fillItems(items);
 	}
-	
+
 	/**
 	 * Sets the container of items to {@code items}. The container will not hold
 	 * any references to the array, nor the item instances in the array.
@@ -316,7 +340,7 @@ public final class Bank {
 	public final void setItems(Item[] items) {
 		tabs[getSelectedTab()].fillItems(items);
 	}
-	
+
 	/**
 	 * Gets the {@link ItemContainer} depending on the index.
 	 * @param index the index to get the items from.
@@ -325,7 +349,7 @@ public final class Bank {
 	public final ItemContainer container(int index) {
 		return tabs[index];
 	}
-	
+
 	/**
 	 * Gets the items in an array format.
 	 * @param index the index to get the items from.
@@ -334,7 +358,7 @@ public final class Bank {
 	public final Item[] items(int index) {
 		return tabs[index].getItems();
 	}
-	
+
 	/**
 	 * Fills up the items from the array.
 	 * @param index bank tab id.
@@ -343,7 +367,7 @@ public final class Bank {
 	public final void fillItems(int index, Item[] items) {
 		tabs[index].fillItems(items);
 	}
-	
+
 	/**
 	 * Gets the selected tab slot.
 	 * @return selected tab slot.
@@ -351,7 +375,7 @@ public final class Bank {
 	public int getSelectedTab() {
 		return selectedTab;
 	}
-	
+
 	/**
 	 * The the new value for {@link #selectedTab}.
 	 * @param selectedTab the new value to set.
@@ -359,26 +383,34 @@ public final class Bank {
 	public void setTab(int selectedTab) {
 		this.selectedTab = selectedTab;
 	}
-	
+
+	/**
+	 *
+	 * @return
+	 */
+	public BankTab[] getTabs() {
+		return tabs;
+	}
+
 	/**
 	 * Deposits a whole {@code Inventory} directly into the selected tab.
 	 */
 	public void depositeInventory() {
 		tabs[getSelectedTab()].depositeInventory(player);
 	}
-	
+
 	/**
 	 * Deposits a whole {@code Equipment} directly into the selected tab.
 	 */
 	public void depositeEquipment() {
 		tabs[getSelectedTab()].depositeEquipment(player);
 	}
-	
+
 	/**
 	 * Deposits a whole {@code FamiliarContainer} directly into the selected tab.
 	 */
 	public void depositeFamiliar() {
 		tabs[getSelectedTab()].depositeFamiliar(player);
 	}
-	
+
 }

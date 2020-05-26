@@ -15,6 +15,7 @@ import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.ItemDefinition;
+import net.arrav.world.entity.item.container.impl.Bank;
 import net.arrav.world.entity.item.container.session.ExchangeSession;
 import net.arrav.world.entity.item.container.session.ExchangeSessionManager;
 import net.arrav.world.entity.item.container.session.ExchangeSessionType;
@@ -341,6 +342,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		int interfaceId = buf.getShort(ByteTransform.A, ByteOrder.LITTLE);
 		int fromSlot = buf.getShort(ByteTransform.A, ByteOrder.LITTLE);
 		int toSlot = buf.getShort(ByteOrder.LITTLE);
+
 		if(interfaceId < 0 || fromSlot < 0 || toSlot < 0)
 			return;
 		if(interfaceId >= 0 && interfaceId <= 9) {
@@ -354,13 +356,11 @@ public final class ItemInterfacePacket implements IncomingPacket {
 			case 3214://inventory
 				player.getInventory().swap(fromSlot, toSlot);
 				break;
-			case 5382://unsure
-				break;
-			case 5064://banking inventory
+			case Bank.SIDEBAR_INVENTORY_ID://banking inventory
 				if(player.getAttr().get("banking").getBoolean()) {
 					player.getInventory().swap(fromSlot, toSlot);
-					player.getInventory().refreshSingle(player, 5064, fromSlot);
-					player.getInventory().refreshSingle(player, 5064, toSlot);
+					player.getInventory().refreshSingle(player, Bank.SIDEBAR_INVENTORY_ID, fromSlot);
+					player.getInventory().refreshSingle(player, Bank.SIDEBAR_INVENTORY_ID, toSlot);
 				}
 				break;
 		}
