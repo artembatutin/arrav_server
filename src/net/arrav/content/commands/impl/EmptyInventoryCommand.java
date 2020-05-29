@@ -5,7 +5,7 @@ import net.arrav.content.commands.CommandSignature;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"emptyinventory"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR}, syntax = "Empties your inventory, ::emptyinventory")
+@CommandSignature(alias = {"emptyinventory", "empty"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR}, syntax = "Empties your inventory, ::emptyinventory")
 public final class EmptyInventoryCommand implements Command {
 	
 	@Override

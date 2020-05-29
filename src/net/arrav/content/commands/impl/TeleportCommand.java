@@ -18,7 +18,7 @@ public final class TeleportCommand implements Command {
 		if(cmd.length > 3) {
 			z = Integer.parseInt(cmd[3]);
 		}
-		DefaultTeleportSpell.startTeleport(player, new Position(x, y, z));
+		player.move(new Position(x, y, z));
 	}
 	
 }
