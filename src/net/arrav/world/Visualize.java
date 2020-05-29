@@ -38,7 +38,17 @@ public final class Visualize {
 	public Visualize(Animation animation, Graphic graphic) {
 		this(Optional.of(animation), Optional.of(graphic));
 	}
-	
+
+	/**
+	 * Constructs a new {@link Visualize}.
+	 * @param animation {@link #animation}.
+	 * @param graphic {@link #graphic}.
+	 */
+	public Visualize(int animation, int graphic) {
+		this(Optional.of(new Animation(animation)), Optional.of(new Graphic(graphic)));
+	}
+
+
 	/**
 	 * Attempts to play the visualization for the specified {@code character}.
 	 * @param character the character to start the visualization for.

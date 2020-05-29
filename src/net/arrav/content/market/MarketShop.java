@@ -213,7 +213,7 @@ public class MarketShop {
 			player.getDialogueBuilder().append(new NpcDialogue(3400, Expression.MAD, "Are you trying to fool me? You haven't", "completed the wave to buy these pair of gloves."));
 			return false;
 		}
-		if(Skillcape.buy(player, marketItem.getId())) {
+		if(Skillcape.buy(player, item)) {
 			return false;
 		}
 		if(item.getAmount() == 0) { // indicates the player is getting the price.

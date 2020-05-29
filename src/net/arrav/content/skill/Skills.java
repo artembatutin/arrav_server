@@ -330,7 +330,7 @@ public final class Skills {
 	public static int determineSkillcape(Player player, Skillcape skillcape) {
 		Skill[] skills = player.getSkills();
 		int count = (int) Arrays.stream(skills).filter(s -> s.getRealLevel() >= 99).count();
-		return count > 1 ? skillcape.getItem() + 1 : skillcape.getItem();
+		return count > 1 ? skillcape.getItem().getId() + 1 : skillcape.getItem().getId();
 	}
 	
 	/**

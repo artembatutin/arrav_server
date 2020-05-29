@@ -137,7 +137,7 @@ public final class Attributes {
 						Item itemWithdrew = new Item(itemId, 1);
 						amount = ItemDefinition.DEFINITIONS[itemWithdrew.getId()].isStackable() ? player.getBank().amount(itemId) : 28;
 					}
-					player.getBank().withdraw(player, 0, slot, amount);
+					player.getBank().withdraw(player, 0, slot, amount);//bank tab (should be interfaceid)
 				}
 				break;
 

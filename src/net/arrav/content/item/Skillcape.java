@@ -12,6 +12,7 @@ import net.arrav.content.dialogue.impl.PlayerDialogue;
 import net.arrav.content.skill.Skills;
 import net.arrav.world.Animation;
 import net.arrav.world.Graphic;
+import net.arrav.world.Visualize;
 import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
@@ -23,55 +24,51 @@ import java.util.Optional;
 /**
  * An enumeration of skill cape emotes.
  * @author Artem Batutin
+ * @autho Tamatea
  */
 public enum Skillcape {
-	ATTACK_CAPE(9747, 9749, 4959, 823, Skills.ATTACK, 4288),
-	STRENGTH_CAPE(9750, 9752, 4981, 828, Skills.STRENGTH, 8270),
-	DEFENCE_CAPE(9753, 9755, 4961, 824, Skills.DEFENCE, 705),
-	RANGING_CAPE(9756, 9758, 4973, 832, Skills.RANGED, 682),
-	PRAYER_CAPE(9759, 9761, 4979, 829, Skills.PRAYER, 802),
-	MAGIC_CAPE(9762, 9764, 4939, 813, Skills.MAGIC, 1658),
-	RUNECRAFT_CAPE(9765, 9767, 4947, 817, Skills.RUNECRAFTING, 5913),
-	HITPOINTS_CAPE(9768, 9770, 4971, 833, Skills.HITPOINTS, 6180),
-	AGILITY_CAPE(9771, 9773, 4977, 830, Skills.AGILITY, 437),
-	HERBLORE_CAPE(9774, 9776, 4969, 835, Skills.HERBLORE, 455),
-	THIEVING_CAPE(9777, 9779, 4965, 826, Skills.THIEVING, 2270),
-	CRAFTING_CAPE(9780, 9782, 4949, 818, Skills.CRAFTING, 805),
-	FLETCHING_CAPE(9783, 9785, 4937, 812, Skills.FLETCHING, 1281),
-	SLAYER_CAPE(9786, 9788, 4967, 1656, Skills.SLAYER, 8275),
-	CONSTRUCT_CAPE(9789, 9791, 4953, 820, Skills.CONSTRUCTION, 4247),
-	MINING_CAPE(9792, 9794, 4941, 814, Skills.MINING, 3295),
-	SMITHING_CAPE(9795, 9797, 4943, 815, Skills.SMITHING, 604),
-	FISHING_CAPE(9798, 9800, 4951, 819, Skills.FISHING, 308),
-	COOKING_CAPE(9801, 9803, 4955, 821, Skills.COOKING, 847),
-	FIREMAKING_CAPE(9804, 9806, 4975, 831, Skills.FIREMAKING, 4946),
-	WOODCUTTING_CAPE(9807, 9809, 4957, 822, Skills.WOODCUTTING, 4906),
-	FARMING_CAPE(9810, 9812, 4963, 825, Skills.FARMING, 3299),
-	SUMMONING_CAPE(12169, 12171, 8525, 1515, Skills.SUMMONING, 6790),
-	HUNTER_CAPE(9948, 9950, 5158, 907, Skills.HUNTER, 5113),
-	VETERAN_CAPE(20763, 20764, 352, 1446, -1, -1);
+	ATTACK_CAPE(new Item(9747), new Item(9749), new Visualize(4959, 823), Skills.ATTACK, 4288),
+	STRENGTH_CAPE(new Item(9750), new Item(9752), new Visualize(4981, 828), Skills.STRENGTH, 8270),
+	DEFENCE_CAPE(new Item(9753), new Item(9755), new Visualize(4961, 824), Skills.DEFENCE, 705),
+	RANGING_CAPE(new Item(9756), new Item(9758), new Visualize(4973, 832), Skills.RANGED, 682),
+	PRAYER_CAPE(new Item(9759), new Item(9761), new Visualize(4979, 829), Skills.PRAYER, 802),
+	MAGIC_CAPE(new Item(9762), new Item(9764), new Visualize(4939, 813), Skills.MAGIC, 1658),
+	RUNECRAFT_CAPE(new Item(9765), new Item(9767), new Visualize(4947, 817), Skills.RUNECRAFTING, 5913),
+	HITPOINTS_CAPE(new Item(9768), new Item(9770), new Visualize(4971, 833), Skills.HITPOINTS, 6180),
+	AGILITY_CAPE(new Item(9771), new Item(9773), new Visualize(4977, 830), Skills.AGILITY, 437),
+	HERBLORE_CAPE(new Item(9774), new Item(9776), new Visualize(4969, 835), Skills.HERBLORE, 455),
+	THIEVING_CAPE(new Item(9777), new Item(9779), new Visualize(4965, 826), Skills.THIEVING, 2270),
+	CRAFTING_CAPE(new Item(9780), new Item(9782), new Visualize(4949, 818), Skills.CRAFTING, 805),
+	FLETCHING_CAPE(new Item(9783), new Item(9785), new Visualize(4937, 812), Skills.FLETCHING, 1281),
+	SLAYER_CAPE(new Item(9786), new Item(9788), new Visualize(4967, 1656), Skills.SLAYER, 8275),
+	CONSTRUCT_CAPE(new Item(9789), new Item(9791), new Visualize(4953, 820), Skills.CONSTRUCTION, 4247),
+	MINING_CAPE(new Item(9792), new Item(9794), new Visualize(4941, 814), Skills.MINING, 3295),
+	SMITHING_CAPE(new Item(9795), new Item(9797), new Visualize(4943, 815), Skills.SMITHING, 604),
+	FISHING_CAPE(new Item(9798), new Item(9800), new Visualize(4951, 819), Skills.FISHING, 308),
+	COOKING_CAPE(new Item(9801), new Item(9803), new Visualize(4955, 821), Skills.COOKING, 847),
+	FIREMAKING_CAPE(new Item(9804), new Item(9806), new Visualize(4975, 831), Skills.FIREMAKING, 4946),
+	WOODCUTTING_CAPE(new Item(9807), new Item(9809), new Visualize(4957, 822), Skills.WOODCUTTING, 4906),
+	FARMING_CAPE(new Item(9810), new Item(9812), new Visualize(4963, 825), Skills.FARMING, 3299),
+	SUMMONING_CAPE(new Item(12169), new Item (12171), new Visualize(8525, 1515), Skills.SUMMONING, 6790),
+	HUNTER_CAPE(new Item(9948), new Item(9950), new Visualize(5158, 907), Skills.HUNTER, 5113),
+	VETERAN_CAPE(new Item(20763), new Item(20764), new Visualize(352, 1446), -1, -1);
 	
 	private static final ImmutableSet<Skillcape> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Skillcape.class));
 	
 	/**
 	 * The item identification for this skillcape.
 	 */
-	private final int item;
+	private final Item item;
 	
 	/**
 	 * The hood item identification for this skillcape.
 	 */
-	private final int hood;
+	private final Item hood;
 	
 	/**
-	 * The animation id of the emote.
+	 * The visualization of the emote.
 	 */
-	private final int animation;
-	
-	/**
-	 * The graphic id of the emote.
-	 */
-	private final int graphic;
+	private final Visualize visualize;
 	
 	/**
 	 * The skill id the cape is representing.
@@ -87,16 +84,14 @@ public enum Skillcape {
 	 * Constructs a new {@link Skillcape}.
 	 * @param item {@link #item}.
 	 * @param hood {@link #hood}.
-	 * @param animation {@link #animation}.
-	 * @param graphic {@link #graphic}.
+	 * @param visualize {@link #visualize}.
 	 * @param skill {@link #skill}.
 	 * @param master {@link #master}.
 	 */
-	Skillcape(int item, int hood, int animation, int graphic, int skill, int master) {
+	Skillcape(Item item, Item hood, Visualize visualize, int skill, int master) {
 		this.item = item;
 		this.hood = hood;
-		this.animation = animation;
-		this.graphic = graphic;
+		this.visualize = visualize;
 		this.skill = skill;
 		this.master = master;
 	}
@@ -108,7 +103,7 @@ public enum Skillcape {
 	 * @return {@code false} if the player hasn't met the criteria, {@code true} otherwise.
 	 */
 	public static boolean verifySkillCape(Player player, Item item) {
-		Skillcape c = getSkillcape(item.getId());
+		Skillcape c = getSkillcape(item);
 		
 		if(c == null) {
 			return true;
@@ -125,12 +120,12 @@ public enum Skillcape {
 		ButtonAction b = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				Skillcape cape = getSkillcape(player.getEquipment().get(Equipment.CAPE_SLOT).getId());
+				Skillcape cape = getSkillcape(player.getEquipment().get(Equipment.CAPE_SLOT));
 				if(cape == null) {
+					player.message("You must be wearing a skillcape to do the emote.");
 					return true;
 				}
-				player.animation(new Animation(cape.getAnimation()));
-				player.graphic(new Graphic(cape.getGraphic()));
+				cape.visualize.play(player);
 				return true;
 			}
 		};
@@ -150,7 +145,7 @@ public enum Skillcape {
 									int item = Skills.determineSkillcape(player, c);
 									player.getDialogueBuilder().append(new GiveItemDialogue(new Item(item, 1), "You received the skill cape!", Optional.of(() -> {
 										player.getInventory().remove(new Item(995, 500000));
-										player.getInventory().add(new Item(c.hood, 1));
+										player.getInventory().add(c.hood);
 									})));
 								} else {
 									player.getDialogueBuilder().append(new PlayerDialogue(Expression.SAD, "I don't have enough inventory space for this skill cape."));
@@ -176,7 +171,7 @@ public enum Skillcape {
 	 * @param item the item id.
 	 * @return {@code true} if the player got into the dialogue stage, {@code false} otherwise.
 	 */
-	public static boolean buy(Player player, int item) {
+	public static boolean buy(Player player, Item item) {
 		Skillcape c = getSkillcape(item);
 		
 		if(c == null) {
@@ -195,22 +190,20 @@ public enum Skillcape {
 	 * @param item the item to grab the skillcape from.
 	 * @return {@code Skillcape} matching the specified item.
 	 */
-	private static Skillcape getSkillcape(int item) {
-		return VALUES.stream().filter(c -> c.item == item || c.item + 1 == item || c.hood == item).findAny().orElse(null);
+	private static Skillcape getSkillcape(Item item) {
+		if(item == null)
+			return null;
+		return VALUES.stream().filter(c -> c.item == item || c.item.getId() + 1 == item.getId() || c.hood == item).findAny().orElse(null);
 	}
 	
-	public int getItem() {
+	public Item getItem() {
 		return item;
 	}
-	
-	public int getAnimation() {
-		return animation;
+
+	public Visualize getVisualize() {
+		return visualize;
 	}
-	
-	public int getGraphic() {
-		return graphic;
-	}
-	
+
 	public int getSkill() {
 		return skill;
 	}
