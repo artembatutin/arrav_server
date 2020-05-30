@@ -91,13 +91,13 @@ public final class TextUtils {
 	 * @param price the price to format.
 	 * @return the newly formatted price.
 	 */
-	public static String formatPrice(int price) {
+	public static String formatPrice(long price) {
 		if(price >= 1000 && price < 1000000) {
 			return "(" + (price / 1000) + "K)";
 		} else if(price >= 1000000) {
 			return "(" + (price / 1000000) + " million)";
 		}
-		return Integer.toString(price);
+		return Long.toString(price);
 	}
 	
 	/**

@@ -24,6 +24,12 @@ public abstract class ItemAction extends Action {
 	public void register(int item) {
 		ItemActionPacket.ITEM_ACTION.register(item, this);
 	}
+
+	public void register(int... items) {
+		for(int item : items) {
+			register(item);
+		}
+	}
 	
 	public void registerEquip(int item) {
 		ItemInterfacePacket.EQUIP.register(item, this);

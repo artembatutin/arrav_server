@@ -1,5 +1,10 @@
 package net.arrav.util.rand;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+
+import java.util.Collections;
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * The enumerated type whose elements represent the chance rates.
  * @author lare96 <http://github.com/lare96>
@@ -57,8 +62,29 @@ public enum Chance {
 	Chance(double denominator) {
 		this.roll = 1D / denominator;
 	}
-	
-	public double getRoll() {
+
+	public boolean success() {
+		return this.getRoll() >= ThreadLocalRandom.current().nextDouble();
+	}
+
+
+	/**
+	 * Iterates through all of the rarities from rarest
+	 * to most common, and checks if they pass. If none pass
+	 * it will return {@code ALWAYS}.
+	 *
+	 * @return chance -  the {@link Chance} returned.
+	 */
+	public static Chance getRandomChance(ObjectArrayList<Chance> chances) {
+		Collections.reverse(chances);
+		for(Chance c : chances) {
+			if(c.success())
+				return c;
+		}
+		return null;
+	}
+
+    public double getRoll() {
 		return roll;
 	}
 	
