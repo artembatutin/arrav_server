@@ -3,6 +3,7 @@ package net.arrav.content.skill.agility.obstacle.impl;
 import net.arrav.content.skill.agility.obstacle.ObstacleActivity;
 import net.arrav.task.Task;
 import net.arrav.world.Animation;
+import net.arrav.world.Direction;
 import net.arrav.world.entity.actor.move.ForcedMovement;
 import net.arrav.world.entity.actor.move.ForcedMovementManager;
 import net.arrav.world.entity.actor.player.Player;
