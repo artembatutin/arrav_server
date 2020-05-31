@@ -1,14 +1,16 @@
-package net.arrav.content.itemBoxes;
+package net.arrav.action.item;
 
 import net.arrav.action.ActionInitializer;
 import net.arrav.action.impl.ItemAction;
+import net.arrav.content.itemBoxes.BoxConstants;
+import net.arrav.content.itemBoxes.ItemBoxHandler;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
 
 /**
  * @author Tamatea Schofield <tamateea@gmail.com>
  */
-public class ItemBoxActionInitializer extends ActionInitializer {
+public class ItemBoxes extends ActionInitializer {
     @Override
     public void init() {
         ItemAction action = new ItemAction() {

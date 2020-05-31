@@ -3,6 +3,7 @@ package net.arrav.world.locale;
 import com.jsoniter.annotation.JsonIgnore;
 import com.jsoniter.annotation.JsonProperty;
 import net.arrav.util.rand.RandomUtils;
+import net.arrav.world.Area;
 import net.arrav.world.Direction;
 
 /**
@@ -465,5 +466,9 @@ public class Position {
 		result = prime * result + y;
 		result = prime * result + z;
 		return result;
+	}
+
+	public boolean inside(Area area) {
+		return x >= area.getWest() && x <= area.getEast() && y >= area.getSouth() && y <= area.getNorth();
 	}
 }

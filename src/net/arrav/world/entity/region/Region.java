@@ -62,7 +62,7 @@ public final class Region extends Entity {
 	/**
 	 * A {@link ObjectList} of {@link GroundItem}s in this {@code Region}.
 	 */
-	private final ObjectList<GroundItem> items = new ObjectArrayList<>();
+	private final ObjectArrayList<GroundItem> items = new ObjectArrayList<>();
 	
 	/**
 	 * A {@link Set} of active {@link Player}s in this {@code Region}.
@@ -316,9 +316,31 @@ public final class Region extends Entity {
 	 * Gets the item node list.
 	 * @return item nodes.
 	 */
-	public ObjectList<GroundItem> getItems() {
+	public ObjectArrayList<GroundItem> getItems() {
 		return items;
+		/*ObjectArrayList<GroundItem> instancedItems = new ObjectArrayList<>();
+		for(GroundItem item : items) {
+			if(item.getInstance() == Instance.NORMAL)
+				instancedItems.add(item);
+		}
+		return instancedItems;*/
 	}
+
+	/**
+	 * Gets item nodes with a specific {@link Instance} property.
+	 * @param instance the instance the ground items are on.
+	 * @return item nodes.
+	 */
+	/*public ObjectArrayList<GroundItem> getItemsInstance(Instance instance) {
+		ObjectArrayList<GroundItem> instancedItems = new ObjectArrayList<>();
+		for(GroundItem item : items) {
+			if(item.getInstance() == instance)
+				instancedItems.add(item);
+		}
+		return instancedItems;
+	}*/
+
+
 	
 	/**
 	 * The method that retrieves the item with {@code id} on {@code position}.

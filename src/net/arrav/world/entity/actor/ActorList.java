@@ -15,6 +15,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -121,7 +122,17 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 	public Iterator<E> iterator() {
 		return new EntityListIterator<>(this);
 	}
-	
+
+
+	/**
+	 * Returns a sequential stream with this collection as its source.
+	 *
+	 * @return a sequential stream over the elements in this collection.
+	 */
+	public Stream<E> stream() {
+		return Arrays.stream(entities);
+	}
+
 	/**
 	 * Finds the first element that matches {@code filter}.
 	 * @param filter The filter to apply to the elements of this sequence.

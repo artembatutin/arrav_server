@@ -21,6 +21,7 @@ import net.arrav.content.PlayerPanel;
 import net.arrav.content.RestoreSpecialTask;
 import net.arrav.content.RestoreStatTask;
 import net.arrav.content.commands.CommandDispatcher;
+import net.arrav.content.itemBoxes.ItemBoxHandler;
 import net.arrav.content.object.pit.FirepitManager;
 import net.arrav.content.object.star.ShootingStarManager;
 import net.arrav.content.scoreboard.ScoreboardTask;
@@ -240,10 +241,11 @@ public final class Arrav {
 		ItemOnItemAction.init();
 		MobAction.init();
 		ObjectAction.init();
+		ItemBoxHandler.init();
 	}
 
 	public static void loadEvents() {
-		Set<Class<? extends ActionInitializer>> clazzSet = new Reflections(ActionInitializer.class.getPackage().getName()).getSubTypesOf(ActionInitializer.class);
+		Set<Class<? extends ActionInitializer>> clazzSet = new Reflections("net.arrav").getSubTypesOf(ActionInitializer.class);
 		int i = 0;
 		for(Class<?> c : clazzSet) {
 			try {

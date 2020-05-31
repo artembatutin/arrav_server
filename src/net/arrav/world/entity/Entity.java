@@ -116,7 +116,7 @@ public abstract class Entity {
 	public void setInstance(int instance) {
 		this.instance = instance;
 	}
-	
+
 	/**
 	 * @return The current state that this {@code Entity} is in.
 	 */
