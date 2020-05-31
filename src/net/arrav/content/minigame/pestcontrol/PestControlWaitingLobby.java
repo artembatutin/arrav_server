@@ -13,12 +13,13 @@ import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.mob.drop.Drop;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.entity.item.ItemCache;
+import net.arrav.world.entity.item.cached.CachedItem;
+import net.arrav.world.entity.item.cached.ItemCache;
 import net.arrav.world.entity.object.GameObject;
 import net.arrav.world.locale.Position;
 
 import static net.arrav.content.minigame.Minigame.MinigameSafety.SAFE;
-import static net.arrav.world.entity.item.ItemCache.*;
+import static net.arrav.world.entity.item.cached.ItemCache.*;
 
 public final class PestControlWaitingLobby extends MinigameLobby {
 	
@@ -191,7 +192,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 					}
 					if(Currency.PEST_POINTS.getCurrency().takeCurrency(player, (index == 0 ? 30 : 15))) {
 						//three items.
-						Drop pack = RandomUtils.random(COMMON.get(packs[index]));
+						CachedItem pack = RandomUtils.random(COMMON.get(packs[index]));
 						player.getInventory().add(new Item(pack.getId(), RandomUtils.inclusive(pack.getMinimum(), pack.getMaximum())));
 					}
 					return true;

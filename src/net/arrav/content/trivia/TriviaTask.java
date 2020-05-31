@@ -3,6 +3,8 @@ package net.arrav.content.trivia;
 import net.arrav.task.Task;
 import net.arrav.world.World;
 import net.arrav.world.entity.actor.player.Player;
+import net.arrav.world.text.ColorConstants;
+import net.arrav.world.text.MessageBuilder;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -47,7 +49,9 @@ public final class TriviaTask extends Task {
 			reminded = true;
 			return;
 		}
-		World.get().message("@red@[Trivia Bot]: @blu@The last trivia question hasn't been answered and has expired!");
+		MessageBuilder mb = new MessageBuilder();
+		mb.appendPrefix("Trivia Bot", ColorConstants.BLACK, ColorConstants.CYAN).append(": ").append("The last trivia question hasn't been answered and has expired!", ColorConstants.BLUE);
+		World.get().message(mb.toString());
 		entry.reset();
 		reminded = false;
 	}

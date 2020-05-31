@@ -1,4 +1,4 @@
-package net.arrav.world.entity.item;
+package net.arrav.world.entity.item.cached;
 
 import net.arrav.world.entity.actor.mob.drop.Drop;
 import net.arrav.world.entity.actor.mob.drop.DropTable;
@@ -106,5 +106,5 @@ public enum ItemCache {
 	 * The {@link EnumMap} consisting of the cached common {@link Drop}s used
 	 * across many {@link DropTable}s.
 	 */
-	public static final EnumMap<ItemCache, Drop[]> COMMON = new EnumMap<>(ItemCache.class);
+	public static final EnumMap<ItemCache, CachedItem[]> COMMON = new EnumMap<>(ItemCache.class);
 }

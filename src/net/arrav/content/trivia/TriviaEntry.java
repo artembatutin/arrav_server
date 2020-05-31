@@ -8,7 +8,10 @@ import net.arrav.util.rand.RandomUtils;
 import net.arrav.world.World;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
+import net.arrav.world.text.ColorConstants;
+import net.arrav.world.text.MessageBuilder;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,14 +38,20 @@ public final class TriviaEntry {
 	 * Sends a message to the entire world asking the trivia question.
 	 */
 	public void ask() {
-		World.get().message("@red@[Trivia Bot]: @blu@" + current.question);
+		MessageBuilder mb = new MessageBuilder();
+		mb.appendPrefix("Trivia Bot", ColorConstants.BLACK, ColorConstants.CYAN).append(": ").
+				append(current.question, ColorConstants.BLUE);
+		World.get().message(mb.toString());
 	}
 	
 	/**
 	 * Sends a reminder to the world.
 	 */
 	public void reminder() {
-		World.get().message("@red@[Trivia Bot]: @blu@The last question hasn't been answered yet!");
+		MessageBuilder mb = new MessageBuilder();
+		mb.appendPrefix("Trivia Bot", ColorConstants.BLACK, ColorConstants.CYAN).append(": ").
+				append("The last question hasn't been answered yet!", ColorConstants.BLUE);
+		World.get().message(mb.toString());
 		ask();
 	}
 	
@@ -51,8 +60,12 @@ public final class TriviaEntry {
 	 * @param player the player to send the question to.
 	 */
 	public void onLogin(Player player) {
-		if(current != null)
-			player.message("@red@[Trivia Bot]: @blu@" + current.question);
+		if(current != null) {
+			MessageBuilder mb = new MessageBuilder();
+			mb.appendPrefix("Trivia Bot", ColorConstants.BLACK, ColorConstants.CYAN).append(": ").
+					append(current.question, ColorConstants.BLUE);
+			player.message(mb.toString());
+		}
 	}
 	
 	/**

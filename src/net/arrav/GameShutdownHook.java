@@ -62,20 +62,6 @@ public final class GameShutdownHook extends Thread {
 				MarketItem.serializeMarketItems();
 			});
 			exit.submit(() -> {
-				//drops
-				DropManager.serializeDrops();
-				try {
-					BufferedWriter out = new BufferedWriter(new FileWriter("./data/suggested_drops.txt", true));
-					for(Drop d : MobInformationPacket.SUGGESTED) {
-						out.write(d.toString());
-						out.newLine();
-					}
-					MobInformationPacket.SUGGESTED.clear();
-					out.close();
-				} catch(Exception ignored) {
-				}
-			});
-			exit.submit(() -> {
 				try {
 					BufferedWriter out = new BufferedWriter(new FileWriter("./bugs.txt", true));
 					for(String b : BugCommand.REPORT_LINES) {

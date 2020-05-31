@@ -1,29 +1,22 @@
 package net.arrav.net.packet.in;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.arrav.net.codec.game.GamePacket;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.net.packet.out.SendMobDrop;
 import net.arrav.util.rand.Chance;
 import net.arrav.world.entity.actor.mob.MobDefinition;
-import net.arrav.world.entity.actor.mob.drop.Drop;
 import net.arrav.world.entity.actor.mob.drop.DropManager;
 import net.arrav.world.entity.actor.mob.drop.DropTable;
-import net.arrav.world.entity.actor.mob.drop.SuggestedDrop;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.Rights;
 import net.arrav.world.entity.item.ItemDefinition;
 
-import static net.arrav.content.achievements.Achievement.DROP_A_SUG;
 
 /**
  * The message sent from the client which depends on the Mob Information panel integration.
  * @author Artem Batutin
  */
-public final class MobInformationPacket implements IncomingPacket {
-	
-	public static final ObjectList<SuggestedDrop> SUGGESTED = new ObjectArrayList<>();
+public final class MobInformationPacket implements IncomingPacket {//todo - reimplement this when i do drop interface
 	
 	@Override
 	public void handle(Player player, int opcode, int size, GamePacket buf) {
@@ -41,7 +34,7 @@ public final class MobInformationPacket implements IncomingPacket {
 					}
 				}
 			}
-			SuggestedDrop suggested = new SuggestedDrop(mob, item, min, max, chance);
+			/*SuggestedDrop suggested = new SuggestedDrop(mob, item, min, max, chance);
 			if(player.getRights() == Rights.ADMINISTRATOR) {
 				int tableId = mob;
 				if(DropManager.getRedirects().containsKey(mob)) {
@@ -67,11 +60,11 @@ public final class MobInformationPacket implements IncomingPacket {
 					int index = 0;
 					String itemName = ItemDefinition.get(item).getName().toLowerCase().replaceAll(" ", "_");
 					if(itemName != null) {
-						for(Drop d : table.getCommon()) {
+						for(Drop d : table.getDrops()) {
 							if(d != null) {
 								String name = ItemDefinition.get(d.getId()).getName().toLowerCase().replaceAll(" ", "_");
 								if(itemName.contains(name.toLowerCase()) || name.contains(itemName.toLowerCase())) {
-									table.getCommon().remove(index);
+									table.getDrops().remove(index);
 									table.sort();
 									player.message("Removed: " + d.toString());
 									player.out(new SendMobDrop(mob, table));
@@ -101,7 +94,7 @@ public final class MobInformationPacket implements IncomingPacket {
 				if(suggested.isRare())
 					table.getRare().add(suggested.toDrop());
 				else
-					table.getCommon().add(suggested.toDrop());
+					table.getDrops().add(suggested.toDrop());
 				table.sort();
 				player.message("Added " + suggested.toString());
 				player.out(new SendMobDrop(mob, table));
@@ -109,7 +102,7 @@ public final class MobInformationPacket implements IncomingPacket {
 				DROP_A_SUG.inc(player);
 				SUGGESTED.add(suggested);
 				player.message("Your suggestion has been submitted.");
-			}
+			}*/
 		} else {
 			int id = buf.getShort();
 			if(id < 0 || id > MobDefinition.DEFINITIONS.length) {

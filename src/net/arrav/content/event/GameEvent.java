@@ -2,6 +2,8 @@ package net.arrav.content.event;
 
 
 import net.arrav.world.World;
+import net.arrav.world.text.ColorConstants;
+import net.arrav.world.text.MessageBuilder;
 
 /**
  * The abstract for game events.
@@ -185,7 +187,9 @@ public abstract class GameEvent {
         if (System.currentTimeMillis() - lastEventMessage < 1000) {
             return;
         }
-        World.get().message(message);
+        MessageBuilder mb = new MessageBuilder();
+        mb.appendPrefix("Global", ColorConstants.GREEN1, ColorConstants.YELLOW).append(message, ColorConstants.DEEP_PINK);
+        World.get().message(mb.toString());
         lastEventMessage = System.currentTimeMillis();
     }
 

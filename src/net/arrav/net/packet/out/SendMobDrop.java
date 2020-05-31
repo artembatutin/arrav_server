@@ -9,6 +9,7 @@ import net.arrav.world.entity.actor.mob.drop.Drop;
 import net.arrav.world.entity.actor.mob.drop.DropTable;
 import net.arrav.world.entity.actor.player.Player;
 
+//todo - reimplement this when i do drop interface
 public final class SendMobDrop implements OutgoingPacket {
 	
 	private final int id;
@@ -26,7 +27,7 @@ public final class SendMobDrop implements OutgoingPacket {
 	
 	@Override
 	public GamePacket write(Player player, ByteBuf buf) {
-		GamePacket out = new GamePacket(this, buf);
+		/*GamePacket out = new GamePacket(this, buf);
 		out.message(121, GamePacketType.VARIABLE_SHORT);
 		out.putInt(id);
 		if(id != 0) {
@@ -35,9 +36,9 @@ public final class SendMobDrop implements OutgoingPacket {
 			MobDefinition def = MobDefinition.DEFINITIONS[id];
 			if(def == null)
 				return null;
-			out.putShort(table == null ? 0 : table.getCommon().size() + table.getRare().size());
-			if(table != null && table.getCommon() != null) {
-				for(Drop d : table.getCommon()) {
+			out.putShort(table == null ? 0 : table.getDrops().size() + table.getRare().size());
+			if(table != null && table.getDrops() != null) {
+				for(Drop d : table.getDrops()) {
 					out.putShort(d.getId());
 					out.putShort(d.getMinimum());
 					out.putShort(d.getMaximum());
@@ -54,6 +55,7 @@ public final class SendMobDrop implements OutgoingPacket {
 			}
 		}
 		out.endVarSize();
-		return out;
+		return out;*/
+		return null;
 	}
 }

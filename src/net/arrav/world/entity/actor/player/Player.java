@@ -89,6 +89,7 @@ import net.arrav.world.entity.actor.combat.weapon.WeaponAnimation;
 import net.arrav.world.entity.actor.combat.weapon.WeaponInterface;
 import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.mob.MobAggression;
+import net.arrav.world.entity.actor.mob.drop.chance.NpcDropChanceHandler;
 import net.arrav.world.entity.actor.player.assets.AntifireDetails;
 import net.arrav.world.entity.actor.player.assets.PrivateMessage;
 import net.arrav.world.entity.actor.player.assets.Rights;
@@ -548,7 +549,12 @@ public final class Player extends Actor {
 	 * The cached player's farming patches progress.
 	 */
 	public Object2ObjectArrayMap<PatchType, Patch> patches = new Object2ObjectArrayMap<>(PatchType.VALUES.size());
-	
+
+	/**
+	 * A {@link NpcDropChanceHandler} for handling the players drop chances.
+	 */
+	private NpcDropChanceHandler dropChanceHandler= new NpcDropChanceHandler(this);
+
 	/**
 	 * Creates a new {@link Player}.
 	 */
@@ -2287,5 +2293,12 @@ public final class Player extends Actor {
 	public AtomicBoolean getInitialUpdate() {
 		return initialUpdate;
 	}
-	
+
+    public NpcDropChanceHandler getDropChanceHandler() {
+        return dropChanceHandler;
+    }
+
+    public void setDropChanceHandler(NpcDropChanceHandler dropChanceHandler) {
+        this.dropChanceHandler = dropChanceHandler;
+    }
 }

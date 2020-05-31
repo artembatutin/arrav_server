@@ -1,17 +1,15 @@
 package net.arrav.world.entity.actor.mob.drop;
 
 import net.arrav.content.market.MarketItem;
-import net.arrav.util.rand.Chance;
 import net.arrav.util.rand.RandomUtils;
+import net.arrav.world.entity.actor.mob.drop.chance.NpcDropChance;
 import net.arrav.world.entity.item.Item;
 
-import java.util.concurrent.ThreadLocalRandom;
-
-import static net.arrav.util.rand.Chance.*;
 
 /**
  * A model representing an item within a rational item table that can be dropped.
  * @author Artem Batutin
+ * @author Tamatea <tamateea@gmail.com>
  */
 public class Drop {
 	
@@ -33,7 +31,22 @@ public class Drop {
 	/**
 	 * The chance of this item being dropped.
 	 */
-	private final Chance chance;
+	private final int chance;
+
+	/**
+	 * If the item is a rare drop.
+	 */
+	private final boolean rare;
+
+	/**
+	 * Whether or not a beam gfx should be displayed with the drop.
+	 */
+	private final boolean beam;
+
+	/**
+	 * A {@link NpcDropChance} for testing the drop.
+	 */
+	private NpcDropChance dropChance;
 	
 	/**
 	 * Creates a new {@link Drop}.
@@ -42,11 +55,14 @@ public class Drop {
 	 * @param maximum the maximum amount that will be dropped.
 	 * @param chance the chance of this item being dropped.
 	 */
-	public Drop(int id, int minimum, int maximum, Chance chance) {
+	public Drop(int id, int minimum, int maximum, int chance, boolean rare, boolean beam) {
 		this.id = id;
 		this.minimum = minimum;
 		this.maximum = maximum;
 		this.chance = chance;
+		this.rare = rare;
+		this.beam = beam;
+		this.dropChance = new NpcDropChance(chance);
 	}
 	
 	@Override
@@ -58,7 +74,7 @@ public class Drop {
 	 * Converts this {@code Drop} into an {@link Item} Object.
 	 * @return the converted drop.
 	 */
-	public Item toItem() {
+	Item toItem() {
 		return new Item(getId(), RandomUtils.inclusive(getMinimum(), getMaximum()));
 	}
 	
@@ -90,18 +106,18 @@ public class Drop {
 	 * Gets the chance of this item being dropped.
 	 * @return the drop chance.
 	 */
-	public Chance getChance() {
+	public int getChance() {
 		return chance;
 	}
-	
+
 	/**
-	 * Returns the condition if this item is rare.
-	 * @return value.
+	 * Gets the Npc drop chance associated with the drop.
+	 * @return The {@link NpcDropChance}.
 	 */
-	public boolean isRare() {
-		return chance == RARE || chance == VERY_RARE || chance == EXTREMELY_RARE;
+	public NpcDropChance getDropChance() {
+		return dropChance;
 	}
-	
+
 	/**
 	 * Gets the pricing value of this drop.
 	 * @return value.
@@ -109,16 +125,30 @@ public class Drop {
 	public int value() {
 		return MarketItem.get(id).getPrice() * maximum;
 	}
-	
+
 	/**
-	 * Tries to roll this item.
-	 * @param rand random gen.
-	 * @return condition if successful.
+	 * Get's the drops rare property.
+	 * @return the rare property.
 	 */
-	public boolean roll(ThreadLocalRandom rand) {
-		return chance.getRoll() >= rand.nextDouble();
+	public boolean isRare() {
+		return rare;
 	}
-	
+
+	/**
+	 * Gets the beam property.
+	 * @return the beam.
+	 */
+	public boolean isBeam() {
+		return beam;
+	}
+
+	/**
+	 * @return If the drop should always be dropped.
+	 */
+	boolean isAlways() {
+		return chance <= 1;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if(o == this)
@@ -136,7 +166,7 @@ public class Drop {
 		result = 31 * result + getId();
 		result = 31 * result + getMinimum();
 		result = 31 * result + getMaximum();
-		result = 31 * result + getChance().hashCode();
+		result = 31 * result + getChance();
 		return result;
 	}
 	

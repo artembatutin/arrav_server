@@ -1,11 +1,8 @@
 package net.arrav.world.entity.actor.mob.drop;
 
-import com.google.gson.Gson;
-import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.arrav.util.json.JsonSaver;
+import net.arrav.content.skill.Skills;
+import net.arrav.content.skill.prayer.Bone;
 import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.GroundItem;
@@ -15,23 +12,20 @@ import net.arrav.world.locale.Position;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The static-utility class that manages all of the {@link DropTable}s
  * including the process of dropping the items when an {@link Mob} is killed.
  * @author lare96 <http://github.org/lare96>
+ * @author Tamatea <tamateea@gmail.com>
  */
 public final class DropManager {
 	
 	/**
 	 * The {@link HashMap} that consists of the drops for {@link Mob}s.
 	 */
-	private final static Int2ObjectOpenHashMap<DropTable> TABLES = new Int2ObjectOpenHashMap<>();
-	
-	/**
-	 * Mob sharing the same table drop redirects.
-	 */
-	public final static Int2IntArrayMap REDIRECTS = new Int2IntArrayMap();
+	private final static ObjectArrayList<DropTable> TABLES = new ObjectArrayList<>();
 	
 	/**
 	 * Drops the items in {@code victim}s drop table for {@code killer}. If the
@@ -40,8 +34,8 @@ public final class DropManager {
 	 * @param victim the victim that was killed.
 	 */
 	public static void dropItems(Player killer, Mob victim) {
-		DropTable table = TABLES.get(victim.getId());
-		if(table == null) {
+		Optional<DropTable> table = getDroptable(victim.getId());
+		if(!table.isPresent()) {
 			return;
 		}
 		Position pos = victim.getPosition();
@@ -51,48 +45,32 @@ public final class DropManager {
 		final Position p = pos;
 		Region r = victim.getRegion();
 		if(r != null) {
-			List<Item> dropItems = table.toItems(killer, victim);
+			List<Item> dropItems = table.get().toItems(killer, false);
 			for(Item drop : dropItems) {
 				if(drop == null)
 					continue;
+
+				if(killer.getInventory().contains(18337)) {
+					Optional<Bone> bone = Bone.getBone(drop.getId());
+					bone.ifPresent(b -> Skills.experience(killer, b.getExperience() * 1.5, Skills.PRAYER));
+					if(bone.isPresent())
+						continue;
+				}
+				//collectors necklace goes here.
 				r.register(new GroundItem(drop, p, killer));
 			}
 		}
 	}
 	
-	public static Int2ObjectOpenHashMap<DropTable> getTables() {
+	public static ObjectArrayList<DropTable> getTables() {
 		return TABLES;
 	}
-	
-	public static Int2IntArrayMap getRedirects() {
-		return REDIRECTS;
-	}
-	
-	/**
-	 * Serializes the drops.
-	 */
-	public static void serializeDrops() {
-		JsonSaver drops_saver = new JsonSaver();
-		for(int id : TABLES.keySet()) {
-			if(REDIRECTS.containsKey(id))
-				continue;
-			DropTable table = TABLES.get(id);
-			if(table == null)
-				continue;
-			table.sort();
-			ObjectList<Integer> redirects = new ObjectArrayList<>();
-			redirects.add(id);
-			REDIRECTS.forEach((i, r) -> {
-				if(r == id) {
-					redirects.add(i);
-				}
-			});
-			drops_saver.current().add("ids", new Gson().toJsonTree(redirects.toArray()));
-			drops_saver.current().add("common", new Gson().toJsonTree(table.getCommon().toArray()));
-			drops_saver.current().add("rare", new Gson().toJsonTree(table.getRare().toArray()));
-			drops_saver.split();
+
+	public static Optional<DropTable> getDroptable(int npcId)  {
+		for(DropTable table : TABLES) {
+			if(table.getNpcId() == npcId)
+				return Optional.of(table);
 		}
-		drops_saver.publish("./data/def/mob/mob_drops2.json");
+		return Optional.empty();
 	}
-	
 }

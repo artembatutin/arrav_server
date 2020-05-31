@@ -19,12 +19,12 @@ import net.arrav.world.entity.actor.mob.drop.Drop;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.entity.item.ItemCache;
+import net.arrav.world.entity.item.cached.CachedItem;
+import net.arrav.world.entity.item.cached.ItemCache;
 import net.arrav.world.entity.object.GameObject;
 import net.arrav.world.locale.Position;
 
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static net.arrav.content.achievements.Achievement.BARROWS;
 
@@ -191,10 +191,10 @@ public final class BarrowsMinigame extends Minigame {
 				ObjectList<Item> loot = new ObjectArrayList<>();
 				int item = RandomUtils.inclusive(3, 7);
 				while(item != 0) {
-					Drop[] drops = ItemCache.COMMON.get(ItemCache.BARROWS);
+					CachedItem[] drops = ItemCache.COMMON.get(ItemCache.BARROWS);
 					int d = RandomUtils.inclusive(RandomUtils.nextBoolean() ? drops.length - 1 : 6);
-					Drop drop = drops[d];
-					if(drop.roll(ThreadLocalRandom.current())) {
+					CachedItem drop = drops[d];
+					if(drop.getChance().success()) {
 						loot.add(new Item(drop.getId(), RandomUtils.inclusive(drop.getMinimum(), drop.getMaximum())));
 						item--;
 					}

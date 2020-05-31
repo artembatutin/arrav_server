@@ -331,5 +331,15 @@ public final class RandomUtils {
 			return true;
 		return ThreadLocalRandom.current().nextDouble() <= value;
 	}
-	
+	/**
+	 * Determines if a pseudorandomly generated double rounded to two decimal
+	 * places is below or equal to {@code value}.
+	 * @param value the value to determine this for.
+	 * @return {@code true} if successful, {@code false} otherwise.
+	 */
+	public static boolean success(int value) {
+		if(value >= 1)
+			return true;
+		return ThreadLocalRandom.current().nextInt() <= value;
+	}
 }

@@ -35,20 +35,6 @@ public final class SaveCommand implements Command {
 				}
 				player.message("Character files have been saved for everyone online!");
 				break;
-			case "drops":
-				DropManager.serializeDrops();
-				try {
-					BufferedWriter out = new BufferedWriter(new FileWriter("./data/suggested_drops.txt", true));
-					for(Drop d : MobInformationPacket.SUGGESTED) {
-						out.write(d.toString());
-						out.newLine();
-					}
-					MobInformationPacket.SUGGESTED.clear();
-					out.close();
-				} catch(Exception e) {
-				}
-				player.message("Serialized drops!");
-				break;
 			case "shops":
 				MarketCounter.serializeShops();
 				player.message("Serialized shops!");

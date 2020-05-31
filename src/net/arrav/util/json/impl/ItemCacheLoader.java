@@ -4,7 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.arrav.util.json.JsonLoader;
 import net.arrav.world.entity.actor.mob.drop.Drop;
-import net.arrav.world.entity.item.ItemCache;
+import net.arrav.world.entity.item.cached.CachedItem;
+import net.arrav.world.entity.item.cached.ItemCache;
 
 import java.util.Objects;
 
@@ -24,7 +25,7 @@ public final class ItemCacheLoader extends JsonLoader {
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		ItemCache table = Objects.requireNonNull(builder.fromJson(reader.get("table"), ItemCache.class));
-		Drop[] items = Objects.requireNonNull(builder.fromJson(reader.get("items"), Drop[].class));
+		CachedItem[] items = Objects.requireNonNull(builder.fromJson(reader.get("items"), CachedItem[].class));
 		ItemCache.COMMON.put(table, items);
 	}
 }
