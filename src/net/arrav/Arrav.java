@@ -21,6 +21,7 @@ import net.arrav.content.PlayerPanel;
 import net.arrav.content.RestoreSpecialTask;
 import net.arrav.content.RestoreStatTask;
 import net.arrav.content.commands.CommandDispatcher;
+import net.arrav.content.event.GameEventManager;
 import net.arrav.content.itemBoxes.ItemBoxHandler;
 import net.arrav.content.object.pit.FirepitManager;
 import net.arrav.content.object.star.ShootingStarManager;
@@ -242,6 +243,7 @@ public final class Arrav {
 		MobAction.init();
 		ObjectAction.init();
 		ItemBoxHandler.init();
+		GameEventManager.loadEvents();
 	}
 
 	public static void loadEvents() {
