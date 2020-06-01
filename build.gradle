@@ -51,7 +51,7 @@ repositories {
 }
 
 sourceSets {
-    main.java.srcDirs = ['src/main/java', 'src/plugins/java']
+    main.java.srcDirs = ['src/main/java', 'src/plugin/java']
     test.java.srcDirs = ['src/test/java']
 }
 

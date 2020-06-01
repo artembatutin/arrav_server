@@ -1,4 +1,4 @@
-package net.arrav.tool;
+package com.rageps.tool;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;
@@ -12,7 +12,7 @@ import java.security.SecureRandom;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static net.arrav.net.codec.game.GamePacket.TERMINATOR_VALUE;
+import static com.rageps.net.codec.game.GamePacket.TERMINATOR_VALUE;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>

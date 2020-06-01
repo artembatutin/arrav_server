@@ -1,7 +1,10 @@
 package com.rageps.util.json;
 
 import com.google.gson.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Paths;
 
@@ -10,11 +13,20 @@ import java.nio.file.Paths;
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class JsonLoader implements Runnable {
-	
+
+	private static final Logger LOGGER = LogManager.getLogger();
+
+
 	/**
 	 * The path to the {@code .json} file being parsed.
 	 */
 	private final String path;
+
+	/**
+	 * Whether or not data on this should be logged.
+	 */
+	private final boolean log;
+
 	
 	/**
 	 * Creates a new {@link JsonLoader}.
@@ -22,6 +34,7 @@ public abstract class JsonLoader implements Runnable {
 	 */
 	public JsonLoader(String path) {
 		this.path = path;
+		this.log = true;
 	}
 	
 	@Override
@@ -60,9 +73,14 @@ public abstract class JsonLoader implements Runnable {
 				JsonObject reader = (JsonObject) array.get(i);
 				load(reader, builder);
 			}
+			if(this.log) {
+				String name = Paths.get(path).getFileName().toString().replaceAll(".json", "").replaceAll("_", " ");
+				LOGGER.info("Loaded: {} {}", array.size(), name);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+
 		end();
 		return this;
 	}
@@ -80,4 +98,5 @@ public abstract class JsonLoader implements Runnable {
 	public void end() {
 	
 	}
+
 }

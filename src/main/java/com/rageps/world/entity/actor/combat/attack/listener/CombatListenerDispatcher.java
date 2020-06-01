@@ -3,14 +3,14 @@ package com.rageps.world.entity.actor.combat.attack.listener;
 import com.rageps.util.Utility;
 import com.rageps.world.entity.actor.player.Player;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import com.rageps.util.LoggerUtils;
 import com.rageps.world.entity.actor.mob.Mob;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -24,7 +24,8 @@ public final class CombatListenerDispatcher {
 	/**
 	 * The logger that will print important information.
 	 */
-	private static Logger logger = LoggerUtils.getLogger(CombatListenerDispatcher.class);
+	private static final Logger LOGGER = LogManager.getLogger();
+
 	
 	public static void load() {
 		ITEM_LISTENERS = loadItems();
@@ -38,7 +39,7 @@ public final class CombatListenerDispatcher {
 	 */
 	private static Int2ObjectArrayMap<CombatListenerSet> loadItems() {
 		Int2ObjectArrayMap<CombatListenerSet> listeners = new Int2ObjectArrayMap<>();
-		logger.info("Loading item listeners...");
+		LOGGER.info("Loading item listeners...");
 		Set<Class<?>> clazzSet = new Reflections(CombatListenerDispatcher.class.getPackage().getName()).getTypesAnnotatedWith(ItemCombatListenerSignature.class);
 		List<CombatListener<Player>> listeners_class = Utility.getClassesInSet(clazzSet).stream().map(clazz -> (CombatListener<Player>) clazz).collect(Collectors.toList());
 		for(CombatListener<Player> l : listeners_class) {
@@ -48,7 +49,7 @@ public final class CombatListenerDispatcher {
 			}
 		}
 
-		logger.info("Successfully loaded " + listeners.size() + " item listeners.");
+		LOGGER.info("Successfully loaded {} item listeners.", listeners.size());
 		return listeners;
 	}
 
@@ -60,7 +61,7 @@ public final class CombatListenerDispatcher {
 	private static Int2ObjectArrayMap<CombatListener<Mob>> loadNpcs() {
 		Set<Class<?>> clazzSet = new Reflections(CombatListenerDispatcher.class.getPackage().getName()).getTypesAnnotatedWith(NpcCombatListenerSignature.class);
 		Int2ObjectArrayMap<CombatListener<Mob>> listeners = new Int2ObjectArrayMap<>();
-		logger.info("Loading npc listeners...");
+		LOGGER.info("Loading npc listeners...");
 		List<CombatListener<Mob>> listeners_class = Utility.getClassesInSet(clazzSet).stream().map(clazz -> (CombatListener<Mob>) clazz).collect(Collectors.toList());
 		for(CombatListener<Mob> l : listeners_class) {
 			NpcCombatListenerSignature meta = l.getClass().getAnnotation(NpcCombatListenerSignature.class);
@@ -71,7 +72,7 @@ public final class CombatListenerDispatcher {
 				}
 			}
 		}
-		logger.info("Successfully loaded " + listeners.size() + " npc listeners.");
+		LOGGER.info("Successfully loaded {} npc listeners.", listeners.size());
 		return listeners;
 	}
 	

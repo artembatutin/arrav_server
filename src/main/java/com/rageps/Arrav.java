@@ -36,19 +36,17 @@ import com.rageps.net.ArravChannelInitializer;
 import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
 import com.rageps.task.Task;
-import com.rageps.util.LoggerUtils;
-import com.rageps.util.json.impl.*;
 import com.rageps.world.entity.actor.attribute.AttributeKey;
 import com.rageps.world.entity.actor.combat.attack.listener.CombatListenerDispatcher;
 import com.rageps.world.locale.InstanceManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static io.netty.util.ResourceLeakDetector.Level.DISABLED;
 import static io.netty.util.ResourceLeakDetector.Level.PARANOID;
@@ -83,8 +81,9 @@ public final class Arrav {
 	/**
 	 * The LOGGER that will print important information.
 	 */
-	private final static Logger LOGGER = LoggerUtils.getLogger(Arrav.class);
-	
+	private static final Logger LOGGER = LogManager.getLogger();
+
+
 	static {
 		//System.out.println("Lines in project: " + Utility.linesInProject(new File("./src/")));
 		try {
@@ -108,7 +107,7 @@ public final class Arrav {
 			Arrav arrav = new Arrav();
 			arrav.init();
 		} catch(Exception e) {
-			LOGGER.log(Level.SEVERE, "Error in game run time!", e);
+			LOGGER.fatal("Error un game run time!", e);
 			System.exit(0);
 		}
 	}
@@ -153,7 +152,7 @@ public final class Arrav {
 			LOGGER.info("Arrav is now online (" + time + ").");
 			STARTING = false;
 		} catch(Exception e) {
-			LOGGER.log(Level.SEVERE, "An error occurred while binding the Bootstrap!", e);
+			LOGGER.fatal("An error occurred while binding the Bootstrap!", e);
 			// No point in continuing server startup when the
 			// bootstrap either failed to bind or was bound
 			// incorrectly.

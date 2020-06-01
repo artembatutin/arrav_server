@@ -1,18 +1,20 @@
 package com.rageps.content.scoreboard;
 
 import com.rageps.task.Task;
-import com.rageps.util.LoggerUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.util.logging.Logger;
 
 /**
  * Handles the timing between each monday for the scoreboard to reset.
  */
 public class ScoreboardTask extends Task {
-	
-	private static final Logger LOGGER = LoggerUtils.getLogger(ScoreboardTask.class);
+
+	private static final Logger LOGGER = LogManager.getLogger();
+
+	//private static final Logger LOGGER = LoggerUtils.getLogger(ScoreboardTask.class);
 	private static final int HOURS = 24;
 	private static final int MINUTES = 60;
 	private static final int SECONDS = 60;

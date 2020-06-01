@@ -4,10 +4,10 @@ import com.rageps.world.entity.object.ObjectDefinition;
 import com.rageps.cache.FileSystem;
 import com.rageps.cache.archive.Archive;
 import com.rageps.util.ByteBufferUtil;
-import com.rageps.util.LoggerUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.nio.ByteBuffer;
-import java.util.logging.Logger;
 
 /**
  * A class which parses object definitions.
@@ -19,8 +19,9 @@ public final class ObjectDefinitionDecoder implements Runnable {
 	/**
 	 * The logger to log process output.
 	 */
-	private final static Logger LOGGER = LoggerUtils.getLogger(ObjectDefinitionDecoder.class);
-	
+	private static final Logger LOGGER = LogManager.getLogger();
+
+
 	/**
 	 * The IndexedFileSystem.
 	 */
@@ -51,7 +52,7 @@ public final class ObjectDefinitionDecoder implements Runnable {
 			pos += idx.getShort() & 0xFFFF;
 			loaded += 1;
 		}
-		LOGGER.info("Loaded " + loaded + " object definitions.");
+		LOGGER.info("Loaded {} object definitions.", loaded);
 	}
 	
 	/**

@@ -9,7 +9,6 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.task.Task;
-import com.rageps.util.LoggerUtils;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.Entity;
 import com.rageps.world.entity.EntityState;
@@ -21,13 +20,14 @@ import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.item.GroundItemState;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.entity.object.ObjectType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.logging.Logger;
 
 import static com.rageps.world.entity.EntityState.ACTIVE;
 import static com.rageps.world.entity.EntityState.INACTIVE;
@@ -42,8 +42,9 @@ public final class Region extends Entity {
 	/**
 	 * The {@link Logger} instance to log our global changes.
 	 */
-	private static final Logger LOGGER = LoggerUtils.getLogger(Region.class);
-	
+	private static final Logger LOGGER = LogManager.getLogger();
+
+
 	/**
 	 * A {@link ObjectList} of all active {@link Region}s in the world.
 	 */
@@ -161,7 +162,6 @@ public final class Region extends Entity {
 		for(Mob n : mobs) {
 			n.setActive(true);
 		}
-		LOGGER.info("Loaded Region: [" + regionId + "] on the fly.");
 	}
 	
 	@Override
@@ -170,7 +170,6 @@ public final class Region extends Entity {
 		for(Mob n : mobs) {
 			n.setActive(false);
 		}
-		LOGGER.info("Disposed Region: [" + regionId + "] on the fly.");
 	}
 	
 	/**

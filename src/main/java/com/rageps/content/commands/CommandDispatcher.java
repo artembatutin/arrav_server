@@ -2,9 +2,10 @@ package com.rageps.content.commands;
 
 import com.rageps.util.Utility;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import com.rageps.util.LoggerUtils;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 
 import java.lang.annotation.Annotation;
@@ -14,7 +15,6 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -31,8 +31,9 @@ public final class CommandDispatcher {
 	/**
 	 * The logger that will print important information.
 	 */
-	private static Logger logger = LoggerUtils.getLogger(CommandDispatcher.class);
-	
+	private static final Logger LOGGER = LogManager.getLogger();
+
+
 	/**
 	 * Executes the specified {@code string} if it's a command.
 	 * @param player the player executing the command.
@@ -109,7 +110,7 @@ public final class CommandDispatcher {
 	 * <b>Method should only be called once on start-up.</b>
 	 */
 	public static void load() {
-		logger.info("Loading commands...");
+		LOGGER.info("Loading commands...");
 		Set<Class<?>> clazzSet = new Reflections(CommandDispatcher.class.getPackage().getName()).getTypesAnnotatedWith(CommandSignature.class);
 		List<Command> commands = Utility.getClassesInSet(clazzSet).stream().map(clazz -> (Command) clazz).collect(Collectors.toList());
 
@@ -120,7 +121,7 @@ public final class CommandDispatcher {
 			}
 			COMMANDS.put(command.getClass().getAnnotation(CommandSignature.class), command);
 		}
-		logger.info("Successfully loaded " + COMMANDS.size() + " commands.");
+		LOGGER.info("Successfully loaded {} commands.", COMMANDS.size());
 	}
 	
 	/**

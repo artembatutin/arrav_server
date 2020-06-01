@@ -17,12 +17,12 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.cache.FileSystem;
 import com.rageps.util.ByteBufferUtil;
 import com.rageps.util.CompressionUtil;
-import com.rageps.util.LoggerUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.nio.ByteBuffer;
 import java.util.Map;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 /**
  * A class which parses static object definitions, which include tool.mapviewer tiles and
@@ -35,8 +35,9 @@ public final class RegionDecoder implements Runnable {
 	/**
 	 * The logger that will print important information.
 	 */
-	private final static Logger LOGGER = LoggerUtils.getLogger(RegionDecoder.class);
-	
+	private static final Logger LOGGER = LogManager.getLogger();
+
+
 	/**
 	 * The FileSystem.
 	 */
@@ -65,7 +66,7 @@ public final class RegionDecoder implements Runnable {
 		LOGGER.info("Loading regional map data.");
 		Map<Integer, RegionDefinition> maps = RegionDefinition.getDefinitions();
 		maps.forEach((i, d) -> load(d));
-		LOGGER.info("Loaded " + decoded + " regions, skipped " + errors + " maps.");
+		LOGGER.info("Loaded {} regions, skipped " + errors + " maps.", decoded);
 	}
 	
 	public void load(RegionDefinition def) {
