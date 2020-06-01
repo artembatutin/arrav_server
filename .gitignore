@@ -11,6 +11,7 @@ data/logs/**
 /out/
 /file_server/file_server.iml
 data/cache/
+data/*.log
 *.iml
 *.eml
 *.userlibraries
