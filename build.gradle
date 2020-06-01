@@ -51,17 +51,16 @@ repositories {
 }
 
 sourceSets {
-    main.java.srcDirs = ['src', 'file_server']
-    main.resources.srcDirs = ['resources']
-
+    main.java.srcDirs = ['src/main/java', 'src/plugins/java']
+    test.java.srcDirs = ['src/test/java']
 }
 
 task fatJar(type: Jar) {
     manifest {
-        attributes 'Implementation-Title': 'ArravServer',
+        attributes 'Implementation-Title': 'RageServer',
                 'Main-Class': mainClassName
     }
-    baseName = 'arrav-w1'
+    baseName = 'rage-world'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
