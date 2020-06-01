@@ -1261,6 +1261,8 @@ public final class Player extends Actor {
 	 * @param packet packet to be queued.
 	 */
 	public void out(OutgoingPacket packet) {
+		if(packet.coordinatePacket() != null)
+			getSession().queue(packet.coordinatePacket());
 		if(packet.onSent(this))
 			getSession().queue(packet);
 	}

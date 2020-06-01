@@ -14,7 +14,7 @@ public interface OutgoingPacket {
 		return true;
 	}
 	
-	default OutgoingPacket coordinatePacket(Player player) {
+	default OutgoingPacket coordinatePacket() {
 		return null;
 	}
 	

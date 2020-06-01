@@ -41,7 +41,7 @@ public final class SendObjectAnimation implements OutgoingPacket {
 	}
 	
 	@Override
-	public OutgoingPacket coordinatePacket(Player player) {
+	public OutgoingPacket coordinatePacket() {
 		return new SendCoordinates(position);
 	}
 }

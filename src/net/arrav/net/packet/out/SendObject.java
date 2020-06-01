@@ -49,7 +49,7 @@ public final class SendObject implements OutgoingPacket {
 	}
 	
 	@Override
-	public OutgoingPacket coordinatePacket(Player player) {
+	public OutgoingPacket coordinatePacket() {
 		return new SendCoordinates(object.getPosition());
 	}
 }
