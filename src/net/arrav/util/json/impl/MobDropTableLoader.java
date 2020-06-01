@@ -28,6 +28,7 @@ public final class MobDropTableLoader extends JsonLoader {
 	 */
 	public MobDropTableLoader() {
 		super("./data/def/mob/mob_drops.json");
+		DropManager.TABLES = new ObjectArrayList<>();
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public final class MobDropTableLoader extends JsonLoader {
 		DropTable drop = new DropTable(npcId, dropTable);
 
 		if (drop.getDrops().size() != 1)
-			DropManager.getTables().add(drop);
+			DropManager.TABLES.add(drop);
 
 		//todo - add serializing of drops for client.
 	}

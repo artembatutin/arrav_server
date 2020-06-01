@@ -56,22 +56,10 @@ public final class SendContainer implements OutgoingPacket {
 					} else {
 						out.put(item.getAmount());
 					}
-					boolean noted = false;
-					out.putShort(item.getId() + (noted ? 0 : 1), ByteTransform.A, ByteOrder.LITTLE);
-					if(id == 3900) {
-						if(item.getValue().getPrice() > 254) {
-							out.put(255);
-							out.putInt(item.getValue().getPrice(), ByteOrder.INVERSE_MIDDLE);
-						} else {
-							out.put(item.getValue().getPrice());
-						}
-					}
+					out.putShort(item.getId() + 1, ByteTransform.A, ByteOrder.LITTLE);
 				} else {
 					out.put(0);
 					out.putShort(0, ByteTransform.A, ByteOrder.LITTLE);
-					if(id == 3900) {
-						out.put(0);
-					}
 				}
 			}
 		}

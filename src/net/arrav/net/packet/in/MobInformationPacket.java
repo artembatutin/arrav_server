@@ -110,7 +110,7 @@ public final class MobInformationPacket implements IncomingPacket {//todo - reim
 				return;
 			}
 			player.getAttr().get("npcInformation").set(id);
-			DropTable drop = DropManager.getTables().get(id);
+			DropTable drop = DropManager.TABLES.get(id);
 			if(drop == null && !player.getRights().equals(Rights.ADMINISTRATOR)) {
 				player.message("This monster doesn't have any drop table.");
 				return;

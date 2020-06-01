@@ -3,6 +3,7 @@ package net.arrav.net.packet.in;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.ItemAction;
 import net.arrav.content.Attributes;
+import net.arrav.content.market.MarketShop;
 import net.arrav.content.skill.crafting.JewelleryMoulding;
 import net.arrav.content.skill.runecrafting.Runecrafting;
 import net.arrav.content.skill.runecrafting.pouch.PouchType;
@@ -38,7 +39,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_INTERFACE))
 			return;
-		
+
 		switch(opcode) {
 			case 145:
 				firstSlot(player, buf);
@@ -78,12 +79,12 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		if(interfaceId < 0 || slot < 0 || itemId < 0) {
 			return;
 		}
-		if(interfaceId == 3900) {
+		if(interfaceId == MarketShop.SHOP_CONTAINER_ID) {
 			if(player.getMarketShop() != null) {
-				player.getMarketShop().purchase(player, new Item(itemId, slot));
+				player.getMarketShop().sendPurchasePrice(player, new Item(itemId));
 			}
 		}
-		if(interfaceId == 3823) {
+		if(interfaceId == MarketShop.INVENTORY_CONTAINER_ID) {
 			if(player.getMarketShop() != null) {
 				player.getMarketShop().sendSellingPrice(player, new Item(itemId));
 			}
@@ -143,9 +144,15 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		int slot = buf.getShort(true, ByteOrder.LITTLE);
 		if(interfaceId < 0 || slot < 0 || itemId < 0)
 			return;
-		if(interfaceId == 3823) {
+		if(interfaceId == MarketShop.INVENTORY_CONTAINER_ID) {
 			if(player.getMarketShop() != null) {
 				player.getMarketShop().sell(player, new Item(itemId, 1), slot);
+			}
+		}
+
+		if(interfaceId == MarketShop.SHOP_CONTAINER_ID) {
+			if(player.getMarketShop() != null) {
+				player.getMarketShop().purchase(player, new Item(itemId, 1));
 			}
 		}
 		if(Attributes.secondSlot(player, interfaceId, slot)) {
@@ -208,9 +215,14 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		if(Smithing.forge(player, interfaceId, slot, 10)) {
 			return;
 		}
+		if(interfaceId == MarketShop.SHOP_CONTAINER_ID) {
+			if(player.getMarketShop() != null) {
+				player.getMarketShop().purchase(player, new Item(itemId, 5));
+			}
+		}
 		Optional<ExchangeSession> session = ExchangeSessionManager.get().getExchangeSession(player);
 		switch(interfaceId) {
-			case 3823:
+			case MarketShop.INVENTORY_CONTAINER_ID:
 				if(player.getMarketShop() != null)
 					player.getMarketShop().sell(player, new Item(itemId, 5), slot);
 				break;
@@ -254,9 +266,14 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		int itemId = buf.getShort(ByteTransform.A);
 		if(interfaceId < 0 || slot < 0 || itemId < 0)
 			return;
-		if(interfaceId == 3823) {
+		if(interfaceId == MarketShop.INVENTORY_CONTAINER_ID) {
 			if(player.getMarketShop() != null) {
 				player.getMarketShop().sell(player, new Item(itemId, 10), slot);
+			}
+		}
+		if(interfaceId == MarketShop.SHOP_CONTAINER_ID) {
+			if(player.getMarketShop() != null) {
+				player.getMarketShop().purchase(player, new Item(itemId, 10));
 			}
 		}
 		if(Attributes.fourthSlot(player, interfaceId, itemId, slot)) {

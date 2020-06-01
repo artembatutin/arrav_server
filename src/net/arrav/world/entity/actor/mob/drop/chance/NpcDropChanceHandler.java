@@ -1,6 +1,9 @@
 package net.arrav.world.entity.actor.mob.drop.chance;
 
+import net.arrav.content.item.pets.PetData;
 import net.arrav.world.entity.actor.player.Player;
+
+import java.util.Optional;
 
 /**
  * todo add pets
@@ -29,6 +32,15 @@ public class NpcDropChanceHandler {
             if (player.getInventory().containsAll(data.getKeys()))
                 base += fake ? data.getFakeDropChance() : data.getDropChance();
         }
+
+        if(player.getPetManager().getPet().isPresent())
+        for(NpcDropChanceData data : NpcDropChances.getPets()) {
+            int id = player.getPetManager().getPet().get().getId();
+            Optional<PetData> petData = PetData.getNpc(id);
+            if(petData.isPresent() && petData.get() == data.getPet())
+                base+= fake ? data.getFakeDropChance() : data.getDropChance();
+        }
+
         return Math.min(base, 100) / 100;
     }
 
@@ -43,6 +55,13 @@ public class NpcDropChanceHandler {
             if (player.getInventory().containsAll(data.getKeys()))
                 base += fake ? data.getFakeDoubleDropChance() : data.getFakeDoubleDropChance();
         }
+        if(player.getPetManager().getPet().isPresent())
+            for(NpcDropChanceData data : NpcDropChances.getPets()) {
+                int id = player.getPetManager().getPet().get().getId();
+                Optional<PetData> petData = PetData.getNpc(id);
+                if(petData.isPresent() && petData.get() == data.getPet())
+                    base+= fake ? data.getFakeDoubleDropChance() : data.getDoubleDropChance();
+            }
         return Math.min(base, 100) / 100;
     }
 

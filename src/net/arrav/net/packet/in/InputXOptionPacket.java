@@ -1,5 +1,6 @@
 package net.arrav.net.packet.in;
 
+import net.arrav.content.market.MarketShop;
 import net.arrav.content.skill.summoning.Summoning;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.ByteTransform;
@@ -36,13 +37,23 @@ public final class InputXOptionPacket implements IncomingPacket {
 				}));
 		}
 		switch(interfaceId) {
-			case 3823:
+			case MarketShop.INVENTORY_CONTAINER_ID:
 				if(player.getInventory().get(slot) == null)
 					return;
 				if(player.getMarketShop() == null)
 					return;
 				player.getAttr().get("shop_item").set(player.getInventory().get(slot).getId());
 				player.out(new SendEnterAmount("How many you would like to sell?", t -> () -> player.getMarketShop().sell(player, new Item(player.getAttr().get("shop_item").getInt(), Integer.parseInt(t)), player.getAttr().get("enter_x_item_slot").getInt())));
+				break;
+
+			case MarketShop.SHOP_CONTAINER_ID:
+				if(player.getMarketShop() == null)
+					return;
+				player.getAttr().get("buying_shop_item").set(player.getMarketShop().getItems().getInt(slot));
+				player.out(new SendEnterAmount("How many you would like to buy?", t -> () -> {
+					if(player.getMarketShop() != null)
+					player.getMarketShop().purchase(player, new Item(player.getAttr().get("buying_shop_item").getInt(), Integer.parseInt(t)));
+				}));
 				break;
 
 			case Bank.SIDEBAR_INVENTORY_ID:

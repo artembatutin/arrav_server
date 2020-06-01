@@ -54,7 +54,6 @@ public class MarketShop {
 	 * The result of our search.
 	 */
 	private IntArrayList items;
-	
 	/**
 	 * Creates a {@link MarketShop} out of saved shops.
 	 * @param title the tile of this shop.
@@ -109,10 +108,12 @@ public class MarketShop {
 		return true;
 	}
 
-	public static final int INTERFACE_ID = 3824;
-	public static final int ITEM_CHILD_ID = 3900;
-	public static final int NAME_INTERFACE_CHILD_ID = 3901;
-	public static final int INVENTORY_INTERFACE_ID = 3823;
+	public static final int SHOP_INTERFACE_ID = 3824;
+	public static final int SHOP_CONTAINER_ID = 3900;
+	public static final int SHOP_NAME_ID = 3901;
+
+	private static final int INVENTORY_INTERFACE_ID = 3822;
+	public static final int INVENTORY_CONTAINER_ID = 3823;
 
 	/**
 	 * Opens the shop.
@@ -127,14 +128,13 @@ public class MarketShop {
 		clearFromShop(player);
 		player.setMarketShop(this);
 		player.text(259, getCurrency().ordinal() + "");
-		player.out(new SendContainer(INVENTORY_INTERFACE_ID, player.getInventory()));
-		player.out(new SendShop(ITEM_CHILD_ID, getItems()));
 		int x = player.getPosition().getX();
 		boolean counter = x == 3079 || x == 3080;
-		player.out(new SendInterface(INTERFACE_ID));
-		//player.out(new SendInventoryInterface(counter ? -4 : -2, 3822));
-		player.text(NAME_INTERFACE_CHILD_ID, getTitle());
+		player.out(new SendInventoryInterface(SHOP_INTERFACE_ID, INVENTORY_INTERFACE_ID));
+		player.out(new SendShop(SHOP_CONTAINER_ID, getItems()));
+		player.text(SHOP_NAME_ID, getTitle());
 		player.out(new SendForceTab(TabInterface.INVENTORY));
+		player.out(new SendContainer(INVENTORY_CONTAINER_ID, player.getInventory()));
 		if(player.getMarketShop().getItems() != null) {
 			for(int id : player.getMarketShop().getItems()) {
 				MarketItem item = MarketItem.get(id);
@@ -169,11 +169,11 @@ public class MarketShop {
 	 * @param player the player to send the value to.
 	 * @param item the item to send the value of.
 	 */
-	private void sendPurchasePrice(Player player, Item item) {
+	public void sendPurchasePrice(Player player, Item item) {
 		MarketItem shopItem = MarketItem.get(item.getId());
 		if(shopItem == null)
 			return;
-		if(player.getRights() == Rights.ADMINISTRATOR) {
+		/*if(player.getRights() == Rights.ADMINISTRATOR) {
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 					player.out(new SendEnterAmount(shopItem.getName() + ": set price to:", s -> () -> shopItem.setPrice(Integer.parseInt(s))));
@@ -192,7 +192,7 @@ public class MarketShop {
 				}
 			}, "Change price", "Change stock", "toggle: " + (shopItem.isUnlimitedStock() ? "unlimited stock" : "variable stock"), "Remove from shop"));
 			return;
-		}
+		}*/
 		if(shopItem.getStock() <= 0 && !shopItem.isUnlimitedStock()) {
 			player.message("There is none of this item left in stock!");
 			return;
@@ -225,7 +225,8 @@ public class MarketShop {
 			return false;
 		}
 		int value = item.getValue().getPrice();
-		if(!(getCurrency().getCurrency().currencyAmount(player) >= (value * item.getAmount()))) {
+		long price = ( (long) value * (long )item.getAmount());
+		if(price > Integer.MAX_VALUE || !(getCurrency().getCurrency().currencyAmount(player) >= (value * item.getAmount()))) {
 			player.message("You do not have enough " + getCurrency() + " to buy " + item.getAmount() + " of these.");
 			return false;
 		}
@@ -249,7 +250,7 @@ public class MarketShop {
 		}
 		getCurrency().getCurrency().takeCurrency(player, item.getAmount() * value);
 		player.getInventory().add(item);
-		player.out(new SendContainer(3823, player.getInventory()));
+		player.out(new SendContainer(INVENTORY_CONTAINER_ID, player.getInventory()));
 		if(!marketItem.isUnlimitedStock()) {
 			marketItem.setStock(marketItem.getStock() - item.getAmount());
 		}
@@ -309,7 +310,7 @@ public class MarketShop {
 				marketItem.updateStock();
 			}
 		}
-		player.out(new SendContainer(3823, player.getInventory()));
+		player.out(new SendContainer(INVENTORY_CONTAINER_ID, player.getInventory()));
 		return true;
 	}
 	

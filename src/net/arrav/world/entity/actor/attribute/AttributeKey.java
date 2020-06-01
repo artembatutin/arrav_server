@@ -78,7 +78,8 @@ public final class AttributeKey<T> {
 		
 		//Shopping
 		AttributeKey.forTransient("shop_item", -1);
-		
+		AttributeKey.forTransient("buying_shop_item", -1);
+
 		//Prayer
 		AttributeKey.forPersistent("quick_pray_on", false);
 		
