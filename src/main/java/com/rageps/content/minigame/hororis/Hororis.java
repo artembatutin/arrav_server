@@ -3,6 +3,8 @@ package com.rageps.content.minigame.hororis;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.net.packet.out.SendFade;
 import com.rageps.world.World;
+import com.rageps.world.entity.actor.mob.MobAttributes;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.content.minigame.Minigame;
@@ -60,7 +62,7 @@ public class Hororis extends Minigame {
 	@Override
 	public void onLogout(Player player) {
 		players.remove(player);
-		player.getAttr().get("ignoredAggressionLevel").set(false);
+		player.getAttributeMap().set(MobAttributes.IGNORED_AGGRESSION_LEVEL, false);
 		player.out(new SendFade(20, 100, 160));
 		player.task(2, pl -> pl.move(new Position(3367, 3513)));
 		player.setMinigame(Optional.empty());
@@ -69,7 +71,7 @@ public class Hororis extends Minigame {
 	@Override
 	public void onEnter(Player player) {
 		players.add(player);
-		player.getAttr().get("ignoredAggressionLevel").set(true);
+		player.getAttributeMap().set(MobAttributes.IGNORED_AGGRESSION_LEVEL, true);
 		player.out(new SendFade(20, 100, 160));
 		player.task(2, pl -> pl.move(new Position(3380, 3513)));
 		player.setMinigame(this);
@@ -124,7 +126,7 @@ public class Hororis extends Minigame {
 			if(!p.lockedXP) {
 				p.getSkills()[Skills.PRAYER].increaseExperience(400);
 			}
-			p.getAttr().get("ignoredAggressionLevel").set(false);
+			p.getAttributeMap().set(MobAttributes.IGNORED_AGGRESSION_LEVEL, false);
 			p.message("The skeletal horror didn't stand a chance! Good job.");
 			Achievement.HORRORIFIC.inc(p);
 		}

@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.net.packet.out.SendItemModelInterface;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
@@ -63,9 +64,9 @@ public final class HideWorking extends ProducingSkillAction {
 	 * @return {@code true} if the skill action was started, {@code false} otherwise.
 	 */
 	public static boolean create(Player player, int buttonId) {
-		HideData data = HideData.getDefinitionByButton(player.getAttr().get("crafting_hide").getInt(), buttonId).orElse(null);
+		HideData data = HideData.getDefinitionByButton(player.getAttributeMap().getInt(PlayerAttributes.CRAFTING_HIDE), buttonId).orElse(null);
 		
-		if(data == null || !player.getAttr().get("crafting_hides").getBoolean()) {
+		if(data == null || !player.getAttributeMap().getBoolean(PlayerAttributes.CRAFTING_HIDES)) {
 			return false;
 		}
 		
@@ -100,10 +101,10 @@ public final class HideWorking extends ProducingSkillAction {
 		if(data == null) {
 			return false;
 		}
-		
-		player.getAttr().get("crafting_hides").set(true);
-		player.getAttr().get("crafting_hide").set(data.required.getId());
-		
+
+		player.getAttributeMap().set(PlayerAttributes.CRAFTING_HIDES, true);
+		player.getAttributeMap().set(PlayerAttributes.CRAFTING_HIDE, data.required.getId());
+
 		HideData[] group = GROUP.get(data.required.getId());
 		
 		if(group.length == 3) {//dragonhide
@@ -195,7 +196,7 @@ public final class HideWorking extends ProducingSkillAction {
 	
 	@Override
 	public void onStop() {
-		player.getAttr().get("crafting_hides").set(false);
+		player.getAttributeMap().reset(PlayerAttributes.CRAFTING_HIDES);
 	}
 	
 	private boolean checkCrafting() {

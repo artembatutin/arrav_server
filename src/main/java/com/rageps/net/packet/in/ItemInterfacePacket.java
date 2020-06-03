@@ -13,6 +13,7 @@ import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemDefinition;
@@ -368,8 +369,9 @@ public final class ItemInterfacePacket implements IncomingPacket {
 				player.getInventory().swap(fromSlot, toSlot);
 				break;
 			case Bank.BANK_INVENTORY_ID:
-				if(player.getAttr().get("banking").getBoolean()) {
-					if((boolean) player.getAttr().get("insert_item").get()) {
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING)) {
+
+					if(player.getAttributeMap().getBoolean(PlayerAttributes.INSERT_ITEM)) {
 						player.getBank().swap(0, fromSlot, toSlot);
 					} else {
 						player.getBank().transfer(0, fromSlot, toSlot);
@@ -377,7 +379,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 				}
 					break;
 			case Bank.SIDEBAR_INVENTORY_ID://banking inventory
-				if(player.getAttr().get("banking").getBoolean()) {
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING)) {
 					player.getInventory().swap(fromSlot, toSlot);
 					player.getInventory().refreshSingle(player, Bank.SIDEBAR_INVENTORY_ID, fromSlot);
 					player.getInventory().refreshSingle(player, Bank.SIDEBAR_INVENTORY_ID, toSlot);

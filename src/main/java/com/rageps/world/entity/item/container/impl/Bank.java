@@ -6,6 +6,7 @@ import com.rageps.world.entity.actor.player.Player;
 import com.rageps.net.packet.out.SendConfig;
 import com.rageps.net.packet.out.SendContainer;
 import com.rageps.net.packet.out.SendInventoryInterface;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.ItemContainer;
 
@@ -97,9 +98,9 @@ public final class Bank {
 			BankPin.loadUpPinInterface(player);
 			return;
 		}
-		player.getAttr().get("banking").set(true);
-		player.out(new SendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0));
-		player.out(new SendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0));
+		player.getAttributeMap().set(PlayerAttributes.BANKING, true);
+		player.out(new SendConfig(115, player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE) ? 1 : 0));
+		player.out(new SendConfig(116, player.getAttributeMap().getBoolean(PlayerAttributes.INSERT_ITEM) ? 1 : 0));
 		player.out(new SendInventoryInterface(BANK_WINDOW_ID, SIDEBAR_ID));
 		player.out(new SendContainer(SIDEBAR_INVENTORY_ID, this.player.getInventory()));
 		if(!bulkStartSent) {
@@ -116,9 +117,9 @@ public final class Bank {
 		Bank bank = p.getBank();
 
 		p.getBank().shiftAll();
-		player.getAttr().get("banking").set(true);
-		player.out(new SendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0));
-		player.out(new SendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0));
+		player.getAttributeMap().set(PlayerAttributes.BANKING, true);
+		player.out(new SendConfig(115, player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE) ? 1 : 0));
+		player.out(new SendConfig(116, player.getAttributeMap().getBoolean(PlayerAttributes.INSERT_ITEM) ? 1 : 0));
 		player.out(new SendInventoryInterface(BANK_WINDOW_ID, SIDEBAR_ID));
 		player.out(new SendContainer(SIDEBAR_INVENTORY_ID, this.player.getInventory()));
 		player.out(new SendContainer(BANK_INVENTORY_ID, bank.tabs[0]));
@@ -293,12 +294,12 @@ public final class Bank {
 	 * Shifts all items in this container to the left to fill any {@code null} slots.
 	 */
 	public void shiftAll() {
-		boolean force = player.getAttr().get("shifting_req").getBoolean();
+		boolean force = player.getAttributeMap().getBoolean(PlayerAttributes.SHIFTING_REQ);
 		for(BankTab t : tabs) {
 			if(force || t.isShiftingReq())
 				t.shift();
 		}
-		player.getAttr().get("shifting_req").set(false);
+		player.getAttributeMap().set(PlayerAttributes.SHIFTING_REQ, false);
 	}
 
 	/**

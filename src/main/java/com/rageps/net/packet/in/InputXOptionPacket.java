@@ -8,6 +8,7 @@ import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
 import com.rageps.net.packet.out.SendEnterAmount;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemDefinition;
 import com.rageps.world.entity.item.container.impl.Bank;
@@ -27,12 +28,12 @@ public final class InputXOptionPacket implements IncomingPacket {
 			return;
 		}
 		
-		player.getAttr().get("enter_x_item_tab").set(0);//bank tab
-		player.getAttr().get("enter_x_item_slot").set(slot);
-		if(interfaceId == Bank.BANK_INVENTORY_ID && player.getAttr().get("banking").getBoolean()) {
+		player.getAttributeMap().set(PlayerAttributes.ENTER_X_ITEM_TAB, 0);//bank tab
+		player.getAttributeMap().set(PlayerAttributes.ENTER_X_ITEM_SLOT, slot);
+		if(interfaceId == Bank.BANK_INVENTORY_ID && player.getAttributeMap().getBoolean(PlayerAttributes.BANKING)) {
 				player.out(new SendEnterAmount("How many you would like to withdraw?", s -> () -> {
-					if(player.getAttr().get("banking").getBoolean()) {
-						player.getBank().withdraw(player, player.getAttr().get("enter_x_item_tab").getInt(), player.getAttr().get("enter_x_item_slot").getInt(), Integer.parseInt(s));
+					if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING)) {
+						player.getBank().withdraw(player, player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_TAB), player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT), Integer.parseInt(s));
 					}
 				}));
 		}
@@ -42,26 +43,26 @@ public final class InputXOptionPacket implements IncomingPacket {
 					return;
 				if(player.getMarketShop() == null)
 					return;
-				player.getAttr().get("shop_item").set(player.getInventory().get(slot).getId());
-				player.out(new SendEnterAmount("How many you would like to sell?", t -> () -> player.getMarketShop().sell(player, new Item(player.getAttr().get("shop_item").getInt(), Integer.parseInt(t)), player.getAttr().get("enter_x_item_slot").getInt())));
+				player.getAttributeMap().set(PlayerAttributes.SHOP_ITEM, player.getInventory().get(slot).getId());
+				player.out(new SendEnterAmount("How many you would like to sell?", t -> () -> player.getMarketShop().sell(player, new Item(player.getAttributeMap().getInt(PlayerAttributes.SHOP_ITEM), Integer.parseInt(t)), player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT))));
 				break;
 
 			case MarketShop.SHOP_CONTAINER_ID:
 				if(player.getMarketShop() == null)
 					return;
-				player.getAttr().get("buying_shop_item").set(player.getMarketShop().getItems().getInt(slot));
+				player.getAttributeMap().set(PlayerAttributes.BUYING_SHOP_ITEM, player.getMarketShop().getItems().getInt(slot));
 				player.out(new SendEnterAmount("How many you would like to buy?", t -> () -> {
 					if(player.getMarketShop() != null)
-					player.getMarketShop().purchase(player, new Item(player.getAttr().get("buying_shop_item").getInt(), Integer.parseInt(t)));
+					player.getMarketShop().purchase(player, new Item(player.getAttributeMap().getInt(PlayerAttributes.BUYING_SHOP_ITEM), Integer.parseInt(t)));
 				}));
 				break;
 
 			case Bank.SIDEBAR_INVENTORY_ID:
-				if(player.getAttr().get("banking").getBoolean()) {
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING)) {
 					player.out(new SendEnterAmount("How many you would like to deposit?", t -> () -> {
 						int amount = Integer.parseInt(t);
-						if(player.getAttr().get("banking").getBoolean()) {
-							player.getBank().deposit(player.getAttr().get("enter_x_item_slot").getInt(), amount, player.getInventory(), true);
+						if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING)) {
+							player.getBank().deposit(player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT), amount, player.getInventory(), true);
 						}
 					}));
 					return;
@@ -69,11 +70,11 @@ public final class InputXOptionPacket implements IncomingPacket {
 				break;
 
 			case 5064://Beast of burden inventory
-				if(player.getAttr().get("bob").getBoolean()) {
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB)) {
 					player.out(new SendEnterAmount("How many you would like to store?", t -> () -> {
 						int amount = Integer.parseInt(t);
-						if(player.getAttr().get("bob").getBoolean()) {
-							Summoning.store(player, player.getAttr().get("enter_x_item_slot").getInt(), amount);
+						if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB)) {
+							Summoning.store(player, player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT), amount);
 						}
 					}));
 					return;
@@ -85,11 +86,11 @@ public final class InputXOptionPacket implements IncomingPacket {
 						int amount = Integer.parseInt(t);
 						if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
 							ExchangeSession session = ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).get();
-							int slot1 = player.getAttr().get("enter_x_item_slot").getInt();
+							int slot1 = player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT);
 							session.add(player, slot1, amount);
 						} else if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
 							ExchangeSession session = ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).get();
-							int slot1 = player.getAttr().get("enter_x_item_slot").getInt();
+							int slot1 = player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT);
 							session.add(player, slot1, amount);
 						}
 					}));
@@ -97,10 +98,10 @@ public final class InputXOptionPacket implements IncomingPacket {
 				}
 				break;
 			case 2702:
-				if(player.getAttr().get("bob").getBoolean()) {
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB)) {
 					player.out(new SendEnterAmount("How many you would like to withdraw?", t -> () -> {
-						if(player.getAttr().get("bob").getBoolean()) {
-							Summoning.withdraw(player, player.getAttr().get("enter_x_item_slot").getInt(), Integer.parseInt(t));
+						if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB)) {
+							Summoning.withdraw(player, player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT), Integer.parseInt(t));
 						}
 					}));
 				}
@@ -111,7 +112,7 @@ public final class InputXOptionPacket implements IncomingPacket {
 						int amount = Integer.parseInt(t);
 						if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
 							ExchangeSession session = ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).get();
-							Item item = session.getExchangeSession().get(player).get(player.getAttr().get("enter_x_item_slot").getInt());
+							Item item = session.getExchangeSession().get(player).get(player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT));
 							session.remove(player, new Item(item.getId(), amount));
 						}
 					}));
@@ -123,7 +124,7 @@ public final class InputXOptionPacket implements IncomingPacket {
 						int amount = Integer.parseInt(t);
 						if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
 							ExchangeSession session = ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).get();
-							Item item = session.getExchangeSession().get(player).get(player.getAttr().get("enter_x_item_slot").getInt());
+							Item item = session.getExchangeSession().get(player).get(player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT));
 							session.remove(player, new Item(item.getId(), amount));
 						}
 					}));

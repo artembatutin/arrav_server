@@ -5,6 +5,7 @@ import com.rageps.content.skill.Skills;
 import com.rageps.world.Animation;
 import com.rageps.world.Graphic;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.ItemContainer;
 
@@ -29,7 +30,7 @@ public enum ItemCombine {
 				player.message("You need 55 crafting to create the slayer helmet.");
 				return false;
 			}
-			if(player.getAttr().get("slayer_tasks").getInt() < 35) {
+			if(player.getAttributeMap().getInt(PlayerAttributes.SLAYER_TASKS) < 35) {
 				player.message("You must complete at least 35 slayer tasks.");
 				return false;
 			}
@@ -40,7 +41,7 @@ public enum ItemCombine {
 	FULL_SLAYER_HELMET(new Item(15492), new Item(15488), new Item(15490), new Item(13263)) {
 		@Override
 		public boolean requirement(Player player) {
-			if(player.getAttr().get("slayer_tasks").getInt() < 35) {
+			if(player.getAttributeMap().getInt(PlayerAttributes.SLAYER_TASKS) < 35) {
 				player.message("You must complete at least 35 slayer tasks.");
 				return false;
 			}

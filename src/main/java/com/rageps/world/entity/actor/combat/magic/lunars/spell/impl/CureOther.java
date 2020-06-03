@@ -8,6 +8,7 @@ import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.magic.MagicRune;
 import com.rageps.world.entity.actor.combat.magic.RequiredRune;
 import com.rageps.world.entity.actor.combat.magic.lunars.spell.LunarCombatSpell;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 
 import java.util.Optional;
 
@@ -48,7 +49,7 @@ public final class CureOther extends LunarCombatSpell {
 		
 		caster.getMovementQueue().reset();
 		
-		if(!target.getAttr().get("accept_aid").getBoolean()) {
+		if(!target.getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID)) {
 			caster.toPlayer().message("This player is not accepting any aid.");
 			return false;
 		}

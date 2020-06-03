@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.content.dialogue.impl.PlayerDialogue;
 import com.rageps.content.dialogue.impl.StatementDialogue;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.Skills;
@@ -58,10 +59,10 @@ public final class Smithing extends ProducingSkillAction {
 	 * @return <true> if the skill action was started, <false> otherwise.
 	 */
 	public static boolean forge(Player player, int interfaceId, int slot, int amount) {
-		if(player.getAttr().get("smithing_equipment").get() == null) {
+		if(player.getAttributeMap().get(PlayerAttributes.SMITHING_EQUIPMENT) == null) {
 			return false;
 		}
-		SmithingTable[] values = TABLE.get(((Item) player.getAttr().get("smithing_equipment").get()).getId());
+		SmithingTable[] values = TABLE.get(((Item) player.getAttributeMap().getObject(PlayerAttributes.SMITHING_EQUIPMENT)).getId());
 		
 		if(values == null) {
 			return false;
@@ -211,8 +212,9 @@ public final class Smithing extends ProducingSkillAction {
 		if(table == null || table.getBar() == null) {
 			return false;
 		}
-		player.getAttr().get("smithing_equipment").set(table.getBar());
-		player.getAttr().get("smithing_position").set(object.getPosition());
+		player.getAttributeMap().set(PlayerAttributes.SMITHING_EQUIPMENT, table.getBar());
+		player.getAttributeMap().set(PlayerAttributes.SMITHING_POSITION, object.getPosition());
+
 		player.widget(994);
 		return true;
 	}
@@ -221,7 +223,7 @@ public final class Smithing extends ProducingSkillAction {
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			player.animation(new Animation(898));
-			SendGraphic.local(player, 2123, (Position) player.getAttr().get("smithing_position").get(), 50);
+			SendGraphic.local(player, 2123, (Position) player.getAttributeMap().getObject(PlayerAttributes.SMITHING_POSITION), 50);
 			amount--;
 			if(amount < 1)
 				t.cancel();
@@ -231,8 +233,8 @@ public final class Smithing extends ProducingSkillAction {
 	
 	@Override
 	public void onStop() {
-		player.getAttr().get("smithing_equipment").set(null);
-		player.getAttr().get("smithing_position").set(null);
+		player.getAttributeMap().set(PlayerAttributes.SMITHING_EQUIPMENT, null);
+		player.getAttributeMap().set(PlayerAttributes.SMITHING_POSITION, null);
 	}
 	
 	@Override

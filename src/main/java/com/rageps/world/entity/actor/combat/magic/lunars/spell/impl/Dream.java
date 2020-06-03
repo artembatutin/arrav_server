@@ -10,6 +10,7 @@ import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.magic.MagicRune;
 import com.rageps.world.entity.actor.combat.magic.RequiredRune;
 import com.rageps.world.entity.actor.combat.magic.lunars.spell.LunarButtonSpell;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 
 import java.util.Optional;
 
@@ -39,7 +40,7 @@ public final class Dream extends LunarButtonSpell {
 		if(!super.canCast(caster, victim)) {
 			return false;
 		}
-		if(caster.getAttr().get("lunar_dream").getBoolean()) {
+		if(caster.getAttributeMap().getBoolean(PlayerAttributes.LUNAR_DREAM)) {
 			caster.toPlayer().message("You are already dreaming...");
 			return false;
 		}
@@ -75,7 +76,7 @@ public final class Dream extends LunarButtonSpell {
 		@Override
 		protected void onSubmit() {
 			player.animation(new Animation(6295));
-			player.getAttr().get("lunar_dream").set(true);
+			player.getAttributeMap().set(PlayerAttributes.LUNAR_DREAM, true);
 		}
 		
 		private boolean replenished;
@@ -84,12 +85,12 @@ public final class Dream extends LunarButtonSpell {
 		protected void execute() {
 			if(player.getCurrentHealth() >= player.getMaximumHealth()) {
 				player.message("You feel fully replenished...");
-				player.getAttr().get("lunar_dream").set(false);
+				player.getAttributeMap().reset(PlayerAttributes.LUNAR_DREAM);
 				replenished = true;
 				this.cancel();
 				return;
 			}
-			if(!player.getAttr().get("lunar_dream").getBoolean()) {
+			if(!player.getAttributeMap().getBoolean(PlayerAttributes.LUNAR_DREAM) ) {
 				this.cancel();
 				return;
 			}

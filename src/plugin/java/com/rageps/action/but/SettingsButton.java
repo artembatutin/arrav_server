@@ -4,6 +4,7 @@ import com.rageps.action.impl.ButtonAction;
 import com.rageps.action.ActionInitializer;
 import com.rageps.net.packet.out.SendConfig;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 
 public class SettingsButton extends ActionInitializer {
 
@@ -29,13 +30,13 @@ public class SettingsButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				Boolean acceptAid = player.getAttr().get("accept_aid").getBoolean();
+				Boolean acceptAid = player.getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID);
 				if(!acceptAid) {
 					player.message("Accept aid has been turned on.");
-					player.getAttr().get("accept_aid").set(true);
+					player.getAttributeMap().reset(PlayerAttributes.ACCEPT_AID);
 				} else {
 					player.message("Accept aid has been turned off.");
-					player.getAttr().get("accept_aid").set(false);
+					player.getAttributeMap().set(PlayerAttributes.ACCEPT_AID, false);
 				}
 				player.out(new SendConfig(427, !acceptAid ? 0 : 1));
 				return true;

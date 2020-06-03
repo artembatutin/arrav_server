@@ -2,7 +2,7 @@ package com.rageps.world.entity.actor;
 
 import com.google.common.base.Preconditions;
 import com.rageps.world.*;
-import com.rageps.world.entity.actor.attribute.AttributeMap;
+import com.rageps.world.attr.AttributeMap;
 import com.rageps.world.entity.actor.combat.Combat;
 import com.rageps.world.entity.actor.combat.CombatUtil;
 import com.rageps.world.entity.actor.combat.effect.CombatEffectType;
@@ -45,8 +45,9 @@ public abstract class Actor extends Entity {
 	/**
 	 * An {@link AttributeMap} instance assigned to this {@code Actor}.
 	 */
-	protected final AttributeMap attr = new AttributeMap();
-	
+	private final AttributeMap attributeMap = new AttributeMap();
+
+
 	/**
 	 * The movement queue that will handle all movement processing for this entity.
 	 */
@@ -530,8 +531,8 @@ public abstract class Actor extends Entity {
 	/**
 	 * @return The {@link AttributeMap} instance assigned to this {@code MobileEntity}.
 	 */
-	public final AttributeMap getAttr() {
-		return attr;
+	public final AttributeMap getAttributeMap() {
+		return attributeMap;
 	}
 	
 	/**

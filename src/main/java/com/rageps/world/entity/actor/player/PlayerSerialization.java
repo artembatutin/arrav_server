@@ -1,11 +1,10 @@
 package com.rageps.world.entity.actor.player;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import com.jsoniter.JsonIterator;
 import com.jsoniter.any.Any;
 import com.jsoniter.output.JsonStream;
+import com.rageps.GameConstants;
 import com.rageps.content.PlayerPanel;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.content.clanchat.ClanManager;
@@ -28,8 +27,7 @@ import com.rageps.content.skill.summoning.familiar.FamiliarContainer;
 import com.rageps.net.codec.login.LoginCode;
 import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
-import com.rageps.world.entity.actor.attribute.AttributeKey;
-import com.rageps.world.entity.actor.attribute.AttributeValue;
+import com.rageps.world.attr.*;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
@@ -45,10 +43,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * The serializer that will serialize and deserialize character files for
@@ -82,7 +77,7 @@ public final class PlayerSerialization {
 	 */
 	public PlayerSerialization(Player player) {
 		this.player = player;
-		this.cf = Paths.get("./data/players/" + player.credentials.username + ".json").toFile();
+		this.cf = Paths.get(GameConstants.SAVE_DIRECTORY, "saves/" + player.credentials.username + ".json").toFile();;
 	}
 	
 	/**
@@ -119,22 +114,23 @@ public final class PlayerSerialization {
 				stream.writeObjectField("quests");
 				stream.writeRaw(gson.toJson(player.getQuestManager().getStartedQuests(), Map.class));
 				stream.writeRaw(",");
-				//write attributes
-				Object2ObjectArrayMap<String, Object> attributes = new Object2ObjectArrayMap<>();
-				for(Map.Entry<String, AttributeValue<?>> it : player.getAttr()) {
-					AttributeKey<?> key = AttributeKey.ALIASES.get(it.getKey());
-					AttributeValue<?> value = it.getValue();
-					
-					if(key.isPersistent()) {
-						Object2ObjectLinkedOpenHashMap<String, Object> attributeEntry = new Object2ObjectLinkedOpenHashMap<>();
-						attributeEntry.put("type", key.getTypeName());
-						attributeEntry.put("value", value.get());
-						attributes.put(key.getName(), attributeEntry);
-					}
+
+				Set<Map.Entry<AttributeKey, Attribute<?>>> attributes = new HashSet<>(player.getAttributeMap().getAttributes().entrySet());
+				attributes.removeIf(e -> Attributes.getDefinition(e.getKey()).getPersistence() != AttributePersistence.PERSISTENT);
+				JsonArray attrs = new JsonArray();
+
+				for (Map.Entry<AttributeKey, Attribute<?>> entry : attributes) {
+					JsonObject attr = new JsonObject();
+					attr.addProperty("name", entry.getKey().getName());
+
+					Attribute<?> attribute = entry.getValue();
+					attr.addProperty("type", attribute.getSavedType());
+					attr.add("value", gson.toJsonTree(attribute.getValue()));
+
+					attrs.add(attr);
 				}
-				stream.writeObjectField("attributes");
-				stream.writeRaw(gson.toJson(attributes));
-				
+				stream.writeRaw("attributes");
+				stream.writeRaw(gson.toJson(attrs));
 				stream.writeObjectEnd();
 				stream.flush();
 				stream.close();
@@ -182,21 +178,46 @@ public final class PlayerSerialization {
 						token.fromJson(player, tokenData);
 					}
 				}
-				Any attributes = data.get("attributes");
-				if(attributes != null) {
-					attributes.asMap().forEach((k, v) -> {
-						try {
-							String old = v.get("type").toString();
-							Class<?> type;
-							type = Class.forName(old);
-							Object obj = v.get("value").as(type);
-							if(AttributeKey.ALIASES.keySet().stream().anyMatch(s -> s.equals(k)))
-								player.getAttr().get(k).set(obj);
-						} catch(ClassNotFoundException e) {
-							e.printStackTrace();
-						}
-					});
+
+				JsonParser parser = new JsonParser();
+				JsonElement tradeElement = parser.parse(data.get("attributes").toString());
+				JsonArray array = tradeElement.getAsJsonArray();
+
+				for (int i = 0; i < array.size(); i++) {
+					JsonObject object = array.get(i).getAsJsonObject();
+
+					String name = object.get("name").getAsString();
+
+					String t = object.get("type").getAsString();
+					AttributeType type = !AttributeType.isPrimitiveType(t) ? AttributeType.OBJECT : AttributeType.valueOf(t);
+
+					JsonElement value = object.get("value");
+
+					Attribute<?> attribute;
+					switch (type) {
+						case BOOLEAN:
+							attribute = new BooleanAttribute(value.getAsBoolean());
+							break;
+						case DOUBLE:
+							attribute = new NumericalAttribute(value.getAsDouble());
+							break;
+						case LONG:
+							attribute = new NumericalAttribute(value.getAsLong());
+							break;
+						case STRING:
+							attribute = new StringAttribute(value.getAsString());
+							break;
+						case OBJECT:
+							Class<?> clazzType = Class.forName(t);
+							Object obj = data.get("attributes").get(i).get("value").as(clazzType);
+							attribute = new ObjectAttribute<>(obj);
+							break;
+						default:
+							throw new IllegalArgumentException("Undefined attribute type: " + type + ", name:"+name);
+					}
+					player.getAttributeMap().set(Attributes.getAttributeKey(name), attribute);
 				}
+
 				Any achievements = data.get("achievements");
 				if(achievements != null) {
 					achievements.asMap().forEach((k, v) -> player.achievements.put(Achievement.valueOf(k), v.toInt()));

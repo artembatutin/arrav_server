@@ -2,6 +2,7 @@ package com.rageps.content.skill.crafting;
 
 import com.google.common.collect.ImmutableMap;
 import com.rageps.net.packet.out.SendItemModelInterface;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import com.rageps.action.impl.ItemOnObjectAction;
 import com.rageps.content.skill.SkillData;
@@ -51,18 +52,18 @@ public final class Spinning extends ProducingSkillAction {
 	 * @return {@code true} if the player created any products, {@code false} otherwise.
 	 */
 	public static boolean create(Player player, int buttonId) {
-		if(!BUTTON_FOR_AMOUNT.containsKey(buttonId) || !player.getAttr().get("crafting_spin").getBoolean()) {
+		if(!BUTTON_FOR_AMOUNT.containsKey(buttonId) || !player.getAttributeMap().getBoolean(PlayerAttributes.CRAFTING_SPIN)) {
 			return false;
 		}
 		int amount = BUTTON_FOR_AMOUNT.get(buttonId);
 		if(amount == -1) {
-			player.out(new SendEnterAmount("How many you would like to spin?", s -> () -> Spinning.create(player, (SpinningData) player.getAttr().get("crafting_spinning").get(), Integer.parseInt(s))));
+			player.out(new SendEnterAmount("How many you would like to spin?", s -> () -> Spinning.create(player, player.getAttributeMap().getObject(PlayerAttributes.CRAFTING_SPINNING), Integer.parseInt(s))));
 			return true;
 		}
 		if(amount == -2) {
-			amount = player.getInventory().computeAmountForId(((SpinningData) player.getAttr().get("crafting_spinning").get()).item.getId());
+			amount = player.getInventory().computeAmountForId(((SpinningData) player.getAttributeMap().getObject(PlayerAttributes.CRAFTING_SPINNING)).item.getId());
 		}
-		create(player, (SpinningData) player.getAttr().get("crafting_spinning").get(), amount);
+		create(player, player.getAttributeMap().getObject(PlayerAttributes.CRAFTING_SPINNING), amount);
 		return true;
 	}
 	
@@ -87,8 +88,8 @@ public final class Spinning extends ProducingSkillAction {
 					}
 					player.text(2799, "\\n\\n\\n\\n\\n" + data.produced.getDefinition().getName());
 					player.out(new SendItemModelInterface(1746, 200, data.produced.getId()));
-					player.getAttr().get("crafting_spin").set(true);
-					player.getAttr().get("crafting_spinning").set(data);
+					player.getAttributeMap().set(PlayerAttributes.CRAFTING_SPIN, true);
+					player.getAttributeMap().set(PlayerAttributes.CRAFTING_SPINNING, data);
 					player.chatWidget(4429);
 					return true;
 				}
@@ -156,7 +157,7 @@ public final class Spinning extends ProducingSkillAction {
 	
 	@Override
 	public void onStop() {
-		player.getAttr().get("crafting_spin").set(false);
+		player.getAttributeMap().reset(PlayerAttributes.CRAFTING_SPIN);
 	}
 	
 	private boolean checkCrafting() {

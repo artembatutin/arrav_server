@@ -24,6 +24,11 @@ public abstract class Task {
 	 * If this {@code Task} is currently running.
 	 */
 	private boolean running;
+
+	/**
+	 * The total number of executions that has been made from this task.
+	 */
+	public int executions;
 	
 	/**
 	 * A counter that determines when this {@code Task} is ready to execute.
@@ -34,7 +39,14 @@ public abstract class Task {
 	 * An attachment for this {@code Task} instance.
 	 */
 	private Optional<Object> key = Optional.empty();
-	
+
+	/**
+	 * Creates a new task with a delay of 1 cycle.
+	 */
+	public Task() {
+		this(1);
+	}
+
 	/**
 	 * Creates a new {@link Task}.
 	 * @param instant If this {@code Task} executes upon being submitted.
@@ -54,6 +66,20 @@ public abstract class Task {
 	 */
 	public Task(int delay) {
 		this(delay, false);
+	}
+
+	/**
+	 * Creates a new task with the specified delay and immediate flag.
+	 *
+	 * @param delay The number of cycles between consecutive executions of this task.
+	 * @param immediate A flag which indicates if for the first execution there should be no delay.
+	 * @throws IllegalArgumentException if the {@code delay} is not positive.
+	 */
+	public Task(int delay, Object key, boolean immediate) {
+		this.delay = delay;
+		this.delay = delay;
+		this.instant = immediate;
+		this.attach(key);
 	}
 	
 	/**
@@ -182,7 +208,16 @@ public abstract class Task {
 	/**
 	 * @return The attachment for this {@code Task} instance.
 	 */
-	Optional<Object> getAttachment() {
+	public Optional<Object> getAttachment() {
 		return key;
+	}
+
+	/**
+	 * The total number of executions that has been made since this task was created.
+	 *
+	 * @return the number of executions.
+	 */
+	public final int getExecutions() {
+		return executions;
 	}
 }

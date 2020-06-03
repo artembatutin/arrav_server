@@ -4,6 +4,7 @@ import com.rageps.content.object.cannon.MulticannonTask;
 import com.rageps.content.skill.Skills;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.locale.Boundary;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.attack.FightType;
@@ -25,7 +26,7 @@ public abstract class RangedStrategy<T extends Actor> extends CombatStrategy<T> 
 	
 	@Override
 	public boolean withinDistance(T attacker, Actor defender) {
-		if(attacker.getAttr().get("master_archery").getBoolean()) {
+		if(attacker.getAttributeMap().getBoolean(PlayerAttributes.MASTER_ARCHERY)) {
 			return true;
 		}
 		

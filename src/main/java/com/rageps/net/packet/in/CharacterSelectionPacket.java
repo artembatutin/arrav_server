@@ -4,6 +4,7 @@ import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAppearance;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 
@@ -50,8 +51,8 @@ public final class CharacterSelectionPacket implements IncomingPacket {
 		player.getAppearance().setValues(values);
 		player.getFlags().flag(UpdateFlag.APPEARANCE);
 		player.closeWidget();
-		if(player.getAttr().get("introduction_stage").getInt() == 0) {
-			player.getAttr().get("introduction_stage").set(1);
+		if(player.getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) == 0) {
+			player.getAttributeMap().set(PlayerAttributes.INTRODUCTION_STAGE, 1);
 		}
 		player.getActivityManager().execute(ActivityType.CHARACTER_SELECTION);
 		CHANGE_APPEARANCE.inc(player);

@@ -9,6 +9,7 @@ import com.rageps.world.entity.actor.combat.CombatUtil;
 import com.rageps.world.entity.actor.combat.magic.MagicRune;
 import com.rageps.world.entity.actor.combat.magic.RequiredRune;
 import com.rageps.world.entity.actor.combat.magic.lunars.spell.LunarButtonSpell;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +34,7 @@ public final class CureGroup extends LunarButtonSpell {
 		super.effect(caster, victim);
 		
 		for(Player target : local_players) {
-			if(!target.getAttr().get("accept_aid").getBoolean()) {
+			if(!target.getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID)) {
 				continue;
 			}
 			target.graphic(new Graphic(744, 90));
@@ -56,7 +57,7 @@ public final class CureGroup extends LunarButtonSpell {
 			return false;
 		}
 		for(Player target : local_players) {
-			if(!target.isPoisoned() || !target.getAttr().get("accept_aid").getBoolean()) {
+			if(!target.isPoisoned() || !target.getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID)) {
 				continue;
 			}
 			if(target.isPoisoned()) {

@@ -8,6 +8,7 @@ import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.magic.MagicRune;
 import com.rageps.world.entity.actor.combat.magic.RequiredRune;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 
 import java.util.Optional;
 
@@ -57,7 +58,7 @@ public final class HealOther extends LunarCombatSpell {
 		
 		int targetHitpoints = target.getCurrentHealth();
 		
-		if(!target.getAttr().get("accept_aid").getBoolean()) {
+		if(!target.getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID)) {
 			caster.toPlayer().message("This player is not accepting any aid.");
 			return false;
 		}

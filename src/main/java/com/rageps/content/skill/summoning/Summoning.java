@@ -5,6 +5,7 @@ import com.rageps.content.skill.summoning.familiar.Familiar;
 import com.rageps.content.skill.summoning.familiar.FamiliarAbility;
 import com.rageps.content.skill.summoning.familiar.FamiliarContainer;
 import com.rageps.content.skill.summoning.familiar.ability.Teleporter;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.content.item.pets.Pet;
 import com.rageps.net.packet.out.SendContainer;
@@ -196,8 +197,8 @@ public final class Summoning {
 		if(!ability.isHoldableContainer()) {
 			return false;
 		}
-		
-		player.getAttr().get("bob").set(true);
+
+		player.getAttributeMap().set(PlayerAttributes.BOB, true);
 		FamiliarContainer storage = (FamiliarContainer) ability;
 		player.out(new SendContainer(2702, storage.getContainer()));
 		player.out(new SendInventoryInterface(2700, 5063));

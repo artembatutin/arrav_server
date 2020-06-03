@@ -10,7 +10,6 @@ import com.rageps.content.market.MarketShop;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.cooking.DoughCreation;
 import com.rageps.content.skill.crafting.*;
-import com.rageps.content.skill.crafting.*;
 import com.rageps.content.skill.fletching.BowCarving;
 import com.rageps.content.skill.magic.EnchantCrossbowBolts;
 import com.rageps.content.skill.prayer.Prayer;
@@ -22,6 +21,7 @@ import com.rageps.net.packet.IncomingPacket;
 import com.rageps.net.packet.out.SendEnterName;
 import com.rageps.world.entity.actor.combat.magic.lunars.LunarSpells;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.item.Item;
@@ -138,9 +138,9 @@ public final class ClickButtonPacket implements IncomingPacket {
 		}
 		switch(button) {
 			case 55095:
-				Item item = player.getInventory().get(player.getAttr().get("destroy_item_slot").getInt());
+				Item item = player.getInventory().get(player.getAttributeMap().getInt(PlayerAttributes.DESTROY_ITEM_SLOT));
 				player.getInventory().remove(item);
-				player.getAttr().get("destroy_item_slot").set(-1);
+				player.getAttributeMap().set(PlayerAttributes.DESTROY_ITEM_SLOT,-1);
 				player.closeWidget();
 				break;
 			case 55096:

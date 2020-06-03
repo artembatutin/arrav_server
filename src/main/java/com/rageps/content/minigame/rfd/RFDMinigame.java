@@ -10,10 +10,10 @@ import com.rageps.content.item.PotionConsumable;
 import com.rageps.content.minigame.SequencedMinigame;
 import com.rageps.content.skill.prayer.Prayer;
 import com.rageps.world.entity.actor.Actor;
-import com.rageps.world.entity.actor.attribute.AttributeValue;
 import com.rageps.world.entity.actor.mob.DefaultMob;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.InstanceManager;
@@ -123,11 +123,14 @@ public final class RFDMinigame extends SequencedMinigame {
 		if(!RFDData.isValidNpc(mob.getId())) {
 			return;
 		}
-		
-		AttributeValue<RFDData> key = player.getAttr().get("rfd_wave");
-		
+
+		if(!player.getMinigame().isPresent())
+		return;
+
+		RFDData key = player.getAttributeMap().getObject(PlayerAttributes.RFD_WAVE);
+
 		if(((RFDMinigame) player.getMinigame().get()).wave.getNextOrLast().equals(RFDData.WAVE_SIX)) {
-			key.set(RFDData.WAVE_SIX);
+			player.getAttributeMap().set(PlayerAttributes.RFD_WAVE, RFDData.WAVE_SIX);
 			player.message("You have completed the rfd minigame.");
 			leave(player);
 			Achievement.DISASTER.inc(player);
@@ -136,8 +139,8 @@ public final class RFDMinigame extends SequencedMinigame {
 		
 		((RFDMinigame) (player.getMinigame().get())).currentNpc = Optional.empty();
 		
-		if(((RFDMinigame) player.getMinigame().get()).wave.getIndex() > key.get().getIndex()) {
-			key.set(key.get().getNextOrLast());
+		if(((RFDMinigame) player.getMinigame().get()).wave.getIndex() > key.getIndex()) {
+			player.getAttributeMap().set(PlayerAttributes.RFD_WAVE, key.getNextOrLast());
 		}
 		
 		((RFDMinigame) player.getMinigame().get()).wave = ((RFDMinigame) player.getMinigame().get()).wave.getNextOrLast();

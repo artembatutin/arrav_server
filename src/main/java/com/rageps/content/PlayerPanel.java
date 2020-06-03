@@ -19,6 +19,7 @@ import com.rageps.net.packet.out.SendLink;
 import com.rageps.net.packet.out.SendMobDrop;
 import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
@@ -234,7 +235,7 @@ public enum PlayerPanel {
 		PlayerPanel.IRON.refresh(player, "@or3@ - Iron man: @yel@" + (player.isIronMan() ? "@gre@yes" : "@red@no"), true);
 		PlayerPanel.SLAYER_POINTS.refresh(player, "@or2@ - Slayer points: @yel@" + player.getSlayerPoints(), true);
 		PlayerPanel.SLAYER_TASK.refresh(player, "@or2@ - Slayer task: @yel@" + (player.getSlayer().isPresent() ? (player.getSlayer().get().toString()) : "none"));
-		PlayerPanel.SLAYER_COUNT.refresh(player, "@or2@ - Completed tasks: @yel@" + player.getAttr().get("slayer_tasks").getInt());
+		PlayerPanel.SLAYER_COUNT.refresh(player, "@or2@ - Completed tasks: @yel@" + player.getAttributeMap().getInt(PlayerAttributes.SLAYER_TASKS));
 		PlayerPanel.PEST_POINTS.refresh(player, "@or2@ - Pest points: @yel@" + player.getPest());
 		PlayerPanel.TOTAL_VOTES.refresh(player, "@or2@ - Total votes: @yel@" + player.totalVotes);
 		

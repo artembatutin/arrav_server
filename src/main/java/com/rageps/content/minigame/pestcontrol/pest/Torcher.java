@@ -2,6 +2,7 @@ package com.rageps.content.minigame.pestcontrol.pest;
 
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.actor.mob.Mob;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
 
@@ -16,7 +17,7 @@ public class Torcher extends Pest {
 	 */
 	public Torcher(int id, Position position) {
 		super(id, position);
-		getAttr().get("master_archery").set(true);
+		toPlayer().getAttributeMap().set(PlayerAttributes.MASTER_ARCHERY, true);
 	}
 	
 	@Override

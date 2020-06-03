@@ -12,6 +12,7 @@ import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
 import com.rageps.world.Animation;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 
 import java.util.EnumSet;
@@ -63,10 +64,10 @@ public final class BowCarving extends ProducingSkillAction {
 	 * @return <true> if this action started, <false> otherwise.
 	 */
 	public static boolean fletch(Player player, int buttonId) {
-		if(!player.getAttr().get("fletching_bows").getBoolean()) {
+		if(!player.getAttributeMap().getBoolean(PlayerAttributes.FLETCHING_BOWS)) {
 			return false;
 		}
-		Optional<ProduciblePolicy> pol = Log.getProducibles((BowCarving) player.getAttr().get("fletching_bowcarving").get(), buttonId);
+		Optional<ProduciblePolicy> pol = Log.getProducibles(player.getAttributeMap().getObject(PlayerAttributes.FLETCHING_BOWCARVING), buttonId);
 		
 		if(!pol.isPresent()) {
 			return false;
@@ -74,7 +75,7 @@ public final class BowCarving extends ProducingSkillAction {
 		
 		player.closeWidget();
 		if(Log.getAmount(buttonId) == 28) {
-			BowCarving fletch = (BowCarving) player.getAttr().get("fletching_bowcarving").get();
+			BowCarving fletch = player.getAttributeMap().getObject(PlayerAttributes.FLETCHING_BOWCARVING);
 			fletch.current = pol.get();
 			player.out(new SendEnterAmount("How many you would like to make?", s -> () -> BowCarving.fletch(player, fletch.getCurrent(), Integer.parseInt(s))));
 			return true;
@@ -90,10 +91,11 @@ public final class BowCarving extends ProducingSkillAction {
 	 * @param amount the amount to register.
 	 */
 	public static void fletch(Player player, ProduciblePolicy producable, int amount) {
-		BowCarving fletch = (BowCarving) player.getAttr().get("fletching_bowcarving").get();
+		BowCarving fletch = player.getAttributeMap().getObject(PlayerAttributes.FLETCHING_BOWCARVING);
 		fletch.counter = amount;
 		fletch.current = producable;
-		player.getAttr().get("fletching_bowcarving").set(fletch);
+		player.getAttributeMap().set(PlayerAttributes.FLETCHING_BOWCARVING, fletch);
+
 		fletch.start();
 	}
 	
@@ -113,8 +115,8 @@ public final class BowCarving extends ProducingSkillAction {
 		
 		if(firstItem.getId() == log.get().log.getId() && secondItem.getId() == 946 || firstItem.getId() == 946 && secondItem.getId() == log.get().log.getId() || beaver) {
 			BowCarving fletching = new BowCarving(player, log.get(), beaver);
-			player.getAttr().get("fletching_bowcarving").set(fletching);
-			player.getAttr().get("fletching_bows").set(true);
+			player.getAttributeMap().set(PlayerAttributes.FLETCHING_BOWCARVING, fletching);
+			player.getAttributeMap().set(PlayerAttributes.FLETCHING_BOWS, true);
 			if(log.get().producibles.length == 2) {
 				player.text(8879, "What would you like to make?");
 				player.out(new SendItemModelInterface(8870, 200, fletching.definition.producibles[0].producible.getId()));
@@ -212,7 +214,7 @@ public final class BowCarving extends ProducingSkillAction {
 	
 	@Override
 	public void onStop() {
-		player.getAttr().get("fletching_bows").set(false);
+		player.getAttributeMap().set(PlayerAttributes.FLETCHING_BOWS, false);
 	}
 	
 	public boolean checkFletching() {

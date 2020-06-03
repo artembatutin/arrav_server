@@ -6,6 +6,7 @@ import com.rageps.task.Task;
 import com.rageps.world.Animation;
 import com.rageps.world.Graphic;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.locale.Position;
 
 /**
@@ -123,8 +124,8 @@ public enum Spellbook {
 			player.message("You have already converted to " + book.toString().toLowerCase() + " magics!");
 			return;
 		}
-		if(player.getAttr().get("lunar_spellbook_swap").getBoolean()) {
-			player.getAttr().get("lunar_spellbook_swap").set(false);
+		if(player.getAttributeMap().getBoolean(PlayerAttributes.LUNAR_SPELLBOOK_SWAP)) {
+			player.getAttributeMap().set(PlayerAttributes.LUNAR_SPELLBOOK_SWAP, false);
 			;
 			player.message("Your spellbook swap spell has been deactivated...");
 		}

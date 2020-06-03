@@ -13,6 +13,7 @@ import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
 import com.rageps.world.Animation;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;
 
@@ -68,15 +69,15 @@ public final class PotClaying extends ProducingSkillAction {
 	public static boolean create(Player player, int buttonId) {
 		PotClayingData data = PotClayingData.getDefinition(buttonId).orElse(null);
 		
-		if(data == null || !player.getAttr().get("crafting_pots").getBoolean()) {
+		if(data == null || !player.getAttributeMap().getBoolean(PlayerAttributes.CRAFTING_POTS)) {
 			return false;
 		}
 		
 		if(data.amount == -1) {
-			player.out(new SendEnterAmount("How many you would like to register?", s -> () -> PotClaying.create(player, data, Integer.parseInt(s), player.getAttr().get("crafting_potfired").getBoolean())));
+			player.out(new SendEnterAmount("How many you would like to register?", s -> () -> PotClaying.create(player, data, Integer.parseInt(s), player.getAttributeMap().getBoolean(PlayerAttributes.CRAFTING_POTFIRED))));
 			return true;
 		}
-		create(player, data, data.amount, player.getAttr().get("crafting_potfired").getBoolean());
+		create(player, data, data.amount, player.getAttributeMap().getBoolean(PlayerAttributes.CRAFTING_POTFIRED));
 		return true;
 	}
 	
@@ -108,8 +109,8 @@ public final class PotClaying extends ProducingSkillAction {
 				player.text(8957, "\\n\\n\\n\\nBowl");
 				player.text(8961, "\\n\\n\\n\\nPlant pot");
 				player.text(8965, "\\n\\n\\n\\nPot lid");
-				player.getAttr().get("crafting_potfired").set(true);
-				player.getAttr().get("crafting_pots").set(true);
+				player.getAttributeMap().set(PlayerAttributes.CRAFTING_POTS, true);
+				player.getAttributeMap().set(PlayerAttributes.CRAFTING_POTFIRED, true);
 				player.chatWidget(8938);
 				return true;
 			}
@@ -129,8 +130,8 @@ public final class PotClaying extends ProducingSkillAction {
 				player.text(8957, "\\n\\n\\n\\nBowl");
 				player.text(8961, "\\n\\n\\n\\nPlant pot");
 				player.text(8965, "\\n\\n\\n\\nPot lid");
-				player.getAttr().get("crafting_potfired").set(false);
-				player.getAttr().get("crafting_pots").set(true);
+				player.getAttributeMap().reset(PlayerAttributes.CRAFTING_POTFIRED);
+				player.getAttributeMap().set(PlayerAttributes.CRAFTING_POTS, true);
 				player.chatWidget(8938);
 				return true;
 			}
@@ -196,8 +197,8 @@ public final class PotClaying extends ProducingSkillAction {
 	
 	@Override
 	public void onStop() {
-		player.getAttr().get("crafting_pots").set(false);
-		player.getAttr().get("crafting_potfired").set(false);
+		player.getAttributeMap().reset(PlayerAttributes.CRAFTING_POTS);
+		player.getAttributeMap().reset(PlayerAttributes.CRAFTING_POTFIRED);
 	}
 	
 	/**
@@ -280,8 +281,6 @@ public final class PotClaying extends ProducingSkillAction {
 		 * @param unfired {@link #unfired}.
 		 * @param fired {@link #fired}.
 		 * @param requirement {@link #requirement}.
-		 * @param experienceUnfired {@link #experienceUnfired}.
-		 * @param experienceFired {@link #experienceFired}.
 		 * @param amount {@link #amount}.
 		 */
 		PotClayingData(int buttonId, PotPolicy unfired, PotPolicy fired, int requirement, int amount) {

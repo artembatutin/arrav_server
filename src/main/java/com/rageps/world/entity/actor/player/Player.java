@@ -55,6 +55,8 @@ import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.OutgoingPacket;
 import com.rageps.net.packet.out.*;
 import com.rageps.util.Utility;
+import com.rageps.world.ExperienceRate;
+import com.rageps.world.GameMode;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.drop.chance.NpcDropChanceHandler;
 import com.rageps.world.entity.actor.player.assets.AntifireDetails;
@@ -70,7 +72,6 @@ import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.net.packet.out.*;
 import com.rageps.task.Task;
 import com.rageps.util.ActionListener;
 import com.rageps.util.MutableNumber;
@@ -556,6 +557,13 @@ public final class Player extends Actor {
 	 */
 	private NpcDropChanceHandler dropChanceHandler= new NpcDropChanceHandler(this);
 
+	private ExperienceRate experienceRate = ExperienceRate.NORMAL;
+
+	/**
+	 * The player {@link GameMode}.
+	 */
+	private GameMode gameMode = GameMode.NORMAL;
+
 	/**
 	 * Creates a new {@link Player}.
 	 */
@@ -632,7 +640,7 @@ public final class Player extends Actor {
 		setUpdateRegion(true);
 		super.getFlags().flag(UpdateFlag.APPEARANCE);
 		Smelting.clearInterfaces(this);
-		if(getAttr().get("introduction_stage").getInt() == 3) {
+		if(getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) == 3) {
 			sendDefaultSidebars();
 		}
 		move(super.getPosition());
@@ -661,7 +669,7 @@ public final class Player extends Actor {
 		out(new SendConfig(174, super.isPoisoned() ? 1 : 0));
 		out(new SendConfig(172, super.isAutoRetaliate() ? 1 : 0));
 		out(new SendConfig(combat.getFightType().getParent(), combat.getFightType().getChild()));
-		out(new SendConfig(427, ((Boolean) getAttr().get("accept_aid").get()) ? 0 : 1));
+		out(new SendConfig(427, ((Boolean) getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID)) ? 0 : 1));
 		out(new SendConfig(108, 0));
 		out(new SendConfig(301, 0));
 		text(149, (int) runEnergy + "%");
@@ -675,7 +683,7 @@ public final class Player extends Actor {
 		if(!clan.isPresent()) {
 			ClanManager.get().clearOnLogin(this);
 		}
-		if(!bot && attr.get("introduction_stage").getInt() != 3) {
+		if(!bot && getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) != 3) {
 			new IntroductionCutscene(this).prerequisites();
 		}
 		if(FirepitManager.get().getFirepit().isActive()) {
@@ -826,6 +834,8 @@ public final class Player extends Actor {
 		if(session != null) {
 			session.pollIncomingMessages();
 		}
+
+		getAttributeMap().plus(PlayerAttributes.SESSION_DURATION, 600L);
 		getMovementQueue().sequence();
 		MobAggression.sequence(this);
 		restoreRunEnergy();
@@ -2304,4 +2314,12 @@ public final class Player extends Actor {
     public void setDropChanceHandler(NpcDropChanceHandler dropChanceHandler) {
         this.dropChanceHandler = dropChanceHandler;
     }
+
+	public GameMode getGameMode() {
+		return gameMode;
+	}
+
+	public ExperienceRate getExperienceRate() {
+		return experienceRate;
+	}
 }

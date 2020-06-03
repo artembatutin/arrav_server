@@ -11,6 +11,7 @@ import com.rageps.content.skill.summoning.familiar.FamiliarAbility;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemIdentifiers;
 
@@ -32,7 +33,7 @@ public final class GraniteCrab extends Familiar {
 	private final ForagerPassiveAbility ability = new ForagerPassiveAbility(ItemIdentifiers.COD, ItemIdentifiers.PIKE, ItemIdentifiers.SEAWEED, ItemIdentifiers.OYSTER) {
 		@Override
 		public boolean canForage(Player player) {
-			return (Boolean) player.getAttr().get("fishing").get();
+			return player.getAttributeMap().getBoolean(PlayerAttributes.FISHING);
 		}
 		
 		@Override

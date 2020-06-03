@@ -32,12 +32,12 @@ public class TitleManager {
        // player.getPacketSender().sendInterface(48100);
 
 
-        if(player.getAttr().exist(KEY_SELECTED_CAT))
-            player.getAttr().get(KEY_SELECTED_CAT).set(TitleData.TitlePolicy.MISC);
-        player.getAttr().get(KEY_OPEN_TITLED).set(idx);
+        /*if(player.getAttributeMap().exist(KEY_SELECTED_CAT))
+            player.getAttributeMap().get(KEY_SELECTED_CAT).set(TitleData.TitlePolicy.MISC);
+        player.getAttributeMap().get(KEY_OPEN_TITLED).set(idx);
+*/
 
-
-        List<TitleData> titles_selected = TitleData.getTitles((TitleData.TitlePolicy) player.getAttr().get(KEY_SELECTED_CAT).get());
+//        List<TitleData> titles_selected = TitleData.getTitles((TitleData.TitlePolicy) player.getAttributeMap().get(KEY_SELECTED_CAT).get());
 
             /*for(int i = 0; i < 50; i++)
                 if(i < titles_selected.size())
@@ -65,7 +65,7 @@ public class TitleManager {
      * @param type The category selected.
      */
     public static void selectCat(Player player, TitleData.TitlePolicy type) {
-        player.getAttr().get(KEY_SELECTED_CAT).set(type);
+//        player.getAttributeMap().get(KEY_SELECTED_CAT).set(type);
         openInterface(player, 1);
     }
 

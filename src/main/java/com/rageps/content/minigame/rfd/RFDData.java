@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.rageps.content.market.MarketItem;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 
 import java.util.Arrays;
@@ -99,7 +100,7 @@ public enum RFDData {
 			return true;
 		}
 		
-		List<Item> items = Arrays.asList(((RFDData) player.getAttr().get("rfd_wave").get()).ids);
+		List<Item> items = Arrays.asList(((RFDData)player.getAttributeMap().getObject(PlayerAttributes.RFD_WAVE)).ids);
 		
 		return items.stream().anyMatch(t -> t.getId() == item.getId());
 	}

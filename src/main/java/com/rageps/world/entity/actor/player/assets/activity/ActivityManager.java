@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import com.rageps.content.skill.action.SkillActionTask;
 import com.rageps.task.LinkedTaskSequence;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
 
 import java.util.Arrays;
@@ -45,14 +46,14 @@ public final class ActivityManager {
 	 * @param type the type to disable.
 	 */
 	public void set(ActivityType... type) {
-		Arrays.stream(type).forEach(disabled::add);
+		disabled.addAll(Arrays.asList(type));
 	}
 	
 	/**
 	 * Disables every kind of activity.
 	 */
 	public void disable() {
-		VALUES.stream().forEach(disabled::add);
+		disabled.addAll(VALUES);
 	}
 	
 	/**
@@ -67,7 +68,7 @@ public final class ActivityManager {
 	
 	/**
 	 * Removes the {@code type} from the collection to re-enable this activity type.
-	 * @param type the type to enable
+	 * @param types the types to enable
 	 */
 	public void remove(ActivityType... types) {
 		Arrays.stream(types).forEach(disabled::remove);
@@ -108,7 +109,7 @@ public final class ActivityManager {
 	 */
 	public boolean containsAny(ActivityType... types) {
 		List<ActivityType> collection = Arrays.asList(types);
-		return collection.stream().anyMatch($it -> disabled.contains($it));
+		return collection.stream().anyMatch(disabled::contains);
 	}
 	
 	/**
@@ -183,11 +184,11 @@ public final class ActivityManager {
 	}
 	
 	private void dreamHook(ActivityType type) {
-		if(!player.getAttr().get("lunar_dream").getBoolean() || type.equals(ActivityType.CLICK_BUTTON)) {
+		if(!player.getAttributeMap().getBoolean(PlayerAttributes.LUNAR_DREAM)  || type.equals(ActivityType.CLICK_BUTTON)) {
 			return;
 		}
 		
-		player.getAttr().get("lunar_dream").set(false);
+		player.getAttributeMap().set(PlayerAttributes.LUNAR_DREAM, false);
 		LinkedTaskSequence seq = new LinkedTaskSequence();
 		seq.connect(2, () -> player.getActivityManager().enable());
 		seq.start();
@@ -195,7 +196,6 @@ public final class ActivityManager {
 	
 	/**
 	 * Executes any hook <b>BEFORE</b> the hook is checked for.
-	 * @param player the player to execute for.
 	 * @param type the type to execute.
 	 */
 	public void executeBeforeHook(ActivityType type) {
@@ -205,14 +205,13 @@ public final class ActivityManager {
 	
 	/**
 	 * Executes the hooks when any activity is handled.
-	 * @param player the player to execute for.
 	 * @param type the current activity type executed.
 	 */
 	public void execute(ActivityType type) {
 		ActivityManager activity = player.getActivityManager();
 		activity.onHook(ActivityType.WALKING, () -> ExchangeSessionManager.get().reset(player));
-		activity.onHook(ActivityType.INTERFACE_CLICK, () -> player.getAttr().get("banking").set(false));
-		activity.onHook(ActivityType.INTERFACE_CLICK, () -> player.getAttr().get("bob").set(false));
+		activity.onHook(ActivityType.INTERFACE_CLICK, () -> player.getAttributeMap().set(PlayerAttributes.BANKING, false));
+		activity.onHook(ActivityType.INTERFACE_CLICK, () -> player.getAttributeMap().set(PlayerAttributes.BOB, false));
 		skillHook(player, type);
 	}
 	

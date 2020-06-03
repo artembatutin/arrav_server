@@ -282,6 +282,22 @@ public final class Skills {
 		}
 		player.out(new SendSkill(skill, s.getLevel(), (int) s.getExperience()));
 	}
+
+	public static long getTotalExp(Player player) {
+		long exp = 0;
+		for(Skill skill : player.getSkills()) {
+			exp += skill.getExperience();
+		}
+		return exp;
+	}
+
+	public static int getTotalLevel(Player player) {
+		int level = 0;
+		for(Skill skill : player.getSkills()) {
+			level += skill.getRealLevel();
+		}
+		return level;
+	}
 	
 	/**
 	 * Sends {@code skills} to the client which will refresh it for

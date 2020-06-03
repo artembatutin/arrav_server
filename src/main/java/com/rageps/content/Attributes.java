@@ -3,6 +3,7 @@ package com.rageps.content;
 import com.rageps.content.skill.summoning.Summoning;
 import com.rageps.net.packet.in.ItemInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemDefinition;
 import com.rageps.world.entity.item.container.impl.Bank;
@@ -26,21 +27,21 @@ public final class Attributes {
 		switch(interfaceId) {
 
 			case Bank.BANK_INVENTORY_ID:
-				if(player.getAttr().get("banking").getBoolean())
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING))
 					player.getBank().withdraw(player, 0, slot, 1);
 				break;
 
 			case Bank.SIDEBAR_INVENTORY_ID:
-				if(player.getAttr().get("banking").getBoolean())
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING))
 					player.getBank().deposit(slot, 1, player.getInventory(), true);
 				return true;
 
 			case 5064:
-				if(player.getAttr().get("bob").getBoolean())
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB))
 					Summoning.store(player, slot, 1);
 				return true;
 			case 2702:
-				if(player.getAttr().get("bob").getBoolean()) {
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB)) {
 					Summoning.withdraw(player, slot, 1);
 				}
 				return true;
@@ -60,20 +61,20 @@ public final class Attributes {
 
 		switch(interfaceId) {
 			case Bank.BANK_INVENTORY_ID:
-				if(player.getAttr().get("banking").getBoolean())
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING))
 					player.getBank().withdraw(player, 0, slot, 5);
 				break;
 			case Bank.SIDEBAR_INVENTORY_ID:
-				if(player.getAttr().get("banking").getBoolean())
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING))
 					player.getBank().deposit(slot, 5, player.getInventory(), true);
 				return true;
 
 			case 5064:
-				if(player.getAttr().get("bob").getBoolean())
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB))
 					Summoning.store(player, slot, 5);
 				return true;
 			case 2702:
-				if(player.getAttr().get("bob").getBoolean()) {
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB)) {
 					Summoning.withdraw(player, slot, 5);
 				}
 				return true;
@@ -94,20 +95,20 @@ public final class Attributes {
 		switch(interfaceId) {
 
 			case Bank.BANK_INVENTORY_ID:
-				if(player.getAttr().get("banking").getBoolean())
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING))
 					player.getBank().withdraw(player, 0, slot, 10);
 				break;
 
 			case Bank.SIDEBAR_INVENTORY_ID:
-				if(player.getAttr().get("banking").getBoolean())
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING))
 					player.getBank().deposit(slot, 10, player.getInventory(), true);
 				return true;
 			case 5064:
-				if((Boolean) player.getAttr().get("bob").get())
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB))
 					Summoning.store(player, slot, 10);
 				return true;
 			case 2702:
-				if(player.getAttr().get("bob").getBoolean()) {
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB)) {
 					Summoning.withdraw(player, slot, 10);
 				}
 				return true;
@@ -129,9 +130,9 @@ public final class Attributes {
 		switch(interfaceId) {
 
 			case Bank.BANK_INVENTORY_ID:
-				if(player.getAttr().get("banking").getBoolean()) {
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING)) {
 					int amount;
-					if(player.getAttr().get("withdraw_as_note").getBoolean()) {
+					if(player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE)) {
 						amount = player.getBank().amount(itemId);
 					} else {
 						Item itemWithdrew = new Item(itemId, 1);
@@ -147,14 +148,14 @@ public final class Attributes {
 				if(inv == null) {
 					return false;
 				}
-				if(player.getAttr().get("banking").getBoolean()) {
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING)) {
 					player.getBank().deposit(slot, player.getInventory().computeAmountForId(inv.getId()), player.getInventory(), true);
-				} else if(player.getAttr().get("bob").getBoolean()) {
+				} else if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB)) {
 					Summoning.store(player, slot, player.getInventory().computeAmountForId(inv.getId()));
 				}
 				return true;
 			case 2702:
-				if(player.getAttr().get("bob").getBoolean()) {
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB)) {
 					Summoning.withdraw(player, slot, -1);
 				}
 				return true;

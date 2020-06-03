@@ -10,11 +10,11 @@ import com.rageps.net.packet.out.*;
 import com.rageps.content.TabInterface;
 import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
-import com.rageps.net.packet.out.*;
 import com.rageps.task.Task;
 import com.rageps.world.Animation;
 import com.rageps.world.Graphic;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.locale.Position;
@@ -52,7 +52,7 @@ public final class IntroductionCutscene extends Cutscene {
 	public void execute(Task t) {
 		player.setPosition(new Position(3088, 3509));
 		if(player.getPosition().same(new Position(3088, 3509))) {
-			if(player.getAttr().get("introduction_stage").getInt() == 1) {
+			if(player.getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) == 1) {
 				player.getDialogueBuilder().append(new StatementDialogue("Welcome to the World of @blu@Arrav!").attach(() -> {
 					player.getActivityManager().set(ActivityType.CLICK_BUTTON);
 					player.out(new SendCameraMovement(new Position(3083, 3510), 420, 2, 10));
@@ -122,7 +122,7 @@ public final class IntroductionCutscene extends Cutscene {
 			player.facePosition(new Position(3221, 3432));
 			player.out(new SendCameraReset());
 			player.setVisible(true);
-			player.getAttr().get("introduction_stage").set(2);
+			player.getAttributeMap().set(PlayerAttributes.INTRODUCTION_STAGE, 2);
 			player.graphic(new Graphic(2189));
 			ClanManager.get().join(player, "rogue");
 		}).attachAfter(() -> {
@@ -135,7 +135,7 @@ public final class IntroductionCutscene extends Cutscene {
 	public void prerequisites() {
 		player.resetSidebars();
 		player.getActivityManager().setAllExcept(ActivityType.WALKING, ActivityType.CLICK_BUTTON, ActivityType.LOG_OUT, ActivityType.CHARACTER_SELECTION, ActivityType.DIALOGUE_INTERACTION, ActivityType.FACE_POSITION);
-		if(player.getAttr().get("introduction_stage").getInt() < 2) {
+		if(player.getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) < 2) {
 			player.setVisible(false);
 			if(player.firstLogin) {
 				submit();
@@ -146,11 +146,11 @@ public final class IntroductionCutscene extends Cutscene {
 					submit();
 				} else {
 					player.getDialogueBuilder().advance();
-					player.getAttr().get("introduction_stage").set(3);
+					player.getAttributeMap().set(PlayerAttributes.INTRODUCTION_STAGE, 3);
 				}
 			}, "I want a quick tour.", "Skip the introduction."), complete());
 		}
-		if(player.getAttr().get("introduction_stage").getInt() == 2) {
+		if(player.getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) == 2) {
 			player.widget(-5);
 		}
 	}

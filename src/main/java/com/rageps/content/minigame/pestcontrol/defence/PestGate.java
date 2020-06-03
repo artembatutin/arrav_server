@@ -5,6 +5,7 @@ import com.rageps.content.skill.Skills;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.Animation;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.Position;
@@ -57,8 +58,8 @@ public class PestGate {
 		player.getInventory().remove(new Item(1511));
 		if(!player.lockedXP)
 			player.getSkills()[Skills.CONSTRUCTION].increaseExperience(20);
-		player.getAttr().get("participation").set(player.getAttr().get("participation").getInt() + 25);
-		player.text(21116, "" + player.getAttr().get("participation").getInt());
+		player.getAttributeMap().plus(PlayerAttributes.PARTICIPATION, 25);
+		player.text(21116, "" + player.getAttributeMap().getInt(PlayerAttributes.PARTICIPATION));
 	}
 
 	public void damage() {

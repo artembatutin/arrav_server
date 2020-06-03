@@ -6,6 +6,7 @@ import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
 import com.rageps.action.ActionInitializer;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 
 public class PanelIronManButton extends ActionInitializer {
@@ -36,7 +37,7 @@ public class PanelIronManButton extends ActionInitializer {
 					player.message("You already received your regular starter package before.");
 				}
 				player.getInventory().updateBulk();
-				player.getAttr().get("introduction_stage").set(3);
+				player.getAttributeMap().set(PlayerAttributes.INTRODUCTION_STAGE, 3);
 				player.getActivityManager().enable();
 				return true;
 			}

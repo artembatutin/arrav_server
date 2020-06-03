@@ -8,6 +8,7 @@ import com.rageps.task.Task;
 import com.rageps.world.Animation;
 import com.rageps.world.Graphic;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemDefinition;
 import com.rageps.world.entity.object.GameObject;
@@ -43,11 +44,11 @@ public final class Cooking extends ProducingSkillAction {
 	
 	@Override
 	public void onStop() {
-		player.getAttr().get("cooking_data").set(null);
-		
+		player.getAttributeMap().set(PlayerAttributes.COOKING_DATA, null);
+
 		if(!spell) {
-			player.getAttr().get("cooking_object").set(null);
-			player.getAttr().get("cooking_usingStove").set(false);
+			player.getAttributeMap().set(PlayerAttributes.COOKING_OBJECT, null);
+			player.getAttributeMap().set(PlayerAttributes.COOKING_USINGSTOVE, false);
 		}
 	}
 	
@@ -158,9 +159,9 @@ public final class Cooking extends ProducingSkillAction {
 				CookingData c = CookingData.forItem(item);
 				if(c == null)
 					return false;
-				player.getAttr().get("cooking_usingStove").set(true);
-				player.getAttr().get("cooking_data").set(c);
-				player.getAttr().get("cooking_object").set(object);
+				player.getAttributeMap().set(PlayerAttributes.COOKING_USINGSTOVE, true);
+				player.getAttributeMap().set(PlayerAttributes.COOKING_DATA, c);
+				player.getAttributeMap().set(PlayerAttributes.COOKING_OBJECT, object);
 				c.openInterface(player);
 				return true;
 			}

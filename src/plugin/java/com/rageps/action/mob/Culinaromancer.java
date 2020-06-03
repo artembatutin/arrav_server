@@ -13,6 +13,7 @@ import com.rageps.content.minigame.rfd.RFDMinigame;
 import com.rageps.action.ActionInitializer;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 
 import java.util.Optional;
@@ -50,7 +51,7 @@ public class Culinaromancer extends ActionInitializer {
 					MarketCounter.getShops().get(3).openShop(player);
 				}));
 				ap.chain(new PlayerDialogue("Can I teleport to your minigame?"));
-				if(player.getAttr().get("rfd_wave").get().equals(RFDData.WAVE_SIX)) {
+				if(player.getAttributeMap().getObject(PlayerAttributes.RFD_WAVE).equals(RFDData.WAVE_SIX)) {
 					ap.chain(new NpcDialogue(3400, "You have already completed my minigame.").attachAfter(() -> player.closeWidget()));
 				} else {
 					ap.chain(new NpcDialogue(3400, "Yeah, but it will cost you 10k to be teleported."));

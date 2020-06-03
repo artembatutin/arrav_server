@@ -5,6 +5,7 @@ import com.rageps.content.BankPin;
 import com.rageps.action.ActionInitializer;
 import com.rageps.net.packet.out.SendConfig;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 
 public class BankingButton extends ActionInitializer {
 	
@@ -54,8 +55,10 @@ public class BankingButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.getAttr().get("withdraw_as_note").set(!(player.getAttr().get("withdraw_as_note").getBoolean()));
-				player.out(new SendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0));
+
+				boolean val = player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE);
+				player.getAttributeMap().set(PlayerAttributes.WITHDRAW_AS_NOTE, !val);
+				player.out(new SendConfig(115, player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE)? 1 : 0));
 				return true;
 			}
 		};

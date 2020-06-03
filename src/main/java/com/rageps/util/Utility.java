@@ -37,20 +37,7 @@ public final class Utility {
 	public static String timeConvert(long l) {
 		return l / 24 / 60 + "d, " + l / 60 % 24 + "h, " + l % 60 + "m";
 	}
-	
-	/**
-	 * Converts milliseconds into a time format (HH:MM:SS)
-	 * @param value the milliseconds to convert.
-	 * @return the time format.
-	 */
-	public static String convertTime(long value) {
-		long milliseconds = value / 1000;
-		int h = (int) (milliseconds / (3600));
-		int m = (int) ((milliseconds - (h * 3600)) / 60);
-		int s = (int) (milliseconds - (h * 3600) - m * 60);
-		
-		return String.format("%02d:%02d:%02d", h, m, s);
-	}
+
 
 	/**
 	 * Gets all of the classes in a directory
@@ -172,5 +159,63 @@ public final class Utility {
 		}
 		return Math.min(value, max);
 	}
+	/** Gets a basic time based off seconds. */
+	public static String getTimeTicks(long ticks) {
+		long secs = ticks * 3 / 5;
 
+		if (secs < 60) {
+			return  (secs < 10 ? "0s" : secs+"s ");
+		}
+
+		long mins = secs / 60;
+		long remainderSecs = secs - (mins * 60);
+		if (mins < 60) {
+			return mins + "m " + (remainderSecs < 10 ? "0s " : remainderSecs + "s ");
+		}
+
+		long hours = mins / 60;
+		long remainderMins = mins - (hours * 60);
+		if (hours < 24) {
+			return hours + "h " + (remainderMins < 10 ? "0m " : remainderMins + "m ")
+					+ (remainderSecs < 10 ? "0s " : remainderSecs + "s ");
+		}
+
+		long days = hours / 24;
+		long remainderHrs = hours - (days * 24);
+		return days + "d " + (remainderHrs < 10 ? "0h " : remainderHrs + "h ") + (remainderMins < 10 ? "0m " : remainderMins + "m ");
+	}
+	public static String getTime(long duration) {
+
+		long second = (duration / 1000) % 60;
+		long minute = (duration / (1000 * 60)) % 60;
+		long hour = (duration / (1000 * 60 * 60)) % 24;
+
+		return hour > 0 ? String.format("%02dh %02dm %02ds", hour, minute, second) :
+				String.format("%02dm %02ds", minute, second);
+	}
+
+	/**
+	 * Converts milliseconds into a time format (HH:MM:SS)
+	 * @param value the milliseconds to convert.
+	 * @return the time format.
+	 */
+	public static String convertTime(long time) {
+		int secs = (int) Math.floor(time / 1000);
+		int mins = (int) Math.floor(secs / 60);
+		secs = secs % 60;
+		int hrs = (int) Math.floor(mins / 60);
+		mins = mins % 60;
+		int days = (int) Math.floor(hrs / 24);
+		hrs = hrs % 24;
+		if (days > 0) {
+			String postFix = hrs > 0 ? (hrs > 1 ? "hours" : "hour") : mins > 0 ? (mins > 1 ? "minutes" : "minute") : secs > 0 ? "seconds" : "second";
+			return String.format("%d " + (days > 1 ? "days and " : " day and ") + "%02d:%02d:%02d " + postFix, days, hrs, mins, secs);
+		} else if (hrs > 0) {
+			return String.format("%02d:%02d:%02d " + (hrs > 1 ? "hours" : "hour"), hrs, mins, secs);
+		} else if (mins > 0) {
+			return String.format("%02d:%02d " + (mins > 1 ? "minutes" : "minute"), mins, secs);
+		} else {
+			return String.format("%02d " + (secs > 1 ? "seconds" : "second"), secs);
+		}
+	}
 }

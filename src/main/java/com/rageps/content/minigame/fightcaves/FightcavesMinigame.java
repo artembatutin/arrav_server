@@ -13,6 +13,7 @@ import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.mob.DefaultMob;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.InstanceManager;
@@ -90,10 +91,10 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			public boolean click(Player player, GameObject object, int click) {
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.getAttr().get("fight_caves_advanced").set(false);
+						player.getAttributeMap().set(PlayerAttributes.FIGHT_CAVES_ADVANCED, false);
 						new FightcavesMinigame().onEnter(player);
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.getAttr().get("fight_caves_advanced").set(true);
+						player.getAttributeMap().set(PlayerAttributes.FIGHT_CAVES_ADVANCED, true);
 						new FightcavesMinigame().onEnter(player);
 					}
 					player.closeWidget();
@@ -115,8 +116,9 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			if(!started && timer-- < 1) {
 				int[] wave;
 				if(this.wave >= WAVES.length) {
-					if(player.getAttr().get("fight_caves_advanced").getBoolean())
-						wave = new int[]{TZTOK_JAD, TZTOK_JAD};//two jads.
+					if(player.getAttributeMap().getBoolean(PlayerAttributes.FIGHT_CAVES_ADVANCED))
+
+					wave = new int[]{TZTOK_JAD, TZTOK_JAD};//two jads.
 					else
 						wave = new int[]{TZTOK_JAD};
 				} else {
@@ -163,7 +165,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		if(this.wave == 14 && empty) {
 			player.setMinigame(Optional.empty());
 			player.message("You have successfully completed the minigame...");
-			int reward = player.getAttr().get("fight_caves_advanced").getBoolean() ? 19111 : 6570;
+			int reward = player.getAttributeMap().getBoolean(PlayerAttributes.FIGHT_CAVES_ADVANCED) ? 19111 : 6570;
 			player.getInventory().addOrBank(new Item(reward, 1));
 			player.move(new Position(2436, 5169));
 			if(RandomUtils.inclusive(100) == 0) {

@@ -13,7 +13,6 @@ import com.rageps.world.Graphic;
 import com.rageps.world.entity.actor.combat.attack.listener.CombatListener;
 import com.rageps.world.entity.actor.combat.attack.listener.other.prayer.curses.TurmoilListener;
 import com.rageps.world.entity.actor.combat.attack.listener.other.prayer.curses.leech.*;
-import com.rageps.world.entity.actor.combat.attack.listener.other.prayer.curses.leech.*;
 import com.rageps.world.entity.actor.combat.attack.listener.other.prayer.regular.ChivalryListener;
 import com.rageps.world.entity.actor.combat.attack.listener.other.prayer.regular.PietyListener;
 import com.rageps.world.entity.actor.combat.attack.listener.other.prayer.regular.attack.ClarityOfThoughtListener;
@@ -32,6 +31,7 @@ import com.rageps.world.entity.actor.combat.attack.listener.other.prayer.regular
 import com.rageps.world.entity.actor.combat.attack.listener.other.prayer.regular.strength.SuperhumanStrengthListener;
 import com.rageps.world.entity.actor.combat.attack.listener.other.prayer.regular.strength.UltimateStrengthListener;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 
 import java.util.ArrayList;
@@ -541,14 +541,14 @@ public enum Prayer {
 			if(player.getQuickPrayers().isEmpty()) {
 				player.message("Please select some quick prayers in order to activate them.");
 			} else {
-				if(player.getAttr().get("quick_pray_on").getBoolean()) {
+				if(player.getAttributeMap().getBoolean(PlayerAttributes.QUICK_PRAY_ON)) {
 					player.getQuickPrayers().forEach(prayer -> prayer.deactivate(player));
 					player.out(new SendConfig(175, 0));
-					player.getAttr().get("quick_pray_on").set(false);
+					player.getAttributeMap().reset(PlayerAttributes.QUICK_PRAY_ON);
 				} else {
 					player.getQuickPrayers().forEach(prayer -> Prayer.activate(player, false, prayer.buttonId));
 					player.out(new SendConfig(175, 1));
-					player.getAttr().get("quick_pray_on").set(true);
+					player.getAttributeMap().set(PlayerAttributes.QUICK_PRAY_ON, true);
 				}
 			}
 			return true;
@@ -633,7 +633,7 @@ public enum Prayer {
 		}
 		if(player.getPrayerActive().isEmpty()) {
 			player.out(new SendConfig(175, 0));
-			player.getAttr().get("quick_pray_on").set(false);
+			player.getAttributeMap().reset(PlayerAttributes.QUICK_PRAY_ON);
 		}
 	}
 	

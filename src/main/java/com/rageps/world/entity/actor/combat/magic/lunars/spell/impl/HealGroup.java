@@ -9,6 +9,7 @@ import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.magic.MagicRune;
 import com.rageps.world.entity.actor.combat.magic.RequiredRune;
 import com.rageps.world.entity.actor.combat.magic.lunars.spell.LunarButtonSpell;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +38,7 @@ public final class HealGroup extends LunarButtonSpell {
 		transfer = transfer / local_players.size();
 		String name = caster.toPlayer().getFormatUsername();
 		for(Player target : local_players) {
-			if(target.getCurrentHealth() >= (target.getMaximumHealth() / 10) || !target.getAttr().get("accept_aid").getBoolean()) {
+			if(target.getCurrentHealth() >= (target.getMaximumHealth() / 10) || !target.getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID)) {
 				continue;
 			}
 			
@@ -72,7 +73,7 @@ public final class HealGroup extends LunarButtonSpell {
 		}
 		
 		for(Player target : local_players) {
-			if(target.getCurrentHealth() >= (target.getMaximumHealth()) || !target.getAttr().get("accept_aid").getBoolean()) {
+			if(target.getCurrentHealth() >= (target.getMaximumHealth()) || !target.getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID)) {
 				continue;
 			}
 			if(target.getCurrentHealth() < (target.getMaximumHealth())) {

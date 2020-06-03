@@ -4,6 +4,7 @@ import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
 import com.rageps.net.packet.out.SendMobDrop;
 import com.rageps.util.rand.Chance;
+import com.rageps.world.entity.actor.mob.MobAttributes;
 import com.rageps.world.entity.actor.mob.MobDefinition;
 import com.rageps.world.entity.actor.mob.drop.DropManager;
 import com.rageps.world.entity.actor.mob.drop.DropTable;
@@ -22,7 +23,7 @@ public final class MobInformationPacket implements IncomingPacket {//todo - reim
 	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(opcode == 19) {
 			Chance chance = Chance.values()[buf.get()];
-			int mob = player.getAttr().get("npcInformation").getInt();
+			int mob = player.getAttributeMap().getInt(MobAttributes.NPC_INFORMATION);
 			int item = buf.getShort();
 			int min = buf.getShort();
 			int max = buf.getShort();
@@ -109,7 +110,7 @@ public final class MobInformationPacket implements IncomingPacket {//todo - reim
 				player.message("No information found.");
 				return;
 			}
-			player.getAttr().get("npcInformation").set(id);
+			player.getAttributeMap().set(MobAttributes.NPC_INFORMATION, id);
 			DropTable drop = DropManager.TABLES.get(id);
 			if(drop == null && !player.getRights().equals(Rights.ADMINISTRATOR)) {
 				player.message("This monster doesn't have any drop table.");

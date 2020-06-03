@@ -7,6 +7,7 @@ import com.rageps.content.skill.action.impl.HarvestingSkillAction;
 import com.rageps.task.Task;
 import com.rageps.world.Animation;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.locale.Position;
 
@@ -34,16 +35,16 @@ public final class Fishing extends HarvestingSkillAction {
 			}
 			Achievement.FISHER_MAN.inc(player, count);
 		}
-		if(!(Boolean) player.getAttr().get("fishing").get()) {
-			player.getAttr().get("fishing").set(true);
+		if(!player.getAttributeMap().getBoolean(PlayerAttributes.FISHING)) {
+			player.getAttributeMap().set(PlayerAttributes.FISHING, true);
 		}
 	}
 	
 	@Override
 	public void onStop() {
 		getPlayer().animation(null);
-		if((Boolean) player.getAttr().get("fishing").get()) {
-			player.getAttr().get("fishing").set(false);
+		if(player.getAttributeMap().getBoolean(PlayerAttributes.FISHING)) {
+			player.getAttributeMap().reset(PlayerAttributes.FISHING);
 		}
 	}
 	

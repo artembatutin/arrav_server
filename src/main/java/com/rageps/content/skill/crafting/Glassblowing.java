@@ -8,6 +8,7 @@ import com.rageps.net.packet.out.SendEnterAmount;
 import com.rageps.task.Task;
 import com.rageps.world.Animation;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemIdentifiers;
 
@@ -51,7 +52,7 @@ public final class Glassblowing extends ProducingSkillAction {
 	public static boolean blow(Player player, int buttonId) {
 		Optional<GlassblowingData> data = GlassblowingData.getDefinition(buttonId);
 		
-		if(!data.isPresent() || !player.getAttr().get("crafting_glass").getBoolean()) {
+		if(!data.isPresent() || !player.getAttributeMap().getBoolean(PlayerAttributes.CRAFTING_GLASS)) {
 			return false;
 		}
 		
@@ -90,8 +91,8 @@ public final class Glassblowing extends ProducingSkillAction {
 		if(item2.getId() != ItemIdentifiers.MOLTEN_GLASS && item.getId() != ItemIdentifiers.MOLTEN_GLASS) {
 			return false;
 		}
-		
-		player.getAttr().get("crafting_glass").set(true);
+
+		player.getAttributeMap().set(PlayerAttributes.CRAFTING_GLASS, true);
 		player.widget(11462);
 		return true;
 	}
@@ -156,7 +157,7 @@ public final class Glassblowing extends ProducingSkillAction {
 	
 	@Override
 	public void onStop() {
-		player.getAttr().get("crafting_glass").set(false);
+		player.getAttributeMap().reset(PlayerAttributes.CRAFTING_GLASS);
 	}
 	
 	/**

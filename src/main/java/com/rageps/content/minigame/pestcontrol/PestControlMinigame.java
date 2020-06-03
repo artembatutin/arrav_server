@@ -5,6 +5,7 @@ import com.rageps.content.minigame.pestcontrol.defence.PestGate;
 import com.rageps.content.minigame.pestcontrol.pest.Pest;
 import com.rageps.net.packet.out.SendWalkable;
 import com.rageps.world.World;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.content.dialogue.impl.NpcDialogue;
@@ -111,8 +112,8 @@ public final class PestControlMinigame extends SequencedMinigame {
 			player.getPoisonDamage().set(0);
 			player.out(new SendConfig(174, 0));
 		}
-		player.getAttr().get("participation").set(0);
-		player.getAttr().get("master_archery").set(false);
+		player.getAttributeMap().set(PlayerAttributes.PARTICIPATION, 0);
+		player.getAttributeMap().set(PlayerAttributes.MASTER_ARCHERY, false);
 		CombatSpecial.restore(player, 100);
 		Skills.restoreAll(player);
 		player.getCombat().reset(true, true);
@@ -253,8 +254,8 @@ public final class PestControlMinigame extends SequencedMinigame {
 			add += hit.getDamage();
 		}
 		if(add != 0) {
-			player.getAttr().get("participation").set(player.getAttr().get("participation").getInt() + (add / 10));
-			player.text(21116, "" + player.getAttr().get("participation").getInt());
+			player.getAttributeMap().plus(PlayerAttributes.PARTICIPATION, (add / 10));
+			player.text(21116, "" + player.getAttributeMap().getInt(PlayerAttributes.PARTICIPATION));
 		}
 	}
 	
@@ -265,7 +266,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 				p.getDialogueBuilder().append(new NpcDialogue(3784, "Congratulations " + p.getFormatUsername() + "!", "You won the pest control match", "You been awarded, well done."));
 				Rights right = p.getRights();
 				int donatorBonus = right.equals(Rights.EXTREME_DONATOR) ? 3 : right.equals(Rights.SUPER_DONATOR) ? 2 : right.equals(Rights.DONATOR) ? 1 : 0;
-				Currency.PEST_POINTS.getCurrency().recieveCurrency(p, (p.getAttr().get("participation").getInt() / 300) + donatorBonus);
+				Currency.PEST_POINTS.getCurrency().recieveCurrency(p, (p.getAttributeMap().getInt(PlayerAttributes.PARTICIPATION) / 300) + donatorBonus);
 				Achievement.PEST_CONTROLLER.inc(p);
 			} else if(voidKnight.getCurrentHealth() > 0) {
 				p.getDialogueBuilder().append(new NpcDialogue(3784, p.getFormatUsername() + " you have Failed.", "You did participate enough to take down", "the portals. ", "Try Harder next time."));
@@ -310,7 +311,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	
 	private void spawn(Player p) {
 		p.move(new Position(2656 + RandomUtils.inclusive(3), 2609 + RandomUtils.inclusive(4)));
-		p.text(21116, "" + p.getAttr().get("participation").getInt());
+		p.text(21116, "" + p.getAttributeMap().getInt(PlayerAttributes.PARTICIPATION));
 		p.out(new SendWalkable((21100)));
 		p.getMovementQueue().reset();
 	}

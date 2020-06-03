@@ -6,13 +6,13 @@ import com.rageps.content.dialogue.Dialogue;
 import com.rageps.content.dialogue.impl.*;
 import com.rageps.content.dialogue.test.DialogueAppender;
 import com.rageps.content.market.currency.Currency;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.action.impl.ItemAction;
 import com.rageps.action.impl.MobAction;
 import com.rageps.content.PlayerPanel;
-import com.rageps.content.dialogue.impl.*;
 import com.rageps.content.skill.Skill;
 import com.rageps.content.skill.Skills;
 import com.rageps.util.TextUtils;
@@ -221,8 +221,8 @@ public final class Slayer {
 			int donatorBonus = right.equals(Rights.EXTREME_DONATOR) ? RandomUtils.inclusive(1, 10) : right.equals(Rights.SUPER_DONATOR) ? RandomUtils.inclusive(1, 5) : right.equals(Rights.DONATOR) ? RandomUtils.inclusive(1, 3) : 0;
 			Currency.SLAYER_POINTS.getCurrency().recieveCurrency(player, slayer.points + donatorBonus);
 			player.setSlayer(Optional.empty());
-			player.getAttr().get("slayer_tasks").set(player.getAttr().get("slayer_tasks").getInt() + 1);
-			PlayerPanel.SLAYER_COUNT.refresh(player, "@or2@ - Completed tasks: @yel@" + player.getAttr().get("slayer_tasks").getInt());
+			player.getAttributeMap().plus(PlayerAttributes.SLAYER_TASKS, 1);
+			PlayerPanel.SLAYER_COUNT.refresh(player, "@or2@ - Completed tasks: @yel@" + player.getAttributeMap().getInt(PlayerAttributes.SLAYER_TASKS));
 			Achievement.SLAYER_MASTER.inc(player);
 			return true;
 		} else {

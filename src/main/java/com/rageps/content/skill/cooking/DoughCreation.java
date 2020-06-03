@@ -8,6 +8,7 @@ import com.rageps.content.skill.action.impl.ProducingSkillAction;
 import com.rageps.net.packet.out.SendEnterAmount;
 import com.rageps.task.Task;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 
 import java.util.EnumSet;
@@ -50,13 +51,13 @@ public final class DoughCreation extends ProducingSkillAction {
 	public static boolean create(Player player, int buttonId) {
 		Optional<DoughData> data = DoughData.getDefinition(buttonId);
 		
-		if(!data.isPresent() || !player.getAttr().get("creating_dough").getBoolean()) {
+		if(!data.isPresent() || !player.getAttributeMap().getBoolean(PlayerAttributes.CREATING_DOUGH)) {
 			return false;
 		}
 		
 		if(data.get().amount == -1) {
-			player.getAttr().get("creating_dough_data").set(data.get());
-			player.out(new SendEnterAmount("How many you would like to make?", s -> () -> DoughCreation.create(player, (DoughData) player.getAttr().get("creating_dough_data").get(), Integer.parseInt(s))));
+			player.getAttributeMap().set(PlayerAttributes.CREATING_DOUGH_DATA, data.get());
+			player.out(new SendEnterAmount("How many you would like to make?", s -> () -> DoughCreation.create(player, player.getAttributeMap().getObject(PlayerAttributes.CREATING_DOUGH_DATA), Integer.parseInt(s))));
 			return true;
 		}
 		create(player, data.get(), data.get().amount);
@@ -89,9 +90,9 @@ public final class DoughCreation extends ProducingSkillAction {
 		if(used.getId() != VIAL_OF_WATER.getId() && usedOn.getId() != VIAL_OF_WATER.getId()) {
 			return false;
 		}
-		
-		player.getAttr().get("creating_dough").set(true);
-		
+
+		player.getAttributeMap().set(PlayerAttributes.CREATING_DOUGH, true);
+
 		player.text(8922, "What sort of dough do you wish to make?");
 		
 		DoughData.VALUES.forEach(dough -> {
@@ -135,7 +136,7 @@ public final class DoughCreation extends ProducingSkillAction {
 	
 	@Override
 	public void onStop() {
-		player.getAttr().get("creating_dough").set(false);
+		player.getAttributeMap().set(PlayerAttributes.CREATING_DOUGH, false);
 	}
 	
 	@Override

@@ -8,6 +8,7 @@ import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
 import com.rageps.net.packet.out.SendItemOnInterfaceSlot;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
 import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.item.Item;
@@ -61,7 +62,7 @@ public final class DropItemPacket implements IncomingPacket {
 			player.text(14182, "This item is valuable, you will not get it back");
 			player.text(14183, "once clicked Yes.");
 			player.text(14184, item.getDefinition().getName());
-			player.getAttr().get("destroy_item_slot").set(slot);
+			player.getAttributeMap().set(PlayerAttributes.DESTROY_ITEM_SLOT, slot);
 			player.chatWidget(14170);
 			return;
 		}

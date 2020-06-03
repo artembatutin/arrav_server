@@ -48,7 +48,17 @@ public class Session {
 	 * The ip address that the connection was received from.
 	 */
 	private final String hostAddress;
-	
+
+	/**
+	 * The unique identification used to identify a player.
+	 */
+	private String uid;
+
+	/**
+	 * A unique identification associated with this {@link Session}.
+	 */
+	private long sessionId;
+
 	/**
 	 * The mac address the connection was received from.
 	 */
@@ -265,7 +275,15 @@ public class Session {
 	public String getHost() {
 		return hostAddress;
 	}
-	
+
+	public String getUid() {
+		return uid;
+	}
+
+	public long getSessionId() {
+		return sessionId;
+	}
+
 	/**
 	 * Gets the channel of this session.
 	 * @return channel.

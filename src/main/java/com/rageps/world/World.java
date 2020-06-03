@@ -1,6 +1,9 @@
 package com.rageps.world;
 
 import com.google.common.util.concurrent.AbstractScheduledService;
+import com.rageps.net.sql.DatabaseTransactionWorker;
+import com.rageps.world.env.Environment;
+import com.rageps.world.env.JsonEnvironmentProvider;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import com.rageps.GameConstants;
@@ -28,6 +31,7 @@ import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.entity.region.RegionManager;
 import com.rageps.world.sync.Synchronizer;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -48,7 +52,19 @@ public final class World extends AbstractScheduledService {
 	 * instantiation of this class file.
 	 */
 	private static final World singleton = new World();
-	
+
+	/**
+	 * An environment provided with configuration related to the specific
+	 * environment the server is running on.
+	 */
+	private static final Environment ENVIRONMENT = JsonEnvironmentProvider.provide();
+
+	/**
+	 * Responsible for asynchronously executing all database transactions.
+	 */
+	private static final DatabaseTransactionWorker DATABASE_WORKER = new DatabaseTransactionWorker();
+
+
 	/**
 	 * Main game synchronizer.
 	 */
@@ -510,6 +526,11 @@ public final class World extends AbstractScheduledService {
 	 * The donation database connection.
 	 */
 	private static Database donation;
+
+	/**
+	 * The punishments database connection.
+	 */
+	private static Database punishments;
 	
 	
 	/* ASSETS GATHERS METHODS. */
@@ -589,5 +610,42 @@ public final class World extends AbstractScheduledService {
 	public static World get() {
 		return singleton;
 	}
-	
+
+	/**
+	 * Returns the singleton pattern {@link Environment}.
+	 * @return The returned environment.
+	 */
+	public Environment getEnvironment() {
+		return ENVIRONMENT;
+	}
+
+
+	/**
+	 * Returns the singleton patter {@link DatabaseTransactionWorker}.
+	 * @return The returned worker.
+	 */
+	public DatabaseTransactionWorker getDatabaseWorker() {
+		return DATABASE_WORKER;
+	}
+
+	/**
+	 * Checks if a player and another player are connected from the same computer.
+	 */
+    public boolean isAlt(Player victim, Player p) {
+    	return victim.getSession().getMacAddress().equals(p.getSession().getMacAddress()) ||
+				victim.getSession().getHost().equals(p.getSession().getHost());
+    }
+
+	/**
+	 * Get's a players alt accounts.
+	 */
+	public ObjectArrayList<Player> getAlts(Player player) {
+    	ObjectArrayList<Player> alts = new ObjectArrayList<>();
+
+    	for(Player p : getPlayers()) {
+    		if(isAlt(player, p))
+    			alts.add(p);
+		}
+    	return alts;
+	}
 }

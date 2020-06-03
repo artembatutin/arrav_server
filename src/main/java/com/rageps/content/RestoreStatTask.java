@@ -7,6 +7,7 @@ import com.rageps.world.World;
 import com.rageps.task.Task;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 
 /**
  * The class that handles the restoration of weakened skills.
@@ -47,8 +48,8 @@ public final class RestoreStatTask extends Task {
 			if(currentCons > maxCons) {
 				hp.decreaseLevel(1);
 				Skills.refresh(player, Skills.HITPOINTS);
-			} else if(currentCons < maxCons && player.getAttr().get("accept_aid").getBoolean()) {
-				int amount = player.getAttr().get("lunar_dream").getBoolean() ? 5 : 1;
+			} else if(currentCons < maxCons && player.getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID)) {
+				int amount = player.getAttributeMap().getBoolean(PlayerAttributes.LUNAR_DREAM) ? 5 : 1;
 				if(Prayer.isActivated(player, Prayer.RAPID_HEAL)) {
 					amount += 1;
 				}

@@ -12,6 +12,7 @@ import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.magic.MagicRune;
 import com.rageps.world.entity.actor.combat.magic.RequiredRune;
 import com.rageps.world.entity.actor.combat.magic.lunars.LunarSpell;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 
 import java.util.Optional;
 
@@ -43,7 +44,7 @@ public final class SpellbookSwap extends LunarSpell {
 		LinkedTaskSequence seq = new LinkedTaskSequence();
 		seq.connect(11, () -> {
 			Spellbook.convert(caster.toPlayer(), type.equals(OptionDialogue.OptionType.FIRST_OPTION) ? Spellbook.NORMAL : Spellbook.ANCIENT);
-			caster.getAttr().get("lunar_spellbook_swap").set(true);
+			caster.getAttributeMap().set(PlayerAttributes.LUNAR_SPELLBOOK_SWAP, true);
 			World.get().submit(new SpellbookSwapTask(caster.toPlayer(), type.equals(OptionDialogue.OptionType.FIRST_OPTION) ? Spellbook.NORMAL : Spellbook.ANCIENT));
 			caster.toPlayer().getActivityManager().enable();
 		});
@@ -74,7 +75,7 @@ public final class SpellbookSwap extends LunarSpell {
 	}
 	
 	/**
-	 * Holds functionality for the timers when the {@link LunarSpells#SPELLBOOK_SWAP}
+	 * Holds functionality for the timers when the spell
 	 * is casted.
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
@@ -109,7 +110,7 @@ public final class SpellbookSwap extends LunarSpell {
 		
 		@Override
 		public void execute() {
-			if(!player.getAttr().get("lunar_spellbook_swap").getBoolean()) {
+			if(!player.getAttributeMap().getBoolean(PlayerAttributes.LUNAR_SPELLBOOK_SWAP)) {
 				this.cancel();
 				return;
 			}

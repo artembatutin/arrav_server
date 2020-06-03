@@ -58,6 +58,7 @@ public final class TaskManager {
 				e.printStackTrace();
 				t.onException(e);
 			}
+			t.executions++;
 		}
 		tasks.add(t);
 	}

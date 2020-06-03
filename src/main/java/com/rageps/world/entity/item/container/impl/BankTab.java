@@ -3,6 +3,7 @@ package com.rageps.world.entity.item.container.impl;
 import com.rageps.content.skill.summoning.familiar.FamiliarContainer;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.net.packet.out.SendContainer;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.IndexedItem;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemDefinition;
@@ -98,7 +99,7 @@ final class BankTab extends ItemContainer {
 		}
 		
 		OptionalInt newId = OptionalInt.empty();
-		if(player.getAttr().get("withdraw_as_note").getBoolean()) { // Configure the noted id of the item we're withdrawing, if applicable.
+		if(player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE)) { // Configure the noted id of the item we're withdrawing, if applicable.
 			ItemDefinition def = withdrawItem.getDefinition();
 			if(def.isNoteable()) {
 				newId = OptionalInt.of(def.getNoted());
@@ -214,7 +215,7 @@ final class BankTab extends ItemContainer {
 	 */
 	public void shifting(Player player) {
 		this.shiftingReq = true;
-		player.getAttr().get("shifting_req").set(true);
+		player.getAttributeMap().set(PlayerAttributes.SHIFTING_REQ, true);
 	}
 	
 	/**

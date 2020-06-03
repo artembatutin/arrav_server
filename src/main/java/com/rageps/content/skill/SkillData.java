@@ -6,6 +6,7 @@ import com.rageps.net.packet.out.SendEnterAmount;
 import com.rageps.net.packet.out.SendSkillGoal;
 import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -104,7 +105,7 @@ public enum SkillData {
 			return false;
 		}
 		
-		player.getAttr().get("goalSettingSkill").set(data.getId());
+		player.getAttributeMap().set(PlayerAttributes.GOAL_SETTING_SKILL, data.getId());
 		player.out(new SendEnterAmount("What level you would like to accomplish?", t -> () -> {
 			int skill = data.id;
 			int amount = Integer.parseInt(t);

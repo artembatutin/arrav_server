@@ -9,6 +9,7 @@ import com.rageps.net.NetworkConstants;
 import com.rageps.util.Utility;
 import com.rageps.util.json.impl.*;
 import com.rageps.world.World;
+import com.rageps.world.attr.Attributes;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.Epoll;
@@ -36,7 +37,6 @@ import com.rageps.net.ArravChannelInitializer;
 import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
 import com.rageps.task.Task;
-import com.rageps.world.entity.actor.attribute.AttributeKey;
 import com.rageps.world.entity.actor.combat.attack.listener.CombatListenerDispatcher;
 import com.rageps.world.locale.InstanceManager;
 import org.apache.logging.log4j.LogManager;
@@ -57,7 +57,7 @@ import static io.netty.util.ResourceLeakDetector.Level.PARANOID;
  * @author lare96 <http://github.com/lare96>
  */
 public final class Arrav {
-	
+
 	/**
 	 * The flag that determines if debugging messages should be printed or not.
 	 */
@@ -189,7 +189,7 @@ public final class Arrav {
 	 */
 	private void initTasks() throws Exception {
 		FileSystem fs = FileSystem.create("data/cache");
-		AttributeKey.init();
+		Attributes.init();
 		//object/region decoding must be done sequentially.
 		new ObjectDefinitionDecoder(fs).run();
 		new MapDefinitionDecoder(fs).run();
@@ -259,5 +259,5 @@ public final class Arrav {
 		}
 		LOGGER.info("Successfully loaded " + i + " action listeners." );
 	}
-	
+
 }

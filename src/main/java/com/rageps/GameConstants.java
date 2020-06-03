@@ -5,6 +5,9 @@ import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.locale.Position;
 
+import java.io.File;
+import java.nio.file.Paths;
+
 /**
  * The class that contains a collection of constants related to the game. This
  * class serves no other purpose than to hold constants.
@@ -16,6 +19,16 @@ public final class GameConstants {
 	 * The public client build number for the login authentication.
 	 */
 	public static final int CLIENT_BUILD = 37;
+
+	/**
+	 * Directory for save files.
+	 */
+	public static final String SAVE_DIRECTORY = Paths.get("data", "players").toString() + File.separator;
+
+	/**
+	 * If MySQL should be used or not.
+	 */
+	public static final boolean SQL_CONNECTED  = false;
 	
 	/**
 	 * The experience multiplier for the game.
