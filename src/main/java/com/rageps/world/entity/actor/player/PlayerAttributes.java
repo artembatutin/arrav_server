@@ -41,17 +41,16 @@ public class PlayerAttributes {
     @Attr  public static final AttributeKey CRAFTING_SPIN = Attributes.define("crafting_spin", false);
 
 
-    @Attr  public static final AttributeKey FREE_SPEC_CHANGE = Attributes.definePersistant("free_spec_change", false);
-    @Attr  public static final AttributeKey ACCEPT_AID = Attributes.definePersistant("accept_aid", true);
-    @Attr  public static final AttributeKey INTRODUCTION_STAGE = Attributes.definePersistant("introduction_stage", 0);
+    @Attr  public static final AttributeKey FREE_SPEC_CHANGE = Attributes.definePersistent("free_spec_change", false);
+    @Attr  public static final AttributeKey ACCEPT_AID = Attributes.definePersistent("accept_aid", true);
+    @Attr  public static final AttributeKey INTRODUCTION_STAGE = Attributes.definePersistent("introduction_stage", 0);
 
     //minigame
     @Attr  public static final AttributeKey PARTICIPATION = Attributes.define("participation", 0);
     @Attr  public static final AttributeKey FIGHT_CAVES_ADVANCED = Attributes.definePersistent("fight_caves_advanced", false);
-    @Attr  public static final AttributeKey RFD_WAVE  = Attributes.definePersistant("rfd_wave", RFDData.WAVE_ONE);
+    @Attr  public static final AttributeKey RFD_WAVE  = Attributes.definePersistentObject("rfd_wave", RFDData.WAVE_ONE);
 
     //combat
-    @Attr  public static final AttributeKey FIGHT_TYPE = Attributes.definePersistant("fight_type", FightType.UNARMED_PUNCH);
     @Attr  public static final AttributeKey MASTER_ARCHERY = Attributes.define("master_archery", false);
 
     //shopping
@@ -71,7 +70,7 @@ public class PlayerAttributes {
     //skills
 
     @Attr  public static final AttributeKey GOAL_SETTING_SKILL = Attributes.define("goal_setting_skill", -1);
-    @Attr  public static final AttributeKey SLAYER_TASKS = Attributes.definePersistant("slayer_tasks", 0);
+    @Attr  public static final AttributeKey SLAYER_TASKS = Attributes.definePersistent("slayer_tasks", 0);
     @Attr  public static final AttributeKey COOKING_DATA = Attributes.define("cooking_data", CookingData.SHRIMP);
     @Attr  public static final AttributeKey COOKING_OBJECT = Attributes.define("cooking_object", new DynamicObject(-1, new Position(0, 0), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, 0));
     @Attr  public static final AttributeKey COOKING_USINGSTOVE = Attributes.define("cooking_usingStove", false);

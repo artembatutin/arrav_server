@@ -58,6 +58,7 @@ import com.rageps.util.Utility;
 import com.rageps.world.ExperienceRate;
 import com.rageps.world.GameMode;
 import com.rageps.world.World;
+import com.rageps.world.entity.actor.combat.strategy.player.custom.AOEWeaponStrategy;
 import com.rageps.world.entity.actor.mob.drop.chance.NpcDropChanceHandler;
 import com.rageps.world.entity.actor.player.assets.AntifireDetails;
 import com.rageps.world.entity.actor.player.assets.PrivateMessage;
@@ -642,6 +643,7 @@ public final class Player extends Actor {
 		Smelting.clearInterfaces(this);
 		if(getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) == 3) {
 			sendDefaultSidebars();
+
 		}
 		move(super.getPosition());
 		Skills.refreshAll(this);
@@ -669,7 +671,7 @@ public final class Player extends Actor {
 		out(new SendConfig(174, super.isPoisoned() ? 1 : 0));
 		out(new SendConfig(172, super.isAutoRetaliate() ? 1 : 0));
 		out(new SendConfig(combat.getFightType().getParent(), combat.getFightType().getChild()));
-		out(new SendConfig(427, ((Boolean) getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID)) ? 0 : 1));
+		out(new SendConfig(427, getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID) ? 0 : 1));
 		out(new SendConfig(108, 0));
 		out(new SendConfig(301, 0));
 		text(149, (int) runEnergy + "%");
@@ -1142,6 +1144,7 @@ public final class Player extends Actor {
 				return PlayerRangedStrategy.get();
 			}
 		}
+
 		
 		if(isSpecialActivated()) {
 			if(combatSpecial == null || combatSpecial.getStrategy() == null) {
@@ -1150,7 +1153,13 @@ public final class Player extends Actor {
 				return combatSpecial.getStrategy();
 			}
 		}
-		
+
+		if(item != null) {
+			if(item.getId() == 4151) {
+				return AOEWeaponStrategy.get();
+			}
+		}
+
 		return PlayerMeleeStrategy.get();
 	}
 	

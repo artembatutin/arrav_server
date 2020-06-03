@@ -129,7 +129,7 @@ public final class PlayerSerialization {
 
 					attrs.add(attr);
 				}
-				stream.writeRaw("attributes");
+				stream.writeObjectField("attributes");
 				stream.writeRaw(gson.toJson(attrs));
 				stream.writeObjectEnd();
 				stream.flush();

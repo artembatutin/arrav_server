@@ -99,7 +99,7 @@ public final class Attributes {
     public static <T> AttributeKey define(String name, T defaultValue) {
         return define(name, AttributeDefinition.emptyObjectDefinition(defaultValue));
     }
-    public static <T> AttributeKey definePersistant(String name, T defaultValue) {
+    public static <T> AttributeKey definePersistentObject(String name, T defaultValue) {
         return define(name, AttributeDefinition.emptyObjectDefinition(defaultValue, AttributePersistence.PERSISTENT));
     }
 

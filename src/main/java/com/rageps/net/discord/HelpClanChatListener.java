@@ -3,6 +3,7 @@ package com.rageps.net.discord;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.rageps.content.clanchat.ClanChat;
+import com.rageps.content.clanchat.ClanManager;
 import com.rageps.content.clanchat.ClanMember;
 import com.rageps.util.StringUtil;
 import com.rageps.world.World;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import static com.rageps.net.discord.DiscordChannel.HELP_CC_TEXT;
@@ -95,7 +97,7 @@ public final class HelpClanChatListener extends ListenerAdapter {
 		}
 
 		// Don't send commands
-		if (message.getContent().startsWith(CommandManager.PREFIX) || message.getContent().startsWith("`")) {
+		if (message.getContentRaw().startsWith(CommandManager.PREFIX) || message.getContentRaw().startsWith("`")) {
 			return;
 		}
 
@@ -120,16 +122,17 @@ public final class HelpClanChatListener extends ListenerAdapter {
 			return;
 		}
 
-		ClanChat clan = ClanChatManager.getClanChatChannel(gameClanChat);
-		if (clan == null) {
+
+		Optional<ClanChat> clan = ClanManager.get().getClan(gameClanChat);
+		if (!clan.isPresent()) {
 			channel.sendMessage("Unable to find the \"" + gameClanChat + "\" clan chat.").queue();
 			return;
 		}
-		sendMessage(channel, clan, message);
+		sendMessage(channel, clan.get(), message);
 	}
 
 	private void sendMessage(TextChannel channel, ClanChat clan, Message message) {
-		String content = message.getContent();
+		String content = message.getContentRaw();
 
 		String bracketColor = "<col=0>";
 		String clanNameColor = "<col=0000FF>";
