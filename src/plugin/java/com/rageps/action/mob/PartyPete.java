@@ -6,9 +6,7 @@ import com.rageps.content.dialogue.impl.NpcDialogue;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.dialogue.impl.PlayerDialogue;
 import com.rageps.content.market.MarketCounter;
-import com.rageps.world.World;
 import com.rageps.action.ActionInitializer;
-import com.rageps.net.database.connection.use.Donating;
 import com.rageps.net.packet.out.SendLink;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
@@ -26,7 +24,6 @@ public class PartyPete extends ActionInitializer {
 						player.out(new SendLink("store/"));
 						player.getDialogueBuilder().last();
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						new Donating(player, World.getDonation()).submit();
 						player.closeWidget();
 					} else {
 						player.closeWidget();

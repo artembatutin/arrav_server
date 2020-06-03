@@ -8,7 +8,6 @@ import com.rageps.world.entity.region.Region;
 import it.unimi.dsi.fastutil.ints.IntArrayFIFOQueue;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.net.database.connection.use.Hiscores;
 import com.rageps.world.entity.EntityState;
 
 import java.lang.reflect.Array;
@@ -260,8 +259,6 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 			World.get().remove(actor);
 			if(actor.isPlayer()) {
 				Player player = actor.toPlayer();
-				if(player.getRights() != Rights.ADMINISTRATOR)
-					new Hiscores(World.getScore(), player).submit();
 				if(player.getRights().isStaff()) {
 					World.get().setStaffCount(World.get().getStaffCount() - 1);
 					PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());

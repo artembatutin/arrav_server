@@ -19,7 +19,7 @@ public final class ItemDefinition {
 	 * The array that contains all of the item definitions.
 	 */
 	public static final ItemDefinition[] DEFINITIONS = new ItemDefinition[22322];
-	
+
 	/**
 	 * The identifier for the item.
 	 */
@@ -150,7 +150,7 @@ public final class ItemDefinition {
 		this.groundActions = groundActions;
 		prayerBonus();
 	}
-	
+
 	/**
 	 * The method that erases the prayer bonus from ranged weapons.
 	 */

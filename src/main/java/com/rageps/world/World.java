@@ -1,6 +1,7 @@
 package com.rageps.world;
 
 import com.google.common.util.concurrent.AbstractScheduledService;
+import com.rageps.net.discord.Discord;
 import com.rageps.net.sql.DatabaseTransactionWorker;
 import com.rageps.world.env.Environment;
 import com.rageps.world.env.JsonEnvironmentProvider;
@@ -9,8 +10,6 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import com.rageps.GameConstants;
 import com.rageps.content.PlayerPanel;
 import com.rageps.content.commands.impl.UpdateCommand;
-import com.rageps.net.database.Database;
-import com.rageps.net.database.pool.ConnectionPool;
 import com.rageps.net.packet.out.SendLogout;
 import com.rageps.net.packet.out.SendYell;
 import com.rageps.task.Task;
@@ -58,6 +57,11 @@ public final class World extends AbstractScheduledService {
 	 * environment the server is running on.
 	 */
 	private static final Environment ENVIRONMENT = JsonEnvironmentProvider.provide();
+
+	/**
+	 * This Discord for this World
+	 */
+	private static final Discord discord = new Discord();
 
 	/**
 	 * Responsible for asynchronously executing all database transactions.
@@ -516,23 +520,7 @@ public final class World extends AbstractScheduledService {
 	 * A integral {@link Task} that handles ranomized movement of all {@link Mob}s.
 	 */
 	private static final MobMovementTask NPC_MOVEMENT_TASK = new MobMovementTask();
-	
-	/**
-	 * The scores database connection.
-	 */
-	private static Database score;
-	
-	/**
-	 * The donation database connection.
-	 */
-	private static Database donation;
 
-	/**
-	 * The punishments database connection.
-	 */
-	private static Database punishments;
-	
-	
 	/* ASSETS GATHERS METHODS. */
 	
 	/**
@@ -586,24 +574,6 @@ public final class World extends AbstractScheduledService {
 	}
 	
 	/**
-	 * Gets the highscores database connection pool.
-	 */
-	public static ConnectionPool getScore() {
-		if(score == null)
-			return null;
-		return score.getPool();
-	}
-	
-	/**
-	 * Gets the donation database connection pool.
-	 */
-	public static ConnectionPool getDonation() {
-		if(donation == null)
-			return null;
-		return donation.getPool();
-	}
-	
-	/**
 	 * Returns the singleton pattern implementation.
 	 * @return The returned implementation.
 	 */
@@ -647,5 +617,9 @@ public final class World extends AbstractScheduledService {
     			alts.add(p);
 		}
     	return alts;
+	}
+
+	public Discord getDiscord() {
+		return discord;
 	}
 }

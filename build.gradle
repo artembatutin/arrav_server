@@ -21,6 +21,11 @@ compileJava   {
 
 dependencies {
 
+    //compile group: 'net.dv8tion', name: 'JDA', version: '1.2.2_139'
+    compile ('net.dv8tion:JDA:3.7.1_385') {
+        exclude module: 'opus-java'
+    }
+
     compile group: 'org.apache.commons', name: 'commons-compress', version: '1.18'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
     compile group: 'commons-codec', name: 'commons-codec', version: '1.12'
