@@ -1,5 +1,6 @@
 package com.rageps.world.entity.actor.mob.impl;
 
+import com.rageps.combat.strategy.npc.boss.KalphiteQueenStrategy;
 import com.rageps.world.locale.Position;
 import com.rageps.task.LinkedTaskSequence;
 import com.rageps.world.Animation;
@@ -24,6 +25,7 @@ public final class KalphiteQueen extends Mob {
 		super(Phase.PHASE_ONE.npcId, position);
 		MobAggression.AGGRESSIVE.add(this.getId());
 		this.setPhase(Phase.PHASE_ONE);
+		this.setStrategy(new KalphiteQueenStrategy());
 	}
 	
 	@Override

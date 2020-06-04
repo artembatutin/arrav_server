@@ -7,7 +7,7 @@ import com.rageps.world.entity.actor.combat.Combat;
 import com.rageps.world.entity.actor.combat.CombatUtil;
 import com.rageps.world.entity.actor.combat.effect.CombatEffectType;
 import com.rageps.world.entity.actor.combat.hit.Hit;
-import com.rageps.world.entity.actor.combat.strategy.CombatStrategy;
+import com.rageps.combat.strategy.CombatStrategy;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.move.ForcedMovement;
 import com.rageps.world.entity.actor.move.MovementQueue;
@@ -21,7 +21,6 @@ import com.rageps.world.locale.Position;
 import com.rageps.task.Task;
 import com.rageps.util.MutableNumber;
 import com.rageps.util.Stopwatch;
-import com.rageps.world.*;
 import com.rageps.world.entity.Entity;
 import com.rageps.world.entity.EntityType;
 

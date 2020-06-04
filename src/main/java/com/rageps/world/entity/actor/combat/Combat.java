@@ -1,13 +1,13 @@
 package com.rageps.world.entity.actor.combat;
 
 import com.rageps.world.entity.actor.combat.attack.FightType;
-import com.rageps.world.entity.actor.combat.attack.listener.CombatListener;
+import com.rageps.combat.listener.CombatListener;
 import com.rageps.world.entity.actor.combat.formula.CombatFormula;
 import com.rageps.world.entity.actor.combat.formula.FormulaModifier;
 import com.rageps.world.entity.actor.combat.hit.CombatData;
 import com.rageps.world.entity.actor.combat.hit.CombatHit;
 import com.rageps.world.entity.actor.combat.hit.Hit;
-import com.rageps.world.entity.actor.combat.strategy.CombatStrategy;
+import com.rageps.combat.strategy.CombatStrategy;
 import com.rageps.task.Task;
 import com.rageps.util.Stopwatch;
 import com.rageps.world.entity.actor.Actor;

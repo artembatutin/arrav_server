@@ -3,7 +3,7 @@ package com.rageps.content;
 import com.rageps.GameConstants;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.content.achievements.AchievementHandler;
-import com.rageps.content.commands.impl.RedeemCommand;
+import com.rageps.command.impl.RedeemCommand;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.dialogue.impl.StatementDialogue;
 import com.rageps.content.market.MarketCounter;

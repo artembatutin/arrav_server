@@ -6,7 +6,7 @@ import com.rageps.content.item.Requirement;
 import com.rageps.content.item.Skillcape;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.world.entity.actor.combat.CombatConstants;
-import com.rageps.world.entity.actor.combat.attack.listener.CombatListenerDispatcher;
+import com.rageps.combat.listener.CombatListenerDispatcher;
 import com.rageps.world.entity.actor.combat.weapon.WeaponAnimation;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
 import com.rageps.world.entity.actor.player.Player;

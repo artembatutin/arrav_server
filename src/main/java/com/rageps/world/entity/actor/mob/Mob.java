@@ -1,35 +1,36 @@
 package com.rageps.world.entity.actor.mob;
 
 import com.google.common.collect.ImmutableMap;
+import com.rageps.combat.strategy.MobCombatStrategyManager;
 import com.rageps.content.skill.Skills;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.combat.Combat;
 import com.rageps.world.entity.actor.combat.CombatConstants;
 import com.rageps.world.entity.actor.combat.CombatType;
-import com.rageps.world.entity.actor.combat.attack.listener.CombatListener;
-import com.rageps.world.entity.actor.combat.attack.listener.CombatListenerDispatcher;
+import com.rageps.combat.listener.CombatListener;
+import com.rageps.combat.listener.CombatListenerDispatcher;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.combat.projectile.CombatProjectile;
-import com.rageps.world.entity.actor.combat.strategy.CombatStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.NpcMagicStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.NpcMeleeStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.NpcRangedStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.GiantMoleStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.KalphiteQueenStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.KingBlackDragonStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.TormentedDemonStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.dagannoth.DagannothPrimeStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.dagannoth.DagannothRexStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.dagannoth.DagannothSupremeStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.godwars.armadyl.FlightKilisaStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.godwars.armadyl.FlockleaderGeerinStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.godwars.armadyl.KreeArraStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.godwars.armadyl.WingmanSkreeStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.godwars.bandos.GeneralGraardorStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.godwars.bandos.SergeantGrimspikeStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.godwars.bandos.SergeantSteelwillStrategy;
-import com.rageps.world.entity.actor.combat.strategy.npc.boss.godwars.bandos.SergeantStrongstackStrategy;
+import com.rageps.combat.strategy.CombatStrategy;
+import com.rageps.combat.strategy.npc.NpcMagicStrategy;
+import com.rageps.combat.strategy.npc.NpcMeleeStrategy;
+import com.rageps.combat.strategy.npc.NpcRangedStrategy;
+import com.rageps.combat.strategy.npc.boss.GiantMoleStrategy;
+import com.rageps.combat.strategy.npc.boss.KalphiteQueenStrategy;
+import com.rageps.combat.strategy.npc.boss.KingBlackDragonStrategy;
+import com.rageps.combat.strategy.npc.boss.TormentedDemonStrategy;
+import com.rageps.combat.strategy.npc.boss.dagannoth.DagannothPrimeStrategy;
+import com.rageps.combat.strategy.npc.boss.dagannoth.DagannothRexStrategy;
+import com.rageps.combat.strategy.npc.boss.dagannoth.DagannothSupremeStrategy;
+import com.rageps.combat.strategy.npc.boss.godwars.armadyl.FlightKilisaStrategy;
+import com.rageps.combat.strategy.npc.boss.godwars.armadyl.FlockleaderGeerinStrategy;
+import com.rageps.combat.strategy.npc.boss.godwars.armadyl.KreeArraStrategy;
+import com.rageps.combat.strategy.npc.boss.godwars.armadyl.WingmanSkreeStrategy;
+import com.rageps.combat.strategy.npc.boss.godwars.bandos.GeneralGraardorStrategy;
+import com.rageps.combat.strategy.npc.boss.godwars.bandos.SergeantGrimspikeStrategy;
+import com.rageps.combat.strategy.npc.boss.godwars.bandos.SergeantSteelwillStrategy;
+import com.rageps.combat.strategy.npc.boss.godwars.bandos.SergeantStrongstackStrategy;
 import com.rageps.world.entity.actor.mob.impl.KalphiteQueen;
 import com.rageps.world.entity.actor.mob.impl.godwars.GeneralGraardor;
 import com.rageps.world.entity.actor.mob.impl.godwars.KreeArra;
@@ -66,11 +67,6 @@ public abstract class Mob extends Actor {
 	private static final Set<Mob> NO_LOCAL_MOBS = new HashSet<>();
 	
 	/**
-	 * Defined {@link Mob} {@link CombatStrategy}s.
-	 */
-	private static final Int2ObjectArrayMap<Supplier<CombatStrategy<Mob>>> STRATEGIES = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, Supplier<CombatStrategy<Mob>>>builder().put(50, KingBlackDragonStrategy::new).put(6260, GeneralGraardorStrategy::new).put(6263, SergeantSteelwillStrategy::new).put(6261, SergeantStrongstackStrategy::new).put(6265, SergeantGrimspikeStrategy::new).put(6222, KreeArraStrategy::new).put(6227, FlightKilisaStrategy::new).put(6225, FlockleaderGeerinStrategy::new).put(6223, WingmanSkreeStrategy::new).put(1158, KalphiteQueenStrategy::new).put(2881, DagannothSupremeStrategy::new).put(2882, DagannothPrimeStrategy::new).put(2883, DagannothRexStrategy::new).put(8349, TormentedDemonStrategy::new).put(8350, TormentedDemonStrategy::new).put(8351, TormentedDemonStrategy::new).put(3340, GiantMoleStrategy::new).build());
-	
-	/**
 	 * A mapping which contains all the custom npcs by their id.
 	 */
 	public static final Int2ObjectArrayMap<Function<Position, Mob>> CUSTOM_MOBS = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, Function<Position, Mob>>builder().put(6260, s -> new GeneralGraardor()).put(6222, s -> new KreeArra()).put(1158, KalphiteQueen::new)
@@ -101,41 +97,8 @@ public abstract class Mob extends Actor {
 		if(listener != null) {
 			combat.addListener(listener);
 		}
-		
-		mob.strategy = STRATEGIES.getOrDefault(id, () -> loadStrategy(mob).orElse(NpcMeleeStrategy.get())).get();
+		mob.strategy = MobCombatStrategyManager.getStrategy(mob);
 		return mob;
-	}
-	
-	/**
-	 * Tries to load a {@link CombatStrategy} for a specific mob.
-	 * @param mob mob
-	 * @return combat strategy.
-	 */
-	private static Optional<CombatStrategy<Mob>> loadStrategy(Mob mob) {
-		if(!mob.getDefinition().getCombatAttackData().isPresent()) {
-			return Optional.empty();
-		}
-		MobDefinition.CombatAttackData data = mob.getDefinition().getCombatAttackData().get();
-		CombatType type = data.type;
-		switch(type) {
-			case RANGED: {
-				CombatProjectile definition = data.getDefinition();
-				if(definition == null) {
-					throw new AssertionError("Could not find ranged projectile for Mob[id=" + mob.id + ", name=" + mob.getDefinition().getName() + "]");
-				}
-				return Optional.of(new NpcRangedStrategy(definition));
-			}
-			case MAGIC: {
-				CombatProjectile definition = data.getDefinition();
-				if(definition == null) {
-					throw new AssertionError("Could not find magic projectile for Mob[id=" + mob.id + ", name=" + mob.getDefinition().getName() + "]");
-				}
-				return Optional.of(new NpcMagicStrategy(definition));
-			}
-			case MELEE:
-				return Optional.of(NpcMeleeStrategy.get());
-		}
-		return Optional.empty();
 	}
 	
 	/**
@@ -223,7 +186,7 @@ public abstract class Mob extends Actor {
 			combat.addListener(listener);
 		}
 		
-		this.strategy = STRATEGIES.getOrDefault(id, () -> loadStrategy(this).orElse(NpcMeleeStrategy.get())).get();
+		this.strategy = MobCombatStrategyManager.getStrategy(this);
 	}
 	
 	/**

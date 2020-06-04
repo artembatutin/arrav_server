@@ -3,13 +3,14 @@ package com.rageps.world.entity.actor.player;
 import com.google.common.collect.ImmutableMap;
 import com.rageps.Arrav;
 import com.rageps.GameConstants;
+import com.rageps.combat.strategy.PlayerWeaponStrategyManager;
 import com.rageps.content.PlayerPanel;
 import com.rageps.content.ShieldAnimation;
 import com.rageps.content.TabInterface;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.content.clanchat.ClanManager;
 import com.rageps.content.clanchat.ClanMember;
-import com.rageps.content.commands.impl.UpdateCommand;
+import com.rageps.command.impl.UpdateCommand;
 import com.rageps.content.dialogue.Dialogue;
 import com.rageps.content.dialogue.DialogueBuilder;
 import com.rageps.content.dialogue.impl.OptionDialogue;
@@ -58,7 +59,6 @@ import com.rageps.util.Utility;
 import com.rageps.world.ExperienceRate;
 import com.rageps.world.GameMode;
 import com.rageps.world.World;
-import com.rageps.world.entity.actor.combat.strategy.player.custom.AOEWeaponStrategy;
 import com.rageps.world.entity.actor.mob.drop.chance.NpcDropChanceHandler;
 import com.rageps.world.entity.actor.player.assets.AntifireDetails;
 import com.rageps.world.entity.actor.player.assets.PrivateMessage;
@@ -92,11 +92,8 @@ import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.combat.magic.CombatSpell;
 import com.rageps.world.entity.actor.combat.ranged.RangedAmmunition;
 import com.rageps.world.entity.actor.combat.ranged.RangedWeaponDefinition;
-import com.rageps.world.entity.actor.combat.strategy.CombatStrategy;
-import com.rageps.world.entity.actor.combat.strategy.player.PlayerMagicStrategy;
-import com.rageps.world.entity.actor.combat.strategy.player.PlayerMeleeStrategy;
-import com.rageps.world.entity.actor.combat.strategy.player.PlayerRangedStrategy;
-import com.rageps.world.entity.actor.combat.strategy.player.special.CombatSpecial;
+import com.rageps.combat.strategy.CombatStrategy;
+import com.rageps.combat.strategy.player.special.CombatSpecial;
 import com.rageps.world.entity.actor.combat.weapon.WeaponAnimation;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
 import com.rageps.world.entity.actor.mob.Mob;
@@ -1117,50 +1114,7 @@ public final class Player extends Actor {
 	
 	@Override
 	public CombatStrategy<Player> getStrategy() {
-		if(isSingleCast()) {
-			return new PlayerMagicStrategy(singleCast);
-		}
-		
-		if(isAutocast()) {
-			return new PlayerMagicStrategy(autocastSpell);
-		}
-		
-		Item item = equipment.get(Equipment.WEAPON_SLOT);
-		
-		if(item != null) {
-			RangedWeaponDefinition def = CombatRangedBowLoader.DEFINITIONS.get(item.getId());
-			
-			if(def != null) {
-				RangedAmmunition ammo = RangedAmmunition.find(equipment.get(def.getSlot()));
-				rangedDefinition = def;
-				rangedAmmo = ammo;
-				if(isSpecialActivated()) {
-					if(combatSpecial == null || combatSpecial.getStrategy() == null) {
-						setSpecialActivated(false);
-					} else {
-						return combatSpecial.getStrategy();
-					}
-				}
-				return PlayerRangedStrategy.get();
-			}
-		}
-
-		
-		if(isSpecialActivated()) {
-			if(combatSpecial == null || combatSpecial.getStrategy() == null) {
-				setSpecialActivated(false);
-			} else {
-				return combatSpecial.getStrategy();
-			}
-		}
-
-		if(item != null) {
-			if(item.getId() == 4151) {
-				return AOEWeaponStrategy.get();
-			}
-		}
-
-		return PlayerMeleeStrategy.get();
+		return PlayerWeaponStrategyManager.getStrategy(this);
 	}
 	
 	/**
@@ -1634,7 +1588,15 @@ public final class Player extends Actor {
 	public boolean isSingleCast() {
 		return singleCast != null;
 	}
-	
+
+	/**
+	 * Gets the players spell being cast manually.
+	 * @return the {@link CombatSpell} which is being casted.
+	 */
+	public CombatSpell getSingleCast() {
+		return singleCast;
+	}
+
 	/**
 	 * Checks whether or not an auto-cast spell is set.
 	 * @return {@code true} if there is an active auto-cast spell

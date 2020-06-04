@@ -3,7 +3,7 @@ package com.rageps.content;
 import com.rageps.world.World;
 import com.rageps.task.Task;
 import com.rageps.world.entity.EntityState;
-import com.rageps.world.entity.actor.combat.strategy.player.special.CombatSpecial;
+import com.rageps.combat.strategy.player.special.CombatSpecial;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 

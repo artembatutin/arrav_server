@@ -1,0 +1,136 @@
+package com.rageps.combat.strategy.npc.boss;
+
+import com.rageps.combat.strategy.MobCombatStrategyMeta;
+import com.rageps.world.entity.actor.combat.projectile.CombatProjectile;
+import com.rageps.world.entity.actor.Actor;
+import com.rageps.world.entity.actor.combat.CombatType;
+import com.rageps.world.entity.actor.combat.attack.FightType;
+import com.rageps.world.entity.actor.combat.hit.CombatHit;
+import com.rageps.world.entity.actor.combat.hit.Hit;
+import com.rageps.combat.strategy.CombatStrategy;
+import com.rageps.combat.strategy.npc.MultiStrategy;
+import com.rageps.combat.strategy.npc.NpcMagicStrategy;
+import com.rageps.combat.strategy.npc.NpcMeleeStrategy;
+import com.rageps.combat.strategy.npc.NpcRangedStrategy;
+import com.rageps.world.entity.actor.mob.Mob;
+import com.rageps.world.entity.actor.mob.impl.KalphiteQueen;
+
+import java.util.Arrays;
+import java.util.Objects;
+
+/**
+ * This strategy doesn't have a {@link MobCombatStrategyMeta} because a new instance of this strategy is assigned
+ * to the Mob in it's constructor.
+ */
+public class KalphiteQueenStrategy extends MultiStrategy {
+	
+	public KalphiteQueenStrategy() {
+		currentStrategy = randomStrategy(FULL_STRATEGIES);
+	}
+	
+	private static final Melee MELEE = new Melee();
+	private static final Ranged RANGED = new Ranged();
+	private static final Magic MAGIC = new Magic();
+	
+	private static final CombatStrategy<Mob>[] FULL_STRATEGIES = createStrategyArray(MELEE, MAGIC, RANGED);
+	private static final CombatStrategy<Mob>[] NON_MELEE = createStrategyArray(MAGIC, RANGED);
+	
+	@Override
+	public boolean canAttack(Mob attacker, Actor defender) {
+		return defender.isPlayer();
+	}
+	
+	@Override
+	public void start(Mob attacker, Actor defender, Hit[] hits) {
+		if(MELEE.withinDistance(attacker, defender)) {
+			currentStrategy = randomStrategy(FULL_STRATEGIES);
+		} else {
+			currentStrategy = randomStrategy(NON_MELEE);
+		}
+		currentStrategy.start(attacker, defender, hits);
+	}
+	
+	@Override
+	public boolean hitBack() {
+		return true;
+	}
+	
+	@Override
+	public void block(Actor attacker, Mob defender, Hit hit, CombatType combatType) {
+		switch(attacker.getStrategy().getCombatType()) {
+			case MELEE:
+				// if(kalphiteQueen.getPhase().equals(KalphiteQueen.Phase.PHASE_TWO)) {
+				Arrays.stream(attacker.getStrategy().getHits(attacker, defender)).filter(Objects::nonNull).forEach(h -> h.modifyDamage(damage -> h.getDamage() / 2));
+				// }
+				break;
+			case RANGED:
+				//if(kalphiteQueen.getPhase().equals(KalphiteQueen.Phase.PHASE_ONE)) {
+				Arrays.stream(attacker.getStrategy().getHits(attacker, defender)).filter(Objects::nonNull).forEach(h -> h.modifyDamage(damage -> h.getDamage() / 2));
+				
+				//}
+				break;
+			case MAGIC:
+				// if(kalphiteQueen.getPhase().equals(KalphiteQueen.Phase.PHASE_ONE)) {
+				Arrays.stream(attacker.getStrategy().getHits(attacker, defender)).filter(Objects::nonNull).forEach(h -> h.modifyDamage(damage -> h.getDamage() / 2));
+				
+				//}
+				break;
+		}
+		currentStrategy.block(attacker, defender, hit, combatType);
+	}
+	
+	/**
+	 * Represents the melee attack style of {@link KalphiteQueenStrategy}
+	 */
+	private static final class Melee extends NpcMeleeStrategy {
+		
+		@Override
+		public int getAttackDistance(Mob attacker, FightType fightType) {
+			return 2;
+		}
+		
+		@Override
+		public CombatHit[] getHits(Mob attacker, Actor defender) {
+			return new CombatHit[]{nextMeleeHit(attacker, defender)};
+		}
+	}
+	
+	/**
+	 * Represents the melee attack style of {@link KalphiteQueenStrategy}
+	 */
+	private static final class Ranged extends NpcRangedStrategy {
+		
+		private Ranged() {
+			super(CombatProjectile.getDefinition("Kalphite Ranged"));
+		}
+		
+		KalphiteQueen.Phase phase;
+		
+		//        @Override
+		//        public Animation getAttackAnimation(Mob attacker, Actor defender) {
+		//            defender.toPlayer().message("phase: " + phase);
+		//            return new Animation(phase.equals(KalphiteQueen.Phase.PHASE_ONE) ? 6420 : 6234);
+		//        }
+		
+	}
+	
+	/**
+	 * Represents the melee attack style of {@link KalphiteQueenStrategy}
+	 */
+	private static final class Magic extends NpcMagicStrategy {
+		
+		private Magic() {
+			super(CombatProjectile.getDefinition("Kalphite Magic"));
+		}
+		
+		KalphiteQueen.Phase phase;
+		
+		//        @Override
+		//        public Animation getAttackAnimation(Mob attacker, Actor defender) {
+		//            defender.toPlayer().message("phase: " + phase);
+		//            return new Animation(phase.equals(KalphiteQueen.Phase.PHASE_ONE) ? 6420 : 6234);
+		//        }
+		
+	}
+	
+}

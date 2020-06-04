@@ -1,7 +1,7 @@
 package com.rageps.content.object.cannon;
 
 import com.rageps.net.packet.out.SendObjectAnimation;
-import com.rageps.world.entity.actor.combat.strategy.basic.RangedStrategy;
+import com.rageps.combat.strategy.basic.RangedStrategy;
 import com.rageps.content.skill.Skills;
 import com.rageps.task.Task;
 import com.rageps.util.rand.RandomUtils;

@@ -30,11 +30,9 @@ import com.rageps.net.host.HostManager;
 import com.rageps.world.attr.*;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.locale.Position;
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import com.rageps.world.entity.actor.combat.attack.FightType;
-import com.rageps.world.entity.actor.combat.attack.listener.CombatListenerDispatcher;
-import com.rageps.world.entity.actor.combat.attack.listener.other.VengeanceListener;
+import com.rageps.combat.listener.CombatListenerDispatcher;
+import com.rageps.combat.listener.other.VengeanceListener;
 import com.rageps.world.entity.actor.player.assets.AntifireDetails;
 import com.rageps.world.entity.item.Item;
 

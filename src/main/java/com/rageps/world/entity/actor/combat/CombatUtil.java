@@ -9,7 +9,7 @@ import com.rageps.world.entity.actor.combat.hit.CombatHit;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
-import com.rageps.world.entity.actor.combat.strategy.CombatStrategy;
+import com.rageps.combat.strategy.CombatStrategy;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.AntifireDetails;

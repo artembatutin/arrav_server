@@ -2,12 +2,13 @@ package com.rageps.content.event;
 
 import com.rageps.task.Task;
 import com.rageps.world.World;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 
 import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 /**
  * The event manager.
@@ -19,7 +20,7 @@ public class GameEventManager {
     /**
      * Logger for the game event manager.
      */
-    private static final Logger log = Logger.getLogger(GameEventManager.class.getName());
+    private static final Logger log = LogManager.getLogger();
 
 
     /**

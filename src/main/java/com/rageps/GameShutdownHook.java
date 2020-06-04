@@ -4,7 +4,7 @@ import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.rageps.content.clanchat.ClanManager;
-import com.rageps.content.commands.impl.BugCommand;
+import com.rageps.command.impl.BugCommand;
 import com.rageps.content.market.MarketItem;
 import com.rageps.content.scoreboard.ScoreboardManager;
 import com.rageps.net.host.HostListType;

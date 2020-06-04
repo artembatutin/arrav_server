@@ -1,6 +1,7 @@
 package com.rageps.world;
 
 import com.google.common.util.concurrent.AbstractScheduledService;
+import com.rageps.combat.strategy.MobCombatStrategyManager;
 import com.rageps.net.discord.Discord;
 import com.rageps.net.sql.DatabaseTransactionWorker;
 import com.rageps.world.env.Environment;
@@ -9,7 +10,7 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import com.rageps.GameConstants;
 import com.rageps.content.PlayerPanel;
-import com.rageps.content.commands.impl.UpdateCommand;
+import com.rageps.command.impl.UpdateCommand;
 import com.rageps.net.packet.out.SendLogout;
 import com.rageps.net.packet.out.SendYell;
 import com.rageps.task.Task;
@@ -45,7 +46,7 @@ import static com.rageps.world.entity.EntityState.IDLE;
  * @author Artem Batutin
  */
 public final class World extends AbstractScheduledService {
-	
+
 	/**
 	 * An implementation of the singleton pattern to prevent indirect
 	 * instantiation of this class file.
@@ -67,7 +68,6 @@ public final class World extends AbstractScheduledService {
 	 * Responsible for asynchronously executing all database transactions.
 	 */
 	private static final DatabaseTransactionWorker DATABASE_WORKER = new DatabaseTransactionWorker();
-
 
 	/**
 	 * Main game synchronizer.
@@ -128,20 +128,6 @@ public final class World extends AbstractScheduledService {
 	 * The time it took in milliseconds to do the sync.
 	 */
 	public static long millis;
-	
-	static {
-		//		int amtCpu = Runtime.getRuntime().availableProcessors();
-		//		try {
-		//			score = new Database(Arrav.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_score", Arrav.DEBUG ? "edge_avro" : "root", Arrav.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
-		//		} catch(Exception e) {
-		//			e.printStackTrace();
-		//		}
-		//		try {
-		//			donation = new Database(Arrav.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_store", Arrav.DEBUG ? "edge_avro" : "root", Arrav.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
-		//		} catch(Exception e) {
-		//			e.printStackTrace();
-		//		}
-	}
 	
 	@Override
 	protected String serviceName() {

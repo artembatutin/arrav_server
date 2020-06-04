@@ -1,7 +1,7 @@
 package com.rageps.world.entity.actor.combat.weapon;
 
 import com.rageps.content.TabInterface;
-import com.rageps.world.entity.actor.combat.strategy.player.special.CombatSpecial;
+import com.rageps.combat.strategy.player.special.CombatSpecial;
 import com.rageps.world.entity.actor.player.Player;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.net.packet.out.SendConfig;

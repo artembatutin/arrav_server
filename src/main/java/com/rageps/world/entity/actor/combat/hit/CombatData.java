@@ -1,6 +1,6 @@
 package com.rageps.world.entity.actor.combat.hit;
 
-import com.rageps.world.entity.actor.combat.strategy.CombatStrategy;
+import com.rageps.combat.strategy.CombatStrategy;
 import com.rageps.world.entity.actor.Actor;
 
 /**

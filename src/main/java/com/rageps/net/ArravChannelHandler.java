@@ -4,7 +4,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ConcurrentHashMultiset;
 import com.google.common.collect.Multiset;
 import com.rageps.Arrav;
-import com.rageps.content.commands.impl.UpdateCommand;
+import com.rageps.command.impl.UpdateCommand;
 import com.rageps.net.codec.login.LoginCode;
 import com.rageps.net.host.HostListType;
 import com.rageps.world.World;

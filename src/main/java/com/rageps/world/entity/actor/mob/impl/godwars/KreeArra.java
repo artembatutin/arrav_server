@@ -1,6 +1,7 @@
 package com.rageps.world.entity.actor.mob.impl.godwars;
 
 import com.google.common.collect.ImmutableSet;
+import com.rageps.combat.strategy.npc.boss.godwars.armadyl.KreeArraStrategy;
 import com.rageps.world.World;
 import com.rageps.world.locale.Position;
 import com.rageps.world.locale.loc.SquareLocation;
@@ -47,6 +48,7 @@ public final class KreeArra extends Mob {
 		this.setOriginalRandomWalk(true);
 		this.getMovementCoordinator().setCoordinate(true);
 		this.getMovementCoordinator().setRadius(3);
+		this.setStrategy(new KreeArraStrategy());
 	}
 	
 	@Override

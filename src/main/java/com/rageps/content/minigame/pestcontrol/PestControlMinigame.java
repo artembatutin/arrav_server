@@ -19,7 +19,7 @@ import com.rageps.net.packet.out.SendConfig;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.hit.Hit;
-import com.rageps.world.entity.actor.combat.strategy.player.special.CombatSpecial;
+import com.rageps.combat.strategy.player.special.CombatSpecial;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.item.GroundItem;

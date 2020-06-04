@@ -1,6 +1,8 @@
 package com.rageps.world.entity.actor.mob.impl.godwars;
 
 import com.google.common.collect.ImmutableSet;
+import com.rageps.combat.strategy.CombatStrategy;
+import com.rageps.combat.strategy.npc.boss.godwars.bandos.GeneralGraardorStrategy;
 import com.rageps.world.World;
 import com.rageps.world.locale.Position;
 import com.rageps.world.locale.loc.SquareLocation;
@@ -52,6 +54,7 @@ public final class GeneralGraardor extends Mob {
 		this.setOriginalRandomWalk(true);
 		this.getMovementCoordinator().setCoordinate(true);
 		this.getMovementCoordinator().setRadius(3);
+		this.setStrategy(new GeneralGraardorStrategy());
 	}
 	
 	@Override
@@ -74,7 +77,7 @@ public final class GeneralGraardor extends Mob {
 		});
 		MobAggression.AGGRESSIVE.add(this.getId());
 	}
-	
+
 	@Override
 	public void appendDeath() {
 		SERGEANTS.stream().filter(s -> !s.isDead()).forEach(Mob::appendDeath);

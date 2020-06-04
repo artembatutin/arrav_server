@@ -11,7 +11,7 @@ import com.rageps.world.Animation;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.combat.hit.Hit;
-import com.rageps.world.entity.actor.combat.strategy.player.special.CombatSpecial;
+import com.rageps.combat.strategy.player.special.CombatSpecial;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;

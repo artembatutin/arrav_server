@@ -1,12 +1,12 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.content.commands.CommandDispatcher;
+import com.rageps.command.CommandDispatcher;
 import com.rageps.content.skill.prayer.PrayerBook;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.combat.hit.Hit;
-import com.rageps.world.entity.actor.combat.strategy.player.special.CombatSpecial;
+import com.rageps.combat.strategy.player.special.CombatSpecial;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
