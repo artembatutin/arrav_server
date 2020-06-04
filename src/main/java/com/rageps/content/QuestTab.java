@@ -6,6 +6,11 @@ import com.rageps.util.StringUtil;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 
+/**
+ * An easy to use manager for sending all data, and interactions with the quest tab.
+ *
+ * @author Tamatea <tamateea@gmail.com>
+ */
 public class QuestTab {
 
 

@@ -59,6 +59,7 @@ import com.rageps.util.Utility;
 import com.rageps.world.ExperienceRate;
 import com.rageps.world.GameMode;
 import com.rageps.world.World;
+import com.rageps.world.entity.actor.mob.MobSpawner;
 import com.rageps.world.entity.actor.mob.drop.chance.NpcDropChanceHandler;
 import com.rageps.world.entity.actor.player.assets.AntifireDetails;
 import com.rageps.world.entity.actor.player.assets.PrivateMessage;
@@ -319,7 +320,12 @@ public final class Player extends Actor {
 	 * The curse effect manager of this player.
 	 */
 	public CurseManager curseManager = new CurseManager();
-	
+
+	/**
+	 * A utility for spawning npcs easily using a command.
+	 */
+	private final MobSpawner mobSpawner = new MobSpawner(this);
+
 	/**
 	 * Immutable map of different stopwatches regarding consumables..
 	 */
@@ -2288,6 +2294,10 @@ public final class Player extends Actor {
 
 	public GameMode getGameMode() {
 		return gameMode;
+	}
+
+	public MobSpawner getMobSpawner() {
+		return mobSpawner;
 	}
 
 	public ExperienceRate getExperienceRate() {
