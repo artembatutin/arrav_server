@@ -147,6 +147,14 @@ public final class AttributeMap {
 	}
 
 	/**
+	 * Returns if the attribute has been set.
+	 * @return if the value is empty
+	 */
+	public boolean has(AttributeKey key) {
+		return get(key).getValue() != null;
+	}
+
+	/**
 	 * Retrieves an object for the given key.
 	 *
 	 * @param key the key for the object.
