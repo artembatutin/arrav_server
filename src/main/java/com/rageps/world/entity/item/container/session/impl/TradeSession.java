@@ -164,7 +164,7 @@ public final class TradeSession extends ExchangeSession {
 				player.text(3431, "");
 				player.text(3417, "Trading with: " + name(recipient) + " " + "who has @gre@" + remaining + " free slots");
 				player.text(3535, "Are you sure you want to make this trade?");
-				player.out(new SendInventoryInterface(3323, 3321));
+				player.getInterfaceManager().openInventory(3323, 3321);
 				player.out(new SendContainer(3322, player.getInventory()));
 			});
 		} else if(getStage() == CONFIRM_DECISION) {
@@ -174,7 +174,7 @@ public final class TradeSession extends ExchangeSession {
 				player.out(new SendContainer(3214, player.getInventory()));
 				player.text(3557, getItemNames(player, this.getExchangeSession().get(player).getItems()));
 				player.text(3558, getItemNames(recipient, this.getExchangeSession().get(recipient).getItems()));
-				player.out(new SendInventoryInterface(3443, 3213));
+				player.getInterfaceManager().openInventory(3443, 3213);
 			});
 		}
 	}

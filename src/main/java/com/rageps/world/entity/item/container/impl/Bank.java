@@ -101,7 +101,7 @@ public final class Bank {
 		player.getAttributeMap().set(PlayerAttributes.BANKING, true);
 		player.out(new SendConfig(115, player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE) ? 1 : 0));
 		player.out(new SendConfig(116, player.getAttributeMap().getBoolean(PlayerAttributes.INSERT_ITEM) ? 1 : 0));
-		player.out(new SendInventoryInterface(BANK_WINDOW_ID, SIDEBAR_ID));
+		player.getInterfaceManager().openInventory(BANK_WINDOW_ID, SIDEBAR_ID);
 		player.out(new SendContainer(SIDEBAR_INVENTORY_ID, this.player.getInventory()));
 		if(!bulkStartSent) {
 			refreshAll();
@@ -120,7 +120,7 @@ public final class Bank {
 		player.getAttributeMap().set(PlayerAttributes.BANKING, true);
 		player.out(new SendConfig(115, player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE) ? 1 : 0));
 		player.out(new SendConfig(116, player.getAttributeMap().getBoolean(PlayerAttributes.INSERT_ITEM) ? 1 : 0));
-		player.out(new SendInventoryInterface(BANK_WINDOW_ID, SIDEBAR_ID));
+		player.getInterfaceManager().openInventory(BANK_WINDOW_ID, SIDEBAR_ID);
 		player.out(new SendContainer(SIDEBAR_INVENTORY_ID, this.player.getInventory()));
 		player.out(new SendContainer(BANK_INVENTORY_ID, bank.tabs[0]));
 		viewing = Optional.of(p);

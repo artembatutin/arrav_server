@@ -5,6 +5,7 @@ import com.rageps.content.skill.cooking.CookingData;
 import com.rageps.content.skill.cooking.DoughCreation;
 import com.rageps.content.skill.crafting.Spinning;
 import com.rageps.content.skill.fletching.BowCarving;
+import com.rageps.content.title.TitleData;
 import com.rageps.world.attr.Attr;
 import com.rageps.world.attr.AttributeKey;
 import com.rageps.world.attr.Attributes;
@@ -14,6 +15,7 @@ import com.rageps.world.entity.object.DynamicObject;
 import com.rageps.world.entity.object.ObjectDirection;
 import com.rageps.world.entity.object.ObjectType;
 import com.rageps.world.locale.Position;
+import com.rageps.world.text.ColorConstants;
 
 /**
  * A collection of {@link AttributeKey}'s associated with a {@link Player}.
@@ -82,6 +84,11 @@ public class PlayerAttributes {
     @Attr  public static final AttributeKey FLETCHING_BOWCARVING = Attributes.define("crafting_hide", new BowCarving(null, null, false));
     @Attr  public static final AttributeKey SMITHING_EQUIPMENT = Attributes.define("smithing_equipment", new Item(-1, -1));
     @Attr  public static final AttributeKey SMITHING_POSITION = Attributes.define("smithing_position", new Position(0, 0));
+
+
+    @Attr  public static final AttributeKey PLAYER_TITLE  = Attributes.definePersistentObject("player_title", TitleData.NONE);
+    @Attr  public static final AttributeKey TITLE_COLOR  = Attributes.definePersistent("title_color", ColorConstants.BLACK);
+    @Attr  public static final AttributeKey YELL_COLOR  = Attributes.definePersistent("yell_color", ColorConstants.BLACK);
 
 
 }

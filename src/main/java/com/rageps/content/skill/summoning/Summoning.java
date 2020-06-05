@@ -201,7 +201,7 @@ public final class Summoning {
 		player.getAttributeMap().set(PlayerAttributes.BOB, true);
 		FamiliarContainer storage = (FamiliarContainer) ability;
 		player.out(new SendContainer(2702, storage.getContainer()));
-		player.out(new SendInventoryInterface(2700, 5063));
+		player.getInterfaceManager().openInventory(2700, 5063);
 		player.out(new SendContainer(5064, player.getInventory()));
 		return true;
 	}

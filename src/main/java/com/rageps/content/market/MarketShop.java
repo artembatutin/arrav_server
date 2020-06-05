@@ -130,7 +130,7 @@ public class MarketShop {
 		player.text(259, getCurrency().ordinal() + "");
 		int x = player.getPosition().getX();
 		boolean counter = x == 3079 || x == 3080;
-		player.out(new SendInventoryInterface(SHOP_INTERFACE_ID, INVENTORY_INTERFACE_ID));
+		player.getInterfaceManager().openInventory(SHOP_INTERFACE_ID, INVENTORY_INTERFACE_ID);
 		player.out(new SendShop(SHOP_CONTAINER_ID, getItems()));
 		player.text(SHOP_NAME_ID, getTitle());
 		player.out(new SendForceTab(TabInterface.INVENTORY));

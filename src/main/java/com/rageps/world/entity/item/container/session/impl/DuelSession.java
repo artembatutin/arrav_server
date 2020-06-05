@@ -234,7 +234,7 @@ public final class DuelSession extends ExchangeSession {
 				player.out(new SendContainer(6669, getExchangeSession().get(player)));
 				player.out(new SendContainer(6670, getExchangeSession().get(player)));
 				player.out(new SendContainer(3322, player.getInventory()));
-				player.out(new SendInventoryInterface(37888, 3321));
+				player.getInterfaceManager().openInventory(37888, 3321);
 				player.text(37927, "");
 				player.text(37928, "Dueling with: " + name(recipient) + " (level-" + recipient.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots");
 				//player.text("Whip & dds only", 669);
@@ -285,7 +285,7 @@ public final class DuelSession extends ExchangeSession {
 				player.text(6517, getItemNames(recipient, this.getExchangeSession().get(recipient).getItems()));
 				player.text(6516, getItemNames(player, this.getExchangeSession().get(player).getItems()));
 				player.out(new SendContainer(3322, player.getInventory()));
-				player.out(new SendInventoryInterface(6412, 3321));
+				player.getInterfaceManager().openInventory(6412, 3321);
 			}
 		}
 	}
@@ -319,7 +319,7 @@ public final class DuelSession extends ExchangeSession {
 			Player recipient = getOther(player);
 			int remaining = recipient.getInventory().remaining();
 			player.out(new SendContainer(3322, player.getInventory()));
-			player.out(new SendInventoryInterface(37888, 3321));
+			player.getInterfaceManager().openInventory(37888, 3321);
 			player.out(new SendContainer(6669, getExchangeSession().get(player)));
 			player.out(new SendContainer(6670, getExchangeSession().get(recipient)));
 			player.text(37927, "");

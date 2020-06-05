@@ -4,6 +4,7 @@ package com.rageps.content.title;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.util.TextUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -14,6 +15,18 @@ import java.util.stream.Stream;
  */
 public enum TitleData {
 
+
+    NONE("", 0L, null) {
+        @Override
+        boolean hasReq(Player player) {
+            return true;
+        }
+
+        @Override
+        int getProgress(Player player) {
+            return 100;
+        }
+    },
 
     THE_GRINDER("Have 100 hours of ingame \\n play time.", 5_000_000, TitlePolicy.MISC) {
         @Override
@@ -209,7 +222,14 @@ public enum TitleData {
 
     }
 
-
+   static  {
+        List<TitleData> t = new ArrayList<>();
+        for(TitleData title : values()) {
+            if(title != NONE)
+                t.add(title);
+        }
+    //    VALUES = (TitleData[]) t.toArray();
+   }
     public static final TitleData[] VALUES = values();
 
 }

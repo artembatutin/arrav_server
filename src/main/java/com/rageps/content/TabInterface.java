@@ -54,7 +54,7 @@ public enum TabInterface {
 		//		if(this == ATTACK) {
 		//			player.write(new SendTab(id, this));
 		//		} else {
-		player.out(new SendTab(id, this));
+		player.getInterfaceManager().setSidebar(this, id);
 		//		}
 	}
 	
@@ -65,4 +65,6 @@ public enum TabInterface {
 	public int getOld() {
 		return oldId;
 	}
+
+	public static final TabInterface[] VALUES = values();
 }

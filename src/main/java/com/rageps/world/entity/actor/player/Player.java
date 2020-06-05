@@ -200,6 +200,11 @@ public final class Player extends Actor {
 	 * The quest manager for this player.
 	 */
 	private final QuestManager quest_manager = new QuestManager(this);
+
+	/**
+	 * The players InterfaceManager for handling, and managing their interfaces.
+	 */
+	private final InterfaceManager interfaceManager = new InterfaceManager(this);
 	
 	/**
 	 * The container that holds the inventory items.
@@ -577,36 +582,24 @@ public final class Player extends Actor {
 	}
 	
 	public void sendDefaultSidebars() {
-		TabInterface.CLAN_CHAT.sendInterface(this, 50128);
-		TabInterface.SKILL.sendInterface(this, 3917);
-		TabInterface.QUEST.sendInterface(this, 638);
-		TabInterface.INVENTORY.sendInterface(this, 3213);
-		TabInterface.EQUIPMENT.sendInterface(this, 1644);
-		TabInterface.PRAYER.sendInterface(this, getPrayerBook().getId());
-		TabInterface.MAGIC.sendInterface(this, getSpellbook().getId());
-		TabInterface.FRIEND.sendInterface(this, 5065);
-		TabInterface.IGNORE.sendInterface(this, 5715);
-		TabInterface.LOGOUT.sendInterface(this, 2449);
-		TabInterface.SETTING.sendInterface(this, 904);
-		TabInterface.EMOTE.sendInterface(this, 147);
-		TabInterface.ATTACK.sendInterface(this, weapon.getId());
+		interfaceManager.setSidebar(TabInterface.CLAN_CHAT, 50128);
+		interfaceManager.setSidebar(TabInterface.SKILL, 3917);
+		interfaceManager.setSidebar(TabInterface.QUEST, 638);
+		interfaceManager.setSidebar(TabInterface.INVENTORY, 3213);
+		interfaceManager.setSidebar(TabInterface.EQUIPMENT, 1644);
+		interfaceManager.setSidebar(TabInterface.PRAYER, getPrayerBook().getId());
+		interfaceManager.setSidebar(TabInterface.MAGIC, getSpellbook().getId());
+		interfaceManager.setSidebar(TabInterface.FRIEND, 5065);
+		interfaceManager.setSidebar(TabInterface.IGNORE, 5715);
+		interfaceManager.setSidebar(TabInterface.LOGOUT, 2449);
+		interfaceManager.setSidebar(TabInterface.SETTING, 904);
+		interfaceManager.setSidebar(TabInterface.EMOTE, 147);
+		interfaceManager.setSidebar(TabInterface.ATTACK, weapon.getId());
 	}
 	
 	public void resetSidebars() {
-		TabInterface.ATTACK.sendInterface(this, -1);
-		TabInterface.CLAN_CHAT.sendInterface(this, -1);
-		TabInterface.SKILL.sendInterface(this, -1);
-		TabInterface.QUEST.sendInterface(this, -1);
-		TabInterface.INVENTORY.sendInterface(this, -1);
-		TabInterface.EQUIPMENT.sendInterface(this, -1);
-		TabInterface.PRAYER.sendInterface(this, -1);
-		TabInterface.MAGIC.sendInterface(this, -1);
-		TabInterface.FRIEND.sendInterface(this, -1);
-		TabInterface.IGNORE.sendInterface(this, -1);
-		TabInterface.LOGOUT.sendInterface(this, -1);
-		TabInterface.SETTING.sendInterface(this, -1);
-		TabInterface.EMOTE.sendInterface(this, -1);
-		TabInterface.ATTACK.sendInterface(this, -1);
+		for(TabInterface tab : TabInterface.VALUES)
+			interfaceManager.setSidebar(tab, -1);
 	}
 	
 	@Override
@@ -1062,18 +1055,18 @@ public final class Player extends Actor {
 		if(Location.inGodwars(this)) {
 			if(!godwarsWidget) {
 				//				GodwarsFaction.refreshInterface(this); TODO: Godwars interface
-				out(new SendWalkable(16210));
+				interfaceManager.openWalkable(16210);
 				godwarsWidget = true;
 			}
 		} else if(godwarsWidget) {
-			out(new SendWalkable(-1));
+			interfaceManager.close(true);
 			godwarsWidget = false;
 		}
 		if(Location.inWilderness(this)) {
 			int calculateY = this.getPosition().getY() > 6400 ? super.getPosition().getY() - 6400 : super.getPosition().getY();
 			wildernessLevel = (((calculateY - 3520) / 8) + 1);
 			if(!wildernessWidget) {
-				out(new SendWalkable(197));
+				interfaceManager.openWalkable(197);
 				out(new SendContextMenu(2, true, "Attack"));
 				wildernessWidget = true;
 				WildernessActivity.enter(this);
@@ -1081,7 +1074,7 @@ public final class Player extends Actor {
 			text(199, "@yel@Level: " + wildernessLevel);
 		} else if(Location.inFunPvP(this)) {
 			if(!wildernessWidget) {
-				out(new SendWalkable(197));
+				interfaceManager.openWalkable(197);
 				out(new SendContextMenu(2, true, "Attack"));
 				wildernessWidget = true;
 				WildernessActivity.enter(this);
@@ -1089,7 +1082,7 @@ public final class Player extends Actor {
 			text(199, "@yel@Fun PvP");
 		} else if(wildernessWidget) {
 			out(new SendContextMenu(2, false, "null"));
-			out(new SendWalkable(-1));
+			interfaceManager.close(true);
 			wildernessWidget = false;
 			wildernessLevel = 0;
 			WildernessActivity.leave(this);
@@ -1259,7 +1252,7 @@ public final class Player extends Actor {
 	 * Opens up a new interface.
 	 */
 	public void widget(int widget) {
-		out(new SendInterface(widget));
+		interfaceManager.open(widget);
 	}
 	
 	/**
@@ -1273,7 +1266,7 @@ public final class Player extends Actor {
 	 * Closes player interface.
 	 */
 	public void closeWidget() {
-		out(new SendCloseInterface());
+		interfaceManager.close();
 	}
 	
 	/**
@@ -2291,6 +2284,10 @@ public final class Player extends Actor {
     public void setDropChanceHandler(NpcDropChanceHandler dropChanceHandler) {
         this.dropChanceHandler = dropChanceHandler;
     }
+
+	public InterfaceManager getInterfaceManager() {
+		return interfaceManager;
+	}
 
 	public GameMode getGameMode() {
 		return gameMode;

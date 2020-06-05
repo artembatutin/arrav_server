@@ -23,7 +23,7 @@ public class BankPin {
 			player.text(14920, "@or1@Set up a bank PIN using the buttons below.");
 			player.text(15313, "First click the FIRST digit.");
 			randomizeButtons(player);
-			player.out(new SendInterface(7424));
+			player.getInterfaceManager().open(7424, true);
 		} else {
 			player.enterPin = "";
 			setStars(player);
@@ -31,7 +31,7 @@ public class BankPin {
 			player.text(14923, "Bank of Arrav");
 			player.text(14920, "@or1@Please enter your PIN using the buttons below.");
 			player.text(15313, "First click the FIRST digit.");
-			player.out(new SendInterface(7424));
+			player.getInterfaceManager().open(7424, true);
 		}
 	}
 	

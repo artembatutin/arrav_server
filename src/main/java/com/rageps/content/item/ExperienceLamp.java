@@ -224,7 +224,7 @@ public class ExperienceLamp extends ActionInitializer {
 		ItemAction e = new ItemAction() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {
-				player.out(new SendInterface(ExperienceLamp.INTERFACE));
+				player.getInterfaceManager().open(ExperienceLamp.INTERFACE, true);
 				return true;
 			}
 		};
