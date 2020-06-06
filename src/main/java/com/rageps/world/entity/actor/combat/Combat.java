@@ -28,8 +28,9 @@ public class Combat<T extends Actor> {
 	
 	private final Stopwatch lastAttacked = new Stopwatch();
 	private final Stopwatch lastBlocked = new Stopwatch();
+
 	private FightType type;
-	
+
 	private final CombatFormula<T> formula = new CombatFormula<>();
 	private final Deque<CombatListener<? super T>> listeners = new LinkedList<>();
 	private final Deque<CombatListener<? super T>> pendingAddition = new LinkedList<>();
@@ -93,13 +94,10 @@ public class Combat<T extends Actor> {
 				sent++;
 			}
 		}
-
-		//if(attacker.isPlayer() && attacker.getCombat().getDefender() != null)
-		//System.out.println((defender != null)+" "+(defender.getCombat().getDefender() != null) +" "+isAttacking(defender.getCombat().defender)+" "+(attacker.isPlayer()));
-		//if (defender != null && defender.getCombat().getDefender() != null && isAttacking(defender.getCombat().defender) && attacker.isPlayer()) {
-		//if(attacker.isPlayer())
-		//attacker.toPlayer().out(new SendCombatTarget(defender));
-	//	}
+		if(attacker.isPlayer() && attacker.getCombat().getDefender() != null)
+		if (defender != null && defender.getCombat().getDefender() != null && attacker.isPlayer()) {
+		attacker.toPlayer().out(new SendCombatTarget(defender));
+		}
 	}
 	
 	private boolean sendNextHitsplat() {

@@ -7,21 +7,22 @@ import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.player.Player;
 import io.netty.buffer.ByteBuf;
 
-public final class SendCombatTarget implements OutgoingPacket {
+public final class SendFeedMessage implements OutgoingPacket {
 
-	private final Actor opponent;
+	private final String message;
+	private final String color;
 
-	public SendCombatTarget(Actor opponent) {
-		System.out.println("ending");
-		this.opponent = opponent;
+	public SendFeedMessage(String message, String color) {
+		this.message = message;
+		this.color = color;
 	}
 	
 	@Override
 	public GamePacket write(Player player, ByteBuf buf) {
 		GamePacket out = new GamePacket(this, buf);
-		out.message(174);
-		out.putShort(opponent == null ? 0 : opponent.getSlot());
-		out.put(opponent == null ? 1 : opponent.isPlayer() ? 2 : 3);
+		out.message(175, GamePacketType.VARIABLE_BYTE);
+		out.putCString(message);
+		out.putCString(color);
 		return out;
 	}
 
