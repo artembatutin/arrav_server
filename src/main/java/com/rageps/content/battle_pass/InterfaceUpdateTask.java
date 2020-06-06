@@ -4,7 +4,7 @@ import com.rageps.task.Task;
 import com.rageps.world.entity.actor.player.Player;
 
 /**
- * @author Tamatea Schofield <tamateea@gmail.com>
+ * @author Tamatea <tamateea@gmail.com>
  */
 public class InterfaceUpdateTask extends Task {
 

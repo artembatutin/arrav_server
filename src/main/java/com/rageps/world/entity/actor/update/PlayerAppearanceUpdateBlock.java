@@ -7,6 +7,7 @@ import com.rageps.net.codec.game.GamePacketType;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAppearance;
 import com.rageps.world.entity.item.container.impl.Equipment;
+import io.netty.util.ReferenceCountUtil;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the updating of the appearance of {@link Player}s.
@@ -40,7 +41,7 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 	@Override
 	public int write(Player player, Player other, GamePacket msg) {
 		PlayerAppearance appearance = other.getAppearance();
-		GamePacket buf = new GamePacket(-1, player.getSession().alloc().buffer(32), GamePacketType.RAW);
+		GamePacket buf = new GamePacket(-1, ReferenceCountUtil.releaseLater(player.getSession().alloc().buffer(32)), GamePacketType.RAW);
 		try {
 			buf.put(appearance.getGender());
 			buf.put(other.headIcon);

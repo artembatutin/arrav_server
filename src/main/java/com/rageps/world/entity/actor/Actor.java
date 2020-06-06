@@ -326,6 +326,11 @@ public abstract class Actor extends Entity {
 	 * @return this charater's health.
 	 */
 	public abstract int getCurrentHealth();
+
+	public int getMaxHP() {
+		return this.isMob() ? toMob().getMaxHealth() : toPlayer().getMaximumHealth();
+
+	}
 	
 	/**
 	 * Decrements this entity's health based on {@code hit}.
@@ -1014,5 +1019,14 @@ public abstract class Actor extends Entity {
 	public void setViewingDistance(int viewingDistance) {
 		this.viewingDistance = viewingDistance;
 	}
-	
+
+	/**
+	 * Get's this actors name
+	 * @return The name
+	 */
+	public Object getName() {
+		if(isMob())
+			return this.toMob().getName();
+		return this.toPlayer().credentials.username;
+	}
 }

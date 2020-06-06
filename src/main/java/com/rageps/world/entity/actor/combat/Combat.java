@@ -1,5 +1,6 @@
 package com.rageps.world.entity.actor.combat;
 
+import com.rageps.net.packet.out.SendCombatTarget;
 import com.rageps.world.entity.actor.combat.attack.FightType;
 import com.rageps.combat.listener.CombatListener;
 import com.rageps.world.entity.actor.combat.formula.CombatFormula;
@@ -92,6 +93,13 @@ public class Combat<T extends Actor> {
 				sent++;
 			}
 		}
+
+		//if(attacker.isPlayer() && attacker.getCombat().getDefender() != null)
+		//System.out.println((defender != null)+" "+(defender.getCombat().getDefender() != null) +" "+isAttacking(defender.getCombat().defender)+" "+(attacker.isPlayer()));
+		//if (defender != null && defender.getCombat().getDefender() != null && isAttacking(defender.getCombat().defender) && attacker.isPlayer()) {
+		//if(attacker.isPlayer())
+		//attacker.toPlayer().out(new SendCombatTarget(defender));
+	//	}
 	}
 	
 	private boolean sendNextHitsplat() {
@@ -351,14 +359,17 @@ public class Combat<T extends Actor> {
 		listeners.forEach(listener -> listener.finishOutgoing(attacker, defender));
 		defender.getCombat().finishIncoming(attacker);
 	}
-	
+
 	public void reset(boolean fullCombat, boolean resetWalk) {
+		if(attacker.isPlayer())
+			attacker.toPlayer().out(new SendCombatTarget(null));
+
 		if(defender != null) {
 			if(fullCombat) {
 				Actor def = defender;
 				defender = null;
 				def.getCombat().reset(false, true);
-			} else {
+				} else {
 				defender = null;
 			}
 			attacker.faceEntity(null);

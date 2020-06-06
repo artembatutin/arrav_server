@@ -15,6 +15,9 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
+
+import static io.netty.util.ReferenceCountUtil.release;
+import static io.netty.util.ReferenceCountUtil.releaseLater;
 import com.rageps.net.packet.out.SendLogout;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.player.Player;
@@ -172,11 +175,11 @@ public class Session {
 	 */
 	public void writeUpdate(OutgoingPacket playerUpdate, OutgoingPacket mobUpdate) {
 		if(channel.isActive() && channel.isOpen()) {
-			channel.write(playerUpdate.write(player, channel.alloc().buffer(playerUpdate.size())));
-			channel.write(mobUpdate.write(player, channel.alloc().buffer(mobUpdate.size())));
+			channel.write(playerUpdate.write(player, releaseLater(channel.alloc().buffer(playerUpdate.size()))));
+			channel.write(mobUpdate.write(player, releaseLater(channel.alloc().buffer(mobUpdate.size()))));
 			while(!outgoing.isEmpty()) {
 				OutgoingPacket packet = outgoing.poll();
-				ChannelFuture future = channel.write(packet.write(player, channel.alloc().buffer(packet.size())));
+				ChannelFuture future = channel.write(packet.write(player, releaseLater(channel.alloc().buffer(packet.size()))));
 				if(packet.getClass() == SendLogout.class) {
 					future.addListener(ChannelFutureListener.CLOSE);
 				}
@@ -187,7 +190,7 @@ public class Session {
 	
 	public void write(OutgoingPacket packet) {
 		if(channel.isActive() && channel.isOpen()) {
-			channel.write(packet.write(player, channel.alloc().buffer(packet.size())));
+			channel.write(packet.write(player, releaseLater(channel.alloc().buffer(packet.size()))));
 		}
 	}
 	
@@ -245,7 +248,8 @@ public class Session {
 		Channel channel = ctx.channel();
 		LoginResponse message = new LoginResponse(response);
 		if(response == LoginCode.NORMAL) {
-			ByteBuf initialMessage = ctx.alloc().buffer(9).writeLong(0); // Write initial message.
+			ByteBuf initialMessage = releaseLater(ctx.alloc().buffer(9));
+			initialMessage.writeLong(0); // Write initial message.
 			channel.write(initialMessage, channel.voidPromise());
 		}
 		channel.writeAndFlush(message.toBuf(ctx)).addListener(ChannelFutureListener.CLOSE); // Write response message.
