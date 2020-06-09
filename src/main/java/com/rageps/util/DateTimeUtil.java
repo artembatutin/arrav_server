@@ -1,11 +1,13 @@
 package com.rageps.util;
 
+import java.text.SimpleDateFormat;
 import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Date;
 
 /**
  * Created by Ryley Kimmel on 2/20/2017.
@@ -39,6 +41,11 @@ public final class DateTimeUtil {
 	 */
 	public static DayOfWeek today() {
 		return LocalDate.now(CLOCK).getDayOfWeek();
+	}
+
+	/** Gets the date of server. */
+	public static String getSimpleDate() {
+		return new SimpleDateFormat("yyyy/MM/dd").format(new Date());
 	}
 
 }

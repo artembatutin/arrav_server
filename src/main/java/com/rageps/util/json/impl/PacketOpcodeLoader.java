@@ -47,6 +47,7 @@ public final class PacketOpcodeLoader extends JsonLoader {
 			IncomingPacket message = (IncomingPacket) c.newInstance();
 			Arrays.stream(opcodes).forEach(op -> NetworkConstants.MESSAGES[op] = message);
 		} catch(Exception e) {
+			System.out.println("Error loading: "+name);
 			e.printStackTrace();
 		}
 	}

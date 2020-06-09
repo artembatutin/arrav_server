@@ -1,7 +1,7 @@
 package com.rageps.content.clanchat;
 
 import com.rageps.net.packet.out.SendClanBanned;
-import com.rageps.net.packet.out.SendClanMessage;
+import com.rageps.net.packet.out.SendClanDetails;
 import com.rageps.net.packet.out.SendClearText;
 import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.player.Player;
@@ -12,7 +12,7 @@ import com.rageps.world.entity.actor.player.assets.Rights;
  * a clan can be in.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
-public enum ClanChatUpdate {
+/*public enum ClanChatUpdate {
 	JOINING() {
 		@Override
 		public void update(ClanMember member) {
@@ -46,7 +46,7 @@ public enum ClanChatUpdate {
 				if(m.getRank().getValue() >= m.getClan().getLowest().getValue())
 					m.getPlayer().text(50306, clan.getName());
 				m.getPlayer().text(50139, "Talking in: @lye@" + clan.getName());
-				m.getPlayer().out(new SendClanMessage("The clan name has been changed.", clan.getName(), clan.getName(), Rights.PLAYER));
+				m.getPlayer().out(new SendClanDetails("The clan name has been changed.", clan.getName(), clan.getName(), Rights.PLAYER));
 			}
 		}
 	}, MEMBER_LIST_MODIFICATION() {
@@ -114,3 +114,4 @@ public enum ClanChatUpdate {
 	
 	}
 }
+*/

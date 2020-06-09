@@ -202,8 +202,8 @@ public class InterfaceManager {
 		return sidebars[tab.ordinal()];
 	}
 
-	public boolean isSidebar(int tab, int id) {
-		return tab <= sidebars.length && sidebars[tab] == id;
+	public boolean isSidebar(TabInterface tab, int id) {
+		return tab.ordinal() <= sidebars.length && sidebars[tab.ordinal()] == id;
 	}
 
 	public boolean hasSidebar(int id) {

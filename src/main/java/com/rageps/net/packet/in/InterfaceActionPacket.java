@@ -1,8 +1,5 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.content.clanchat.ClanChatRank;
-import com.rageps.content.clanchat.ClanChatUpdate;
-import com.rageps.content.clanchat.ClanManager;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
 import com.rageps.net.packet.out.SendEnterName;
@@ -24,7 +21,7 @@ public final class InterfaceActionPacket implements IncomingPacket {
 			return;
 		int interfaceId = buf.getInt();
 		int action = buf.getInt();
-		if(player.getClan().isPresent()) {
+		/*if(player.getClan().isPresent()) {
 			player.getClan().get().getClan().getSettings().click(player.getClan().get(), interfaceId, action);
 		}
 		if(interfaceId >= 50144 && interfaceId <= 50244) {
@@ -67,7 +64,7 @@ public final class InterfaceActionPacket implements IncomingPacket {
 					}
 				})));
 			}
-		}
+		}*/
 		switch(interfaceId) {
 			
 			default:

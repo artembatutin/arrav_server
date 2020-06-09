@@ -111,20 +111,25 @@
 	],
 	"class": "com.rageps.net.packet.in.MarketPacket"
   },
-  {
-	"opcodes": [
-	  104
-	],
-	"class": "com.rageps.net.packet.in.ClanChatPacket"
-  },
+//  {
+//	"opcodes": [
+//	  104
+//	],
+//	"class": "com.rageps.net.packet.in.ClanChatPacket"
+//  },
   {
 	"opcodes": [
 	  0,
-	  95,
 	  241,
 	  86
 	],
 	"class": "com.rageps.net.packet.in.DefaultPacket"
+  },
+  {
+  "opcodes": [
+	  95
+	],
+	"class": "com.rageps.net.packet.in.PrivacyOptionPacket"
   },
   {
 	"opcodes": [

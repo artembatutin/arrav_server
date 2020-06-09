@@ -16,6 +16,9 @@ public final class SendText implements OutgoingPacket {
 		this.id = id;
 		this.text = text;
 	}
+	public SendText(String text, int id) {
+		this(id, text);
+	}
 	
 	@Override
 	public GamePacket write(Player player, ByteBuf buf) {

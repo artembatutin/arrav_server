@@ -24,7 +24,7 @@ public final class SendPrivateMessage implements OutgoingPacket {
 		GamePacket out = new GamePacket(this, buf);
 		out.message(196, GamePacketType.VARIABLE_BYTE);
 		out.putLong(name);
-		out.putInt(player.getPrivateMessage().getLastMessage().getAndIncrement());
+		out.putInt(player.relations.getPrivateMessageId());
 		out.put(rights);
 		out.putBytes(message, size);
 		out.endVarSize();

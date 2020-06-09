@@ -3,8 +3,12 @@ package com.rageps.util;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
+import java.text.NumberFormat;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * String utilities.
@@ -150,6 +154,10 @@ public class StringUtil {
 	public static String prettifyUsername(long username) {
 		return capitalizeFirst(decodeUsername(longToString(username)));
 	}
+	public static String formatName(final String string) {
+		return Stream.of(string.trim().split("\\s")).filter(word -> word.length() > 0)
+				.map(word -> word.substring(0, 1).toUpperCase() + word.substring(1)).collect(Collectors.joining(" "));
+	}
 
 	public static String formatEnumString(String string) {
 		return capitalizeFirst(decodeUsername(string));
@@ -278,4 +286,66 @@ public class StringUtil {
 		return new String(out, 0, outPos);
 	}
 
+	/** Formats digits for integers. */
+	public static String formatDigits(final int amount) {
+		return NumberFormat.getInstance().format(amount);
+	}
+
+	/** Formats digits for longs. */
+	public static String formatDigits(final long amount) {
+		return NumberFormat.getInstance().format(amount);
+	}
+
+	/** Formats digits for doubles. */
+	public static String formatDigits(final double amount) {
+		return NumberFormat.getInstance().format(amount);
+	}
+
+	/** Formats a price for longs. */
+	public static String formatPrice(final long amount) {
+		if (amount >= 0 && amount < 1_000)
+			return "" + amount;
+		if (amount >= 1_000 && amount < 1_000_000) {
+			return (amount / 1_000) + "K";
+		}
+		if (amount >= 1_000_000 && amount < 1_000_000_000) {
+			return (amount / 1_000_000) + "M";
+		}
+		if (amount >= 1_000_000_000 && amount < Integer.MAX_VALUE) {
+			return (amount / 1_000_000_000) + "B";
+		}
+		return "<col=fc2a2a>Lots!";
+	}
+
+	/** Capitalize each letter after . */
+	public static String capitalizeSentence(final String string) {
+		int pos = 0;
+		boolean capitalize = true;
+		StringBuilder sb = new StringBuilder(string);
+		while (pos < sb.length()) {
+			if (sb.charAt(pos) == '.') {
+				capitalize = true;
+			} else if (capitalize && !Character.isWhitespace(sb.charAt(pos))) {
+				sb.setCharAt(pos, Character.toUpperCase(sb.charAt(pos)));
+				capitalize = false;
+			}
+			pos++;
+		}
+		return sb.toString();
+	}
+
+	public static String formatText(String s) {
+		for (int i = 0; i < s.length(); i++) {
+			if (i == 0) {
+				s = String.format("%s%s", Character.toUpperCase(s.charAt(0)), s.substring(1));
+			}
+			if (!Character.isLetterOrDigit(s.charAt(i))) {
+				if (i + 1 < s.length()) {
+					s = String.format("%s%s%s", s.subSequence(0, i + 1), Character.toUpperCase(s.charAt(i + 1)),
+							s.substring(i + 2));
+				}
+			}
+		}
+		return s.replace("_", " ");
+	}
 }

@@ -2,9 +2,9 @@ package com.rageps.net.discord;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.rageps.content.clanchat.ClanChat;
-import com.rageps.content.clanchat.ClanManager;
-import com.rageps.content.clanchat.ClanMember;
+import com.rageps.content.clanchannel.ClanMember;
+import com.rageps.content.clanchannel.ClanRepository;
+import com.rageps.content.clanchannel.channel.ClanChannel;
 import com.rageps.util.StringUtil;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
@@ -123,7 +123,7 @@ public final class HelpClanChatListener extends ListenerAdapter {
 		}
 
 
-		Optional<ClanChat> clan = ClanManager.get().getClan(gameClanChat);
+		Optional<ClanChannel> clan = ClanRepository.getChannel(gameClanChat);
 		if (!clan.isPresent()) {
 			channel.sendMessage("Unable to find the \"" + gameClanChat + "\" clan chat.").queue();
 			return;
@@ -131,7 +131,7 @@ public final class HelpClanChatListener extends ListenerAdapter {
 		sendMessage(channel, clan.get(), message);
 	}
 
-	private void sendMessage(TextChannel channel, ClanChat clan, Message message) {
+	private void sendMessage(TextChannel channel, ClanChannel clan, Message message) {
 		String content = message.getContentRaw();
 
 		String bracketColor = "<col=0>";
@@ -152,8 +152,8 @@ public final class HelpClanChatListener extends ListenerAdapter {
 		timeouts.put(member, false);
 
 		for (ClanMember memberPlayer : clan.getMembers()) {
-			if (memberPlayer != null) {
-				memberPlayer.sendMessage(StringUtil.capitalize(content));
+			if (memberPlayer != null && memberPlayer.player.isPresent()) {
+				memberPlayer.player.get().message(StringUtil.capitalize(content));
 			}
 		}
 	}

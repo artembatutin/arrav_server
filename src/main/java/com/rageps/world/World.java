@@ -1,11 +1,12 @@
 package com.rageps.world;
 
 import com.google.common.util.concurrent.AbstractScheduledService;
-import com.rageps.combat.strategy.MobCombatStrategyManager;
 import com.rageps.net.discord.Discord;
+import com.rageps.net.packet.out.SendBroadcast;
 import com.rageps.net.sql.DatabaseTransactionWorker;
 import com.rageps.world.env.Environment;
 import com.rageps.world.env.JsonEnvironmentProvider;
+import com.rageps.world.text.ColorConstants;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import com.rageps.GameConstants;
@@ -355,6 +356,19 @@ public final class World extends AbstractScheduledService {
 		players.forEach(actors::add);
 		return actors;
 	}
+
+	/**
+	 * Sends a broadcast to the entire world.
+	 * @param time
+	 * @param message
+	 * @param countdown
+	 */
+	public void sendBroadcast(int time, String message, boolean countdown) {
+		get().players.stream().forEach($it -> {
+			$it.out(new SendBroadcast(countdown ? 0 : 1, time, (message)));
+			$it.message("<ima=29>["+ ColorConstants.MAGENTA +"RagePS</col>]" + (message));
+		});
+	}
 	
 	/**
 	 * Sends {@code message} to all online players with an announcement dependent of {@code announcement}.
@@ -603,6 +617,20 @@ public final class World extends AbstractScheduledService {
     			alts.add(p);
 		}
     	return alts;
+	}
+
+	/** Gets a player by name. */
+	public Optional<Player> search(String name) {
+		for (Player player : players) {
+			if (player == null) {
+				continue;
+			}
+
+			if (player.credentials.username.equalsIgnoreCase(name)) {
+				return Optional.of(player);
+			}
+		}
+		return Optional.empty();
 	}
 
 	public Discord getDiscord() {

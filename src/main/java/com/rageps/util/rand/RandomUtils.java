@@ -1,8 +1,6 @@
 package com.rageps.util.rand;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -84,7 +82,13 @@ public final class RandomUtils {
 	public static <T> T random(T[] array) {
 		return array[(int) (ThreadLocalRandom.current().nextDouble() * array.length)];
 	}
-	
+
+	/** Picks a random element out of any array type. */
+	public static <T> T random(Collection<T> collection) {
+		return new ArrayList<T>(collection).get((int) (ThreadLocalRandom.current().nextDouble() * collection.size()));
+	}
+
+
 	/**
 	 * Pseudo-randomly retrieves an {@code int} from this {@code array}.
 	 * @param array The array to retrieve an {@code int} from.

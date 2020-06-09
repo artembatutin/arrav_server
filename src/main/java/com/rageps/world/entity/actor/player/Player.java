@@ -8,8 +8,8 @@ import com.rageps.content.PlayerPanel;
 import com.rageps.content.ShieldAnimation;
 import com.rageps.content.TabInterface;
 import com.rageps.content.achievements.Achievement;
-import com.rageps.content.clanchat.ClanManager;
-import com.rageps.content.clanchat.ClanMember;
+import com.rageps.content.clanchannel.channel.ClanChannel;
+import com.rageps.content.clanchannel.content.ClanViewer;
 import com.rageps.command.impl.UpdateCommand;
 import com.rageps.content.dialogue.Dialogue;
 import com.rageps.content.dialogue.DialogueBuilder;
@@ -62,7 +62,7 @@ import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.MobSpawner;
 import com.rageps.world.entity.actor.mob.drop.chance.NpcDropChanceHandler;
 import com.rageps.world.entity.actor.player.assets.AntifireDetails;
-import com.rageps.world.entity.actor.player.assets.PrivateMessage;
+import com.rageps.world.entity.actor.player.assets.relations.PlayerRelation;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.actor.update.UpdateFlag;
@@ -78,7 +78,6 @@ import com.rageps.task.Task;
 import com.rageps.util.ActionListener;
 import com.rageps.util.MutableNumber;
 import com.rageps.util.Stopwatch;
-import com.rageps.util.json.impl.CombatRangedBowLoader;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.Graphic;
 import com.rageps.world.entity.EntityState;
@@ -99,7 +98,6 @@ import com.rageps.world.entity.actor.combat.weapon.WeaponAnimation;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.mob.MobAggression;
-import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.impl.Bank;
 import com.rageps.world.entity.item.container.impl.Equipment;
 import com.rageps.world.entity.item.container.impl.Inventory;
@@ -224,8 +222,18 @@ public final class Player extends Actor {
 	/**
 	 * The private message manager that manages messages for this player.
 	 */
-	private final PrivateMessage privateMessage = new PrivateMessage(this);
-	
+//	private final PrivateMessage privateMessage = new PrivateMessage(this);
+
+	/**
+	 * Handles all relations with players like friends/ignore/clan options.
+	 */
+	public final PlayerRelation relations = new PlayerRelation(this);
+
+	/**
+	 * Handles interactions with clan interfaces.
+	 */
+	public final ClanViewer clanViewer = new ClanViewer(this);
+
 	/**
 	 * The dialogue builder for this player.
 	 */
@@ -473,7 +481,14 @@ public final class Player extends Actor {
 	/**
 	 * The clan this player is in.
 	 */
-	private Optional<ClanMember> clan = Optional.empty();
+	//private Optional<ClanMember> clan = Optional.empty();
+
+
+	public String lastClan = "";
+	public ClanChannel clanChannel;
+	public String clan = "";
+	public String clanTag = "";
+	public String clanTagColor = "";
 	
 	/**
 	 * The player-npc identifier for updating.
@@ -642,12 +657,12 @@ public final class Player extends Actor {
 
 		}
 		move(super.getPosition());
-		Skills.refreshAll(this);
+		Skills.initializeSkills(this);
 		equipment.updateBulk();
 		inventory.updateBulk();
-		out(new SendPrivateMessageStatus(2));
-		privateMessage.updateThisList();
-		privateMessage.updateOtherList(true);
+		relations.onLogin();
+//		privateMessage.updateThisList();
+//		privateMessage.updateOtherList(true);
 		out(new SendContextMenu(3, false, "Follow"));
 		out(new SendContextMenu(4, false, "Trade with"));
 		CombatEffect.values().forEach($it -> {
@@ -678,9 +693,9 @@ public final class Player extends Actor {
 		}
 		MinigameHandler.executeVoid(this, m -> m.onLogin(this));
 		PlayerPanel.refreshAll(this);
-		if(!clan.isPresent()) {
-			ClanManager.get().clearOnLogin(this);
-		}
+//		if(!clan.isPresent()) {
+//			ClanManager.get().clearOnLogin(this);
+//		}
 		if(!bot && getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) != 3) {
 			new IntroductionCutscene(this).prerequisites();
 		}
@@ -692,7 +707,7 @@ public final class Player extends Actor {
 		}
 		TriviaTask.getBot().onLogin(this);
 		if(Arrav.UPDATING > 0) {
-			out(new SendUpdateTimer((int) (Arrav.UPDATING * 50 / 30)));
+			out(new SendBroadcast(0, (int) (Arrav.UPDATING * 60), true));
 		}
 		Summoning.login(this);
 		FarmingManager.login(this);
@@ -820,8 +835,9 @@ public final class Player extends Actor {
 		setSkillAction(Optional.empty());
 		resetOverloadEffect(true);
 		MinigameHandler.executeVoid(this, m -> m.onLogout(this));
-		privateMessage.updateOtherList(false);
-		clan.ifPresent(c -> c.getClan().remove(this, true));
+		relations.updateLists(false);
+//		privateMessage.updateOtherList(false);
+//		clan.ifPresent(c -> c.getClan().remove(this, true));
 		cannon.ifPresent(c -> c.pickup(true));
 		WildernessActivity.leave(this);
 		save();
@@ -1166,22 +1182,22 @@ public final class Player extends Actor {
 		return dollars ? totalDonated / 100 : totalDonated;
 	}
 	
-	/**
-	 * Gets the hash collection of friends.
-	 * @return the friends list.
-	 */
-	public Set<Long> getFriends() {
-		return friends;
-	}
-	
-	/**
-	 * Gets the hash collection of ignores.
-	 * @return the ignores list.
-	 */
-	public Set<Long> getIgnores() {
-		return ignores;
-	}
-	
+//	/**
+//	 * Gets the hash collection of friends.
+//	 * @return the friends list.
+//	 */
+//	public Set<Long> getFriends() {
+//		return friends;
+//	}
+//
+//	/**
+//	 * Gets the hash collection of ignores.
+//	 * @return the ignores list.
+//	 */
+//	public Set<Long> getIgnores() {
+//		return ignores;
+//	}
+//
 	/**
 	 * Gets the container that holds the inventory items.
 	 * @return the container for the inventory.
@@ -1204,14 +1220,6 @@ public final class Player extends Actor {
 	 */
 	public Equipment getEquipment() {
 		return equipment;
-	}
-	
-	/**
-	 * Gets the private message manager that manages messages for this player.
-	 * @return the private message manager.
-	 */
-	public PrivateMessage getPrivateMessage() {
-		return privateMessage;
 	}
 	
 	/**
@@ -1871,23 +1879,23 @@ public final class Player extends Actor {
 	public void setChatEffects(int chatEffects) {
 		this.chatEffects = chatEffects;
 	}
-	
-	/**
-	 * Gets the clan the player is in.
-	 * @return the clan wrapped in an optional.
-	 */
-	public Optional<ClanMember> getClan() {
-		return clan;
-	}
-	
-	/**
-	 * Sets clan the player is in.
-	 * @param clan the clan to set.
-	 */
-	public void setClan(Optional<ClanMember> clan) {
-		this.clan = clan;
-	}
-	
+
+//	/**
+//	 * Gets the clan the player is in.
+//	 * @return the clan wrapped in an optional.
+//	 */
+//	public Optional<ClanMember> getClan() {
+//		return clan;
+//	}
+//
+//	/**
+//	 * Sets clan the player is in.
+//	 * @param clan the clan to set.
+//	 */
+//	public void setClan(Optional<ClanMember> clan) {
+//		this.clan = clan;
+//	}
+
 	/**
 	 * Gets the player-npc identifier for updating.
 	 * @return the player npc identifier.

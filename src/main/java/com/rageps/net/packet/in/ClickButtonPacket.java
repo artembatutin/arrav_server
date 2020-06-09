@@ -4,7 +4,6 @@ import com.rageps.Arrav;
 import com.rageps.action.ActionContainer;
 import com.rageps.action.impl.ButtonAction;
 import com.rageps.content.TabInterface;
-import com.rageps.content.clanchat.ClanManager;
 import com.rageps.content.dialogue.Dialogues;
 import com.rageps.content.market.MarketShop;
 import com.rageps.content.skill.SkillData;
@@ -146,7 +145,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 			case 55096:
 				player.closeWidget();
 				break;
-			case 195212:
+			/*case 195212:
 				if(player.getClan().isPresent())
 					if(player.getClan().get().getRank().getValue() >= player.getClan().get().getClan().getLowest().getValue())
 						player.widget(-3);
@@ -154,16 +153,16 @@ public final class ClickButtonPacket implements IncomingPacket {
 						player.getClan().get().sendMessage("You don't have the requirements to do that.");
 				else
 					player.out(new SendEnterName("Your clan chat name:", t -> () -> ClanManager.get().create(player, t)));
-				break;
+				break;*/
 			case 83093:
 				player.widget(15106);
 				break;
-			case 195209:
+			/*case 195209:
 				if(player.getClan().isPresent())
 					ClanManager.get().exit(player);
 				else
 					player.out(new SendEnterName("Enter the name of the chat you wish to join.", s -> () -> ClanManager.get().join(player, s)));
-				break;
+				break;*/
 			case 24017:
 			case 7212:
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());

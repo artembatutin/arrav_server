@@ -9,7 +9,7 @@ public enum GameMode {
 	IRONMAN(2),
 	ULTIMATE_IRONMAN(3),
 	PK_MODE(4),
-	KOTS_IRONMAN(5);
+	GROUP_IRONMAN(5);
 
 	private int value;
 
@@ -19,6 +19,9 @@ public enum GameMode {
 
 	public int getValue() {
 		return value;
+	}
+	public boolean isIronman() {
+		return this == IRONMAN || this == HARDCORE_IRONMAN || this == ULTIMATE_IRONMAN || this == GROUP_IRONMAN;
 	}
 
 	@Override

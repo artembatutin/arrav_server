@@ -40,11 +40,39 @@ public class MessageBuilder {
     }
 
     /**
+     * Appends a shade to the text.
+     * @param color The color of the shading.
+     * @return This {@link MessageBuilder}.
+     */
+    public MessageBuilder appendShade(int color) {
+        append("<shad=").append(color).append(">");
+        return this;
+    }
+    /**
+     * Appends a black shade to the text.
+     * @return This {@link MessageBuilder}.
+     */
+    public MessageBuilder appendShade() {
+        append("<shad=").append(0).append(">");
+        return this;
+    }
+
+
+    /**
      * Terminates the current color code.
      * @return This {@link MessageBuilder}.
      */
     public MessageBuilder terminateColor() {
         append("</col>");
+        return this;
+    }
+
+    /**
+     * Terminates the current shade code.
+     * @return This {@link MessageBuilder}.
+     */
+    public MessageBuilder terminateShade() {
+        append("</shad>");
         return this;
     }
 
@@ -103,6 +131,10 @@ public class MessageBuilder {
         return this;
     }
 
+    /**
+     * The message which has been built.
+     * @return The completed message.
+     */
     @Override
     public String toString() {
         return sb.toString();

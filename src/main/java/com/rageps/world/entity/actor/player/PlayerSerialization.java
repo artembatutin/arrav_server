@@ -7,7 +7,6 @@ import com.jsoniter.output.JsonStream;
 import com.rageps.GameConstants;
 import com.rageps.content.PlayerPanel;
 import com.rageps.content.achievements.Achievement;
-import com.rageps.content.clanchat.ClanManager;
 import com.rageps.content.item.pets.Pet;
 import com.rageps.content.item.pets.PetManager;
 import com.rageps.content.item.pets.PetProgress;
@@ -365,7 +364,7 @@ public final class PlayerSerialization {
 		public void fromJson(Player p, Any n) {
 			p.votePoints += n.toInt();
 		}
-	}, new Token("clan") {
+	},/* new Token("clan") {
 		@Override
 		public void toJson(Player p, JsonStream s) throws IOException {
 			s.writeVal(p.getClan().map(clanMember -> clanMember.getClan().getOwner()).orElse(""));
@@ -377,7 +376,7 @@ public final class PlayerSerialization {
 			if(clan.length() > 0)
 				ClanManager.get().join(p, n.toString());
 		}
-	}, new Token("appearance") {
+	},*/ new Token("appearance") {
 		@Override
 		public void toJson(Player p, JsonStream s) throws IOException {
 			s.writeVal(p.getAppearance().getValues());
@@ -570,27 +569,28 @@ public final class PlayerSerialization {
 				}
 			}
 		}
-	}, bank(0), bank(1), bank(2), bank(3), bank(4), bank(5), bank(6), bank(7), bank(8), new Token("friends") {
-		@Override
-		public void toJson(Player p, JsonStream s) throws IOException {
-			s.writeVal(p.getFriends().toArray());
-		}
-		
-		@Override
-		public void fromJson(Player p, Any n) {
-			Collections.addAll(p.getFriends(), n.as(Long[].class));
-		}
-	}, new Token("ignores") {
-		@Override
-		public void toJson(Player p, JsonStream s) throws IOException {
-			s.writeVal(p.getIgnores().toArray());
-		}
-		
-		@Override
-		public void fromJson(Player p, Any n) {
-			Collections.addAll(p.getIgnores(), n.as(Long[].class));
-		}
-	}, new Token("total-player-kills") {
+	}, bank(0), bank(1), bank(2), bank(3), bank(4), bank(5), bank(6), bank(7), bank(8),
+			/*		new Token("friends") {
+          	@Override
+                public void toJson(Player p, JsonStream s) throws IOException {
+                    s.writeVal(p.getFriends().toArray());
+                }
+
+                @Override
+                public void fromJson(Player p, Any n) {
+                    Collections.addAll(p.getFriends(), n.as(Long[].class));
+                }
+            }, new Token("ignores") {
+                @Override
+                public void toJson(Player p, JsonStream s) throws IOException {
+                    s.writeVal(p.getIgnores().toArray());
+                }
+
+                @Override
+                public void fromJson(Player p, Any n) {
+                    Collections.addAll(p.getIgnores(), n.as(Long[].class));
+                }
+            },*/ new Token("total-player-kills") {
 		@Override
 		public void toJson(Player p, JsonStream s) throws IOException {
 			s.writeVal(p.getPlayerKills().get());

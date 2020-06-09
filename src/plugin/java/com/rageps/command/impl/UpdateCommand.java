@@ -5,7 +5,7 @@ import com.rageps.world.World;
 import com.rageps.command.Command;
 import com.rageps.command.CommandSignature;
 import com.rageps.net.packet.out.SendLogout;
-import com.rageps.net.packet.out.SendUpdateTimer;
+import com.rageps.net.packet.out.SendBroadcast;
 import com.rageps.task.Task;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerSerialization;
@@ -24,13 +24,13 @@ public final class UpdateCommand implements Command {
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		inProgess = 1;
-		int timer = Integer.parseInt(cmd[1]);
+		int timer = (Integer.parseInt(cmd[1]));
 		Player other;
 		Iterator<Player> it = World.get().getPlayers().iterator();
 		while((other = it.next()) != null) {
-			other.out(new SendUpdateTimer(timer * 50 / 30));
+			other.out(new SendBroadcast(0, timer, "System update"));
 		}
-		Arrav.UPDATING = timer;
+		Arrav.UPDATING = timer * 0.6;
 		World.get().getTask().submit(new Task(1, true) {
 			@Override
 			protected void execute() {

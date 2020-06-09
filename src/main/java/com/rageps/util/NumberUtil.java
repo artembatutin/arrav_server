@@ -15,6 +15,11 @@ public final class NumberUtil {
 
 	private static final NavigableMap<Long, String> suffixes = new TreeMap<>();
 
+	/** Gets a percentage amount. */
+	public static double getPercentageAmount(int progress, int total) {
+		return 100 * progress / total;
+	}
+
 	static {
 		suffixes.put(1_000L, "k");
 		suffixes.put(1_000_000L, "M");

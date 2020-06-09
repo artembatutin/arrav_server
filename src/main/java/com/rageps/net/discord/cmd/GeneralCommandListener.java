@@ -4,6 +4,7 @@ import com.rageps.util.DateTimeUtil;
 import com.rageps.util.StringUtil;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.assets.relations.PrivateChatMessage;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import com.rageps.net.discord.Discord;
@@ -42,31 +43,6 @@ public final class GeneralCommandListener implements CommandListener {
 				message.getTextChannel().sendMessage("https://Vorkath.net");
 				return;
 
-			case "pm":
-				if (!arguments.hasRemaining(2)) {
-					message.getTextChannel().sendMessage("You must specify a username and message to send!").queue();
-					return;
-				}
-
-				String username = arguments.getNext();
-				Player other = World.get().getPlayerByNames().get(StringUtil.stringToLong(username));
-				if (other == null) {
-					message.getTextChannel().sendMessage("Player: " + username + " is not currently online.").queue();
-					return;
-				}
-
-				Member member = message.getMember();
-				byte[] bytes = arguments.getRemaining().toLowerCase(Locale.US).getBytes(StandardCharsets.UTF_8);
-				String uncompressed = StringUtil.decompress(bytes, bytes.length);
-				uncompressed = StringUtil.filterInvalidCharacters(uncompressed);
-				uncompressed = StringUtil.capitalize(uncompressed);
-
-				byte[] recompressed = new byte[bytes.length];
-				StringUtil.compress(uncompressed, recompressed);
-
-				String sender = member.getEffectiveName();
-				other.getPrivateMessage().sendPrivateMessage(StringUtil.stringToLong(sender), recompressed, bytes.length);
-				message.getTextChannel().sendMessage("Sent.").queue();
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.rageps.content.scene.impl;
 
-import com.rageps.content.clanchat.ClanManager;
+import com.rageps.content.clanchannel.ClanRepository;
+import com.rageps.content.clanchannel.channel.ClanChannelHandler;
 import com.rageps.content.dialogue.Dialogue;
 import com.rageps.content.dialogue.impl.GiveItemDialogue;
 import com.rageps.content.dialogue.impl.OptionDialogue;
@@ -124,7 +125,7 @@ public final class IntroductionCutscene extends Cutscene {
 			player.setVisible(true);
 			player.getAttributeMap().set(PlayerAttributes.INTRODUCTION_STAGE, 2);
 			player.graphic(new Graphic(2189));
-			ClanManager.get().join(player, "rogue");
+			ClanChannelHandler.connect(player, "help", false);
 		}).attachAfter(() -> {
 			player.move(new Position(3088, 3509));
 			player.widget(-5);

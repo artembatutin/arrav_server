@@ -49,9 +49,10 @@ public final class TriviaTask extends Task {
 			reminded = true;
 			return;
 		}
+
 		MessageBuilder mb = new MessageBuilder();
-		mb.appendPrefix("Trivia Bot", ColorConstants.BLACK, ColorConstants.CYAN).append(": ").append("The last trivia question hasn't been answered and has expired!", ColorConstants.BLUE);
-		World.get().message(mb.toString());
+		mb.appendShade().appendPrefix("Trivia Bot", ColorConstants.BLACK, ColorConstants.PURPLE).append(": ").
+				append("The last trivia question hasn't been answered and has expired!", ColorConstants.MAGENTA).terminateShade();
 		entry.reset();
 		reminded = false;
 	}

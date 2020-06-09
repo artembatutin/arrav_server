@@ -3,7 +3,6 @@ package com.rageps;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.rageps.content.clanchat.ClanManager;
 import com.rageps.command.impl.BugCommand;
 import com.rageps.content.market.MarketItem;
 import com.rageps.content.scoreboard.ScoreboardManager;
@@ -54,7 +53,7 @@ public final class GameShutdownHook extends Thread {
 				
 			});
 			exit.submit(() -> {
-				ClanManager.get().save();
+				//todo save clans
 				ScoreboardManager.get().serializeIndividualScoreboard();
 				MarketItem.serializeMarketItems();
 			});

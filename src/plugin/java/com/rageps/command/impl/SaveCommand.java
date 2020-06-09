@@ -2,7 +2,6 @@ package com.rageps.command.impl;
 
 import com.rageps.content.scoreboard.ScoreboardManager;
 import com.rageps.world.World;
-import com.rageps.content.clanchat.ClanManager;
 import com.rageps.command.Command;
 import com.rageps.command.CommandSignature;
 import com.rageps.content.market.MarketCounter;
@@ -39,8 +38,8 @@ public final class SaveCommand implements Command {
 				player.message("Serialized market prices!");
 				break;
 			case "clans"://included in hook.
-				ClanManager.get().save();
-				player.message("Serialized shops!");
+				//todo save clans
+				player.message("Saved clans!");
 				break;
 			case "board"://included in hook.
 				ScoreboardManager.get().serializeIndividualScoreboard();

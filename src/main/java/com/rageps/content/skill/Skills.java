@@ -280,7 +280,7 @@ public final class Skills {
 			}
 			player.getSkills()[skill] = s;
 		}
-		player.out(new SendSkill(skill, s.getLevel(), (int) s.getExperience()));
+		player.out(new SendSkill(skill, s.getLevel(), (int) s.getExperience(), false));
 	}
 
 	public static long getTotalExp(Player player) {
@@ -317,6 +317,22 @@ public final class Skills {
 		for(int i = 0; i < player.getSkills().length; i++) {
 			refresh(player, i);
 			player.out(new SendSkillGoal(i, player.getSkills()[i].getGoal()));
+		}
+	}
+
+	public static void initializeSkills(Player player) {
+		for(int skill = 0; skill < player.getSkills().length; skill++) {
+			Skill s = player.getSkills()[skill];
+			if(s == null) {
+				s = new Skill();
+				if(skill == Skills.HITPOINTS) {
+					s.setLevel(100, false);
+					s.setExperience(1300);
+				}
+				player.getSkills()[skill] = s;
+			}
+			player.out(new SendSkill(skill, s.getLevel(), (int) s.getExperience(), true));
+			player.out(new SendSkillGoal(skill, player.getSkills()[skill].getGoal()));
 		}
 	}
 	

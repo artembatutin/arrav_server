@@ -2,8 +2,14 @@ package com.rageps.net.packet.in;
 
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
+import com.rageps.util.ChatCodec;
+import com.rageps.util.StringUtil;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
+import com.rageps.world.entity.actor.player.assets.relations.PrivateChatMessage;
+
+import java.util.Optional;
 
 /**
  * The message sent from the client when a player adds, removes, or sends someone
@@ -46,7 +52,7 @@ public final class SocialPacket implements IncomingPacket {
 		long name = buf.getLong();
 		if(name < 0)
 			return;
-		player.getPrivateMessage().addFriend(name);
+		player.relations.addFriend(name);
 	}
 	
 	/**
@@ -58,7 +64,7 @@ public final class SocialPacket implements IncomingPacket {
 		long name = buf.getLong();
 		if(name < 0)
 			return;
-		player.getPrivateMessage().removeFriend(name);
+		player.relations.deleteFriend(name);
 	}
 	
 	/**
@@ -70,7 +76,7 @@ public final class SocialPacket implements IncomingPacket {
 		long name = buf.getLong();
 		if(name < 0)
 			return;
-		player.getPrivateMessage().addIgnore(name);
+		player.relations.addIgnore(name);
 	}
 	
 	/**
@@ -82,7 +88,7 @@ public final class SocialPacket implements IncomingPacket {
 		long name = buf.getLong();
 		if(name < 0)
 			return;
-		player.getPrivateMessage().removeIgnore(name);
+		player.relations.deleteIgnore(name);
 	}
 	
 	/**
@@ -92,14 +98,18 @@ public final class SocialPacket implements IncomingPacket {
 	 */
 	private void sendMessage(Player player, int size, GamePacket buf) {
 		long to = buf.getLong();
-		int newSize = size - 8;
-		byte[] message = buf.getBytes(newSize);
-		if(to < 0 || newSize < 0 || message == null)
-			return;
-		if(!player.getFriends().contains(to)) {
-			player.message("You cannot send a message to a " + "player not on your friends list!");
+
+		final Optional<Player> result = World.get().search(StringUtil.formatText(StringUtil.longToString(to)).replace("_", " "));
+
+		if (!result.isPresent()) {
 			return;
 		}
-		player.getPrivateMessage().sendPrivateMessage(to, message, newSize);
+
+		final Player other = result.get();
+
+		final byte[] input = buf.getBytes(size - Long.BYTES);
+		final String decoded = ChatCodec.decode(input);
+		final byte[] compressed = ChatCodec.encode(decoded);
+		player.relations.message(other, new PrivateChatMessage(decoded, compressed));
 	}
 }

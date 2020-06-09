@@ -9,11 +9,14 @@ import com.rageps.world.entity.actor.player.Player;
 public final class SendSkill implements OutgoingPacket {
 	
 	private final int id, level, exp;
+
+	private final boolean login;
 	
-	public SendSkill(int id, int level, int exp) {
+	public SendSkill(int id, int level, int exp, boolean login) {
 		this.id = id;
 		this.level = level;
 		this.exp = exp;
+		this.login = login;
 	}
 	
 	@Override
@@ -23,6 +26,7 @@ public final class SendSkill implements OutgoingPacket {
 		out.put(id);
 		out.putInt(exp, ByteOrder.MIDDLE);
 		out.putInt(level);
+		out.put(login ? 1 : 0);
 		return out;
 	}
 }

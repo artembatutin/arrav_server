@@ -213,7 +213,7 @@ public final class Arrav {
 		launch.execute(new AreaLoader());
 		launch.execute(new AreaMultiLoader());
 		launch.execute(new ShopLoader());
-		launch.execute(new ClanChatLoader());
+//		launch.execute(new ClanChatLoader());
 		launch.execute(new WeaponPoisonLoader());
 		launch.execute(new PacketOpcodeLoader());
 		launch.execute(new PacketSizeLoader());

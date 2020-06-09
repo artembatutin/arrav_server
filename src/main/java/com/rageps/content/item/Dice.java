@@ -1,7 +1,5 @@
 package com.rageps.content.item;
 
-import com.rageps.content.clanchat.ClanChatRank;
-import com.rageps.content.clanchat.ClanMember;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.action.impl.ItemAction;
 import com.rageps.task.LinkedTaskSequence;
@@ -12,6 +10,8 @@ import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.impl.Inventory;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * The class which is responsible for dicing actions.
@@ -34,30 +34,28 @@ public final class Dice {
 			player.message("You have to be a donator to be able to gamble");
 			return true;
 		}
-		if(!player.getDiceTimer().elapsed(1800)) {
+		if(!player.getDiceTimer().elapsed(3, TimeUnit.SECONDS)) {
 			return true;
 		}
 		player.getDiceTimer().reset();
 		if(clanchat) {
-			if(!player.getClan().isPresent()) {
+			if(player.clan != null) {
 				player.message("You have to be in a clan chat to do this.");
 				return true;
 			}
-			
-			ClanMember member = player.getClan().get();
-			
-			if(!member.getRank().greater(ClanChatRank.CORPORAL)) {
-				player.message("You must be corporal+ in a clan chat to do this.");
+
+				if (player.clanChannel != null) {
+					player.animation(new Animation(11900, Animation.AnimationPriority.HIGH));
+					player.graphic(data.graphic);
+
+					LinkedTaskSequence seq = new LinkedTaskSequence();
+					//player.clanChannel.message(player.getName() + " has rolled <col=ff0000>" + random + "</col> on the percentile dice!");
+					seq.connect(1, () -> player.clanChannel.message(data.clanChatformat(), "[Dice: " + player.getFormatUsername() + "]"));
+					seq.start();
+					return true;
+				}
+				player.message("@blu@You need to be in a Clan Chat channel in order to roll the percentile dice!");
 				return true;
-			}
-			
-			player.animation(new Animation(11900, Animation.AnimationPriority.HIGH));
-			player.graphic(data.graphic);
-			
-			LinkedTaskSequence seq = new LinkedTaskSequence();
-			seq.connect(1, () -> member.message(data.clanChatformat(), "[Dice: " + player.getFormatUsername() + "]"));
-			seq.start();
-			return true;
 		}
 		
 		player.animation(new Animation(11900, Animation.AnimationPriority.HIGH));

@@ -12,7 +12,6 @@ public final class SendCombatTarget implements OutgoingPacket {
 	private final Actor opponent;
 
 	public SendCombatTarget(Actor opponent) {
-		System.out.println("ending");
 		this.opponent = opponent;
 	}
 	

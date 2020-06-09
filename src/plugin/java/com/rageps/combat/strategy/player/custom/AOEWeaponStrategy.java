@@ -63,7 +63,6 @@ public class AOEWeaponStrategy extends PlayerMeleeStrategy {
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
        CombatHit hits = nextMeleeHit(attacker, defender);
-        hits.setHitDelay(3);
         return new CombatHit[] {
                 hits
         };
