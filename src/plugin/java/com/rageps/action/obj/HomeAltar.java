@@ -29,9 +29,8 @@ public class HomeAltar extends ActionInitializer {
 				return true;
 			}
 		};
-		pray.registerFirst(409);
-		pray.registerFirst(41979);
-		
+		pray.registerFirst(39842);
+
 		//prayer/magic switcher
 		ObjectAction change = new ObjectAction() {
 			@Override
@@ -70,7 +69,7 @@ public class HomeAltar extends ActionInitializer {
 				return true;
 			}
 		};
-		change.registerFirst(6552);
+		change.registerFirst(61);
 		
 	}
 }

@@ -1,6 +1,8 @@
 package com.rageps.content.skill.prayer;
 
 import com.google.common.collect.ImmutableList;
+import com.rageps.combat.listener.other.prayer.curses.DeflectListener;
+import com.rageps.combat.listener.other.prayer.curses.SoulsplitListener;
 import com.rageps.combat.listener.other.prayer.regular.ProtectionPrayerListener;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.net.packet.out.SendForceTab;
@@ -228,17 +230,17 @@ public enum Prayer {
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{WRATH, SOUL_SPLIT});
 		}
-	}, DEFLECT_MAGIC(PrayerBook.CURSES, 83123, 5, 10, 65, 731, 67057, 637) {
+	}, DEFLECT_MAGIC(PrayerBook.CURSES, new DeflectListener(),83123, 5, 10, 65, 731, 67057, 637) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_MISSILES, DEFLECT_MELEE, WRATH, SOUL_SPLIT});
 		}
-	}, DEFLECT_MISSILES(PrayerBook.CURSES, 83125, 5, 11, 68, 732, 67058, 638) {
+	}, DEFLECT_MISSILES(PrayerBook.CURSES, new DeflectListener(), 83125, 5, 11, 68, 732, 67058, 638) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_MAGIC, DEFLECT_MELEE, WRATH, SOUL_SPLIT});
 		}
-	}, DEFLECT_MELEE(PrayerBook.CURSES, 83127, 5, 9, 71, 733, 67059, 639) {
+	}, DEFLECT_MELEE(PrayerBook.CURSES, new DeflectListener(), 83127, 5, 9, 71, 733, 67059, 639) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_MISSILES, DEFLECT_MAGIC, WRATH, SOUL_SPLIT});
@@ -313,7 +315,7 @@ public enum Prayer {
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_SUMMONING, DEFLECT_MAGIC, DEFLECT_MISSILES, DEFLECT_MELEE, SOUL_SPLIT});
 		}
-	}, SOUL_SPLIT(PrayerBook.CURSES, 83145, 3.33, 17, 92, 742, 67068, 648) {
+	}, SOUL_SPLIT(PrayerBook.CURSES, new SoulsplitListener(), 83145, 3.33, 17, 92, 742, 67068, 648) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_SUMMONING, DEFLECT_MAGIC, DEFLECT_MISSILES, DEFLECT_MELEE, WRATH});
