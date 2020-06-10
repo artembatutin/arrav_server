@@ -28,7 +28,7 @@ public class InterfaceManager {
 	/** The current dialogue. */
 	private int dialogue = -1;
 
-	private int[] sidebars = new int[15];
+	private int[] sidebars = new int[16];
 
 	/** Creates a new <code>InterfaceManager<code>. */
 	InterfaceManager(Player player) {
