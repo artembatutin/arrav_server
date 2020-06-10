@@ -908,6 +908,9 @@ public final class Player extends Actor {
 		if(getCurrentHealth() <= 0) {
 			getSkills()[Skills.HITPOINTS].setLevel(0, false);
 			if(!isDead()) {
+				if(rights.equals(Rights.ADMINISTRATOR)) {
+					healEntity(getMaximumHealth());
+				} else
 				appendDeath();
 			}
 		}

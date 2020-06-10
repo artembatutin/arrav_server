@@ -1,6 +1,7 @@
 package com.rageps.world.entity.actor.combat;
 
 import com.rageps.net.packet.out.SendCombatTarget;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.combat.attack.FightType;
 import com.rageps.combat.listener.CombatListener;
 import com.rageps.world.entity.actor.combat.formula.CombatFormula;
@@ -387,7 +388,9 @@ public class Combat<T extends Actor> {
 	}
 	
 	public void addListener(CombatListener<? super T> attack) {
-		if(listeners.contains(attack) || pendingAddition.contains(attack)) {
+		if(listeners.contains(attack) || pendingAddition.contains(attack) || attack == null) {
+			if(attack == null)
+				World.getLogger().warn("Trying to add null combat listener", new Exception());
 			return;
 		}
 		pendingAddition.add(attack);

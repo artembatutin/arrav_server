@@ -33,6 +33,8 @@ import com.rageps.world.entity.region.Region;
 import com.rageps.world.entity.region.RegionManager;
 import com.rageps.world.sync.Synchronizer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -47,6 +49,12 @@ import static com.rageps.world.entity.EntityState.IDLE;
  * @author Artem Batutin
  */
 public final class World extends AbstractScheduledService {
+
+
+	/**
+	 * The LOGGER that will print important information.
+	 */
+	private static final Logger LOGGER = LogManager.getLogger();
 
 	/**
 	 * An implementation of the singleton pattern to prevent indirect
@@ -617,6 +625,14 @@ public final class World extends AbstractScheduledService {
     			alts.add(p);
 		}
     	return alts;
+	}
+
+	/**
+	 * Get's the logger used by the world to log various happenings.
+	 * @return The logger.
+	 */
+	public static Logger getLogger() {
+		return LOGGER;
 	}
 
 	/** Gets a player by name. */

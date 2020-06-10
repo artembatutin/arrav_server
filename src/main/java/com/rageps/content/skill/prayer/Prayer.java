@@ -1,6 +1,7 @@
 package com.rageps.content.skill.prayer;
 
 import com.google.common.collect.ImmutableList;
+import com.rageps.combat.listener.other.prayer.regular.ProtectionPrayerListener;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.net.packet.out.SendForceTab;
 import com.rageps.world.World;
@@ -127,17 +128,17 @@ public enum Prayer {
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	}, PROTECT_FROM_MAGIC(PrayerBook.NORMAL, 21245, 5, 2, 37, 95, 67066, 646) {
+	}, PROTECT_FROM_MAGIC(PrayerBook.NORMAL, new ProtectionPrayerListener(), 21245, 5, 2, 37, 95, 67066, 646) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MISSILES, PROTECT_FROM_MELEE, RETRIBUTION, REDEMPTION, SMITE});
 		}
-	}, PROTECT_FROM_MISSILES(PrayerBook.NORMAL, 21246, 5, 1, 40, 96, 67067, 647) {
+	}, PROTECT_FROM_MISSILES(PrayerBook.NORMAL, new ProtectionPrayerListener(), 21246, 5, 1, 40, 96, 67067, 647) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MAGIC, PROTECT_FROM_MELEE, RETRIBUTION, REDEMPTION, SMITE});
 		}
-	}, PROTECT_FROM_MELEE(PrayerBook.NORMAL, 21247, 5, 0, 43, 97, 67068, 648) {
+	}, PROTECT_FROM_MELEE(PrayerBook.NORMAL, new ProtectionPrayerListener(), 21247, 5, 0, 43, 97, 67068, 648) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MAGIC, PROTECT_FROM_MISSILES, RETRIBUTION, REDEMPTION, SMITE});
@@ -521,7 +522,9 @@ public enum Prayer {
 			Arrays.stream(prayer.get().deactivate().get()).forEach(it -> it.deactivate(player));
 		}
 		player.getPrayerActive().add(prayer.get());
+
 		player.getCombat().addListener(prayer.get().formulaModifier);
+
 		player.out(new SendConfig(prayer.get().getConfig(), 1));
 		if(prayer.get().getHeadIcon() != -1) {
 			player.headIcon = prayer.get().getHeadIcon();

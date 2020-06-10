@@ -46,6 +46,7 @@ public enum PrayerBook {
 			player.message("You have already converted to " + book.toString().toLowerCase() + " magics!");
 			return;
 		}
+		player.getPrayerActive().forEach(p -> p.deactivate(player));
 		TabInterface.PRAYER.sendInterface(player, book.id);
 		player.setPrayerBook(book);
 	}

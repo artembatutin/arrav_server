@@ -42,6 +42,13 @@ public final class CombatUtil {
 	private CombatUtil() {
 		throw new UnsupportedOperationException("This class cannot be instantiated!");
 	}
+
+
+	/** The rate at which accuracy will be reduced by combat protection prayer.
+	 * Currently at .255 meaning 25.5% percent chance of canceling damage when
+	 * using the right protection prayer.
+	 */
+	public static final double PRAYER_ACCURACY_REDUCTION = .255;
 	
 	/**
 	 * Gets the ranged distance based on {@code weapon}.
