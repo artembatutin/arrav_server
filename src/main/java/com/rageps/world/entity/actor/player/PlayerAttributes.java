@@ -88,7 +88,9 @@ public class PlayerAttributes {
 
     @Attr  public static final AttributeKey PLAYER_TITLE  = Attributes.definePersistentObject("player_title", TitleData.NONE);
     @Attr  public static final AttributeKey TITLE_COLOR  = Attributes.definePersistent("title_color", ColorConstants.BLACK);
+    @Attr  public static final AttributeKey TITLE_SHADE  = Attributes.definePersistent("title_shade", ColorConstants.BLACK);
     @Attr  public static final AttributeKey YELL_COLOR  = Attributes.definePersistent("yell_color", ColorConstants.BLACK);
+    @Attr  public static final AttributeKey YELL_SHADE  = Attributes.definePersistent("yell_shade", ColorConstants.BLACK);
 
 
 }

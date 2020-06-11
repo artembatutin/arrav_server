@@ -24,7 +24,7 @@ public class MessageBuilder {
      * @param color The hex color code.
      * @return This {@link MessageBuilder}.
      */
-    public MessageBuilder appendColorTag(String color) {
+    public MessageBuilder appendColorTag(int color) {
         append("<col=").append(color).append(">");
         return this;
     }
@@ -93,7 +93,7 @@ public class MessageBuilder {
      * @param contentColor The color of the message inside the prefix.
      * @return This {@link MessageBuilder}.
      */
-    public MessageBuilder appendPrefix(String content, String tagColor, String contentColor) {
+    public MessageBuilder appendPrefix(String content, int tagColor, int contentColor) {
         appendColorTag(tagColor).append("[").terminateColor().//bracket
                 appendColorTag(contentColor).append(content).terminateColor().//message
         appendColorTag(tagColor).append("]").terminateColor();//bracket
@@ -115,7 +115,7 @@ public class MessageBuilder {
      * @param color The color of the message.
      * @return This {@link MessageBuilder}.
      */
-    public MessageBuilder append(String str, String color) {
+    public MessageBuilder append(String str, int color) {
         appendColorTag(color).append(str).terminateColor();
         return this;
     }

@@ -21,13 +21,13 @@ public enum ActivityType {
         }
     };
 
-    private String messageColor;
+    private int messageColor;
 
     private String keyword;
 
     private boolean broadcast;
 
-    ActivityType(String messageColor, boolean broadcast) {
+    ActivityType(int messageColor, boolean broadcast) {
         this.messageColor = messageColor;
         this.broadcast = broadcast;
     }
@@ -36,7 +36,7 @@ public enum ActivityType {
         return null;
     }
 
-    public String getMessageColor() {
+    public int getMessageColor() {
         return messageColor;
     }
 

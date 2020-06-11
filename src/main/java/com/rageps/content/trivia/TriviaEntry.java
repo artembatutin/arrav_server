@@ -83,9 +83,8 @@ public final class TriviaEntry {
 		}
 		
 		answer = answer.toLowerCase();
-		System.out.println(answer+" "+Arrays.toString(current.answers));
 		for(String a : current.answers) {
-			if(answer.equals(a)) {
+			if(answer.equals(a.toLowerCase())) {
 				answered(player, answer);
 				return;
 			}

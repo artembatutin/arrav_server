@@ -9,7 +9,6 @@ import com.rageps.util.rand.RandomUtils;
 public enum TriviaData {
 	_1("raeldu", "Durael"),
 	_2("lod is wenam", "Wise Old Man"),
-	_3("RagePS", "Yanil;e"),
 	_4("shan", "Hans"),
 	_5("mizaze", "Zezima"),
 	_6("eifr eunr", "fire rune"),

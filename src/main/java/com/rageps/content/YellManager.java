@@ -22,11 +22,18 @@ public class YellManager {
 
         TitleData title = p.getAttributeMap().getObject(PlayerAttributes.PLAYER_TITLE);
         if(title != TitleData.NONE) {
-            String titleColor = p.getAttributeMap().getString(PlayerAttributes.TITLE_COLOR);
+            int titleShade = p.getAttributeMap().getInt(PlayerAttributes.TITLE_SHADE);
+            yb.getMb().appendShade(titleShade);
+            int titleColor = p.getAttributeMap().getInt(PlayerAttributes.TITLE_COLOR);
             yb.appendTitle(StringUtil.formatEnumString(title), titleColor);
+            yb.getMb().terminateShade();
         }
+
+        int shadeColor = p.getAttributeMap().getInt(PlayerAttributes.YELL_SHADE);
+        yb.getMb().appendShade(shadeColor);
         yb.appendname(p.getFormatUsername(), ColorConstants.MAGENTA);//todo - get name color from rights/rank/gm
-        String yellColor = p.getAttributeMap().getString(PlayerAttributes.YELL_COLOR);
+        int yellColor = p.getAttributeMap().getInt(PlayerAttributes.YELL_COLOR);
+        yb.getMb().terminateShade();
         yb.appentMessage(message, yellColor);
 
         World.get().message(yb.toString());

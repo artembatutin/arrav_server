@@ -24,7 +24,7 @@ public final class GetNpcCommand implements Command {
 		String queryName = cmd[1].toLowerCase().replaceAll("_", " ");
 		ObjectArrayList<MobDefinition> found = new ObjectArrayList<>();
 		for(MobDefinition definition : MobDefinition.DEFINITIONS) {
-			if(definition.getName().toLowerCase().startsWith(queryName))
+			if(definition.getName().toLowerCase().contains(queryName))
 				found.add(definition);
 		}
 		if(found.isEmpty())

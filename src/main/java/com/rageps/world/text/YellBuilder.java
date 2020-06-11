@@ -12,19 +12,23 @@ public class YellBuilder {
         mb.append("#yell#");
     }
 
-    public YellBuilder appendname(String name, String color) {
+    public YellBuilder appendname(String name, int color) {
         mb.append(name, color);
         return this;
     }
 
-    public YellBuilder appendTitle(String title, String color) {
+    public YellBuilder appendTitle(String title, int color) {
         mb.appendPrefix(title, ColorConstants.BLACK, color);
         return this;
     }
 
-    public YellBuilder appentMessage(String message, String color) {
+    public YellBuilder appentMessage(String message, int color) {
         mb.append(message, color);
         return this;
+    }
+
+    public MessageBuilder getMb() {
+        return mb;
     }
 
     @Override
