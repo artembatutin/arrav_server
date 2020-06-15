@@ -48,7 +48,7 @@ public final class ItemDefinitionLoader extends JsonLoader {
 		int[] bonus = null;
 		if(reader.has("bonus"))
 			bonus = builder.fromJson(reader.get("bonus").getAsJsonArray(), int[].class);
-		ItemDefinition.DEFINITIONS[index] = new ItemDefinition(index, name, equipmentType, tradeable, weapon, twoHanded, stackable, alchable, noted, noteId, lended, lendId, lowAlchValue, highAlchValue, weight, bonus, inventoryActions, groundActions);
+		ItemDefinition.DEFINITIONS[index] = new ItemDefinition(index, name, equipmentType, tradeable, twoHanded, stackable, alchable, noted, noteId, lended, lendId, lowAlchValue, highAlchValue, weight, bonus, inventoryActions, groundActions);
 	}
 	
 }

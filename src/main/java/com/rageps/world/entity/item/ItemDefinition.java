@@ -36,11 +36,6 @@ public final class ItemDefinition {
 	private final EquipmentType equipmentType;
 	
 	/**
-	 * The flag that determines if the item is a weapon.
-	 */
-	private final boolean weapon;
-	
-	/**
 	 * The flag that determines if the item is noted.
 	 */
 	private final boolean noted;
@@ -116,7 +111,6 @@ public final class ItemDefinition {
 	 * @param name the proper name of the item.
 	 * @param equipmentType the equipment type of this item.
 	 * @param tradeable the flag that determines if this item is tradeable.
-	 * @param weapon the flag that determines if this item is a weapon.
 	 * @param twoHanded the flag that determines if this item is two-handed.
 	 * @param stackable the flag that determines if this item is stackable.
 	 * @param alchable the flag that determines if this item is alchable.
@@ -129,12 +123,11 @@ public final class ItemDefinition {
 	 * @param inventoryActions the array of inventory actions for this item.
 	 * @param groundActions the array of ground actions for this item.
 	 */
-	public ItemDefinition(int id, String name, EquipmentType equipmentType, boolean tradeable, boolean weapon, boolean twoHanded, boolean stackable, boolean alchable, boolean noted, int noteId, boolean lended, int lendId, int lowAlchValue, int highAlchValue, double weight, int[] bonus, String[] inventoryActions, String[] groundActions) {
+	public ItemDefinition(int id, String name, EquipmentType equipmentType, boolean tradeable, boolean twoHanded, boolean stackable, boolean alchable, boolean noted, int noteId, boolean lended, int lendId, int lowAlchValue, int highAlchValue, double weight, int[] bonus, String[] inventoryActions, String[] groundActions) {
 		this.id = id;
 		this.name = name;
 		this.equipmentType = equipmentType;
 		this.tradable = tradeable;
-		this.weapon = weapon;
 		this.twoHanded = twoHanded;
 		this.stackable = stackable;
 		this.alchable = alchable;
@@ -286,16 +279,7 @@ public final class ItemDefinition {
 	public boolean isTwoHanded() {
 		return twoHanded;
 	}
-	
-	/**
-	 * Determines if this item is a weapon or not.
-	 * @return {@code true} if this item is a weapon, {@code false}
-	 * otherwise.
-	 */
-	public boolean isWeapon() {
-		return weapon;
-	}
-	
+
 	/**
 	 * Determines if this item is a full plate body or not.
 	 * @return {@code true} if this item is a full plate body, {@code false}
@@ -381,7 +365,6 @@ public final class ItemDefinition {
 			item_def_saver.current().addProperty("name", d.getName());
 			item_def_saver.current().addProperty("tradeable", d.isTradable());
 			item_def_saver.current().addProperty("stackable", d.isStackable());
-			item_def_saver.current().addProperty("weapon", d.isWeapon());
 			item_def_saver.current().addProperty("twoHanded", d.isTwoHanded());
 			item_def_saver.current().addProperty("noted", d.isNoted());
 			item_def_saver.current().addProperty("lended", d.isLended());
