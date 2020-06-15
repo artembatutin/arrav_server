@@ -28,7 +28,6 @@ public final class ItemDefinitionLoader extends JsonLoader {
 		String name = Objects.requireNonNull(reader.get("name").getAsString());
 		boolean tradeable = reader.get("tradeable").getAsBoolean();
 		boolean stackable = reader.get("stackable").getAsBoolean();
-		boolean weapon = reader.get("weapon").getAsBoolean();
 		boolean twoHanded = reader.get("twoHanded").getAsBoolean();
 		boolean noted = reader.get("noted").getAsBoolean();
 		boolean lended = reader.get("lended").getAsBoolean();
