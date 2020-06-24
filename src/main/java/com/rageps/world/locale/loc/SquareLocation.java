@@ -1,7 +1,11 @@
 package com.rageps.world.locale.loc;
 
 import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.Area;
 import com.rageps.world.locale.Position;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The location type that models any area in a square or rectangle shape.
@@ -33,6 +37,23 @@ public final class SquareLocation extends Location {
 	 * The {@code Z} level of the box.
 	 */
 	private final int z;
+
+
+	/**
+	 * Creates a new {@link SquareLocation} from a region id.
+	 * @param regionId the region for which this location is being made for.
+	 */
+	public SquareLocation(int regionId) {
+		int baseX = ((regionId >> 8) & 0xFF) << 6;
+		int baseY = (regionId & 0xFF) << 6;
+		int size = 64 - 1;
+		this.swX = baseX;
+		this.swY = baseY;
+		this.neX = baseX + size;
+		this.neY = baseY + size;
+		this.z = 0;
+	}
+
 	
 	/**
 	 * Creates a new {@link SquareLocation}.
@@ -157,5 +178,43 @@ public final class SquareLocation extends Location {
 	 */
 	public int getZ() {
 		return z;
+	}
+
+	public SquareLocation grow(Position position, int grow) {
+		int north = position.getY() + grow;
+		int east = position.getX() + grow;
+		int west = position.getX() - grow;
+		int south = position.getY() - grow;
+		return new SquareLocation(west, south, east, north, position.getZ());
+	}
+
+	public SquareLocation grow(Position position, int x, int y, boolean fromCenter) {
+		int north = position.getY() + y;
+		int east = position.getX() + x;
+		int west = fromCenter ? position.getX() - x : position.getX();
+		int south = fromCenter ? position.getY() - y : position.getY();
+		return new SquareLocation(west, south, east, north, position.getZ());
+	}
+
+	public SquareLocation of(Position p1, Position p2) {
+		int north = Math.max(p1.getY(), p2.getY());
+		int east = Math.max(p1.getX(), p2.getX());
+		int south = Math.min(p1.getY(), p2.getY());
+		int west = Math.min(p1.getX(), p2.getX());
+		return new SquareLocation(west, south, east, north);
+	}
+	/**
+	 * Gets the ids of all the regions inside this {@link SquareLocation}.
+	 * @return The region ids.
+	 */
+	public List<Integer> getRegionIds() {
+		List<Integer> regionIds = new ArrayList<>();
+		for (int x = swX >> 6; x < (neX >> 6) + 1; x++) {
+			for (int y = swY >> 6; y < (neY >> 6) + 1; y++) {
+				int id = y | x << 8;
+				regionIds.add(id);
+			}
+		}
+		return regionIds;
 	}
 }
