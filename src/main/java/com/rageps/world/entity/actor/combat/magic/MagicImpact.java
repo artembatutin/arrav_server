@@ -35,7 +35,7 @@ public enum MagicImpact {
 	MAGIC_DART((attacker, defender, hit, extra) -> {
 		if(attacker.isPlayer() && hit.isAccurate()) {
 			Player player = attacker.toPlayer();
-			int damage = 10 + player.getSkills()[Skills.MAGIC].getLevel() / 10;
+			int damage = 10 + player.getSkills()[Skills.MAGIC].getCurrentLevel() / 10;
 			
 			if(defender.isMob() && player.getSlayer().isPresent()) {
 				Mob mob = defender.toMob();
@@ -43,7 +43,7 @@ public enum MagicImpact {
 				String key = mob.getDefinition().getSlayerKey();
 				
 				if(key != null && slayer.getKey().equals(key)) {
-					damage = 13 + player.getSkills()[Skills.MAGIC].getLevel() / 6;
+					damage = 13 + player.getSkills()[Skills.MAGIC].getCurrentLevel() / 6;
 				}
 			}
 			
@@ -111,7 +111,7 @@ public enum MagicImpact {
 		int id = RandomUtils.inclusiveExcludes(Skills.ATTACK, Skills.MAGIC, Skills.HITPOINTS);
 		Skill skill = player.getSkills()[id];
 		
-		if(skill.getLevel() - 1 >= 0) {
+		if(skill.getCurrentLevel() - 1 >= 0) {
 			skill.decreaseLevel(1, true);
 			Skills.refresh(player, id);
 		}
@@ -127,10 +127,10 @@ public enum MagicImpact {
 		
 		double ratio = percentage / 100.0;
 		int limit = (int) (skill.getRealLevel() * (1 - ratio));
-		int amount = (int) (skill.getLevel() * ratio);
+		int amount = (int) (skill.getCurrentLevel() * ratio);
 		
-		if(skill.getLevel() - amount < limit) {
-			amount = skill.getLevel() - limit;
+		if(skill.getCurrentLevel() - amount < limit) {
+			amount = skill.getCurrentLevel() - limit;
 		}
 		
 		if(amount > 0) {

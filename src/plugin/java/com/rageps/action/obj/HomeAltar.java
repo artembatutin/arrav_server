@@ -18,7 +18,7 @@ public class HomeAltar extends ActionInitializer {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
 				int level = player.getSkills()[Skills.PRAYER].getRealLevel();
-				if(player.getSkills()[Skills.PRAYER].getLevel() < level) {
+				if(player.getSkills()[Skills.PRAYER].getCurrentLevel() < level) {
 					player.animation(new Animation(645));
 					player.getSkills()[Skills.PRAYER].setLevel(level, true);
 					player.message("You recharge your prayer points.");

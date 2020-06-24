@@ -67,7 +67,7 @@ public final class PrayerTask extends Task {
 	 * otherwise.
 	 */
 	private boolean checkPrayer() {
-		if(player.getSkills()[Skills.PRAYER].getLevel() < 1) {
+		if(player.getSkills()[Skills.PRAYER].getCurrentLevel() < 1) {
 			player.message("You've run out of prayer points!");
 			Prayer.deactivateAll(player);
 			this.cancel();

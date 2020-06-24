@@ -64,7 +64,7 @@ public abstract class HarvestingSkillAction extends SkillAction {
 	@Override
 	public final void execute(Task t) {
 		Preconditions.checkState(SUCCESS_FACTOR >= 0 && SUCCESS_FACTOR <= 99, "Invalid success factor for harvesting!");
-		int factor = (getPlayer().getSkills()[skill().getId()].getLevel() / SUCCESS_FACTOR);
+		int factor = (getPlayer().getSkills()[skill().getId()].getCurrentLevel() / SUCCESS_FACTOR);
 		double boost = (factor * 0.01);
 		if(RandomUtils.success((successFactor() + boost))) {
 			Optional<Item[]> removeItems = removeItems();

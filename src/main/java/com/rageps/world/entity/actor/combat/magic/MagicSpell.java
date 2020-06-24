@@ -45,7 +45,7 @@ public abstract class MagicSpell {
 		
 		Player player = attacker.toPlayer();
 		
-		if(player.getSkills()[Skills.MAGIC].getLevel() < level) {
+		if(player.getSkills()[Skills.MAGIC].getCurrentLevel() < level) {
 			player.message("You need a Magic level of " + level + " to cast this spell.");
 			player.getCombat().reset(false, true);
 			return false;

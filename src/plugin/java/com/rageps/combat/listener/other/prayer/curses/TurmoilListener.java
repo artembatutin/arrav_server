@@ -14,7 +14,7 @@ public class TurmoilListener extends SimplifiedListener<Player> {
 
 		if(defender.isPlayer()) {
 			Skill skill = defender.toPlayer().getSkills()[Skills.ATTACK];
-			int current = skill.getLevel();
+			int current = skill.getCurrentLevel();
 			int max = skill.getRealLevel();
 			bonus += current * 0.15 / max;
 		}
@@ -28,7 +28,7 @@ public class TurmoilListener extends SimplifiedListener<Player> {
 
 		if(defender.isPlayer()) {
 			Skill skill = defender.toPlayer().getSkills()[Skills.STRENGTH];
-			int current = skill.getLevel();
+			int current = skill.getCurrentLevel();
 			int max = skill.getRealLevel();
 			bonus += current * 0.10 / max;
 		}
@@ -42,7 +42,7 @@ public class TurmoilListener extends SimplifiedListener<Player> {
 
 		if(attacker.isPlayer()) {
 			Skill skill = attacker.toPlayer().getSkills()[Skills.DEFENCE];
-			int current = skill.getLevel();
+			int current = skill.getCurrentLevel();
 			int max = skill.getRealLevel();
 			bonus += current * 0.15 / max;
 		}

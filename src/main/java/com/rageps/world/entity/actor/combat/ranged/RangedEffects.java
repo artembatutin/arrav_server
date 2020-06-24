@@ -192,7 +192,7 @@ public enum RangedEffects {
 
 			if(type.equals(CombatType.MAGIC)) {
 				Skill magic = player.getSkills()[Skills.MAGIC];
-				int max = (int) (Math.floor(0.5 + magic.getLevel() * 15 / 80) * 10);
+				int max = (int) (Math.floor(0.5 + magic.getCurrentLevel() * 15 / 80) * 10);
 				Hit magicHit = FormulaFactory.nextMagicHit(attacker, defender, max);
 				hit.setAs(magicHit);
 			} else if(type.equals(CombatType.MELEE)) {
@@ -214,7 +214,7 @@ public enum RangedEffects {
 
 			if(type.equals(CombatType.MAGIC)) {
 				Skill magic = player.getSkills()[Skills.MAGIC];
-				int max = (int) (Math.floor(0.5 + magic.getLevel() * 123 / 640) * 10);
+				int max = (int) (Math.floor(0.5 + magic.getCurrentLevel() * 123 / 640) * 10);
 				Hit magicHit = FormulaFactory.nextMagicHit(attacker, defender, max);
 				hit.setAs(magicHit);
 			} else if(type.equals(CombatType.MELEE)) {
@@ -236,7 +236,7 @@ public enum RangedEffects {
 
 			if(type.equals(CombatType.MAGIC)) {
 				Skill magic = player.getSkills()[Skills.MAGIC];
-				int max = (int) (Math.floor(0.5 + magic.getLevel() * 141 / 640) * 10);
+				int max = (int) (Math.floor(0.5 + magic.getCurrentLevel() * 141 / 640) * 10);
 				Hit magicHit = FormulaFactory.nextMagicHit(attacker, defender, max);
 				hit.setAs(magicHit);
 			} else if(type.equals(CombatType.MELEE)) {
@@ -258,7 +258,7 @@ public enum RangedEffects {
 
 			if(type.equals(CombatType.MAGIC)) {
 				Skill magic = player.getSkills()[Skills.MAGIC];
-				int max = (int) (Math.floor(0.5 + magic.getLevel() * 156 / 640) * 10);
+				int max = (int) (Math.floor(0.5 + magic.getCurrentLevel() * 156 / 640) * 10);
 				Hit magicHit = FormulaFactory.nextMagicHit(attacker, defender, max);
 				hit.setAs(magicHit);
 			} else if(type.equals(CombatType.MELEE)) {

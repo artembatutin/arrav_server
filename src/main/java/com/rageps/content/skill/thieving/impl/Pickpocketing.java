@@ -102,9 +102,9 @@ public final class Pickpocketing extends Thieving {
 	@Override
 	public boolean failure() {
 		if(mob.getDefinition().getName().contains("Master")) {
-			return !RandomUtils.success(((((double) 5 / 833) * getPlayer().getSkills()[Skills.THIEVING].getLevel()) + ((double) 17 / 49)));
+			return !RandomUtils.success(((((double) 5 / 833) * getPlayer().getSkills()[Skills.THIEVING].getCurrentLevel()) + ((double) 17 / 49)));
 		}
-		return (RandomUtils.inclusive(getPlayer().getSkills()[Skills.THIEVING].getLevel() + RandomUtils.inclusive(5)) < (RandomUtils.inclusive(definition.requirement) + RandomUtils.inclusive((5))));
+		return (RandomUtils.inclusive(getPlayer().getSkills()[Skills.THIEVING].getCurrentLevel() + RandomUtils.inclusive(5)) < (RandomUtils.inclusive(definition.requirement) + RandomUtils.inclusive((5))));
 	}
 	
 	@Override

@@ -102,7 +102,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 					continue;
 				SendGraphic.local(getActor(), 2260, new Position(x, y, getActor().getPosition().getZ()), 25);
 			}
-			int maxHit = (int) ((getActor().getSkills()[Skills.PRAYER].getLevel() / 100.D) * 25);
+			int maxHit = (int) ((getActor().getSkills()[Skills.PRAYER].getCurrentLevel() / 100.D) * 25);
 			if(getActor().inMulti()) {
 				getActor().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getActor().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit), Hitsplat.NORMAL, HitIcon.NONE)));
 				if(getActor().inWilderness()) {

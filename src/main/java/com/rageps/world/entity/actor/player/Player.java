@@ -156,6 +156,8 @@ public final class Player extends Actor {
 	 * 2 - iron man maxed
 	 */
 	private int ironMan;
+
+
 	private int wildernessLevel;
 	public int ringOfRecoil = 400;
 	public double weight;
@@ -581,6 +583,9 @@ public final class Player extends Actor {
 	 */
 	private NpcDropChanceHandler dropChanceHandler= new NpcDropChanceHandler(this);
 
+	/**
+	 * The {@link ExperienceRate} Associated with the players account.
+	 */
 	private ExperienceRate experienceRate = ExperienceRate.NORMAL;
 
 	/**
@@ -638,7 +643,7 @@ public final class Player extends Actor {
 	
 	@Override
 	public int getSkillLevel(int skill) {
-		return skills[skill].getLevel();
+		return skills[skill].getCurrentLevel();
 	}
 	
 	@Override
@@ -931,7 +936,7 @@ public final class Player extends Actor {
 	
 	@Override
 	public int getCurrentHealth() {
-		return skills[Skills.HITPOINTS].getLevel();
+		return skills[Skills.HITPOINTS].getCurrentLevel();
 	}
 	
 	public int getMaximumHealth() {
@@ -1123,7 +1128,7 @@ public final class Player extends Actor {
 	public void restoreRunEnergy() {
 		if(lastEnergy.elapsed(3500) && runEnergy < 100 && (this.getMovementQueue().isMovementDone() || !getMovementQueue().isRunning())) {
 			double restoreRate = 0.45D;
-			double agilityFactor = 0.01 * skills[Skills.AGILITY].getLevel();
+			double agilityFactor = 0.01 * skills[Skills.AGILITY].getCurrentLevel();
 			setRunEnergy(runEnergy + (restoreRate + agilityFactor));
 			lastEnergy.reset();
 			out(new SendEnergy());
@@ -2310,5 +2315,13 @@ public final class Player extends Actor {
 
 	public ExperienceRate getExperienceRate() {
 		return experienceRate;
+	}
+
+	public void setGameMode(GameMode gameMode) {
+		this.gameMode = gameMode;
+	}
+
+	public void setExperienceRate(ExperienceRate experienceRate) {
+		this.experienceRate = experienceRate;
 	}
 }

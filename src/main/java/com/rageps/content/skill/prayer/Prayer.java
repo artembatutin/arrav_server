@@ -506,7 +506,7 @@ public enum Prayer {
 		StringBuilder sb = new StringBuilder();
 		if(player.getSkills()[Skills.PRAYER].getRealLevel() < prayer.get().getLevel()) {
 			sb.append("You need a Prayer " + "level of " + prayer.get().getLevel() + " to use " + prayer.get().toString() + ".");
-		} else if(player.getSkills()[Skills.PRAYER].getLevel() < 1) {
+		} else if(player.getSkills()[Skills.PRAYER].getCurrentLevel() < 1) {
 			sb.append("You need to recharge your prayer at an altar!");
 		}
 		if(sb.length() > 0) {

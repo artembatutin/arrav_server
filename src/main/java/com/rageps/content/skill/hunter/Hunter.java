@@ -40,7 +40,7 @@ public final class Hunter {
 	 */
 	private static int getMaximumTraps(Player player) {
 		Skill hunter = player.getSkills()[Skills.HUNTER];
-		return hunter.getLevel() / 20 + 1;
+		return hunter.getCurrentLevel() / 20 + 1;
 	}
 
 	/**

@@ -3,6 +3,8 @@ package com.rageps.content.skill;
 import com.jsoniter.annotation.JsonIgnore;
 import com.jsoniter.annotation.JsonProperty;
 import com.rageps.util.Stopwatch;
+import com.rageps.world.ExperienceRate;
+import com.rageps.world.entity.actor.player.Player;
 
 /**
  * The representation of a single skill that can be trained by a player.
@@ -201,7 +203,7 @@ public final class Skill {
 	 * Gets the level for this skill.
 	 * @return the level.
 	 */
-	public int getLevel() {
+	public int getCurrentLevel() {
 		return level;
 	}
 	

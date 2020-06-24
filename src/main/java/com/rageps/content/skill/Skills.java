@@ -5,6 +5,7 @@ import com.rageps.GameConstants;
 import com.rageps.content.item.Skillcape;
 import com.rageps.net.packet.out.SendSkillGoal;
 import com.rageps.util.TextUtils;
+import com.rageps.world.ExperienceRate;
 import com.rageps.world.Graphic;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
@@ -172,30 +173,27 @@ public final class Skills {
 	/**
 	 * Attempts to add {@code amount} of experience for {@code player}.
 	 * @param player the player to add the experience for.
-	 * @param amount the amount of experience that will be added.
+	 * @param experience the amount of experience that will be added.
 	 * @param skill the skill to add the experience for.
 	 */
-	public static void experience(Player player, double amount, int skill) {
-		if(amount <= 0)
+	public static void experience(Player player, double experience, int skill) {
+		if(experience <= 0)
 			return;
 		int oldLevel = player.getSkills()[skill].getRealLevel();
-		if(skill > 6)
-			amount *= SKILL_EXPERIENCE_MULTIPLIER;
-		else
-			amount *= skill == PRAYER ? PRAYER_EXPERIENCE_MULTIPLIER : COMBAT_EXPERIENCE_MULTIPLER;
-		amount *= GameConstants.EXPERIENCE_MULTIPLIER;
-		Rights right = player.getRights();
-		amount *= right.equals(Rights.EXTREME_DONATOR) ? 1.10 : right.equals(Rights.SUPER_DONATOR) ? 1.05 : right.equals(Rights.DONATOR) ? 1.025 : 1;
+
+		experience *= getExperienceMultiplier(player, skill);
+
+
 		if(!player.lockedXP)
-			player.getSkills()[skill].increaseExperience(amount);
+			player.getSkills()[skill].increaseExperience(experience);
 		if(oldLevel < 99) {
 			int newLevel = player.getSkills()[skill].getLevelForExperience();
 			if(oldLevel < newLevel) {
-				if(player.getSkills()[skill].getLevel() <= newLevel) {
+				if(player.getSkills()[skill].getCurrentLevel() <= newLevel) {
 					if(skill != 3) {
 						player.getSkills()[skill].setLevel(newLevel, true);
 					} else {
-						int old = player.getSkills()[skill].getLevel();
+						int old = player.getSkills()[skill].getCurrentLevel();
 						if(old + 10 < 990)
 							player.getSkills()[skill].setLevel(old + 10, false);
 					}
@@ -223,6 +221,20 @@ public final class Skills {
 		}
 		Skills.refresh(player, skill);
 	}
+
+	/**
+	 * Custom skill multipliers
+	 *
+	 * @return multiplier.
+	 */
+	public static int getExperienceMultiplier(Player player, int skill) {
+		ExperienceRate rate = player.getExperienceRate();
+		//if (player.getSkillManager().getMaxLevel(this) >= SkillManager.getMaxAchievingLevel(this)) {
+		//	return rate.getBase();
+		//}
+		return rate.getMultiplier(player, skill);
+	}
+
 	
 	/**
 	 * Gets the minimum experience in said level.
@@ -280,7 +292,7 @@ public final class Skills {
 			}
 			player.getSkills()[skill] = s;
 		}
-		player.out(new SendSkill(skill, s.getLevel(), (int) s.getExperience(), false));
+		player.out(new SendSkill(skill, s.getCurrentLevel(), (int) s.getExperience(), false));
 	}
 
 	public static long getTotalExp(Player player) {
@@ -331,7 +343,7 @@ public final class Skills {
 				}
 				player.getSkills()[skill] = s;
 			}
-			player.out(new SendSkill(skill, s.getLevel(), (int) s.getExperience(), true));
+			player.out(new SendSkill(skill, s.getCurrentLevel(), (int) s.getExperience(), true));
 			player.out(new SendSkillGoal(skill, player.getSkills()[skill].getGoal()));
 		}
 	}

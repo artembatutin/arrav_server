@@ -141,7 +141,7 @@ public enum FoodConsumable {
 			
 			Skill skill = player.getSkills()[Skills.FARMING];
 			
-			if(skill.getLevel() >= (skill.getRealLevel() + 3)) {
+			if(skill.getCurrentLevel() >= (skill.getRealLevel() + 3)) {
 				return;
 			}
 			
@@ -161,7 +161,7 @@ public enum FoodConsumable {
 			
 			Skill skill = player.getSkills()[Skills.FISHING];
 			
-			if(skill.getLevel() >= (skill.getRealLevel() + 3)) {
+			if(skill.getCurrentLevel() >= (skill.getRealLevel() + 3)) {
 				return;
 			}
 			
@@ -176,7 +176,7 @@ public enum FoodConsumable {
 			
 			Skill skill = player.getSkills()[Skills.FISHING];
 			
-			if(skill.getLevel() >= (skill.getRealLevel() + 5)) {
+			if(skill.getCurrentLevel() >= (skill.getRealLevel() + 5)) {
 				return;
 			}
 			
@@ -196,14 +196,14 @@ public enum FoodConsumable {
 			
 			Skill[] skill = new Skill[]{player.getSkills()[Skills.RANGED], player.getSkills()[Skills.SLAYER]};
 			
-			if(skill[0].getLevel() >= (skill[0].getRealLevel() + 4)) {
+			if(skill[0].getCurrentLevel() >= (skill[0].getRealLevel() + 4)) {
 				return;
 			}
 			
 			skill[0].increaseLevel(4);
 			Skills.refresh(player, Skills.RANGED);
 			
-			if(skill[1].getLevel() >= (skill[1].getRealLevel() + 5)) {
+			if(skill[1].getCurrentLevel() >= (skill[1].getRealLevel() + 5)) {
 				return;
 			}
 			
@@ -222,7 +222,7 @@ public enum FoodConsumable {
 			super.onEffect(player);
 			player.setRunEnergy(player.getRunEnergy() * 0.20);
 			Skill skill = player.getSkills()[Skills.AGILITY];
-			if(skill.getLevel() >= (skill.getRealLevel() + 5)) {
+			if(skill.getCurrentLevel() >= (skill.getRealLevel() + 5)) {
 				return;
 			}
 			skill.increaseLevel(5);

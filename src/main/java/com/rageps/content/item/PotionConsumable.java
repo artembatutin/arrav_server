@@ -502,10 +502,10 @@ public enum PotionConsumable {
 		defence.increaseLevelReal((int) Math.floor(2 + (0.20 * defence.getRealLevel())));
 		int hpCalc = (int) Math.floor(20 + (0.15 * (hp.getRealLevel() * 10)));
 		hp.increaseLevel(hpCalc, (hp.getRealLevel() * 10) + hpCalc);
-		attack.decreaseLevel((int) Math.floor(0.10 * attack.getLevel()));
-		strength.decreaseLevel((int) Math.floor(0.10 * strength.getLevel()));
-		magic.decreaseLevel((int) Math.floor(0.10 * magic.getLevel()));
-		ranged.decreaseLevel((int) Math.floor(0.10 * ranged.getLevel()));
+		attack.decreaseLevel((int) Math.floor(0.10 * attack.getCurrentLevel()));
+		strength.decreaseLevel((int) Math.floor(0.10 * strength.getCurrentLevel()));
+		magic.decreaseLevel((int) Math.floor(0.10 * magic.getCurrentLevel()));
+		ranged.decreaseLevel((int) Math.floor(0.10 * ranged.getCurrentLevel()));
 		Skills.refresh(player, Skills.ATTACK, Skills.STRENGTH, Skills.DEFENCE, Skills.HITPOINTS, Skills.RANGED, Skills.MAGIC);
 	}
 	
@@ -607,7 +607,7 @@ public enum PotionConsumable {
 			Skill skill = player.getSkills()[index];
 			int realLevel = skill.getRealLevel();
 			
-			if(skill.getLevel() >= realLevel) {
+			if(skill.getCurrentLevel() >= realLevel) {
 				continue;
 			}
 			
@@ -642,8 +642,8 @@ public enum PotionConsumable {
 		int boostLevel = (int) Math.floor(type.getBase() + (realLevel * type.getAmount()));
 		int cap = realLevel + boostLevel;
 		
-		if((s.getLevel() + boostLevel) > (realLevel + boostLevel + 1)) {
-			boostLevel = (realLevel + boostLevel) - s.getLevel();
+		if((s.getCurrentLevel() + boostLevel) > (realLevel + boostLevel + 1)) {
+			boostLevel = (realLevel + boostLevel) - s.getCurrentLevel();
 		}
 		s.increaseLevel(boostLevel, cap);
 		Skills.refresh(player, skill);

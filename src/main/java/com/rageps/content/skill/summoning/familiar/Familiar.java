@@ -71,7 +71,7 @@ public abstract class Familiar extends Follower {
 			player.message("You need a summoning level of " + data.getLevelRequired() + " to summon this familiar.");
 			return false;
 		}
-		if(data.getSummonCost() > player.getSkills()[Skills.SUMMONING].getLevel()) {
+		if(data.getSummonCost() > player.getSkills()[Skills.SUMMONING].getCurrentLevel()) {
 			player.message("You don't have enough summoning points to summon this familiar.");
 			return false;
 		}
@@ -143,7 +143,7 @@ public abstract class Familiar extends Follower {
 	 */
 	public void setInterface(Player player) {
 		/* We send the summoning points left out of the total summoning points this player has */
-		player.text(18045, Integer.toString(player.getSkills()[Skills.SUMMONING].getLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()));
+		player.text(18045, Integer.toString(player.getSkills()[Skills.SUMMONING].getCurrentLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()));
 		/* We send the special attack points left out of the total amount */
 		player.text(18024, "60/60");
 		/* We send the familiars name */
@@ -331,7 +331,7 @@ public abstract class Familiar extends Follower {
 			}
 			//TODO: PROPER DECREASING. Why orb lvl isn't same as skill tab's?
 			player.getSkills()[Skills.SUMMONING].decreaseLevel(1);
-			player.text(18045, Integer.toString(player.getSkills()[Skills.SUMMONING].getLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()));
+			player.text(18045, Integer.toString(player.getSkills()[Skills.SUMMONING].getCurrentLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()));
 			Skills.refresh(player, Skills.SUMMONING);
 			
 			interval = !interval;
@@ -340,7 +340,7 @@ public abstract class Familiar extends Follower {
 			familiar.setDuration(familiar.getDuration() - 1);
 			player.text(18043, familiar.getDuration() + " minutes");
 			
-			if(familiar.getDuration() < 1 || player.getSkills()[Skills.SUMMONING].getLevel() == 0) {
+			if(familiar.getDuration() < 1 || player.getSkills()[Skills.SUMMONING].getCurrentLevel() == 0) {
 				familiar.dismiss(player, false);
 				player.message("@red@Your familiar has vanished.");
 				this.cancel();

@@ -103,19 +103,19 @@ public abstract class Trap {
 
 		Skill skill = player.getSkills()[Skills.HUNTER];
 
-		chance = chance + (int) (skill.getLevel() / 1.5) + 10;
+		chance = chance + (int) (skill.getCurrentLevel() / 1.5) + 10;
 
-		if(skill.getLevel() < 65) {
+		if(skill.getCurrentLevel() < 65) {
 			chance = (int) (chance * 1.05) + 3;
-		} else if(skill.getLevel() < 60) {
+		} else if(skill.getCurrentLevel() < 60) {
 			chance = (int) (chance * 1.1);
-		} else if(skill.getLevel() < 55) {
+		} else if(skill.getCurrentLevel() < 55) {
 			chance = (int) (chance * 1.2);
-		} else if(skill.getLevel() < 50) {
+		} else if(skill.getCurrentLevel() < 50) {
 			chance = (int) (chance * 1.3) + 1;
-		} else if(skill.getLevel() < 40) {
+		} else if(skill.getCurrentLevel() < 40) {
 			chance = (int) (chance * 1.4) + 3;
-		} else if(skill.getLevel() < 25) {
+		} else if(skill.getCurrentLevel() < 25) {
 			chance = (int) (chance * 1.5) + 8;
 		}
 		return chance;

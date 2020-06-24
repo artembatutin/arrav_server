@@ -103,7 +103,7 @@ public final class BirdSnare extends Trap {
 				}
 				if(mob.getPosition().getX() == getObject().getX() && mob.getPosition().getY() == getObject().getY()) {
 					this.cancel();
-					if(player.getSkills()[Skills.HUNTER].getLevel() < bird.getData().requirement) {
+					if(player.getSkills()[Skills.HUNTER].getCurrentLevel() < bird.getData().requirement) {
 						setState(TrapState.FALLEN, mob);
 						return;
 					}

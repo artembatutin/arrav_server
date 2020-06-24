@@ -8,6 +8,7 @@ import java.util.Arrays;
  * @author lare96 <http://github.com/lare96>
  */
 public enum Rights {
+
 	PLAYER(0, 0),
 	IRON_MAN(1, 1),
 	DESIGNER(2, 1),

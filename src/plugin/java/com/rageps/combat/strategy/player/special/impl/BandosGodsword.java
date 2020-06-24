@@ -34,8 +34,8 @@ public class BandosGodsword extends PlayerMeleeStrategy {
 			for(int s : skillOrder) {
 				//Getting the skill value to decrease.
 				int removeFromSkill;
-				if(h.getDamage() > victim.getSkills()[s].getLevel()) {
-					int difference = damage - victim.getSkills()[s].getLevel();
+				if(h.getDamage() > victim.getSkills()[s].getCurrentLevel()) {
+					int difference = damage - victim.getSkills()[s].getCurrentLevel();
 					removeFromSkill = damage - difference;
 				} else
 					removeFromSkill = damage;

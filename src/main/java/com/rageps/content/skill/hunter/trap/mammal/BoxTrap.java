@@ -100,7 +100,7 @@ public final class BoxTrap extends Trap {
 				}
 				if(mob.getPosition().same(getObject().getPosition())) {
 					this.cancel();
-					if(player.getSkills()[Skills.HUNTER].getLevel() < mammal.getData().requirement) {
+					if(player.getSkills()[Skills.HUNTER].getCurrentLevel() < mammal.getData().requirement) {
 						setState(TrapState.FALLEN, mob);
 						return;
 					}
