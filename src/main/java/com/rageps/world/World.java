@@ -39,6 +39,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 
 import static com.rageps.net.Session.UPDATE_LIMIT;
 import static com.rageps.world.entity.EntityState.AWAITING_REMOVAL;
@@ -374,7 +375,7 @@ public final class World extends AbstractScheduledService {
 	public void sendBroadcast(int time, String message, boolean countdown) {
 		get().players.stream().forEach($it -> {
 			$it.out(new SendBroadcast(countdown ? 0 : 1, time, (message)));
-			$it.message("<ima=29>["+ ColorConstants.MAGENTA +"RagePS</col>]" + (message));
+			$it.message("<img=29>["+ ColorConstants.MAGENTA +"RagePS</col>]" + (message));
 		});
 	}
 	
@@ -411,6 +412,13 @@ public final class World extends AbstractScheduledService {
 		while((p = it.next()) != null) {
 			p.out(new SendYell(author, message, rights));
 		}
+	}
+
+	public void messageIf(String message, Predicate<? super Player> filter) {
+		players.stream().filter(Objects::nonNull).filter(filter).forEach(p -> p.message(message));
+	}
+	public void broadcastIf(Predicate<? super Player> filter, int time, String message, boolean countdown) {
+		players.stream().filter(Objects::nonNull).filter(filter).forEach(p -> p.out(new SendBroadcast(countdown ? 0 : 1, time, (message))));
 	}
 	
 	/**
