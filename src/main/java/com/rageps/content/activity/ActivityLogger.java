@@ -13,6 +13,8 @@ import java.util.Optional;
  * Handles logging and getting values associated with completed in-game.
  * activities.
  *
+ * todo - persistance
+ *
  * @author Tamatea Schofield <tamateea@gmail.com>
  */
 public class ActivityLogger {

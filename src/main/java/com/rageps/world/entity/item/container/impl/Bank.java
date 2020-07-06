@@ -232,12 +232,12 @@ public final class Bank {
 
 	/**
 	 * Attemps to add an item to the selected tab.
-	 * @param slot the tab slot to be added to.
+	 * @param tab the tab to be added to.
 	 * @param item the item to be added to.
 	 * @return {@code true} if it went successful, {@code false} otherwise.
 	 */
-	public int add(int slot, Item item) {
-		return tabs[slot].add(item);
+	public int add(int tab, Item item) {
+		return tabs[tab].add(item);
 	}
 
 	/**

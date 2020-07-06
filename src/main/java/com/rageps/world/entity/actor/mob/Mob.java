@@ -172,7 +172,9 @@ public abstract class Mob extends Actor {
 	 * Creates the particular {@link Mob instance}.
 	 * @return new {@link Mob} instance.
 	 */
-	public abstract Mob create();
+	public Mob create() {
+		return null;
+	}
 	
 	@Override
 	public void register() {

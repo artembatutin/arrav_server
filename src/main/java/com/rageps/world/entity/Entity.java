@@ -1,7 +1,7 @@
 package com.rageps.world.entity;
 
 import com.rageps.task.Task;
-import com.rageps.util.CallBack;
+import com.rageps.util.ActionListener;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
@@ -146,7 +146,7 @@ public abstract class Entity {
 	}
 
 	/** Delay an action for the next cycle **/
-	protected void delay(CallBack callBack) {
+	protected void delay(ActionListener callBack) {
 		delay(1,  callBack);
 	}
 
@@ -157,11 +157,11 @@ public abstract class Entity {
 	 * /** Delay an action for a given {@code delay} and repeat it for an amount
 	 * of times based on {@code repeatCount}
 	 **/
-	public void delay(int delay, CallBack callBack) {
+	public void delay(int delay, ActionListener callBack) {
 		World.get().submit(new Task(delay, false) {
 			@Override
 			protected void execute() {
-				callBack.callBack();
+				callBack.execute();
 				cancel();
 			}
 		});
