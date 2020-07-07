@@ -4,6 +4,7 @@ import com.google.common.util.concurrent.AbstractScheduledService;
 import com.rageps.net.discord.Discord;
 import com.rageps.net.packet.out.SendBroadcast;
 import com.rageps.net.sql.DatabaseTransactionWorker;
+import com.rageps.world.attr.AttributeMap;
 import com.rageps.world.env.Environment;
 import com.rageps.world.env.JsonEnvironmentProvider;
 import com.rageps.world.text.ColorConstants;
@@ -78,6 +79,11 @@ public final class World extends AbstractScheduledService {
 	 * Responsible for asynchronously executing all database transactions.
 	 */
 	private static final DatabaseTransactionWorker DATABASE_WORKER = new DatabaseTransactionWorker();
+
+	/**
+	 * World attributes.
+	 */
+	private static final AttributeMap attributeMap = new AttributeMap();
 
 	/**
 	 * Main game synchronizer.
@@ -659,5 +665,9 @@ public final class World extends AbstractScheduledService {
 
 	public Discord getDiscord() {
 		return discord;
+	}
+
+	public static AttributeMap getAttributeMap() {
+		return attributeMap;
 	}
 }

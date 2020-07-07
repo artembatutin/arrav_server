@@ -10,7 +10,7 @@ import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.SquareLocation;
+import com.rageps.world.locale.loc.SquareArea;
 
 import java.util.EnumSet;
 
@@ -20,12 +20,12 @@ import static com.rageps.content.teleport.TeleportType.OBELISK;
  * Handles the wilderness obelisks.
  */
 public enum Obelisk {
-	LEVEL_FIFTY(14831, new SquareLocation(3307, 3916, 0, 2)),
-	LEVEL_SEVENTEEN(14830, new SquareLocation(3219, 3656, 0, 2)),
-	LEVEL_THIRTEEN(14829, new SquareLocation(3156, 3620, 0, 2)),
-	LEVEL_THIRTY_FIVE(14828, new SquareLocation(3106, 3794, 0, 2)),
-	LEVEL_TWENTY_SEVEN(14827, new SquareLocation(3035, 3732, 0, 2)),
-	LEVEL_FORTY_FOUR(14826, new SquareLocation(2980, 3866, 0, 2));
+	LEVEL_FIFTY(14831, new SquareArea(3307, 3916, 0, 2)),
+	LEVEL_SEVENTEEN(14830, new SquareArea(3219, 3656, 0, 2)),
+	LEVEL_THIRTEEN(14829, new SquareArea(3156, 3620, 0, 2)),
+	LEVEL_THIRTY_FIVE(14828, new SquareArea(3106, 3794, 0, 2)),
+	LEVEL_TWENTY_SEVEN(14827, new SquareArea(3035, 3732, 0, 2)),
+	LEVEL_FORTY_FOUR(14826, new SquareArea(2980, 3866, 0, 2));
 	
 	/**
 	 * Caches our enum values.
@@ -38,11 +38,11 @@ public enum Obelisk {
 	private final int object;
 	
 	/**
-	 * The obelisk's boundary in a {@link SquareLocation}.
+	 * The obelisk's boundary in a {@link SquareArea}.
 	 */
-	private final SquareLocation boundary;
+	private final SquareArea boundary;
 	
-	Obelisk(int object, SquareLocation boundary) {
+	Obelisk(int object, SquareArea boundary) {
 		this.object = object;
 		this.boundary = boundary;
 	}
@@ -109,7 +109,7 @@ public enum Obelisk {
 			int x = dest.boundary.getSwX();
 			int y = dest.boundary.getSwY();
 			reg.getPlayers().forEach(p -> {
-				if(data.boundary.inLocation(p.getPosition())) {
+				if(data.boundary.inArea(p.getPosition())) {
 					p.teleport(new Position(x + RandomUtils.inclusive(1, 3), y + RandomUtils.inclusive(1, 3)), OBELISK);
 					p.message("Ancient magic teleports you somewhere in the wilderness...");
 				}

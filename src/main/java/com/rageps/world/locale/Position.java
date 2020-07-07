@@ -3,8 +3,9 @@ package com.rageps.world.locale;
 import com.jsoniter.annotation.JsonIgnore;
 import com.jsoniter.annotation.JsonProperty;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Area;
 import com.rageps.world.Direction;
+import com.rageps.world.locale.loc.Area;
+import com.rageps.world.locale.loc.Location;
 
 /**
  * The container class that represents a coordinate anywhere in the world.
@@ -469,6 +470,10 @@ public class Position {
 	}
 
 	public boolean inside(Area area) {
-		return x >= area.getWest() && x <= area.getEast() && y >= area.getSouth() && y <= area.getNorth();
+		return area.inArea(this);
+	}
+
+	public boolean inside(Location area) {
+		return area.getArea().inArea(this);
 	}
 }

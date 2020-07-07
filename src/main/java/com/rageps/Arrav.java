@@ -210,7 +210,6 @@ public final class Arrav {
 			new MobDropTableLoader().load();
 			//MobDefinition.dump();
 		});
-		launch.execute(new AreaLoader());
 		launch.execute(new AreaMultiLoader());
 		launch.execute(new ShopLoader());
 //		launch.execute(new ClanChatLoader());

@@ -2,6 +2,7 @@ package com.rageps.content.minigame.dueling;
 
 import com.rageps.net.packet.out.SendContextMenu;
 import com.rageps.world.World;
+import com.rageps.world.locale.loc.SquareArea;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.content.dialogue.impl.OptionDialogue;
@@ -26,7 +27,6 @@ import com.rageps.world.entity.item.container.session.impl.DuelSession;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.SquareLocation;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -66,22 +66,22 @@ public final class DuelMinigame extends Minigame {
 	/**
 	 * The square location for the obstacles dueling arena.
 	 */
-	private static final SquareLocation OBSTACLES_ARENA_CHECK = new SquareLocation(3367, 3246, 3384, 3256, 0);
+	private static final SquareArea OBSTACLES_ARENA_CHECK = new SquareArea(3367, 3246, 3384, 3256, 0);
 	
 	/**
 	 * The square location for the default dueling arena.
 	 */
-	private static final SquareLocation DEFAULT_ARENA_CHECK = new SquareLocation(3336, 3246, 3354, 3256, 0);
+	private static final SquareArea DEFAULT_ARENA_CHECK = new SquareArea(3336, 3246, 3354, 3256, 0);
 	
 	/**
 	 * The square location for the obstacles dueling arena.
 	 */
-	private static final SquareLocation OBSTACLES_ARENA = new SquareLocation(3367, 3246, 3384, 3256, 0);
+	private static final SquareArea OBSTACLES_ARENA = new SquareArea(3367, 3246, 3384, 3256, 0);
 	
 	/**
 	 * The square location for the default dueling arena.
 	 */
-	private static final SquareLocation DEFAULT_ARENA = new SquareLocation(3336, 3246, 3354, 3256, 0);
+	private static final SquareArea DEFAULT_ARENA = new SquareArea(3336, 3246, 3354, 3256, 0);
 	
 	/**
 	 * Applies the staked items to the winner and clears the minigame session.
@@ -222,7 +222,7 @@ public final class DuelMinigame extends Minigame {
 	
 	@Override
 	public boolean contains(Player player) {
-		return claim || OBSTACLES_ARENA_CHECK.inLocation(player.getPosition()) || DEFAULT_ARENA_CHECK.inLocation(player.getPosition());
+		return claim || OBSTACLES_ARENA_CHECK.inArea(player.getPosition()) || DEFAULT_ARENA_CHECK.inArea(player.getPosition());
 	}
 	
 	@Override

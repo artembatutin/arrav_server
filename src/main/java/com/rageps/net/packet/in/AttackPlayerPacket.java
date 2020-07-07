@@ -15,7 +15,7 @@ import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.item.container.session.ExchangeSession;
 import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
 import com.rageps.world.entity.item.container.session.impl.DuelSession;
-import com.rageps.world.locale.loc.Location;
+import com.rageps.world.locale.loc.Area;
 
 import java.util.Optional;
 
@@ -100,18 +100,18 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			attacker.getMovementQueue().reset();
 			return false;
 		}
-		if(attacker.getMinigame().isPresent() && Location.inWilderness(attacker)) {
+		if(attacker.getMinigame().isPresent() && attacker.getLocation().inWilderness()) {
 			attacker.message("Something went wrong there! You are still in a minigame, please re-log!");
 			return false;
 		}
-		if(Location.inDuelArena(attacker) && !attacker.getMinigame().isPresent()) {
+		if(attacker.getLocation().inDuelArena() && !attacker.getMinigame().isPresent()) {
 			ExchangeSessionManager.get().request(new DuelSession(attacker, victim, ExchangeSession.REQUEST));
 			attacker.getMovementQueue().reset();
 			return false;
 		}
 		Optional<Minigame> optional = MinigameHandler.getMinigame(attacker);
 		if(!optional.isPresent()) {
-			if(Location.inFunPvP(attacker) && Location.inFunPvP(victim)) {
+			if(attacker.getLocation().inFunPvP() && victim.getLocation().inFunPvP()) {
 				return true;
 			}
 			if(!attacker.inWilderness() || !victim.inWilderness()) {

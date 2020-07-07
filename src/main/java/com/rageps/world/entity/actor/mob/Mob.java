@@ -18,7 +18,9 @@ import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
+import com.rageps.world.locale.loc.Area;
 import com.rageps.world.locale.loc.Location;
+import com.rageps.world.locale.loc.Locations;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.task.Task;
 import com.rageps.world.entity.EntityType;
@@ -267,12 +269,12 @@ public abstract class Mob extends Actor {
 	
 	@Override
 	public boolean inMulti() {
-		return Location.inMultiCombat(this);
+		return Locations.inMultiCombat(this);
 	}
 	
 	@Override
 	public boolean inWilderness() {
-		return Location.inWilderness(this);
+		return getLocation().inWilderness();
 	}
 	
 	/**

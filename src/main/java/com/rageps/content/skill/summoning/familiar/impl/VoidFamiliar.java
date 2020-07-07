@@ -13,7 +13,7 @@ import com.rageps.content.skill.summoning.familiar.FamiliarAbility;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.locale.loc.Location;
+import com.rageps.world.locale.loc.Area;
 
 import java.util.Optional;
 
@@ -89,7 +89,7 @@ public abstract class VoidFamiliar extends Familiar {
 			super(SummoningData.VOID_SHIFTER);
 		}
 		
-		private final Teleporter ability = new Teleporter(Location.PEST_CONTROL, Optional.of(new Teleporter.TeleportPolicy(true, 10)));
+		private final Teleporter ability = new Teleporter(Area.PEST_CONTROL, Optional.of(new Teleporter.TeleportPolicy(true, 10)));
 		
 		@Override
 		public FamiliarAbility getAbilityType() {

@@ -3,7 +3,7 @@ package com.rageps.content.minigame.barrows;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.CircleLocation;
+import com.rageps.world.locale.loc.CircleArea;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -14,12 +14,12 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum BarrowsData {
-	AHRIM(2025, 6821, 6702, new CircleLocation(3565, 3289, 0, 5), new Position(3559, 9701, 3), new Position(3557, 9703, 3)),
-	DHAROK(2026, 6771, 6703, new CircleLocation(3575, 3298, 0, 5), new Position(3552, 9716, 3), new Position(3556, 9718, 3)),
-	GUTHAN(2027, 6773, 6704, new CircleLocation(3577, 3282, 0, 5), new Position(3537, 9701, 3), new Position(3534, 9704, 3)),
-	KARIL(2028, 6822, 6705, new CircleLocation(3566, 3276, 0, 5), new Position(3549, 9680, 3), new Position(3546, 9684, 3)),
-	TORAG(2029, 6772, 6706, new CircleLocation(3554, 3283, 0, 5), new Position(3572, 9687, 3), new Position(3568, 9683, 3)),
-	VERAC(2030, 6823, 6707, new CircleLocation(3557, 3297, 0, 5), new Position(3575, 9705, 3), new Position(3578, 9706, 3));
+	AHRIM(2025, 6821, 6702, new CircleArea(3565, 3289, 0, 5), new Position(3559, 9701, 3), new Position(3557, 9703, 3)),
+	DHAROK(2026, 6771, 6703, new CircleArea(3575, 3298, 0, 5), new Position(3552, 9716, 3), new Position(3556, 9718, 3)),
+	GUTHAN(2027, 6773, 6704, new CircleArea(3577, 3282, 0, 5), new Position(3537, 9701, 3), new Position(3534, 9704, 3)),
+	KARIL(2028, 6822, 6705, new CircleArea(3566, 3276, 0, 5), new Position(3549, 9680, 3), new Position(3546, 9684, 3)),
+	TORAG(2029, 6772, 6706, new CircleArea(3554, 3283, 0, 5), new Position(3572, 9687, 3), new Position(3568, 9683, 3)),
+	VERAC(2030, 6823, 6707, new CircleArea(3557, 3297, 0, 5), new Position(3575, 9705, 3), new Position(3578, 9706, 3));
 	
 	/**
 	 * Caches our enum values.
@@ -44,7 +44,7 @@ public enum BarrowsData {
 	/**
 	 * The circle location of the spot to dig.
 	 */
-	private final CircleLocation location;
+	private final CircleArea location;
 	
 	/**
 	 * The spawn position of this barrow brother.
@@ -64,7 +64,7 @@ public enum BarrowsData {
 	 * @param location {@link #location}.
 	 * @param cave {@link #cave}.
 	 */
-	BarrowsData(int npcId, int sarcophagusId, int stairId, CircleLocation location, Position spawn, Position cave) {
+	BarrowsData(int npcId, int sarcophagusId, int stairId, CircleArea location, Position spawn, Position cave) {
 		this.npcId = npcId;
 		this.sarcophagusId = sarcophagusId;
 		this.stairId = stairId;
@@ -104,7 +104,7 @@ public enum BarrowsData {
 	/**
 	 * @return the location
 	 */
-	public CircleLocation getLocation() {
+	public CircleArea getLocation() {
 		return location;
 	}
 	
@@ -115,7 +115,7 @@ public enum BarrowsData {
 	 * @return the barrows data wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
 	protected static Optional<BarrowsData> getDefinitionForLocation(Position position) {
-		return VALUES.stream().filter(def -> def.location.inLocation(position)).findFirst();
+		return VALUES.stream().filter(def -> def.location.inArea(position)).findFirst();
 	}
 	
 	/**

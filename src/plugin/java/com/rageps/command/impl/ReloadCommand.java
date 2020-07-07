@@ -13,7 +13,6 @@ import com.rageps.task.Task;
 import com.rageps.combat.listener.CombatListenerDispatcher;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
-import com.rageps.world.locale.area.AreaManager;
 
 @CommandSignature(alias = {"reload"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::reload")
 public final class ReloadCommand implements Command {
@@ -69,8 +68,6 @@ public final class ReloadCommand implements Command {
 								p.getLocalMobs().clear();
 								p.getMobs().clear();
 							}
-							//clearing areas
-							AreaManager.get().getAreas().clear();
 							//Deleting shops
 							MarketCounter.getShops().clear();
 							player.message("Successfully removed the world nodes [Objects, Mobs, Shops, Areas].");
@@ -80,7 +77,6 @@ public final class ReloadCommand implements Command {
 							new MobDefinitionLoader().load();
 							new MobNodeLoader().load();
 							new ShopLoader().load();
-							new AreaLoader().load();
 							this.cancel();
 							player.message("Successfully reloaded the world [Objects, Mobs, Shops, Defs, Areas].");
 						}

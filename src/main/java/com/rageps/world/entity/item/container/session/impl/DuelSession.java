@@ -5,12 +5,11 @@ import com.rageps.content.minigame.dueling.DuelingRules;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.container.session.ExchangeSessionActionType;
 import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
-import com.rageps.world.locale.loc.Location;
+import com.rageps.world.locale.loc.Area;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.net.packet.out.SendConfig;
 import com.rageps.net.packet.out.SendContainer;
-import com.rageps.net.packet.out.SendInventoryInterface;
 import com.rageps.net.packet.out.SendItemOnInterfaceSlot;
 import com.rageps.util.Stopwatch;
 import com.rageps.world.entity.item.Item;
@@ -51,11 +50,11 @@ public final class DuelSession extends ExchangeSession {
 	
 	@Override
 	public void onRequest(Player player, Player requested) {
-		if(!Location.inDuelArena(player)) {
+		if(!player.getLocation().inDuelArena()) {
 			player.message("You must be in the duel arena area to do this.");
 			return;
 		}
-		if(!Location.inDuelArena(requested)) {
+		if(!requested.getLocation().inDuelArena()) {
 			player.message("The challenger must be in the duel arena area to do this.");
 			return;
 		}

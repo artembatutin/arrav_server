@@ -1,11 +1,10 @@
 package com.rageps.world.entity.actor.mob.impl.godwars;
 
 import com.google.common.collect.ImmutableSet;
-import com.rageps.combat.strategy.CombatStrategy;
 import com.rageps.combat.strategy.npc.boss.godwars.bandos.GeneralGraardorStrategy;
 import com.rageps.world.World;
 import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.SquareLocation;
+import com.rageps.world.locale.loc.SquareArea;
 import com.rageps.world.entity.actor.mob.DefaultMob;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.mob.MobAggression;
@@ -19,7 +18,7 @@ public final class GeneralGraardor extends Mob {
 	/**
 	 * The chamber of this boss.
 	 */
-	public static final SquareLocation CHAMBER = new SquareLocation(2864, 5351, 2876, 5369, 2);
+	public static final SquareArea CHAMBER = new SquareArea(2864, 5351, 2876, 5369, 2);
 	
 	/**
 	 * The random forced chats the graardor yells when attacking the victim.

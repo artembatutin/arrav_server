@@ -25,7 +25,7 @@ import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.SquareLocation;
+import com.rageps.world.locale.loc.SquareArea;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -39,7 +39,7 @@ public final class CyclopsRoom extends GuildRoom {
 	/**
 	 * Represents the location of the cyclops room.
 	 */
-	public static final SquareLocation LOCATION = new SquareLocation(2837, 3533, 2877, 3557, 2);
+	public static final SquareArea LOCATION = new SquareArea(2837, 3533, 2877, 3557, 2);
 	
 	/**
 	 * The flag which determines if the player has entered the room.
@@ -159,7 +159,7 @@ public final class CyclopsRoom extends GuildRoom {
 	
 	@Override
 	public boolean contains(Player player) {
-		return LOCATION.inLocation(player.getPosition());
+		return LOCATION.inArea(player.getPosition());
 	}
 	
 	@Override

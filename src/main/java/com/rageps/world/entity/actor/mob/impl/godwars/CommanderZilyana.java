@@ -3,7 +3,7 @@ package com.rageps.world.entity.actor.mob.impl.godwars;
 import com.google.common.collect.ImmutableSet;
 import com.rageps.world.World;
 import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.SquareLocation;
+import com.rageps.world.locale.loc.SquareArea;
 import com.rageps.world.entity.actor.mob.DefaultMob;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.mob.MobAggression;
@@ -17,7 +17,7 @@ public final class CommanderZilyana extends Mob {
 	/**
 	 * The chamber of this boss.
 	 */
-	public static final SquareLocation CHAMBER = new SquareLocation(2889, 5258, 2889, 5258, 0);
+	public static final SquareArea CHAMBER = new SquareArea(2889, 5258, 2889, 5258, 0);
 	
 	/**
 	 * The bree minion.

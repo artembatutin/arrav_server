@@ -21,7 +21,7 @@ public class SergeantGrimspikeStrategy extends NpcRangedStrategy {
 	
 	@Override
 	public boolean canAttack(Mob attacker, Actor defender) {
-		return defender.isPlayer() && GeneralGraardor.CHAMBER.inLocation(defender.getPosition());
+		return defender.isPlayer() && GeneralGraardor.CHAMBER.inArea(defender.getPosition());
 		
 	}
 	
