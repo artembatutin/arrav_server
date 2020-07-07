@@ -11,6 +11,8 @@ import com.rageps.world.locale.Position;
  */
 public enum Location {
 
+    
+
     PEST_LOBBY(new SquareArea(2659, 2637, 2664, 2644, 0), false, false, false, false, false, false),
     PEST_CONTROL(new SquareArea(2618, 2556, 2692, 2624, 0), true, false, true, true, true, true),
     CLAN_WARS(new SquareArea(3264, 3672, 3279, 3695, 0), true, false, true, true, true, true),
