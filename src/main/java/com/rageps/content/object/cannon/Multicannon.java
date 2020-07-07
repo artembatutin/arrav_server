@@ -16,7 +16,7 @@ import com.rageps.world.entity.object.ObjectDirection;
 import com.rageps.world.entity.object.ObjectType;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.entity.region.TraversalConstants;
-import com.rageps.world.locale.loc.Location;
+import com.rageps.world.locale.loc.Area;
 
 import java.util.Optional;
 
@@ -139,7 +139,7 @@ public class Multicannon extends DynamicObject {
 						}
 					}
 				}
-				if(!clip || Location.isAtHome(player)) {
+				if(!clip || player.getLocation().isCannonAllowed()) {
 					player.message("You can't set the cannon here.");
 					return true;
 				}

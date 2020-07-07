@@ -13,7 +13,7 @@ import com.rageps.combat.strategy.CombatStrategy;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.AntifireDetails;
-import com.rageps.world.locale.loc.Location;
+import com.rageps.world.locale.loc.Area;
 import com.rageps.net.packet.out.SendMessage;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.Animation;
@@ -308,7 +308,7 @@ public final class CombatUtil {
 			Player victim = defender.toPlayer();
 			Optional<Minigame> optional = MinigameHandler.getMinigame(player);
 			if(!optional.isPresent()) {
-				if(Location.inFunPvP(attacker) && Location.inFunPvP(victim)) {
+				if(attacker.getLocation().inFunPvP() && victim.getLocation().inFunPvP()) {
 					return true;
 				}
 				if(!attacker.inWilderness() || !victim.inWilderness()) {

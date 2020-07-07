@@ -38,7 +38,7 @@ public class KreeArraStrategy extends MultiStrategy {
 	
 	@Override
 	public boolean canAttack(Mob attacker, Actor defender) {
-		return defender.isPlayer() && KreeArra.CHAMBER.inLocation(defender.getPosition());
+		return defender.isPlayer() && KreeArra.CHAMBER.inArea(defender.getPosition());
 	}
 	
 	@Override

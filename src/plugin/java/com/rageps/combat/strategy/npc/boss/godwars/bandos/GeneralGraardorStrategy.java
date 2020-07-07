@@ -32,7 +32,7 @@ public class GeneralGraardorStrategy extends MultiStrategy {
 	
 	@Override
 	public boolean canAttack(Mob attacker, Actor defender) {
-		return defender.isPlayer() && GeneralGraardor.CHAMBER.inLocation(defender.getPosition());
+		return defender.isPlayer() && GeneralGraardor.CHAMBER.inArea(defender.getPosition());
 		
 	}
 	
@@ -100,7 +100,7 @@ public class GeneralGraardorStrategy extends MultiStrategy {
 		public CombatHit[] getHits(Mob attacker, Actor defender) {
 			ObjectList<Player> toHit = new ObjectArrayList<>();
 			World.get().getLocalPlayers(defender).forEachRemaining(player -> {
-				if(GeneralGraardor.CHAMBER.inLocation(player.getPosition())) {
+				if(GeneralGraardor.CHAMBER.inArea(player.getPosition())) {
 					toHit.add(player);
 				}
 			});

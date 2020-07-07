@@ -13,7 +13,8 @@ import com.rageps.util.ActionListener;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
 import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.Location;
+import com.rageps.world.locale.loc.Area;
+import com.rageps.world.locale.loc.Locations;
 
 import java.util.Optional;
 
@@ -111,7 +112,7 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 			return false;
 		}
 		
-		if(type != OBELISK && Location.inWilderness(destination)) {
+		if(type != OBELISK && Locations.inWilderness(destination)) {
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 					teleport(player, spell);

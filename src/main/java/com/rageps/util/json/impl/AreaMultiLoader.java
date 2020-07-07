@@ -2,10 +2,10 @@ package com.rageps.util.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.rageps.world.locale.area.AreaManager;
-import com.rageps.world.locale.loc.CircleLocation;
-import com.rageps.world.locale.loc.Location;
-import com.rageps.world.locale.loc.SquareLocation;
+import com.rageps.world.locale.loc.CircleArea;
+import com.rageps.world.locale.loc.Area;
+import com.rageps.world.locale.loc.Locations;
+import com.rageps.world.locale.loc.SquareArea;
 import com.rageps.util.json.JsonLoader;
 
 /**
@@ -21,7 +21,7 @@ public final class AreaMultiLoader extends JsonLoader {
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		boolean square = reader.has("square");
-		Location loc = builder.fromJson(square ? reader.get("square") : reader.get("circle"), square ? SquareLocation.class : CircleLocation.class);
-		AreaManager.get().getMultiZones().add(loc);
+		Area loc = builder.fromJson(square ? reader.get("square") : reader.get("circle"), square ? SquareArea.class : CircleArea.class);
+		Locations.MULTI_AREA.add(loc);
 	}
 }

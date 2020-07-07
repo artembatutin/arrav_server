@@ -68,7 +68,8 @@ import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.Location;
+import com.rageps.world.locale.loc.Area;
+import com.rageps.world.locale.loc.Locations;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
@@ -1065,9 +1066,10 @@ public final class Player extends Actor {
 	
 	/**
 	 * Sends wilderness and multi-combat interfaces as needed.
+	 * @deprecated - replace these checks with {@link Locations} process stuff.
 	 */
 	public void sendInterfaces() {
-		if(Location.inDuelArena(this)) {
+		if(getLocation().inDuelArena()) {
 			if(!duelingWidget) {
 				out(new SendContextMenu(2, false, "Challenge"));
 				duelingWidget = true;
@@ -1076,7 +1078,7 @@ public final class Player extends Actor {
 			out(new SendContextMenu(2, false, "null"));
 			duelingWidget = false;
 		}
-		if(Location.inGodwars(this)) {
+		/*if(Area.inGodwars(this)) {
 			if(!godwarsWidget) {
 				//				GodwarsFaction.refreshInterface(this); TODO: Godwars interface
 				interfaceManager.openWalkable(16210);
@@ -1085,8 +1087,8 @@ public final class Player extends Actor {
 		} else if(godwarsWidget) {
 			interfaceManager.close(true);
 			godwarsWidget = false;
-		}
-		if(Location.inWilderness(this)) {
+		}*/
+		if(getLocation().inWilderness()) {
 			int calculateY = this.getPosition().getY() > 6400 ? super.getPosition().getY() - 6400 : super.getPosition().getY();
 			wildernessLevel = (((calculateY - 3520) / 8) + 1);
 			if(!wildernessWidget) {
@@ -1096,7 +1098,7 @@ public final class Player extends Actor {
 				WildernessActivity.enter(this);
 			}
 			text(199, "@yel@Level: " + wildernessLevel);
-		} else if(Location.inFunPvP(this)) {
+		} else if(getLocation().inFunPvP()) {
 			if(!wildernessWidget) {
 				interfaceManager.openWalkable(197);
 				out(new SendContextMenu(2, true, "Attack"));
@@ -1111,7 +1113,7 @@ public final class Player extends Actor {
 			wildernessLevel = 0;
 			WildernessActivity.leave(this);
 		}
-		if(Location.inMultiCombat(this)) {
+		if(Locations.inMultiCombat(this)) {
 			if(!multicombatWidget) {
 				out(new SendMultiIcon(false));
 				multicombatWidget = true;

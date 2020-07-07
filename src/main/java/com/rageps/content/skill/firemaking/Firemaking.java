@@ -13,7 +13,7 @@ import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.Location;
+import com.rageps.world.locale.loc.Area;
 
 import java.util.Optional;
 
@@ -99,7 +99,7 @@ public final class Firemaking extends DestructionSkillAction {
 		Region reg = getPlayer().getRegion();
 		if(reg == null)
 			return false;
-		if(!familiar && reg.getObjects(p).hasInteractive() || !TraversalMap.isTraversable(p, Direction.WEST, getPlayer().size()) && !TraversalMap.isTraversable(p, Direction.EAST, getPlayer().size()) || Location.isAtHome(getPlayer())) {
+		if(!familiar && reg.getObjects(p).hasInteractive() || !TraversalMap.isTraversable(p, Direction.WEST, getPlayer().size()) && !TraversalMap.isTraversable(p, Direction.EAST, getPlayer().size()) || !getPlayer().getLocation().isFiremakingAllowed()) {
 			getPlayer().message("You can't start a fire here.");
 			return false;
 		}
@@ -142,7 +142,7 @@ public final class Firemaking extends DestructionSkillAction {
 	}
 	
 	private boolean checkFiremaking() {
-		if(Location.isAtHome(getPlayer())) {
+		if(!getPlayer().getLocation().isFiremakingAllowed()) {
 			getPlayer().message("You cannot light fire here.");
 			return false;
 		}

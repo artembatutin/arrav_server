@@ -93,4 +93,7 @@ public class PlayerAttributes {
     @Attr  public static final AttributeKey YELL_SHADE  = Attributes.definePersistent("yell_shade", ColorConstants.BLACK);
 
 
+    @Attr  public static final AttributeKey REDEEMING  = Attributes.define("redeeming", false);
+
+
 }

@@ -20,7 +20,7 @@ import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.SquareLocation;
+import com.rageps.world.locale.loc.SquareArea;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -36,7 +36,7 @@ public final class AnimationRoom extends GuildRoom {
 	/**
 	 * Represents the location of the animation room.
 	 */
-	public static final SquareLocation LOCATION = new SquareLocation(2849, 3534, 2861, 3545, 0);
+	public static final SquareArea LOCATION = new SquareArea(2849, 3534, 2861, 3545, 0);
 	
 	/**
 	 * The animated armour that should be spawned.
@@ -156,7 +156,7 @@ public final class AnimationRoom extends GuildRoom {
 	
 	@Override
 	public boolean contains(Player player) {
-		return LOCATION.inLocation(player.getPosition());
+		return LOCATION.inArea(player.getPosition());
 	}
 	
 	@Override

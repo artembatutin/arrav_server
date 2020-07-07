@@ -17,7 +17,7 @@ import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.Location;
+import com.rageps.world.locale.loc.Area;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.net.packet.out.SendConfig;
@@ -116,7 +116,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			}
 		}
 		
-		if(Location.inFunPvP(getActor())) {
+		if(getActor().getLocation().inFunPvP()) {
 			getActor().move(new Position(3076, 3503, 1));
 			setCounter(6);
 		}
