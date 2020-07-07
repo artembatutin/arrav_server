@@ -2,7 +2,7 @@ package com.rageps.net.sql.starter;
 
 import com.google.common.collect.ImmutableMap;
 import com.rageps.net.sql.UncheckedSQLException;
-import com.rageps.world.GameMode;
+import com.rageps.world.entity.actor.player.assets.group.GameMode;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 

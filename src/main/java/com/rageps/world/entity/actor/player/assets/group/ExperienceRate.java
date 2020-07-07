@@ -1,4 +1,4 @@
-package com.rageps.world;
+package com.rageps.world.entity.actor.player.assets.group;
 
 
 import com.rageps.util.StringUtil;

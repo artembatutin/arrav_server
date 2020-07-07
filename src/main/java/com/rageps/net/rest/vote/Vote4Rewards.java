@@ -1,11 +1,10 @@
 package com.rageps.net.rest.vote;
 
 import com.rageps.content.achievements.Achievement;
-import com.rageps.content.achievements.AchievementHandler;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.dialogue.test.DialogueAppender;
 import com.rageps.net.rest.RestfulNexus;
-import com.rageps.world.GameMode;
+import com.rageps.world.entity.actor.player.assets.group.GameMode;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
