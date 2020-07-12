@@ -5,14 +5,12 @@ package com.rageps.world.entity.actor.player.assets.group;
  */
 public enum SpecialPrivilege implements Privilege {
     PLAYER(0, Crown.NONE),
-    TOP_PKER(0, Crown.TOP_PKER),
     VETERAN(0, Crown.VETERAN),
     IRONMAN(0, Crown.IRONMAN),
     HARDCORE_IRONMAN(0, Crown.HARDCORE_IRONMAN),
     ULTIMATE_IRONMAN(0, Crown.ULTIMATE_IRONMAN),
     KOTS_IRONMAN(0, Crown.KOTS_IRONMAN),
     EXTREME(0, Crown.SKULL),
-    PK_MODE(0, Crown.NONE),
     ;
 
     private final int priority;

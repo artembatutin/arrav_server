@@ -1,0 +1,100 @@
+package com.rageps.world.entity.actor.player.persist.impl;
+
+import com.google.gson.*;
+import com.rageps.net.codec.login.LoginCode;
+import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.persist.PlayerPersistable;
+import com.rageps.world.entity.actor.player.persist.PlayerPersistanceManager;
+import com.rageps.world.entity.actor.player.persist.property.PlayerPersistanceProperty;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.rageps.util.json.GsonUtils;
+
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public final class PlayerPersistFile implements PlayerPersistable {
+
+	public static final Logger logger = LogManager.getLogger();
+
+	public static final Path FILE_DIR = Paths.get("data", "profile", "save");
+
+	public static final Gson GSON = GsonUtils.JSON_PRETTY_ALLOW_NULL;
+
+	@Override
+	public void save(Player player) {
+		//if (player.isBot) {
+		//	return;
+		//}
+
+		//HighscoreService.saveHighscores(player);
+
+
+
+
+		new Thread(() -> {
+			try {
+				JsonObject properties = new JsonObject();
+
+				for (PlayerPersistanceProperty property : PlayerPersistanceManager.PROPERTIES) {
+					properties.add(property.name, GSON.toJsonTree(property.write(player)));
+				}
+
+				try {
+					Files.write(FILE_DIR.resolve(player.getName() + ".json"), GSON.toJson(properties).getBytes());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} catch (Exception ex) {
+				logger.error(String.format("Error while saving player=%s", player.getName()), ex);
+			}
+
+			player.saved.set(true);
+		}).start();
+	}
+
+	@Override
+	public LoginCode load(Player player) {
+		final File dir = FILE_DIR.toFile();
+
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+
+		try {
+			Path path = FILE_DIR.resolve(player.getName() + ".json");
+
+			if (!Files.exists(path)) {
+				player.firstLogin = true;
+				return LoginCode.NORMAL;
+			}
+
+			try (Reader reader = new FileReader(path.toFile())) {
+				JsonElement parsed = new JsonParser().parse(reader);
+				if(parsed instanceof JsonNull)
+					logger.error("Fatal! JsonNull loading player file");
+				JsonObject jsonReader = (JsonObject) parsed;
+
+				for (PlayerPersistanceProperty property : PlayerPersistanceManager.PROPERTIES) {
+					if (jsonReader.has(property.name)) {
+						if (jsonReader.get(property.name).isJsonNull())
+							continue;
+						property.read(player, jsonReader.get(property.name));
+					}
+				}
+			}
+
+			return LoginCode.NORMAL;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return LoginCode.COULD_NOT_COMPLETE_LOGIN;
+	}
+}

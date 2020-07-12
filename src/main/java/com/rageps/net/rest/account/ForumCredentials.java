@@ -3,7 +3,7 @@ package com.rageps.net.rest.account;
 import com.google.common.base.MoreObjects;
 import com.google.gson.annotations.SerializedName;
 
-public final class Credentials {
+public final class ForumCredentials {
     @SerializedName("member_id")
     private final int id;
 
@@ -25,7 +25,7 @@ public final class Credentials {
     @SerializedName("mfa_details")
     private final MultifactorAuthentication authentication;
 
-    public Credentials(int id, int groupId, String secondaryGroups, String email, String passwordHash, String passwordSalt, MultifactorAuthentication authentication) {
+    public ForumCredentials(int id, int groupId, String secondaryGroups, String email, String passwordHash, String passwordSalt, MultifactorAuthentication authentication) {
         this.id = id;
         this.groupId = groupId;
         this.secondaryGroups = secondaryGroups;

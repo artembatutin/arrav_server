@@ -8,6 +8,8 @@ import com.rageps.world.entity.actor.player.Player;
  */
 public class InterfaceUpdateTask extends Task {
 
+    private final int INTERFACE_ID = 0;
+
 
     public InterfaceUpdateTask(Player key) {
         super(1, key, true);
@@ -17,7 +19,7 @@ public class InterfaceUpdateTask extends Task {
     protected void execute() {
         Player player = (Player) getAttachment().get();
 
-        if(!player.getInterfaceManager().isInterfaceOpen(0))
+        if(!player.getInterfaceManager().isInterfaceOpen(INTERFACE_ID))
             this.cancel();
     }
 }

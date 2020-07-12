@@ -1,5 +1,9 @@
 package com.rageps.net.sql.statement;
 
+import com.google.gson.Gson;
+import com.rageps.util.json.GsonUtils;
+import com.rageps.world.entity.actor.player.persist.property.PersistancePropertyType;
+
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -233,6 +237,32 @@ public class NamedPreparedStatement extends DelegatingPreparedStatement {
 	public void setObject(String parameter, Object x) throws SQLException {
 		for (Integer i : getParameterIndexes(parameter)) {
 			getDelegate().setObject(i, x);
+		}
+	}
+
+	private final Gson GSON = GsonUtils.JSON_ALLOW_NULL;
+
+
+	public void setObject(String parameter, PersistancePropertyType type, Object object) throws SQLException {
+		switch (type) {
+			case ENUM:
+				setString(parameter, ((Enum) object).name());
+				break;
+			case JSON:
+				setString(parameter, GSON.toJson(object));
+				break;
+			case INT:
+				setInt(parameter, (Integer) object);
+				break;
+			case LONG:
+				setLong(parameter, (Long) object);
+				break;
+			case STRING:
+				setString(parameter, (String) object);
+				break;
+			default:
+				setObject(parameter, object);
+				break;
 		}
 	}
 

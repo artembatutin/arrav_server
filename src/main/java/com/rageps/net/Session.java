@@ -1,5 +1,6 @@
 package com.rageps.net;
 
+import com.google.common.base.Stopwatch;
 import com.rageps.net.codec.crypto.IsaacRandom;
 import com.rageps.net.codec.game.GameDecoder;
 import com.rageps.net.codec.game.GameEncoder;
@@ -25,6 +26,7 @@ import com.rageps.world.entity.actor.player.PlayerCredentials;
 import com.rageps.world.entity.actor.player.PlayerSerialization;
 
 import java.net.InetSocketAddress;
+import java.time.Duration;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -71,7 +73,12 @@ public class Session {
 	 * The {@link Channel} to send and receive messages through.
 	 */
 	private final Channel channel;
-	
+
+	/**
+	 * A stopwatch to measure the length of the session.
+	 */
+	private final Stopwatch sessionStart = Stopwatch.createStarted();
+
 	/**
 	 * The player associated with this session.
 	 */
@@ -263,7 +270,15 @@ public class Session {
 	static String address(ChannelHandlerContext ctx) {
 		return ((InetSocketAddress) ctx.channel().remoteAddress()).getAddress().getHostAddress();
 	}
-	
+
+	/**
+	 * Sets the id for this session.
+	 * @param sessionId the id.
+	 */
+	public void setSessionId(long sessionId) {
+		this.sessionId = sessionId;
+	}
+
 	/**
 	 * Getting a {@link ByteBufAllocator} to allocate buffers.
 	 * @return allocator.
@@ -284,6 +299,11 @@ public class Session {
 		return uid;
 	}
 
+	/**
+	 * And identifier used to identify this specific session and tie
+	 * and ingame events to it.
+	 * @return the session id.
+	 */
 	public long getSessionId() {
 		return sessionId;
 	}
@@ -311,5 +331,9 @@ public class Session {
 	 */
 	public static boolean validMac(String mac) {
 		return !mac.equals(NetworkConstants.INVALID_MAC);
+	}
+
+	public Duration getSessionDuration() {
+		return sessionStart.elapsed();
 	}
 }

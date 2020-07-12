@@ -7,34 +7,38 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class Account {
+/**
+ * Represents a players account and their credentials stored on the forums.
+ * @author Tamatea <tamateea@gmail.com>
+ */
+public final class ForumAccount {
 
     private final String username;
 
-    private final Credentials credentials;
+    private final ForumCredentials forumCredentials;
 
     private final MemberGroup primaryGroup;
 
     private final Set<MemberGroup> secondaryGroups;
 
-    public Account(String username, Credentials credentials, MemberGroup primaryGroup, Set<MemberGroup> groups) {
+    public ForumAccount(String username, ForumCredentials forumCredentials, MemberGroup primaryGroup, Set<MemberGroup> groups) {
         this.username = username;
-        this.credentials = credentials;
+        this.forumCredentials = forumCredentials;
         this.primaryGroup = primaryGroup;
         this.secondaryGroups = groups;
     }
 
-    public static Account fromCredentials(String username, Credentials credentials) {
-        Set<MemberGroup> groups = Stream.of(credentials.getSecondaryGroups().split(","))
+    public static ForumAccount fromCredentials(String username, ForumCredentials forumCredentials) {
+        Set<MemberGroup> groups = Stream.of(forumCredentials.getSecondaryGroups().split(","))
                 .filter(Predicates.NOT_EMPTY)
                 .mapToInt(Integer::parseInt)
                 .mapToObj(MemberGroup::fromId)
                 .collect(Collectors.toSet());
-        return new Account(username, credentials, MemberGroup.fromId(credentials.getGroupId()), groups);
+        return new ForumAccount(username, forumCredentials, MemberGroup.fromId(forumCredentials.getGroupId()), groups);
     }
 
-    public Credentials getCredentials() {
-        return credentials;
+    public ForumCredentials getForumCredentials() {
+        return forumCredentials;
     }
 
     public String getUsername() {
@@ -53,7 +57,7 @@ public final class Account {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("username", username)
-                .add("credentials", credentials)
+                .add("credentials", forumCredentials)
                 .add("primaryGroup", primaryGroup)
                 .add("secondaryGroups", secondaryGroups)
                 .toString();

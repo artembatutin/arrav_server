@@ -148,7 +148,13 @@ public final class Player extends Actor {
 	 * The exchange session manager of this {@link Player}.
 	 */
 	public final _ExchangeSessionManager exchange_manager = new _ExchangeSessionManager(this);
-	
+
+	/**
+	 * Whether or not he player has finished saving.
+	 */
+	public final AtomicBoolean saved = new AtomicBoolean(false);
+
+
 	/**
 	 * Determines if this player is playing in iron man mode.
 	 * 0 - not

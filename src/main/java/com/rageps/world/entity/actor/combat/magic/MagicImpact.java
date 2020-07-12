@@ -42,7 +42,7 @@ public enum MagicImpact {
 				Slayer slayer = player.getSlayer().get();
 				String key = mob.getDefinition().getSlayerKey();
 				
-				if(key != null && slayer.getKey().equals(key)) {
+				if(slayer.getKey().equals(key)) {
 					damage = 13 + player.getSkills()[Skills.MAGIC].getCurrentLevel() / 6;
 				}
 			}

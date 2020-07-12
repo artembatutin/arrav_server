@@ -6,8 +6,8 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.GetRequest;
 import com.mashape.unirest.request.HttpRequestWithBody;
-import com.rageps.net.rest.account.Account;
-import com.rageps.net.rest.account.Credentials;
+import com.rageps.net.rest.account.ForumAccount;
+import com.rageps.net.rest.account.ForumCredentials;
 import com.rageps.net.rest.payments.Invoice;
 import com.rageps.util.StringUtil;
 
@@ -42,18 +42,18 @@ public final class RestfulNexus {
 		return Boolean.parseBoolean(response.getBody());
 	}
 
-	public Account getAccount(String username) throws UnirestException {
+	public ForumAccount getAccount(String username) throws UnirestException {
 		GetRequest request = Unirest.get(url + "forums/select/{username}");
 		request.header("key", apiKey);
 		request.routeParam("username", username);
 
 		HttpResponse<String> response = request.asString();
-		Credentials[] credentials = GSON.fromJson(response.getBody(), Credentials[].class);
+		ForumCredentials[] credentials = GSON.fromJson(response.getBody(), ForumCredentials[].class);
 		if (credentials.length == 0) {
 			return null;
 		}
 
-		return Account.fromCredentials(username, credentials[0]);
+		return ForumAccount.fromCredentials(username, credentials[0]);
 	}
 
 	public double getUnspentPointBalance(String username) throws UnirestException {

@@ -322,6 +322,19 @@ public final class World extends AbstractScheduledService {
 	public Optional<Player> getPlayer(long username) {
 		return Optional.ofNullable(playerByNames.get(username));
 	}
+
+	/**
+	 * Checks if one player is the same person or is logged in from the same machine/host as
+	 * the other player.
+	 * @param p1 The first player.
+	 * @param p2 The second player.
+	 * @return Whether or not they are connected physically.
+	 */
+	public boolean samePerson(Player p1, Player p2) {
+		return p1.getSession().getHost().equals(p2.getSession().getHost()) ||
+				p1.getSession().getUid().equals(p2.getSession().getUid()) ||
+				p1.getSession().getMacAddress().equals(p2.getSession().getUid());
+	}
 	
 	/**
 	 * Returns a player within an optional whose name is equal to

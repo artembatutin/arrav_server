@@ -30,11 +30,7 @@ public final class SlayerKeyPolicy {
 	 * The combat requirement required to get this npc assigned.
 	 */
 	private final int requirement;
-	
-	/**
-	 * Rewards for completing this task.
-	 */
-	private final Item[] rewards;
+
 	
 	/**
 	 * Constructs a new {@link SlayerKeyPolicy}.
@@ -44,12 +40,11 @@ public final class SlayerKeyPolicy {
 	 * @param maxAmount the maximum amount.
 	 * @param combatRequirement {@link #requirement}.
 	 */
-	SlayerKeyPolicy(String key, SlayerDifficulty difficulty, int minAmount, int maxAmount, int combatRequirement, Item... rewards) {
+	SlayerKeyPolicy(String key, SlayerDifficulty difficulty, int minAmount, int maxAmount, int combatRequirement) {
 		this.key = key;
 		this.difficulty = difficulty;
 		this.amount = IntStream.rangeClosed(minAmount, maxAmount).toArray();
 		this.requirement = combatRequirement;
-		this.rewards = rewards;
 	}
 	
 	/**
@@ -86,12 +81,4 @@ public final class SlayerKeyPolicy {
 	public int getCombatRequirement() {
 		return requirement;
 	}
-	
-	/**
-	 * @return rewards.
-	 */
-	public Item[] getRewards() {
-		return rewards;
-	}
-	
 }
