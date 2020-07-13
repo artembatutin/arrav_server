@@ -129,7 +129,7 @@ public class LoginDecoder extends StatefulFrameDecoder<LoginState> {
 					write(ctx, LoginCode.ACCOUNT_DISABLED);
 					return;
 				}
-				
+
 				String username = getCString(rsaBuffer).toLowerCase().replaceAll("_", " ").toLowerCase().trim();
 				String password = getCString(rsaBuffer).toLowerCase();
 				long usernameHash = TextUtils.nameToHash(username);

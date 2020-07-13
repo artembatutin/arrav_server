@@ -85,17 +85,6 @@ public final class PlayerPersistenceManager {
 	 */
 	public static final PlayerPersistanceProperty[] PROPERTIES = {
 
-			new PlayerPersistanceProperty("username", STRING) {
-				@Override
-				public void read(Player player, JsonElement property) {
-					player.credentials.setUsername(property.getAsString());
-				}
-
-				@Override
-				public Object write(Player player) {
-					return player.credentials.username;
-				}
-			}
 	};
 
 	/**

@@ -5,6 +5,8 @@ package com.rageps.net.codec.login;
  * @author Artem Batutin
  */
 public enum LoginCode {
+
+	MUTED(0),
 	NORMAL(2),
 	INVALID_CREDENTIALS(3),
 	ACCOUNT_DISABLED(4),

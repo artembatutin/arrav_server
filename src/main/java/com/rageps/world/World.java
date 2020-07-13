@@ -335,7 +335,7 @@ public final class World extends AbstractScheduledService {
 				p1.getSession().getUid().equals(p2.getSession().getUid()) ||
 				p1.getSession().getMacAddress().equals(p2.getSession().getUid());
 	}
-	
+
 	/**
 	 * Returns a player within an optional whose name is equal to
 	 * {@code username}.
@@ -633,13 +633,6 @@ public final class World extends AbstractScheduledService {
 		return DATABASE_WORKER;
 	}
 
-	/**
-	 * Checks if a player and another player are connected from the same computer.
-	 */
-    public boolean isAlt(Player victim, Player p) {
-    	return victim.getSession().getMacAddress().equals(p.getSession().getMacAddress()) ||
-				victim.getSession().getHost().equals(p.getSession().getHost());
-    }
 
 	/**
 	 * Get's a players alt accounts.
@@ -648,7 +641,7 @@ public final class World extends AbstractScheduledService {
     	ObjectArrayList<Player> alts = new ObjectArrayList<>();
 
     	for(Player p : getPlayers()) {
-    		if(isAlt(player, p))
+    		if(samePerson(player, p))
     			alts.add(p);
 		}
     	return alts;

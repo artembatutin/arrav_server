@@ -96,4 +96,7 @@ public class PlayerAttributes {
     @Attr  public static final AttributeKey REDEEMING  = Attributes.define("redeeming", false);
 
 
+    @Attr public static final AttributeKey HAS_AUTHENTICATOR = Attributes.define("has_authenticator", false);
+    @Attr public static final AttributeKey ACCOUNT_CREATION_EPOCH = Attributes.definePersistent("account_creation_epoch", -1L);
+
 }

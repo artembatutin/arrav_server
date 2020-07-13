@@ -1,7 +1,11 @@
 package com.rageps.net;
 
 import com.google.common.base.Stopwatch;
+import com.google.common.base.Strings;
+import com.rageps.content.punishment.PunishmentHandler;
 import com.rageps.net.codec.crypto.IsaacRandom;
+import com.rageps.net.codec.crypto.bcrypt.BCrypt;
+import com.rageps.net.codec.crypto.bcrypt.IpsBCrypt;
 import com.rageps.net.codec.game.GameDecoder;
 import com.rageps.net.codec.game.GameEncoder;
 import com.rageps.net.codec.game.GamePacket;
@@ -9,7 +13,17 @@ import com.rageps.net.codec.login.LoginCode;
 import com.rageps.net.codec.login.LoginRequest;
 import com.rageps.net.codec.login.LoginResponse;
 import com.rageps.net.packet.OutgoingPacket;
+import com.rageps.net.rest.RestfulNexus;
+import com.rageps.net.rest.account.ForumAccount;
+import com.rageps.net.rest.account.ForumCredentials;
+import com.rageps.net.rest.account.MultifactorAuthentication;
+import com.rageps.net.sql.daily_statistics.DailyStatisticInsertTransaction;
+import com.rageps.util.DateTimeUtil;
 import com.rageps.world.World;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
+import com.rageps.world.entity.actor.player.assets.PlayerEmail;
+import com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager;
+import com.rageps.world.env.Environment;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.Channel;
@@ -24,14 +38,16 @@ import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerCredentials;
 import com.rageps.world.entity.actor.player.PlayerSerialization;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.net.InetSocketAddress;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.logging.Logger;
 
 /**
  * Player's session which handles I/O operations.
@@ -42,7 +58,7 @@ public class Session {
 	/**
 	 * The asynchronous logger.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(Session.class.getName());
+	private static final Logger LOGGER = LogManager.getLogger();
 	
 	/**
 	 * The cap limit of outgoing packets per session.
@@ -121,7 +137,7 @@ public class Session {
 			}
 		}
 		if(msg instanceof LoginRequest) {
-			handleRequest(ctx, (LoginRequest) msg);
+			handleLoginRequest(ctx, (LoginRequest) msg);
 		}
 	}
 	
@@ -210,44 +226,125 @@ public class Session {
 	
 	/**
 	 * Handles a login request.
-	 * @throws Exception If any errors occur while handling credentials.
 	 */
-	private void handleRequest(ChannelHandlerContext ctx, LoginRequest request) throws Exception {
+	private LoginCode handleRequest(LoginRequest request) {
 		this.macAddress = request.getMacAddress();
 		this.encryptor = request.getEncryptor();
 		player = new Player(new PlayerCredentials(request.getUsername(), request.getPassword()));
 		player.setSession(this);
 		LoginCode code = LoginCode.NORMAL;
-		
+
 		// Validate the username and password, change login code if needed
 		// for invalid credentials or the world being full.
 		boolean invalidCredentials = !request.getUsername().matches("^[a-zA-Z0-9_ ]{1,12}$") || request.getPassword().isEmpty() || request.getPassword().length() > 20;
 		code = invalidCredentials ? LoginCode.INVALID_CREDENTIALS : World.get().getPlayers().remaining() < 1 ? LoginCode.WORLD_FULL : code;
-		
+
 		// Validating player login possibility.
 		if(code == LoginCode.NORMAL && World.get().getPlayer(request.getUsernameHash()).isPresent()) {
 			code = LoginCode.ACCOUNT_ONLINE;
 		}
+
+		if (World.get().getEnvironment().isSqlEnabled()) {
+			try {
+				ForumAccount account = RestfulNexus.NEXUS.getAccount(player.credentials.username);
+
+				// New account
+				if (account == null) {
+					//if (checkPassword) {
+					LoginCode response = PunishmentHandler.getBlockResponse(player);
+					if (response != LoginCode.NORMAL) {
+						return response;
+					}
+					//}
+
+					String salt = IpsBCrypt.gensalt();
+					String hash = IpsBCrypt.hashpw(player.credentials.password, salt);
+
+					boolean success = false;
+					for (int attempt = 0; attempt < 5; attempt++) {
+						if (RestfulNexus.NEXUS.addAccount(player.credentials.username, hash, salt, player.getSession().hostAddress)) {
+							success = true;
+							break;
+						}
+						Thread.sleep(1_000);
+					}
+
+					if (!success) {
+						return LoginCode.LOGIN_SERVER_OFFLINE;
+					}
+
+					player.credentials.password = hash;
+
+					player.firstLogin = true;
+					player.getAttributeMap().set(PlayerAttributes.ACCOUNT_CREATION_EPOCH, Instant.now(DateTimeUtil.CLOCK).toEpochMilli());
+					World.get().getDatabaseWorker().submit(new DailyStatisticInsertTransaction(player.credentials.username, getHost(), player.firstLogin));
+					return LoginCode.NORMAL;
+				}
+
+				ForumCredentials credentials = account.getForumCredentials();
+				MultifactorAuthentication authentication = credentials.getAuthentication();
+				String salt = credentials.getPasswordSalt();
+				String hashed = credentials.getPasswordHash();
+
+				// If we have a salt, verify using legacy method
+				if (!Strings.isNullOrEmpty(salt)) {
+					String password = IpsBCrypt.hashpw(player.credentials.password, salt);
+					if (!password.equals(hashed)) {
+						return LoginCode.INVALID_CREDENTIALS;
+					}
+
+					player.credentials.password = password;
+				} else {
+					// todo - Update salt version... PHP bcrypt uses 2y, jbcrypt uses 2a
+					hashed = hashed.replace("2y", "2a");
+
+					String password = BCrypt.hashpw(player.credentials.password, hashed);
+					if (!password.equals(hashed)) {
+						return LoginCode.INVALID_CREDENTIALS;
+					}
+
+					player.credentials.password = password;
+				}
+
+				if (authentication != null) {
+					player.getAttributeMap().set(PlayerAttributes.HAS_AUTHENTICATOR, true);
+					player.setMfaSecret(authentication.getSecret());
+				}
+
+				player.credentials.setEmail(new PlayerEmail(credentials.getEmail()));
+			} catch (Exception cause) {
+				LOGGER.error("Unable to load data for player: " + player, cause);
+				return LoginCode.LOGIN_SERVER_OFFLINE;
+			}
+		}
+
+
 		// Deserialization
 		if(code == LoginCode.NORMAL) {
 			player.credentials.setUsername(request.getUsername());
-			player.credentials.password = request.getPassword();
-			code = new PlayerSerialization(player).loginCheck(request.getPassword());
+			code = PlayerPersistenceManager.load(player);
 		}
+
+		//future.awaitUninterruptibly();
+		return code;
+	}
+
+	private void handleLoginRequest(ChannelHandlerContext ctx, LoginRequest request) {
+
+		LoginCode code = handleRequest(request);
+
 		ChannelFuture future = channel.writeAndFlush(new LoginResponse(code, player.getRights(), player.isIronMan()).toBuf(ctx));
 		if(code != LoginCode.NORMAL) {
 			future.addListener(ChannelFutureListener.CLOSE);
 			return;
 		}
-		
-		//future.awaitUninterruptibly();
-		
+
 		ctx.pipeline().addFirst("encoder", new GameEncoder(request.getEncryptor(), player));
 		ctx.pipeline().addBefore("handler", "decoder", new GameDecoder(request.getDecryptor()));
-		
+
 		World.get().queueLogin(player);
 	}
-	
+
 	/**
 	 * Writes a closed response to the login channel.
 	 */

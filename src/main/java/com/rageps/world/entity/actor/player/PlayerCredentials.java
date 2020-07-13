@@ -1,6 +1,7 @@
 package com.rageps.world.entity.actor.player;
 
 import com.rageps.util.TextUtils;
+import com.rageps.world.entity.actor.player.assets.PlayerEmail;
 
 import java.time.LocalDateTime;
 
@@ -15,8 +16,7 @@ public final class PlayerCredentials {
 	public String username;
 	public String password;
 	public long databaseId;
-	public String passHash;
-	public LocalDateTime creationDate;
+	private PlayerEmail playerEmail;
 
 	public PlayerCredentials(String username, String password) {
 		this.formattedUsername = TextUtils.capitalize(username);
@@ -24,7 +24,15 @@ public final class PlayerCredentials {
 		this.username = username;
 		this.password = password;
 	}
-	
+
+	public void setEmail(PlayerEmail playerEmail) {
+		this.playerEmail = playerEmail;
+	}
+
+	public PlayerEmail getEmail() {
+		return playerEmail;
+	}
+
 	public void setUsername(String username) {
 		this.username = username;
 		this.formattedUsername = TextUtils.capitalize(username);

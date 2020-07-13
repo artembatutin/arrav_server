@@ -7,6 +7,7 @@ import com.rageps.net.sql.statement.NamedPreparedStatement;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  * Submits a {@link Punishment} to the database.
@@ -15,29 +16,47 @@ import java.sql.SQLException;
  */
 public final class UpdatePunishmentTransaction extends DatabaseTransaction {
 
-	private final Punishment punishment;
+	private final String moderator;
 
-	public UpdatePunishmentTransaction(Punishment punishment) {
+	private final Sanction sanction;
+
+	private final String offender;
+
+	private final String ipAddress;
+
+	private final String serialNumber;
+
+	private final Timestamp expire;
+
+	private final String reason;
+
+	private final long sessionId;
+
+	public UpdatePunishmentTransaction(String moderator, Sanction sanction, String offender, long sessionId, String ipAddress, String serialNumber, Timestamp expire, String reason) {
 		super(TableRepresentation.SANCTIONS);
-		this.punishment = punishment;
+		this.moderator = moderator;
+		this.sessionId = sessionId;
+		this.sanction = sanction;
+		this.offender = offender;
+		this.ipAddress = ipAddress;
+		this.serialNumber = serialNumber;
+		this.expire = expire;
+		this.reason = reason;
 	}
 
 	@Override
 	public void execute(Connection connection) throws SQLException {
 		try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection,
-		 "INSERT INTO punishment (`user_name`,`agent`, `session_id`,`expireDate`,`duration`,`macAddress`,`hostAddress`,`uid`,`punishmentPolicy`,`reason`,`punishmentType`) "
-			+ "VALUES (:user_name, :agent, :session_id, :expireDate, :duration, :macAddress, :hostAddress, :uid, :punishmentPolicy, :reason, :punishmentType );")) {
-			statement.setString("user_name", punishment.getOffender());
-			statement.setString("agent", punishment.getAgent());
-			statement.setLong("session_id", punishment.getOffenderSession());
-			statement.setLong("expireDate", punishment.getExpireDate());
-			statement.setString("duration", punishment.getDuration());
-			statement.setString("macAddress", punishment.getMac());
-			statement.setString("hostAddress", punishment.getHost());
-			statement.setString("uid", punishment.getUid());
-			statement.setString("punishmentPolicy", punishment.getPunishmentPolicy().name());
-			statement.setString("reason", punishment.getReason());
-			statement.setString("punishmentType", punishment.getPunishmentType().name());
+				"INSERT INTO sanctions (sanction, moderator, offender, session_id, ip_address, serial_number, expire, reason) "
+						+ "VALUES (:sanction, :moderator, :offender, :session_id, :ip_address, :serial_number, :expire, :reason);")) {
+			statement.setString("sanction", sanction.name().toLowerCase());
+			statement.setString("moderator", moderator);
+			statement.setString("offender", offender);
+			statement.setLong("session_id", sessionId);
+			statement.setString("ip_address", ipAddress);
+			statement.setString("serial_number", serialNumber);
+			statement.setTimestamp("expire", expire);
+			statement.setString("reason", reason);
 			statement.executeUpdate();
 			connection.commit();
 		}

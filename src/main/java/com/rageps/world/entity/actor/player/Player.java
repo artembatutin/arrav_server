@@ -55,6 +55,7 @@ import com.rageps.net.Session;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.OutgoingPacket;
 import com.rageps.net.packet.out.*;
+import com.rageps.net.rest.account.MultifactorAuthentication;
 import com.rageps.util.Utility;
 import com.rageps.world.entity.actor.player.assets.group.ExperienceRate;
 import com.rageps.world.entity.actor.player.assets.group.GameMode;
@@ -128,7 +129,12 @@ public final class Player extends Actor {
 	 * The player appearance update red skull identifier.
 	 */
 	public static final int RED_SKULL = 1;
-	
+
+	/**
+	 * The players {@link MultifactorAuthentication} secret.
+	 */
+	private String mfaSecret;
+
 	/**
 	 * The player credentials on login.
 	 */
@@ -2330,5 +2336,13 @@ public final class Player extends Actor {
 
 	public void setExperienceRate(ExperienceRate experienceRate) {
 		this.experienceRate = experienceRate;
+	}
+
+	public String getMfaSecret() {
+		return mfaSecret;
+	}
+
+	public void setMfaSecret(String mfaSecret) {
+		this.mfaSecret = mfaSecret;
 	}
 }
