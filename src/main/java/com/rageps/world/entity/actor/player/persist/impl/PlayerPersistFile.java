@@ -4,7 +4,7 @@ import com.google.gson.*;
 import com.rageps.net.codec.login.LoginCode;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.persist.PlayerPersistable;
-import com.rageps.world.entity.actor.player.persist.PlayerPersistanceManager;
+import com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager;
 import com.rageps.world.entity.actor.player.persist.property.PlayerPersistanceProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,12 +19,26 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Handles persistence using JSON files.
+ *
+ * @author Tamatea <tamateea@gmail.com>
+ */
 public final class PlayerPersistFile implements PlayerPersistable {
 
+	/**
+	 * Logging for this class.
+	 */
 	public static final Logger logger = LogManager.getLogger();
 
+	/**
+	 * Path to the directory that players are saved.
+	 */
 	public static final Path FILE_DIR = Paths.get("data", "profile", "save");
 
+	/**
+	 * Gson parser for this class.
+	 */
 	public static final Gson GSON = GsonUtils.JSON_PRETTY_ALLOW_NULL;
 
 	@Override
@@ -42,7 +56,7 @@ public final class PlayerPersistFile implements PlayerPersistable {
 			try {
 				JsonObject properties = new JsonObject();
 
-				for (PlayerPersistanceProperty property : PlayerPersistanceManager.PROPERTIES) {
+				for (PlayerPersistanceProperty property : PlayerPersistenceManager.PROPERTIES) {
 					properties.add(property.name, GSON.toJsonTree(property.write(player)));
 				}
 
@@ -81,7 +95,7 @@ public final class PlayerPersistFile implements PlayerPersistable {
 					logger.error("Fatal! JsonNull loading player file");
 				JsonObject jsonReader = (JsonObject) parsed;
 
-				for (PlayerPersistanceProperty property : PlayerPersistanceManager.PROPERTIES) {
+				for (PlayerPersistanceProperty property : PlayerPersistenceManager.PROPERTIES) {
 					if (jsonReader.has(property.name)) {
 						if (jsonReader.get(property.name).isJsonNull())
 							continue;

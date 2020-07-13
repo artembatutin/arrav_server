@@ -1,6 +1,5 @@
 package com.rageps.world.entity.actor.player.persist.impl;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
@@ -12,11 +11,9 @@ import com.rageps.net.sql.TableRepresentation;
 import com.rageps.net.sql.player.UpdateForumUserGroupsTransaction;
 import com.rageps.net.sql.statement.NamedPreparedStatement;
 import com.rageps.util.DatabaseUtils;
-import com.rageps.util.json.GsonUtils;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.persist.PlayerPersistable;
-import com.rageps.world.entity.actor.player.persist.PlayerPersistanceManager;
 import com.rageps.world.entity.actor.player.persist.property.PlayerPersistanceProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,11 +23,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static com.rageps.world.entity.actor.player.persist.PlayerPersistanceManager.PROPERTIES;
-import static com.rageps.world.entity.actor.player.persist.PlayerPersistanceManager.PROPERTY_NAMES;
+import static com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager.PROPERTIES;
+import static com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager.PROPERTY_NAMES;
 
+/**
+ * Handles persistence using a MySQL database.
+ *
+ * @author Tamatea <tamateea@gmail.com>
+ */
 public final class PlayerPersistDB implements PlayerPersistable {
 
+    /**
+     * Logging for this class.
+     */
 	private static final Logger logger = LogManager.getLogger();
 
 	@Override
