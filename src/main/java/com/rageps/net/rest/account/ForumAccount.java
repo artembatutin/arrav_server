@@ -2,6 +2,9 @@ package com.rageps.net.rest.account;
 
 import com.google.common.base.MoreObjects;
 import com.rageps.util.Predicates;
+import com.rageps.world.entity.actor.mob.drop.Drop;
+import com.rageps.world.entity.actor.player.assets.group.Privilege;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,6 +46,12 @@ public final class ForumAccount {
 
     public String getUsername() {
         return username;
+    }
+
+    public ObjectArrayList<Privilege> getPrivileges() {
+        ObjectArrayList<Privilege> groups = secondaryGroups.stream().map(MemberGroup::getPrivilege).collect(Collectors.toCollection(ObjectArrayList::new));
+        groups.add(primaryGroup.getPrivilege());
+        return groups;
     }
 
     public MemberGroup getPrimaryGroup() {

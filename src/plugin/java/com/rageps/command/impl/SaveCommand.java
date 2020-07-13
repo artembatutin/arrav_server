@@ -9,8 +9,8 @@ import com.rageps.content.market.MarketItem;
 import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.player.PlayerSerialization;
 import com.rageps.world.entity.actor.player.assets.Rights;
+import com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager;
 import com.rageps.world.entity.item.ItemDefinition;
 
 import java.util.Iterator;
@@ -25,7 +25,7 @@ public final class SaveCommand implements Command {
 				Player other;
 				Iterator<Player> it = World.get().getPlayers().iterator();
 				while((other = it.next()) != null) {
-					new PlayerSerialization(other).serialize();
+					PlayerPersistenceManager.save(other);
 				}
 				player.message("Character files have been saved for everyone online!");
 				break;

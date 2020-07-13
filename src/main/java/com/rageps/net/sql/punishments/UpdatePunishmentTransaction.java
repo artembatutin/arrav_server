@@ -1,6 +1,5 @@
 package com.rageps.net.sql.punishments;
 
-import com.rageps.content.moderation.Punishment;
 import com.rageps.net.sql.DatabaseTransaction;
 import com.rageps.net.sql.TableRepresentation;
 import com.rageps.net.sql.statement.NamedPreparedStatement;
@@ -10,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 /**
- * Submits a {@link Punishment} to the database.
+ * Submits a {@link Sanction} to the database.
  *
  * @author Tamatea <tamateea@gmail.com>
  */

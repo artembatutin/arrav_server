@@ -66,6 +66,7 @@ import com.rageps.world.entity.actor.player.assets.AntifireDetails;
 import com.rageps.world.entity.actor.player.assets.relations.PlayerRelation;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
+import com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
@@ -1029,7 +1030,7 @@ public final class Player extends Actor {
 	 * Saves the character file for this player.
 	 */
 	private void save() {
-		new PlayerSerialization(this).serialize();
+		PlayerPersistenceManager.save(this);
 	}
 	
 	/**

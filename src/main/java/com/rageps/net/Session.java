@@ -37,7 +37,6 @@ import com.rageps.net.packet.out.SendLogout;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerCredentials;
-import com.rageps.world.entity.actor.player.PlayerSerialization;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -285,6 +284,7 @@ public class Session {
 				MultifactorAuthentication authentication = credentials.getAuthentication();
 				String salt = credentials.getPasswordSalt();
 				String hashed = credentials.getPasswordHash();
+				player.credentials.databaseId = credentials.getId();
 
 				// If we have a salt, verify using legacy method
 				if (!Strings.isNullOrEmpty(salt)) {

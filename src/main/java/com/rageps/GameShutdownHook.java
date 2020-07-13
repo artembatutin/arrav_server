@@ -10,7 +10,7 @@ import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.player.PlayerSerialization;
+import com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -42,7 +42,7 @@ public final class GameShutdownHook extends Thread {
 				for(Player p : World.get().getPlayers()) {
 					if(p == null)
 						continue;
-					new PlayerSerialization(p).serialize();
+					PlayerPersistenceManager.save(p);
 				}
 			});
 			exit.submit(() -> {

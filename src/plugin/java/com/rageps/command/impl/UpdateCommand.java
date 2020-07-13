@@ -8,8 +8,8 @@ import com.rageps.net.packet.out.SendLogout;
 import com.rageps.net.packet.out.SendBroadcast;
 import com.rageps.task.Task;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.player.PlayerSerialization;
 import com.rageps.world.entity.actor.player.assets.Rights;
+import com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager;
 
 import java.util.Iterator;
 
@@ -43,7 +43,7 @@ public final class UpdateCommand implements Command {
 					for(Player p : World.get().getPlayers()) {
 						if(p == null)
 							continue;
-						new PlayerSerialization(p).serialize();
+						PlayerPersistenceManager.save(p);
 						p.out(new SendLogout());
 					}
 					System.out.println("Waiting for shutdown.");
