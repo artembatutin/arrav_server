@@ -1,9 +1,11 @@
-package com.rageps.world.entity.actor.update;
+package com.rageps.world.entity.actor.update.block.impl.player;
 
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.update.block.PlayerUpdateBlock;
+import com.rageps.world.entity.actor.update.UpdateFlag;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the secondary {@link Hit} update block.

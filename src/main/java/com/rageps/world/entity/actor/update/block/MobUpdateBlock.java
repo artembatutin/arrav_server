@@ -1,6 +1,7 @@
-package com.rageps.world.entity.actor.update;
+package com.rageps.world.entity.actor.update.block;
 
 import com.rageps.world.entity.actor.mob.Mob;
+import com.rageps.world.entity.actor.update.UpdateFlag;
 
 /**
  * An {@link UpdateBlock} implementation specific to {@link Mob}s contained within an {@link UpdateBlockSet} and sent it.

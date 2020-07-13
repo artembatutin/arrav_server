@@ -1,9 +1,11 @@
-package com.rageps.world.entity.actor.update;
+package com.rageps.world.entity.actor.update.block;
 
 import com.google.common.base.MoreObjects;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.update.UpdateFlag;
+import com.rageps.world.entity.actor.update.UpdateManager;
 
 import java.util.Objects;
 

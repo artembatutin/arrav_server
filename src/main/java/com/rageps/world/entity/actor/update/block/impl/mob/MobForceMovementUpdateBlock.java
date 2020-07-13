@@ -1,8 +1,10 @@
-package com.rageps.world.entity.actor.update;
+package com.rageps.world.entity.actor.update.block.impl.mob;
 
 import com.rageps.net.codec.ByteOrder;
 import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
+import com.rageps.world.entity.actor.update.block.MobUpdateBlock;
+import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.locale.Position;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.move.ForcedMovement;

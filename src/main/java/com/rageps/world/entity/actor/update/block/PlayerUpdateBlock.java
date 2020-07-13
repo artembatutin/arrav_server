@@ -1,6 +1,8 @@
-package com.rageps.world.entity.actor.update;
+package com.rageps.world.entity.actor.update.block;
 
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.update.UpdateFlag;
+import com.rageps.world.entity.actor.update.UpdateManager;
 
 /**
  * An {@link UpdateBlock} implementation specific to {@link Player}s contained within an {@link UpdateManager} and sent.

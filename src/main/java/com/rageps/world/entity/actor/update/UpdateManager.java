@@ -3,6 +3,8 @@ package com.rageps.world.entity.actor.update;
 import com.rageps.net.codec.ByteOrder;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.codec.game.GamePacketType;
+import com.rageps.world.entity.actor.update.block.MobUpdateBlock;
+import com.rageps.world.entity.actor.update.block.PlayerUpdateBlock;
 import io.netty.buffer.Unpooled;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
