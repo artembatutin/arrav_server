@@ -1,6 +1,5 @@
-package com.rageps.net.rest.account;
+package com.rageps.net.sql.forum.account;
 
-import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.group.DonatorPrivilege;
 import com.rageps.world.entity.actor.player.assets.group.PlayerPrivilege;
 import com.rageps.world.entity.actor.player.assets.group.Privilege;

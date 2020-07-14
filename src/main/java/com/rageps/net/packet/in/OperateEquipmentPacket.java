@@ -1,9 +1,10 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.Arrav;
+import com.rageps.RagePS;
 import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.item.Item;
@@ -72,7 +73,7 @@ public class OperateEquipmentPacket implements IncomingPacket {
 				}
 				break;
 			default:
-				if(player.getRights().greater(Rights.ADMINISTRATOR) && Arrav.DEBUG) {
+				if(player.getRights().greater(Rights.ADMINISTRATOR) && World.get().getEnvironment().isDebug()) {
 					player.message("Operate Item - itemId: " + slot + " amount: " + item.getAmount() + " slot: ");
 				}
 				break;

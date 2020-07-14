@@ -19,7 +19,7 @@ public enum Currency {
 	CASTLE_WARS_TICKETS(new ItemCurrency(4067)),
 	AGILITY_ARENA_TICKETS(new ItemCurrency(2996)),
 	BLOOD_MONEY(new ItemCurrency(19000, Optional.of("blood money"))),
-	EDGE_TOKENS(new ItemCurrency(7478, Optional.of("arrav tokens"))),
+	EDGE_TOKENS(new ItemCurrency(7478, Optional.of("tokens"))),
 	VOTE_POINTS(new VoteCurrency()),
 	PEST_POINTS(new PestCurrency()),
 	STARDUST(new ItemCurrency(13727));

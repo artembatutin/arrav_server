@@ -20,7 +20,7 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 	/**
 	 * Creates a new {@link PlayerAppearanceUpdateBlock}.
 	 */
-	PlayerAppearanceUpdateBlock() {
+    public PlayerAppearanceUpdateBlock() {
 		super(0x10, UpdateFlag.APPEARANCE);
 	}
 	

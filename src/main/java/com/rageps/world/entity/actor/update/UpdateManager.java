@@ -5,6 +5,8 @@ import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.codec.game.GamePacketType;
 import com.rageps.world.entity.actor.update.block.MobUpdateBlock;
 import com.rageps.world.entity.actor.update.block.PlayerUpdateBlock;
+import com.rageps.world.entity.actor.update.block.impl.mob.*;
+import com.rageps.world.entity.actor.update.block.impl.player.*;
 import io.netty.buffer.Unpooled;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;

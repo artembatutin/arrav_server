@@ -1,10 +1,11 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.Arrav;
+import com.rageps.RagePS;
 import com.rageps.net.codec.ByteOrder;
 import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 
 /**
@@ -20,7 +21,7 @@ public class MagicOnGroundItemPacket implements IncomingPacket {
 		int itemId = buf.getShort(true);
 		int spellId = buf.getShort(false, ByteTransform.A);
 		
-		if(Arrav.DEBUG) {
+		if(World.get().getEnvironment().isDebug()) {
 			player.message("item = " + itemId + ", spell = " + spellId + ", x = " + x + ", y = " + y + ".");
 		}
 	}

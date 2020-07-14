@@ -1,6 +1,6 @@
 package com.rageps.content.object.star;
 
-import com.rageps.Arrav;
+import com.rageps.RagePS;
 import com.rageps.world.World;
 import com.rageps.util.Stopwatch;
 import com.rageps.util.rand.RandomUtils;
@@ -35,7 +35,7 @@ public final class ShootingStarManager {
 	 * The process method which is invoked every minute on start-up.
 	 */
 	public void process() {
-		if(Arrav.STARTING) {
+		if(RagePS.STARTING) {
 			return;
 		}
 		if(!stopwatch.elapsed(28, TimeUnit.MINUTES) || (star != null && star.sprite.getState().equals(EntityState.ACTIVE))) { // 1 minute correction, because task runs every minute and it might skip.

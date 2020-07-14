@@ -1,6 +1,6 @@
 package com.rageps.command.impl;
 
-import com.rageps.Arrav;
+import com.rageps.RagePS;
 import com.rageps.world.World;
 import com.rageps.command.Command;
 import com.rageps.command.CommandSignature;
@@ -30,13 +30,13 @@ public final class UpdateCommand implements Command {
 		while((other = it.next()) != null) {
 			other.out(new SendBroadcast(0, timer, "System update"));
 		}
-		Arrav.UPDATING = timer * 0.6;
+		RagePS.UPDATING = timer * 0.6;
 		World.get().getTask().submit(new Task(1, true) {
 			@Override
 			protected void execute() {
-				Arrav.UPDATING -= 0.6;
-				System.out.println("Update count: " + Arrav.UPDATING);
-				if(Arrav.UPDATING <= 0) {
+				RagePS.UPDATING -= 0.6;
+				System.out.println("Update count: " + RagePS.UPDATING);
+				if(RagePS.UPDATING <= 0) {
 					inProgess = 2;
 					System.out.println("Setting player into updating mode.");
 					System.out.println("Logging players out... - Players online: " + World.get().getPlayers().size());

@@ -10,12 +10,12 @@ import com.rageps.world.entity.actor.update.UpdateFlag;
  * An {@link MobUpdateBlock} implementation that handles the {@code FORCE_CHAT} update block.
  * @author Artem Batutin
  */
-final class MobForceChatUpdateBlock extends MobUpdateBlock {
+public final class MobForceChatUpdateBlock extends MobUpdateBlock {
 	
 	/**
 	 * Creates a new {@link MobForceChatUpdateBlock}.
 	 */
-	MobForceChatUpdateBlock() {
+	public MobForceChatUpdateBlock() {
 		super(4, UpdateFlag.FORCE_CHAT);
 	}
 	

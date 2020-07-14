@@ -1,4 +1,4 @@
-package com.rageps.net.rest.account;
+package com.rageps.net.sql.forum.account;
 
 import com.google.common.base.MoreObjects;
 import com.google.gson.annotations.SerializedName;

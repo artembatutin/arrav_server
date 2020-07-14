@@ -2,6 +2,7 @@ package com.rageps.content.achievements;
 
 import com.google.common.collect.ImmutableSet;
 import com.rageps.util.TextUtils;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 
 /**
@@ -17,7 +18,7 @@ public enum Achievement {
 	TRIVIABOT("Answer %s Trivia bot questions", 10, 30, 100, 250),
 	POKER_FLOWER("Plant %s mithril seeds", 3, 10, 20, 50),
 	WILD_ONE("Enter the wilderness %s times", 50, 100, 400, 1000),
-	TELEPORTER("Teleport %s times around the world of Arrav", 100, 500, 2500, 10_000),
+	TELEPORTER("Teleport %s times around the world of "+ World.get().getEnvironment().getName(), 100, 500, 2500, 10_000),
 	//combat
 	KILL_A_MAN("Kill %s times a man", 5, 25),
 	KILLER("Kill %s players", 10, 50, 150, 1000, 1500, 10_000),

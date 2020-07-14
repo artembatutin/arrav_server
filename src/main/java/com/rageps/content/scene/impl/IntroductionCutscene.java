@@ -14,6 +14,7 @@ import com.rageps.net.host.HostManager;
 import com.rageps.task.Task;
 import com.rageps.world.Animation;
 import com.rageps.world.Graphic;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
@@ -54,7 +55,7 @@ public final class IntroductionCutscene extends Cutscene {
 		player.setPosition(new Position(3088, 3509));
 		if(player.getPosition().same(new Position(3088, 3509))) {
 			if(player.getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) == 1) {
-				player.getDialogueBuilder().append(new StatementDialogue("Welcome to the World of @blu@Arrav!").attach(() -> {
+				player.getDialogueBuilder().append(new StatementDialogue("Welcome to the World of "+ World.get().getEnvironment().getName()+"!").attach(() -> {
 					player.getActivityManager().set(ActivityType.CLICK_BUTTON);
 					player.out(new SendCameraMovement(new Position(3083, 3510), 420, 2, 10));
 					player.out(new SendCameraAngle(new Position(3091, 3510), 270, 2, 10));
@@ -75,10 +76,10 @@ public final class IntroductionCutscene extends Cutscene {
 				}), new StatementDialogue("This shiny portal allows you to", "get anywhere: @red@skills, minigames, bosses.").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3085, 3511), 340, 6, 12));
 					player.out(new SendCameraAngle(new Position(3081, 3514), 320, 6, 12));
-				}), new StatementDialogue("Spria is the slayer master, ask her for any tasks."), new StatementDialogue("This is @red@Party Pete", "He changes arrav tokens into precious goods.").attach(() -> {
+				}), new StatementDialogue("Spria is the slayer master, ask her for any tasks."), new StatementDialogue("This is @red@Party Pete", "He changes tokens into precious goods.").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3091, 3511), 340, 6, 12));
 					player.out(new SendCameraAngle(new Position(3094, 3515), 250, 4, 10));
-				}), new GiveItemDialogue(new Item(7478, 20), "You can get arrav tokens by donating on our website.", Optional.empty()).attach(() -> {
+				}), new GiveItemDialogue(new Item(7478, 20), "You can get tokens by donating on our website.", Optional.empty()).attach(() -> {
 				}), new StatementDialogue("As you may noticed, this is the @red@Garden.", "You can plant trees here!").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3087, 3504), 1800, 2, 10));
 					player.out(new SendCameraAngle(new Position(3087, 3498), 2000, 2, 10));
@@ -99,7 +100,7 @@ public final class IntroductionCutscene extends Cutscene {
 				}), new StatementDialogue("Another place on the list is the @red@Camp.", "Most of holidays activities will be held here.").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3106, 3504), 1900, 2, 10));
 					player.out(new SendCameraAngle(new Position(3107, 3512), 2100, 2, 10));
-				}), new StatementDialogue("We hope you'll enjoy your stay at @red@Arrav.", "Don't forget to register on our forums.", "Report bugs also!").attach(() -> {
+				}), new StatementDialogue("We hope you'll enjoy your stay at @red@"+World.get().getEnvironment().getName()+".", "Don't forget to register on our forums.", "Report bugs also!").attach(() -> {
 					player.setVisible(true);
 					player.setInstance(0);
 					player.out(new SendCameraMovement(new Position(3096, 3519), 1900, 2, 10));

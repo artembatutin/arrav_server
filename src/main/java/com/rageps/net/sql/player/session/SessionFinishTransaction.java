@@ -2,6 +2,7 @@ package com.rageps.net.sql.player.session;
 
 import com.rageps.net.sql.DatabaseTransaction;
 import com.rageps.net.sql.TableRepresentation;
+import com.rageps.net.sql.forum.UpdateForumLastActiveTransaction;
 import com.rageps.net.sql.statement.NamedPreparedStatement;
 import com.rageps.world.entity.actor.player.Player;
 
@@ -44,6 +45,9 @@ public class SessionFinishTransaction extends DatabaseTransaction {
             if (affectedRows == 0) {
                 throw new SQLException("Failed to finish session: " + sessionId);
             }
+            new UpdateForumLastActiveTransaction(user.credentials).execute(connection);
+        } catch (Exception e) {
+            throw new SQLException(e);
         }
     }
 

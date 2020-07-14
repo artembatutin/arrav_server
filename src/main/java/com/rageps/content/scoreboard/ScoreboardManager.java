@@ -40,7 +40,7 @@ public final class ScoreboardManager {
 	
 	/**
 	 * The mappings of the player rewards, where string is the users username and the mutable number
-	 * the amount of arrav-tokens to be given.
+	 * the amount of tokens to be given.
 	 */
 	private final Object2ObjectArrayMap<String, MutableNumber> player_scoreboard_rewards = new Object2ObjectArrayMap<>();
 	

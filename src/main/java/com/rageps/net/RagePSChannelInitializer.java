@@ -10,12 +10,12 @@ import io.netty.channel.socket.SocketChannel;
  * The {@link ChannelInitializer} implementation that will initialize {@link SocketChannel}s before they are registered.
  * @author Artem Batutin
  */
-public final class ArravChannelInitializer extends ChannelInitializer<SocketChannel> {
+public final class RagePSChannelInitializer extends ChannelInitializer<SocketChannel> {
 	
 	/**
 	 * Handles upstream messages from Netty.
 	 */
-	private static final ChannelHandler HANDLER = new ArravChannelHandler();
+	private static final ChannelHandler HANDLER = new RageChannelHandler();
 	
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {

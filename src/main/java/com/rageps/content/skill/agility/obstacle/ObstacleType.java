@@ -35,7 +35,7 @@ public enum ObstacleType {
 	RUN_UP_WALL(10493, "You look if anybody is watching you...", null),
 	CLIMB_UP_WALL(10023, "You climb-up the wall...", null),
 	SPRING_DEVICE(4189, "You walk-up to the tip of the spring device...", "... and successfully land."),
-	WILDERNESS_GATE(762, "You go through the gate and try to arrav over the ridge...", "...You skillfully balance across the ridge.");
+	WILDERNESS_GATE(762, "You go through the gate and try to edge over the ridge...", "...You skillfully balance across the ridge.");
 	
 	/**
 	 * The animation played upon passing this obstacle.

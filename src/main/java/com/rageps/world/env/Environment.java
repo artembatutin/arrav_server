@@ -31,14 +31,21 @@ public final class Environment {
 
 	private final Type type;
 
-	public Environment(String name, int port, boolean sqlEnabled, int version, Type type) {
+	private final boolean debug;
+
+	public Environment(String name, int port, boolean sqlEnabled, boolean debug, int version, Type type) {
 		this.name = name;
 		this.port = port;
 		this.sqlEnabled = sqlEnabled;
+		this.debug = debug;
 		this.version = version;
 		this.type = type;
 	}
-	
+
+	public boolean isDebug() {
+		return debug;
+	}
+
 	public String getName() {
 		return name;
 	}

@@ -1,6 +1,6 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.Arrav;
+import com.rageps.RagePS;
 import com.rageps.action.ActionContainer;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.minigame.MinigameHandler;
@@ -11,7 +11,6 @@ import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
-import com.rageps.world.entity.object.*;
 import com.rageps.world.entity.object.*;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Boundary;
@@ -101,7 +100,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 		if(!o.isPresent())
 			return;
 		final GameObject object = o.get();
-		if(player.getRights().equals(Rights.ADMINISTRATOR) && Arrav.DEBUG)
+		if(player.getRights().equals(Rights.ADMINISTRATOR) && World.get().getEnvironment().isDebug())
 			player.message("[OBJ" + action + "]:" + object.getId() + " - " + object.getPosition().toString());
 		boolean distanceIgnore = (action == 1 && (objectId == 85584 || objectId == 85532 || objectId == 85534));
 		Boundary boundary = new Boundary(position, object.getDefinition().getSize());

@@ -15,7 +15,7 @@ public final class PlayerCredentials {
 	public long usernameHash;
 	public String username;
 	public String password;
-	public long databaseId;
+	public int databaseId;
 	private PlayerEmail playerEmail;
 
 	public PlayerCredentials(String username, String password) {

@@ -6,6 +6,7 @@ package com.rageps.net.sql;
 public enum TableRepresentation {
 	LOGGING(HikariDataSourceWrapper.create("logging", 36)),
 	PLAYER(HikariDataSourceWrapper.create("player", 50)),
+	FORUM(HikariDataSourceWrapper.create("forum", 50)),
 	SANCTIONS(HikariDataSourceWrapper.create("sanctions", 4)),
 	LEADERBOARDS(HikariDataSourceWrapper.create("leaderboards", 4)),
 	PLAYER_SHOP(HikariDataSourceWrapper.create("player_shop", 4)),

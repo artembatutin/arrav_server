@@ -1,5 +1,6 @@
 package com.rageps.world.entity.actor.player.persist;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.rageps.net.codec.login.LoginCode;
 import com.rageps.world.World;
@@ -8,11 +9,13 @@ import com.rageps.world.entity.actor.player.PlayerCredentials;
 import com.rageps.world.entity.actor.player.persist.impl.PlayerPersistDB;
 import com.rageps.world.entity.actor.player.persist.impl.PlayerPersistFile;
 import com.rageps.world.entity.actor.player.persist.property.PlayerPersistanceProperty;
+import com.rageps.world.locale.Position;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.stream.Stream;
 
+import static com.rageps.world.entity.actor.player.persist.property.PersistancePropertyType.JSON;
 import static com.rageps.world.entity.actor.player.persist.property.PersistancePropertyType.STRING;
 
 /**
@@ -78,12 +81,26 @@ public final class PlayerPersistenceManager {
 		return other;
 	}
 
+	private static final Gson GSON = new Gson();
+
 
 	/**
 	 * Represents all of the properties present in a save file, along with their handling
 	 * for loading/saving.
 	 */
 	public static final PlayerPersistanceProperty[] PROPERTIES = {
+
+			new PlayerPersistanceProperty("position", JSON) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.setPosition(GSON.fromJson(property, Position.class));
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.getPosition();
+				}
+			}
 
 	};
 

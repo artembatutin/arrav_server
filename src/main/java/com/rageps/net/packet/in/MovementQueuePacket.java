@@ -1,12 +1,13 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.Arrav;
+import com.rageps.RagePS;
 import com.rageps.content.market.MarketShop;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.net.codec.ByteOrder;
 import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
@@ -92,7 +93,7 @@ public final class MovementQueuePacket implements IncomingPacket {
 			player.getMovementQueue().finish();
 		}
 		
-		if(Arrav.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
+		if(World.get().getEnvironment().isDebug() && player.getRights().greater(Rights.ADMINISTRATOR)) {
 			player.message("DEBUG[walking= " + player.getPosition().getRegion() + "]");
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.WALKING);

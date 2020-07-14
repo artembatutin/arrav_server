@@ -10,13 +10,13 @@ import java.sql.SQLException;
 /**
  * @author Tamatea <tamateea@gmail.com>
  */
-public class UpdateForumUserGroupsTransaction extends DatabaseTransaction {
+public class UpdateForumAccountTransaction extends DatabaseTransaction {
 
     private final Player player;
 
 
-    public UpdateForumUserGroupsTransaction(Player player) {
-        super(TableRepresentation.PLAYER);
+    public UpdateForumAccountTransaction(Player player) {
+        super(TableRepresentation.FORUM);
         this.player = player;
     }
 

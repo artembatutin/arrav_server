@@ -1,6 +1,6 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.Arrav;
+import com.rageps.RagePS;
 import com.rageps.action.ActionContainer;
 import com.rageps.action.impl.ItemOnObjectAction;
 import com.rageps.content.minigame.MinigameHandler;
@@ -59,7 +59,7 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 			return;
 		
 		final GameObject object = o.get();
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Arrav.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && World.get().getEnvironment().isDebug())
 			player.message("[ItemOnObject message] objectId = " + object.toString() + ", itemId = " + item.getId());
 		
 		player.facePosition(position);

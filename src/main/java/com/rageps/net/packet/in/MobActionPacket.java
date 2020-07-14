@@ -1,6 +1,6 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.Arrav;
+import com.rageps.RagePS;
 import com.rageps.action.ActionContainer;
 import com.rageps.action.impl.MobAction;
 import com.rageps.content.item.pets.Pet;
@@ -127,7 +127,7 @@ public final class MobActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Arrav.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && World.get().getEnvironment().isDebug())
 			player.message("[NPC1]:" + mob.toString());
 	}
 	
@@ -158,7 +158,7 @@ public final class MobActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Arrav.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && World.get().getEnvironment().isDebug())
 			player.message("[NPC2]:" + mob.toString());
 	}
 	
@@ -186,7 +186,7 @@ public final class MobActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Arrav.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && World.get().getEnvironment().isDebug())
 			player.message("[NPC3]:" + mob.toString());
 	}
 	
@@ -215,7 +215,7 @@ public final class MobActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Arrav.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && World.get().getEnvironment().isDebug())
 			player.message("[NPC4]:" + mob.toString());
 	}
 	

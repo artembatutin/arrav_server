@@ -3,7 +3,7 @@ package com.rageps.net;
 import com.google.common.base.Objects;
 import com.google.common.collect.ConcurrentHashMultiset;
 import com.google.common.collect.Multiset;
-import com.rageps.Arrav;
+import com.rageps.RagePS;
 import com.rageps.command.impl.UpdateCommand;
 import com.rageps.net.codec.login.LoginCode;
 import com.rageps.net.host.HostListType;
@@ -21,12 +21,12 @@ import com.rageps.net.host.HostManager;
  * @author Artem Batutin
  */
 @Sharable
-public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
+public final class RageChannelHandler extends ChannelInboundHandlerAdapter {
 	
 	/**
 	 * A default access level constructor to discourage external instantiation outside of the {@code com.rageps.net} package.
 	 */
-	ArravChannelHandler() {
+	RageChannelHandler() {
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 			Session.write(ctx, LoginCode.SERVER_BEING_UPDATED);
 			return;
 		}
-		if(Arrav.STARTING) {
+		if(RagePS.STARTING) {
 			Session.write(ctx, LoginCode.SERVER_STARTING);
 			return;
 		}

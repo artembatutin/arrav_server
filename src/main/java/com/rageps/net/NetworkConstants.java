@@ -15,11 +15,6 @@ import java.math.BigInteger;
 public final class NetworkConstants {
 	
 	/**
-	 * The online port that this server will bind to.
-	 */
-	public static final int PORT_ONLINE = 43594;
-	
-	/**
 	 * Maximum allowance of messages per tick.
 	 */
 	public static final int MESSAGES_PER_TICK = 25;
@@ -68,7 +63,7 @@ public final class NetworkConstants {
 	public static final BigInteger RSA_EXPONENT = new BigInteger("58942123322685908809689084302625256728774551587748168286651364002223076520293763732441711633712538400732268844501356343764421742749024359146319836858905124072353297696448255112361453630421295623429362610999525258756790291981270575779800669035081348981858658116089267888135561190976376091835832053427710797233");
 	
 	/**
-	 * The list of exceptions that are ignored and discarded by the {@link ArravChannelHandler}.
+	 * The list of exceptions that are ignored and discarded by the {@link RageChannelHandler}.
 	 */
 	static final ImmutableList<String> IGNORED_NETWORK_EXCEPTIONS = ImmutableList.of("An existing connection was forcibly closed by the remote host", "An established connection was aborted by the software in your host machine");
 	

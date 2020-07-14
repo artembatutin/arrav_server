@@ -7,7 +7,6 @@ import com.rageps.action.impl.*;
 import com.rageps.combat.strategy.MobCombatStrategyManager;
 import com.rageps.combat.strategy.PlayerWeaponStrategyManager;
 import com.rageps.content.event.GameEventManager;
-import com.rageps.net.NetworkConstants;
 import com.rageps.util.Utility;
 import com.rageps.util.json.impl.*;
 import com.rageps.world.World;
@@ -34,7 +33,7 @@ import com.rageps.content.object.pit.FirepitManager;
 import com.rageps.content.object.star.ShootingStarManager;
 import com.rageps.content.scoreboard.ScoreboardTask;
 import com.rageps.content.trivia.TriviaTask;
-import com.rageps.net.ArravChannelInitializer;
+import com.rageps.net.RagePSChannelInitializer;
 import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
 import com.rageps.task.Task;
@@ -57,12 +56,7 @@ import static io.netty.util.ResourceLeakDetector.Level.PARANOID;
  * @author Artem Batutin
  * @author lare96 <http://github.com/lare96>
  */
-public final class Arrav {
-
-	/**
-	 * The flag that determines if debugging messages should be printed or not.
-	 */
-	public static boolean DEBUG = true;
+public final class RagePS {
 	
 	/**
 	 * The flag that determines if the server is starting up.
@@ -88,14 +82,14 @@ public final class Arrav {
 	static {
 		//System.out.println("Lines in project: " + Utility.linesInProject(new File("./src/")));
 		try {
-			Thread.currentThread().setName("ArravInitializationThread");
+			Thread.currentThread().setName("RageInitializationThread");
 		} catch(Exception e) {
 			throw new ExceptionInInitializerError(e);
 		}
 	}
 	
 	/**
-	 * Invoked when this program is started, initializes the {@link Arrav}.
+	 * Invoked when this program is started, initializes the {@link RagePS}.
 	 * @param args The runtime arguments, none of which are parsed.
 	 */
 	public static void main(String[] args) {
@@ -105,8 +99,8 @@ public final class Arrav {
 			DEBUG = false;
 		}*/
 		try {
-			Arrav arrav = new Arrav();
-			arrav.init();
+			RagePS ragePS = new RagePS();
+			ragePS.init();
 		} catch(Exception e) {
 			LOGGER.fatal("Error un game run time!", e);
 			System.exit(0);
@@ -116,8 +110,8 @@ public final class Arrav {
 	/**
 	 * A package-private constructor to discourage external instantiation.
 	 */
-	public Arrav() {
-		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("ArravInitialization").build());
+	public RagePS() {
+		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("RageInitialization").build());
 		launch = MoreExecutors.listeningDecorator(delegateService);
 	}
 	
@@ -128,7 +122,7 @@ public final class Arrav {
 	private void init() {
 		try {
 			long time = System.currentTimeMillis();
-			LOGGER.info("Arrav is being initialized...");
+			LOGGER.info("RagePS is being initialized...");
 			prepare();
 			bind();
 			initTasks();
@@ -150,7 +144,7 @@ public final class Arrav {
 			});
 			time = System.currentTimeMillis() - time;
 			System.gc();//cleaning up startup.
-			LOGGER.info("Arrav is now online (" + time + ").");
+			LOGGER.info(World.get().getEnvironment().getName()+" is now online (" + time + ").");
 			STARTING = false;
 		} catch(Exception e) {
 			LOGGER.fatal("An error occurred while binding the Bootstrap!", e);
@@ -166,7 +160,7 @@ public final class Arrav {
 	 * @throws Exception If any exceptions are thrown while binding.
 	 */
 	private void bind() {
-		LOGGER.info("Binding Arrav on port " + NetworkConstants.PORT_ONLINE + ".");
+		LOGGER.info("Binding RagePs on port " + World.get().getEnvironment().getPort() + ".");
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		EventLoopGroup loopGroup;
 		//If epoll possible, better to use it (for linux systems).
@@ -178,9 +172,9 @@ public final class Arrav {
 			bootstrap.channel(NioServerSocketChannel.class);
 		}
 		bootstrap.group(loopGroup);
-		ResourceLeakDetector.setLevel(DEBUG ? PARANOID : DISABLED);
-		bootstrap.childHandler(new ArravChannelInitializer());
-		bootstrap.bind(NetworkConstants.PORT_ONLINE).syncUninterruptibly();
+		ResourceLeakDetector.setLevel(World.get().getEnvironment().isDebug() ? PARANOID : DISABLED);
+		bootstrap.childHandler(new RagePSChannelInitializer());
+		bootstrap.bind(World.get().getEnvironment().getPort()).syncUninterruptibly();
 		
 	}
 	

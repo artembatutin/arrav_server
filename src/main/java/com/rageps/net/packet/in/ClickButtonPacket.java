@@ -1,6 +1,6 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.Arrav;
+import com.rageps.RagePS;
 import com.rageps.action.ActionContainer;
 import com.rageps.action.impl.ButtonAction;
 import com.rageps.content.TabInterface;
@@ -17,7 +17,7 @@ import com.rageps.content.skill.smithing.Smelting;
 import com.rageps.content.skill.summoning.Summoning;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
-import com.rageps.net.packet.out.SendEnterName;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.combat.magic.lunars.LunarSpells;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
@@ -59,7 +59,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 	@Override
 	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		int button = PROPER_READ ? buf.getShort() : hexToInt(buf.getBytes(2));
-		if(Arrav.DEBUG && player.getRights().equals(Rights.ADMINISTRATOR)) {
+		if(World.get().getEnvironment().isDebug() && player.getRights().equals(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");
 		}
 		

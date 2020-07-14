@@ -1,6 +1,6 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.Arrav;
+import com.rageps.RagePS;
 import com.rageps.action.ActionContainer;
 import com.rageps.action.impl.ItemAction;
 import com.rageps.content.skill.runecrafting.Runecrafting;
@@ -9,6 +9,7 @@ import com.rageps.net.codec.ByteOrder;
 import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.item.Item;
@@ -49,7 +50,7 @@ public final class ItemActionPacket implements IncomingPacket {
 		int container = buf.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int slot = buf.getShort(false, ByteTransform.A);
 		int id = buf.getShort(false, ByteOrder.LITTLE);
-		if(Arrav.DEBUG) {
+		if(World.get().getEnvironment().isDebug()) {
 			player.message("Item action: First click, ID: " + id);
 		}
 		if(slot < 0 || container < 0 || id < 0 || id > ItemDefinition.DEFINITIONS.length)
@@ -75,7 +76,7 @@ public final class ItemActionPacket implements IncomingPacket {
 		int container = buf.getShort(true, ByteTransform.A);
 		int slot = buf.getShort(true, ByteOrder.LITTLE);
 		int id = buf.getShort(true, ByteTransform.A);
-		if(Arrav.DEBUG) {
+		if(World.get().getEnvironment().isDebug()) {
 			player.message("Item action: second click, ID: " + id);
 		}
 		if(slot < 0 || container < 0 || id < 0 || id > ItemDefinition.DEFINITIONS.length) {
@@ -117,7 +118,7 @@ public final class ItemActionPacket implements IncomingPacket {
 		int container = buf.getShort(true, ByteTransform.A);
 		int slot = buf.getShort(true, ByteOrder.LITTLE);
 		int id = buf.getShort(true, ByteTransform.A);
-		if(Arrav.DEBUG) {
+		if(World.get().getEnvironment().isDebug()) {
 			player.message("Item action: third click, ID: " + id);
 		}
 		if(slot < 0 || container < 0 || id < 0 || id > ItemDefinition.DEFINITIONS.length) {

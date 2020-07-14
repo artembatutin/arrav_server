@@ -36,7 +36,7 @@ dependencies {
     compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
     compile group: 'com.google.guava', name: 'guava', version: '28.0-jre'
     compile group: 'org.apache.ant', name: 'ant-compress', version: '1.5'
-    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.44'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
 

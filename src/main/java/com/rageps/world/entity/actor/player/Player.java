@@ -1,7 +1,7 @@
 package com.rageps.world.entity.actor.player;
 
 import com.google.common.collect.ImmutableMap;
-import com.rageps.Arrav;
+import com.rageps.RagePS;
 import com.rageps.GameConstants;
 import com.rageps.combat.strategy.PlayerWeaponStrategyManager;
 import com.rageps.content.PlayerPanel;
@@ -55,7 +55,7 @@ import com.rageps.net.Session;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.OutgoingPacket;
 import com.rageps.net.packet.out.*;
-import com.rageps.net.rest.account.MultifactorAuthentication;
+import com.rageps.net.sql.forum.account.MultifactorAuthentication;
 import com.rageps.util.Utility;
 import com.rageps.world.entity.actor.player.assets.group.ExperienceRate;
 import com.rageps.world.entity.actor.player.assets.group.GameMode;
@@ -662,7 +662,7 @@ public final class Player extends Actor {
 	@Override
 	public void register() {
 		boolean bot = false;
-		if(Arrav.DEBUG && getFormatUsername().startsWith("Bot")) {
+		if(World.get().getEnvironment().isDebug() && getFormatUsername().startsWith("Bot")) {
 			bot = true;
 		}
 		setLastRegion(getPosition().copy());
@@ -688,7 +688,7 @@ public final class Player extends Actor {
 				World.get().submit(new CombatEffectTask(this, $it));
 		});
 		ExchangeSessionManager.get().resetRequests(this);
-		message("@blu@Welcome to Arrav!");
+		message("@blu@Welcome to "+World.get().getEnvironment().getName()+"!");
 		message("@blu@Report bugs with ::bug description");
 		if(UpdateCommand.inProgess == 1) {
 			message("@red@There is currently an update schedule in progress. You'll be kicked off soon.");
@@ -724,8 +724,8 @@ public final class Player extends Actor {
 			this.message("@red@[ANNOUNCEMENT]: " + ShootingStarManager.get().getShootingStar().getLocationData().getMessageWhenActive());
 		}
 		TriviaTask.getBot().onLogin(this);
-		if(Arrav.UPDATING > 0) {
-			out(new SendBroadcast(0, (int) (Arrav.UPDATING * 60), true));
+		if(RagePS.UPDATING > 0) {
+			out(new SendBroadcast(0, (int) (RagePS.UPDATING * 60), true));
 		}
 		Summoning.login(this);
 		FarmingManager.login(this);

@@ -1,6 +1,6 @@
 package com.rageps.command.impl;
 
-import com.rageps.Arrav;
+import com.rageps.RagePS;
 import com.rageps.util.json.impl.*;
 import com.rageps.world.World;
 import com.rageps.command.Command;
@@ -21,7 +21,7 @@ public final class ReloadCommand implements Command {
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		switch(cmd[1].toLowerCase()) {
 			case "actions":
-				Arrav.loadEvents();
+				RagePS.loadEvents();
 				player.message("Reloaded action events.");
 				break;
 			case "drops":

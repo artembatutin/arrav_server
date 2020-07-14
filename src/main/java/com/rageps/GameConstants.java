@@ -23,7 +23,7 @@ public final class GameConstants {
 	/**
 	 * Directory for save files.
 	 */
-	public static final String SAVE_DIRECTORY = Paths.get("data", "players").toString() + File.separator;
+	public static final String SAVE_DIRECTORY = Paths.get("data", "saves").toString() + File.separator;
 
 	/**
 	 * If MySQL should be used or not.

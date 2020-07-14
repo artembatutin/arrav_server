@@ -1,9 +1,10 @@
-package com.rageps.net.rest.account;
+package com.rageps.net.sql.forum.account;
 
 import com.google.common.base.MoreObjects;
 import com.google.gson.annotations.SerializedName;
 
 public final class ForumCredentials {
+
     @SerializedName("member_id")
     private final int id;
 

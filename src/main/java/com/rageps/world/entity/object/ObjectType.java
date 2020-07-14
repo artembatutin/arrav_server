@@ -104,22 +104,22 @@ public enum ObjectType {
 	STRAIGHT_FLAT_TOP_ROOF(17, ObjectGroup.ROOFING),
 	
 	/**
-	 * Represents straight bottom arrav roofs.
+	 * Represents straight bottom edge roofs.
 	 */
 	STRAIGHT_BOTTOM_EDGE_ROOF(18, ObjectGroup.ROOFING),
 	
 	/**
-	 * Represents diagonal bottom arrav connecting roofs.
+	 * Represents diagonal bottom edge connecting roofs.
 	 */
 	DIAGONAL_BOTTOM_EDGE_CONNECTING_ROOF(19, ObjectGroup.ROOFING),
 	
 	/**
-	 * Represents straight bottom arrav connecting roofs.
+	 * Represents straight bottom edge connecting roofs.
 	 */
 	STRAIGHT_BOTTOM_EDGE_CONNECTING_ROOF(20, ObjectGroup.ROOFING),
 	
 	/**
-	 * Represents straight bottom arrav connecting corner roofs.
+	 * Represents straight bottom edge connecting corner roofs.
 	 */
 	STRAIGHT_BOTTOM_EDGE_CONNECTING_CORNER_ROOF(21, ObjectGroup.ROOFING),
 	

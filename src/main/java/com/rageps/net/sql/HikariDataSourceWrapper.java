@@ -28,9 +28,9 @@ public final class HikariDataSourceWrapper {
 	}
 
 	public static HikariDataSourceWrapper create(String name, int minimumConnections) {
-		if (!World.get().getEnvironment().isSqlEnabled()) {
-			return null;
-		}
+		//if (!World.get().getEnvironment().isSqlEnabled()) {
+		//	return null;
+		//}
 
 		Properties properties = new Properties();
 		try {
@@ -52,7 +52,13 @@ public final class HikariDataSourceWrapper {
 		config.setPassword(properties.getProperty("password"));
 		config.validate();
 
-		return new HikariDataSourceWrapper(new HikariDataSource(config));
+		try {
+			return new HikariDataSourceWrapper(new HikariDataSource(config));
+		}catch (Exception e) {
+			logger.warn("Unable to create connection with database name={} host={} database={}", name, properties.getProperty("host"), properties.getProperty("database"));
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public Connection open() {

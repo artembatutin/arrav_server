@@ -14,16 +14,18 @@ import com.rageps.net.codec.login.LoginRequest;
 import com.rageps.net.codec.login.LoginResponse;
 import com.rageps.net.packet.OutgoingPacket;
 import com.rageps.net.rest.RestfulNexus;
-import com.rageps.net.rest.account.ForumAccount;
-import com.rageps.net.rest.account.ForumCredentials;
-import com.rageps.net.rest.account.MultifactorAuthentication;
+import com.rageps.net.sql.TableRepresentation;
+import com.rageps.net.sql.forum.CreateForumAccountTransaction;
+import com.rageps.net.sql.forum.SelectForumAccountTransaction;
+import com.rageps.net.sql.forum.account.ForumAccount;
+import com.rageps.net.sql.forum.account.ForumCredentials;
+import com.rageps.net.sql.forum.account.MultifactorAuthentication;
 import com.rageps.net.sql.daily_statistics.DailyStatisticInsertTransaction;
 import com.rageps.util.DateTimeUtil;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.actor.player.assets.PlayerEmail;
 import com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager;
-import com.rageps.world.env.Environment;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.Channel;
@@ -245,7 +247,8 @@ public class Session {
 
 		if (World.get().getEnvironment().isSqlEnabled()) {
 			try {
-				ForumAccount account = RestfulNexus.NEXUS.getAccount(player.credentials.username);
+				ForumAccount account = new SelectForumAccountTransaction(player.credentials).onExecute(TableRepresentation.PLAYER.getWrapper().open());
+				//ForumAccount account = RestfulNexus.NEXUS.getAccount(player.credentials.username);
 
 				// New account
 				if (account == null) {
@@ -261,7 +264,7 @@ public class Session {
 
 					boolean success = false;
 					for (int attempt = 0; attempt < 5; attempt++) {
-						if (RestfulNexus.NEXUS.addAccount(player.credentials.username, hash, salt, player.getSession().hostAddress)) {
+						if(new CreateForumAccountTransaction(player.credentials.username, hash, salt, player.getSession().hostAddress).onExecute(TableRepresentation.PLAYER.getWrapper().open())) {
 							success = true;
 							break;
 						}
@@ -318,6 +321,7 @@ public class Session {
 			}
 		}
 
+		System.err.println("CODE="+code.name());
 
 		// Deserialization
 		if(code == LoginCode.NORMAL) {

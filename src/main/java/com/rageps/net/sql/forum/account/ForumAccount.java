@@ -1,8 +1,7 @@
-package com.rageps.net.rest.account;
+package com.rageps.net.sql.forum.account;
 
 import com.google.common.base.MoreObjects;
 import com.rageps.util.Predicates;
-import com.rageps.world.entity.actor.mob.drop.Drop;
 import com.rageps.world.entity.actor.player.assets.group.Privilege;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
@@ -32,7 +31,7 @@ public final class ForumAccount {
     }
 
     public static ForumAccount fromCredentials(String username, ForumCredentials forumCredentials) {
-        Set<MemberGroup> groups = Stream.of(forumCredentials.getSecondaryGroups().split(","))
+        Set<MemberGroup> groups = Stream.of(forumCredentials. getSecondaryGroups().split(","))
                 .filter(Predicates.NOT_EMPTY)
                 .mapToInt(Integer::parseInt)
                 .mapToObj(MemberGroup::fromId)
