@@ -244,7 +244,6 @@ public class Session {
 		if(code == LoginCode.NORMAL && World.get().getPlayer(request.getUsernameHash()).isPresent()) {
 			code = LoginCode.ACCOUNT_ONLINE;
 		}
-
 		if (World.get().getEnvironment().isSqlEnabled()) {
 			try {
 				ForumAccount account = new SelectForumAccountTransaction(player.credentials).onExecute(TableRepresentation.PLAYER.getWrapper().open());
@@ -320,8 +319,6 @@ public class Session {
 				return LoginCode.LOGIN_SERVER_OFFLINE;
 			}
 		}
-
-		System.err.println("CODE="+code.name());
 
 		// Deserialization
 		if(code == LoginCode.NORMAL) {
