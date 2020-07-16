@@ -11,7 +11,7 @@ public final class SendEnergy implements OutgoingPacket {
 	public GamePacket write(Player player, ByteBuf buf) {
 		GamePacket out = new GamePacket(this, buf);
 		out.message(110);
-		out.put((int) player.getRunEnergy());
+		out.put((int) player.playerData.getRunEnergy());
 		return out;
 	}
 }

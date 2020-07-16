@@ -149,7 +149,7 @@ public enum RangedEffects {
 				return false;
 			}
 
-			if(defender.isPlayer() && defender.toPlayer().getAntifireDetails().isPresent()) {
+			if(defender.isPlayer() && defender.toPlayer().playerData.getAntifireDetails().isPresent()) {
 				return false;
 			}
 

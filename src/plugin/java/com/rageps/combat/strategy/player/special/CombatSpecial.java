@@ -244,7 +244,7 @@ public enum CombatSpecial {
 	GRANITE_MAUL(new int[]{4153}, 50, new GraniteMaul()) {
 		@Override
 		public void enable(Player player) {
-			if(player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
+			if(player.playerData.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
 				player.out(new SendMessage("You do not have enough special energy left!"));
 				return;
 			}
@@ -292,7 +292,7 @@ public enum CombatSpecial {
 	 * @param player the player who's special bar will be drained.
 	 */
 	public void drain(Player player) {
-		player.getSpecialPercentage().decrementAndGet(amount, 0);
+		player.playerData.getSpecialPercentage().decrementAndGet(amount, 0);
 		updateSpecialAmount(player);
 		disable(player);
 	}
@@ -303,7 +303,7 @@ public enum CombatSpecial {
 	 * @param amount the amount of energy to restore to the special bar.
 	 */
 	public static void restore(Player player, int amount) {
-		player.getSpecialPercentage().incrementAndGet(amount, 100);
+		player.playerData.getSpecialPercentage().incrementAndGet(amount, 100);
 		updateSpecialAmount(player);
 	}
 	
@@ -319,7 +319,7 @@ public enum CombatSpecial {
 		
 		int specialCheck = 10;
 		int specialBar = player.getWeapon().getSpecialMeter();
-		int specialAmount = player.getSpecialPercentage().get() / 10;
+		int specialAmount = player.playerData.getSpecialPercentage().get() / 10;
 		
 		for(int i = 0; i < 10; i++) {
 			player.out(new SendUpdateSpecial(--specialBar, specialAmount >= specialCheck ? 500 : 0));
@@ -370,7 +370,7 @@ public enum CombatSpecial {
 	
 	public void enable(Player player) {
 		if(!player.isSpecialActivated()) {
-			if(player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
+			if(player.playerData.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
 				player.out(new SendMessage("You do not have enough special energy left!"));
 				return;
 			}

@@ -2,10 +2,15 @@ package com.rageps.world.entity.actor.player.persist;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.rageps.content.skill.magic.Spellbook;
+import com.rageps.content.skill.prayer.PrayerBook;
 import com.rageps.net.codec.login.LoginCode;
 import com.rageps.world.World;
+import com.rageps.world.entity.actor.combat.attack.FightType;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAppearance;
 import com.rageps.world.entity.actor.player.PlayerCredentials;
+import com.rageps.world.entity.actor.player.assets.AntifireDetails;
 import com.rageps.world.entity.actor.player.persist.impl.PlayerPersistDB;
 import com.rageps.world.entity.actor.player.persist.impl.PlayerPersistFile;
 import com.rageps.world.entity.actor.player.persist.property.PlayerPersistanceProperty;
@@ -15,8 +20,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.stream.Stream;
 
-import static com.rageps.world.entity.actor.player.persist.property.PersistancePropertyType.JSON;
-import static com.rageps.world.entity.actor.player.persist.property.PersistancePropertyType.STRING;
+import static com.rageps.world.entity.actor.player.persist.property.PersistancePropertyType.*;
 
 /**
  * Handles all interactions with player persistence and can also load details of players who are not online.
@@ -100,7 +104,187 @@ public final class PlayerPersistenceManager {
 				public Object write(Player player) {
 					return player.getPosition();
 				}
+			},
+
+			new PlayerPersistanceProperty("xp_lock", BOOLEAN) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.lockedXP = property.getAsBoolean();
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.lockedXP;
+				}
+			},
+
+			new PlayerPersistanceProperty("total_donated", INT) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.totalDonated = property.getAsInt();
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.getTotalDonated(false);
+				}
+			},
+			new PlayerPersistanceProperty("total_votes", INT) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.totalVotes = property.getAsInt();
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.totalVotes;
+				}
+			},
+			new PlayerPersistanceProperty("vote_points", INT) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.votePoints = property.getAsInt();
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.votePoints;
+				}
+			},
+			new PlayerPersistanceProperty("clan", STRING) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.clan = property.getAsString();
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.clan;
+				}
+			},
+			new PlayerPersistanceProperty("last_clan", STRING) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.lastClan = property.getAsString();
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.lastClan;
+				}
+			},
+			new PlayerPersistanceProperty("appearance", JSON) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.setAppearance(GSON.fromJson(property, PlayerAppearance.class));
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.getAppearance();
+				}
+			},
+			new PlayerPersistanceProperty("prayer_type", ENUM) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.setPrayerBook(PrayerBook.valueOf(property.getAsString()));
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.getPrayerBook();
+				}
+			},
+			new PlayerPersistanceProperty("spell_book", ENUM) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.setSpellbook(Spellbook.valueOf(property.getAsString()));
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.getSpellbook();
+				}
+			},
+			new PlayerPersistanceProperty("last-killer", STRING) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.lastKiller = property.getAsString();
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.lastKiller;
+				}
+			},
+			new PlayerPersistanceProperty("fight_type", ENUM) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.getCombat().setFightType(FightType.valueOf(property.getAsString()));
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.getCombat().getFightType();
+				}
+			},
+			new PlayerPersistanceProperty("poison-damage", INT) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.getPoisonDamage().set(property.getAsInt());
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.getPoisonDamage().get();
+				}
+			},
+			new PlayerPersistanceProperty("running", BOOLEAN) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.getMovementQueue().setRunning(property.getAsBoolean());
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.getMovementQueue().isRunning();
+				}
+			},
+			new PlayerPersistanceProperty("antifire_details", JSON) {//todo test this one
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.playerData.setAntifireDetail(GSON.fromJson(property.getAsString(), AntifireDetails.class));
+				}
+
+				@Override
+				public Object write(Player player) {
+					return player.playerData.getAntifireDetails().orElse(null);
+				}
+			},
+			new PlayerPersistanceProperty("run_energy", INT) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.setRunEnergy(property.getAsInt());
+				}
+
+				@Override
+				public Object write(Player player) {
+					return ((int) player.playerData.getRunEnergy());
+				}
+			},
+			new PlayerPersistanceProperty("special_amount", INT) {
+				@Override
+				public void read(Player player, JsonElement property) {
+					player.playerData.getSpecialPercentage().set(property.getAsInt());
+				}
+
+				@Override
+				public Object write(Player player) {
+					return null;
+				}
 			}
+
+
 
 	};
 

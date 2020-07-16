@@ -40,8 +40,9 @@ public final class ChatLog {
 		Connection connection = REPRESENTATION.getWrapper().open();
 		connection.clearWarnings();
 
-		try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection, "INSERT INTO chats (username, message, timestamp) VALUES (:username, :message, :timestamp)")) {
+		try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection, "INSERT INTO chats (session_id, username, message, timestamp) VALUES (:session_id, :username, :message, :timestamp)")) {
 			for (Chat chat : cloned) {
+				statement.setLong("session_id", chat.getSessionId());
 				statement.setString("username", chat.getUsername());
 				statement.setString("message", chat.getMessage());
 				statement.setTimestamp("timestamp", chat.getTimestamp());
@@ -60,11 +61,18 @@ public final class ChatLog {
 
 		private final String message;
 
+		private final long sessionId;
+
 		private final Timestamp timestamp = Timestamp.from(Instant.now(DateTimeUtil.CLOCK));
 
-		public Chat(String username, String message) {
+		public Chat(String username, String message, long sessionId) {
 			this.username = username;
+			this.sessionId = sessionId;
 			this.message = message;
+		}
+
+		public long getSessionId() {
+			return sessionId;
 		}
 
 		public String getUsername() {

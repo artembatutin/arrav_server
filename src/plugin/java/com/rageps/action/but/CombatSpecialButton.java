@@ -24,7 +24,7 @@ public class CombatSpecialButton extends ActionInitializer {
 					player.out(new SendConfig(301, 0));
 					player.setSpecialActivated(false);
 				} else {
-					if(player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
+					if(player.playerData.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
 						player.message("You do not have enough special energy left!");
 						return true;
 					}

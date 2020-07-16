@@ -35,11 +35,11 @@ public final class CombatAntifireEffect extends CombatEffect {
 		
 		Player player = c.toPlayer();
 		
-		if(player.getAntifireDetails().isPresent()) {
-			player.setAntifireDetail(new AntifireDetails(type));
+		if(player.playerData.getAntifireDetails().isPresent()) {
+			player.playerData.setAntifireDetail(new AntifireDetails(type));
 			return false;
 		}
-		player.setAntifireDetail(new AntifireDetails(type));
+		player.playerData.setAntifireDetail(new AntifireDetails(type));
 		return true;
 	}
 	
@@ -48,7 +48,7 @@ public final class CombatAntifireEffect extends CombatEffect {
 		if(c.isPlayer()) {
 			Player player = c.toPlayer();
 			
-			if(!player.getAntifireDetails().isPresent()) {
+			if(!player.playerData.getAntifireDetails().isPresent()) {
 				return true;
 			}
 			
@@ -59,15 +59,15 @@ public final class CombatAntifireEffect extends CombatEffect {
 	
 	@Override
 	public void process(Actor c) {
-		if(c.isPlayer() && c.toPlayer().getAntifireDetails().isPresent()) {
+		if(c.isPlayer() && c.toPlayer().playerData.getAntifireDetails().isPresent()) {
 			Player player = c.toPlayer();
-			AntifireDetails detail = player.getAntifireDetails().get();
+			AntifireDetails detail = player.playerData.getAntifireDetails().get();
 			int count = detail.getAntifireDelay().decrementAndGet();
 			if(count == 30) {
 				player.message("@red@Your resistance to dragon fire is about to wear off!");
 			}
 			if(count < 1) {
-				player.setAntifireDetail(Optional.empty());
+				player.playerData.setAntifireDetail(Optional.empty());
 				player.message("Your resistance to dragon fire has worn off!");
 			}
 		}
@@ -75,7 +75,7 @@ public final class CombatAntifireEffect extends CombatEffect {
 	
 	@Override
 	public boolean onLogin(Actor c) {
-		return c.isPlayer() && c.toPlayer().getAntifireDetails().isPresent();
+		return c.isPlayer() && c.toPlayer().playerData.getAntifireDetails().isPresent();
 	}
 	
 }

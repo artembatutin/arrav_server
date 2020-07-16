@@ -33,8 +33,9 @@ public final class ItemPickedUpLog extends DatabaseTransaction {
 	@Override
 	public void execute(Connection connection) throws SQLException {
 		try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection,
-		 "INSERT INTO looted_items (username, ip_address, uid, dropped_by, item_id, amount, x, y, z, timestamp) "
-			+ "VALUES (:username, :ip_address, :uid, :dropped_by, :item_id, :amount, :x, :y, :z, :timestamp);")) {
+		 "INSERT INTO looted_items (session_id, username, ip_address, uid, dropped_by, item_id, amount, x, y, z, timestamp) "
+			+ "VALUES (:session_id, :username, :ip_address, :uid, :dropped_by, :item_id, :amount, :x, :y, :z, :timestamp);")) {
+			statement.setLong("session_id", player.getSession().getSessionId());
 			statement.setString("username", player.credentials.username);
 			statement.setString("ip_address", player.getSession().getHost());
 			statement.setString("uid", player.getSession().getUid());

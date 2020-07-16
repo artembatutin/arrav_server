@@ -70,8 +70,8 @@ public abstract class TeleportSpell {
 			player.message("You must be below level 20 wilderness to teleport!");
 			return false;
 		}
-		if(player.getTeleblockTimer().get() > 0) {
-			int time = player.getTeleblockTimer().get() * 600;
+		if(player.playerData.getTeleblockTimer().get() > 0) {
+			int time = player.playerData.getTeleblockTimer().get() * 600;
 			if(time >= 1000 && time <= 60000) {
 				player.message("You must wait approximately " + ((time) / 1000) + " seconds in order to teleport!");
 				return false;

@@ -22,10 +22,10 @@ public final class CombatSkullEffect extends CombatEffect {
 	public boolean apply(Actor c) {
 		if(c.isPlayer()) {
 			Player player = (Player) c;
-			if(player.getSkullTimer().get() > 0) {
+			if(player.playerData.getSkullTimer().get() > 0) {
 				return false;
 			}
-			player.getSkullTimer().set(3000);
+			player.playerData.getSkullTimer().set(3000);
 			player.skullIcon = Player.WHITE_SKULL;
 			player.getFlags().flag(UpdateFlag.APPEARANCE);
 			return true;
@@ -37,7 +37,7 @@ public final class CombatSkullEffect extends CombatEffect {
 	public boolean removeOn(Actor c) {
 		if(c.isPlayer()) {
 			Player player = (Player) c;
-			if(player.getSkullTimer().get() <= 0) {
+			if(player.playerData.getSkullTimer().get() <= 0) {
 				player.skullIcon = -1;
 				player.getFlags().flag(UpdateFlag.APPEARANCE);
 				return true;
@@ -51,7 +51,7 @@ public final class CombatSkullEffect extends CombatEffect {
 	public void process(Actor c) {
 		if(c.isPlayer()) {
 			Player player = (Player) c;
-			player.getSkullTimer().decrementAndGet(50, 0);
+			player.playerData.getSkullTimer().decrementAndGet(50, 0);
 		}
 	}
 	
@@ -59,7 +59,7 @@ public final class CombatSkullEffect extends CombatEffect {
 	public boolean onLogin(Actor c) {
 		if(c.isPlayer()) {
 			Player player = (Player) c;
-			if(player.getSkullTimer().get() > 0) {
+			if(player.playerData.getSkullTimer().get() > 0) {
 				player.skullIcon = Player.WHITE_SKULL;
 				return true;
 			}

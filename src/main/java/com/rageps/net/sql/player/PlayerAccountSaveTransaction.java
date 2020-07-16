@@ -39,7 +39,7 @@ public class PlayerAccountSaveTransaction extends DatabaseTransaction {
                 statement.setString("user_name", player.credentials.username);
 
                 for (PlayerPersistanceProperty property : PROPERTIES) {
-                    statement.setObject(property.name, property.write(player));
+                    statement.setObject(property.name, property.write(player), property.getType());
                 }
 
                 statement.execute();

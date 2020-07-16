@@ -57,6 +57,7 @@ import com.rageps.net.packet.OutgoingPacket;
 import com.rageps.net.packet.out.*;
 import com.rageps.net.sql.forum.account.MultifactorAuthentication;
 import com.rageps.util.Utility;
+import com.rageps.world.entity.actor.player.assets.PlayerData;
 import com.rageps.world.entity.actor.player.assets.group.ExperienceRate;
 import com.rageps.world.entity.actor.player.assets.group.GameMode;
 import com.rageps.world.World;
@@ -174,14 +175,14 @@ public final class Player extends Actor {
 	private int wildernessLevel;
 	public int ringOfRecoil = 400;
 	public double weight;
-	private double runEnergy = 100D;
+
 	public int headIcon = -1, skullIcon = -1;
 	public int votePoints, totalVotes, totalDonated, aggressionTick;
 	private boolean specialActivated, updateRegion;
 	public boolean venged, banned, muted, ipMuted, autocasting, screenFocus, firstLogin, lockedXP;
 	public boolean wildernessWidget, multicombatWidget, duelingWidget, godwarsWidget;
 	public BarChair sitting;
-	String lastKiller = null;
+	public String lastKiller = null;
 	private int[] godwarsKillcount = new int[4];
 	
 	/**
@@ -307,7 +308,7 @@ public final class Player extends Actor {
 	/**
 	 * The container of appearance values for this player.
 	 */
-	private final PlayerAppearance appearance = new PlayerAppearance();
+	private PlayerAppearance appearance = new PlayerAppearance();
 	
 	/**
 	 * The flag that determines if this player is disabled.
@@ -363,21 +364,19 @@ public final class Player extends Actor {
 	 * The collection of stopwatches used for various timing operations.
 	 */
 	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(), specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch().reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
-	
+
+	/**
+	 * A data class designed to be saved as json for less important things.
+	 */
+	public final PlayerData playerData = new PlayerData();
+
 	/**
 	 * Leech delay stopwatch.
+	 * todo - implement
 	 */
 	public final Stopwatch leechDelay = new Stopwatch().reset();
-	
-	/**
-	 * The collection of counters used for various counting operations.
-	 */
-	private final MutableNumber poisonImmunity = new MutableNumber(), teleblockTimer = new MutableNumber(), skullTimer = new MutableNumber(), specialPercentage = new MutableNumber(100);
-	
-	/**
-	 * Holds an optional wrapped inside the Antifire details.
-	 */
-	private Optional<AntifireDetails> antifireDetails = Optional.empty();
+
+
 	
 	/**
 	 * The enter input listener which will execute code when a player submits an input.
@@ -703,7 +702,7 @@ public final class Player extends Actor {
 		out(new SendConfig(427, getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID) ? 0 : 1));
 		out(new SendConfig(108, 0));
 		out(new SendConfig(301, 0));
-		text(149, (int) runEnergy + "%");
+		text(149, (int) this.playerData.runEnergy + "%");
 		out(new SendEnergy());
 		Prayer.VALUES.forEach(c -> out(new SendConfig(c.getConfig(), 0)));
 		if(getPetManager().getPet().isPresent()) {
@@ -1140,10 +1139,10 @@ public final class Player extends Actor {
 	 * Restores run energy based on the last time it was restored.
 	 */
 	public void restoreRunEnergy() {
-		if(lastEnergy.elapsed(3500) && runEnergy < 100 && (this.getMovementQueue().isMovementDone() || !getMovementQueue().isRunning())) {
+		if(lastEnergy.elapsed(3500) && this.playerData.runEnergy < 100 && (this.getMovementQueue().isMovementDone() || !getMovementQueue().isRunning())) {
 			double restoreRate = 0.45D;
 			double agilityFactor = 0.01 * skills[Skills.AGILITY].getCurrentLevel();
-			setRunEnergy(runEnergy + (restoreRate + agilityFactor));
+			setRunEnergy(this.playerData.runEnergy + (restoreRate + agilityFactor));
 			lastEnergy.reset();
 			out(new SendEnergy());
 		}
@@ -1492,74 +1491,15 @@ public final class Player extends Actor {
 	public Stopwatch getDiceTimer() {
 		return diceTimer;
 	}
-	
-	/**
-	 * Gets the poison immunity counter value.
-	 * @return the poison immunity counter.
-	 */
-	public MutableNumber getPoisonImmunity() {
-		return poisonImmunity;
-	}
-	
-	/**
-	 * Gets the anti-fire details instance for this player.
-	 * @return the {@link AntifireDetails} as an optional.
-	 */
-	public Optional<AntifireDetails> getAntifireDetails() {
-		return antifireDetails;
-	}
-	
-	/**
-	 * Sets a new anti-fire instance for this class.
-	 * @param details the anti-fire instance to set.
-	 */
-	public void setAntifireDetail(Optional<AntifireDetails> details) {
-		this.antifireDetails = details;
-	}
-	
-	/**
-	 * Sets the new anti-fire instance for this class directly.
-	 * @param details the anti-fire instance to set.
-	 */
-	public void setAntifireDetail(AntifireDetails details) {
-		setAntifireDetail(details == null ? Optional.empty() : Optional.of(details));
-	}
-	
-	/**
-	 * Gets the teleblock counter value.
-	 * @return the teleblock counter.
-	 */
-	public MutableNumber getTeleblockTimer() {
-		return teleblockTimer;
-	}
-	
-	/**
-	 * Gets the skull timer counter value.
-	 * @return the skull timer counter.
-	 */
-	public MutableNumber getSkullTimer() {
-		return skullTimer;
-	}
-	
-	public double getRunEnergy() {
-		return runEnergy;
-	}
-	
+
+
 	/**
 	 * Sets the run energy percentage counter value.
 	 * @return the new value to set.
 	 */
 	public void setRunEnergy(double energy) {
-		this.runEnergy = energy > 100 ? 100 : energy;
-		text(149, (int) runEnergy + "%");
-	}
-	
-	/**
-	 * Gets the special percentage counter value.
-	 * @return the special percentage counter.
-	 */
-	public MutableNumber getSpecialPercentage() {
-		return specialPercentage;
+		this.playerData.runEnergy = energy > 100 ? 100 : energy;
+		text(149, (int) this.playerData.runEnergy + "%");
 	}
 	
 	/**
@@ -2116,6 +2056,14 @@ public final class Player extends Actor {
 	 */
 	public PlayerAppearance getAppearance() {
 		return appearance;
+	}
+
+	/**
+	 * Set's the players appearance container.
+	 * @param appearance
+	 */
+	public void setAppearance(PlayerAppearance appearance) {
+		this.appearance = appearance;
 	}
 	
 	/**

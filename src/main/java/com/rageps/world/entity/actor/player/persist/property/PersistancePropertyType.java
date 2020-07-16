@@ -9,6 +9,7 @@ package com.rageps.world.entity.actor.player.persist.property;
 public enum PersistancePropertyType {
     JSON,
     ENUM,
+    BOOLEAN,
     STRING,
     LONG,
     INT;

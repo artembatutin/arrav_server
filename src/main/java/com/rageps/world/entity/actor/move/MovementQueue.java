@@ -126,12 +126,12 @@ public final class MovementQueue {
 					player.sitting.unsit();
 				}
 				if(player.getRights().less(Rights.ADMINISTRATOR)) {
-					if(player.getRunEnergy() > 0 && !(player.isIronMaxed() && !player.inWilderness())) {
+					if(player.playerData.getRunEnergy() > 0 && !(player.isIronMaxed() && !player.inWilderness())) {
 						double drainRate = 0.7D;
 						double weight = player.weight;
 						double weightFactor = (weight > 1.371D ? (int) weight * 0.00729166D : 0.0D);
 						weightFactor = Math.round(weightFactor * 100.0D) / 100.0D;
-						player.setRunEnergy(player.getRunEnergy() - (drainRate + weightFactor));
+						player.setRunEnergy(player.playerData.getRunEnergy() - (drainRate + weightFactor));
 						player.sendInterfaces();
 						player.out(new SendEnergy());
 					} else {

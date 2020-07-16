@@ -16,7 +16,7 @@ public class SettingsButton extends ActionInitializer {
 				if(player.getMovementQueue().isRunning()) {
 					player.getMovementQueue().setRunning(false);
 				} else {
-					if(player.getRunEnergy() <= 0) {
+					if(player.playerData.getRunEnergy() <= 0) {
 						return true;
 					}
 					player.getMovementQueue().setRunning(true);

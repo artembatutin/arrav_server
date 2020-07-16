@@ -34,7 +34,7 @@ public final class RestoreSpecialTask extends Task {
 			if(player.isDead()) {
 				continue;
 			}
-			if(player.getSpecialPercentage().get() < 100) {
+			if(player.playerData.getSpecialPercentage().get() < 100) {
 				if(player.getRights().equal(Rights.ADMINISTRATOR)) {
 					CombatSpecial.restore(player, 100);
 					return;

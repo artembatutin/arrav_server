@@ -243,7 +243,7 @@ public class NamedPreparedStatement extends DelegatingPreparedStatement {
 	private final Gson GSON = GsonUtils.JSON_ALLOW_NULL;
 
 
-	public void setObject(String parameter, PersistancePropertyType type, Object object) throws SQLException {
+	public void setObject(String parameter, Object object, PersistancePropertyType type) throws SQLException {
 		switch (type) {
 			case ENUM:
 				setString(parameter, ((Enum) object).name());
@@ -256,6 +256,9 @@ public class NamedPreparedStatement extends DelegatingPreparedStatement {
 				break;
 			case LONG:
 				setLong(parameter, (Long) object);
+				break;
+			case BOOLEAN:
+				setBoolean(parameter, (Boolean) object);
 				break;
 			case STRING:
 				setString(parameter, (String) object);

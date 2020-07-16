@@ -43,7 +43,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 			return false;
 		if(t.isPlayer()) {
 			Player player = (Player) t;
-			if(player.getPoisonImmunity().get() > 0 || t.isDead())
+			if(player.playerData.getPoisonImmunity().get() > 0 || t.isDead())
 				return false;
 			player.out(new SendConfig(174, 1));
 			player.message("You have been poisoned!");//u dont have tosend message

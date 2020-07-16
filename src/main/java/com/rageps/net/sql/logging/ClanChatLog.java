@@ -41,8 +41,9 @@ public final class ClanChatLog {
 		connection.clearWarnings();
 
 		try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection,
-		 "INSERT INTO clan_chats (channel, username, message, timestamp) VALUES (:channel, :username, :message, :timestamp)")) {
+		 "INSERT INTO clan_chats (session_id, channel, username, message, timestamp) VALUES (:session_id, :channel, :username, :message, :timestamp)")) {
 			for (Chat chat : cloned) {
+				statement.setLong("session_id", chat.getSessionId());
 				statement.setString("channel", chat.getChannel());
 				statement.setString("username", chat.getUsername());
 				statement.setString("message", chat.getMessage());
@@ -64,12 +65,19 @@ public final class ClanChatLog {
 
 		private final String message;
 
+		private final long sessionId;
+
 		private final Timestamp timestamp = Timestamp.from(Instant.now(DateTimeUtil.CLOCK));
 
-		public Chat(String channel, String username, String message) {
+		public Chat(String channel, String username, String message, long sessionId) {
 			this.channel = channel;
+			this.sessionId = sessionId;
 			this.username = username;
 			this.message = message;
+		}
+
+		public long getSessionId() {
+			return sessionId;
 		}
 
 		public String getChannel() {

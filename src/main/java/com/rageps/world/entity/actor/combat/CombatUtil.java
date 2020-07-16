@@ -348,12 +348,12 @@ public final class CombatUtil {
 			Player player = defender.toPlayer();
 			prayer &= player.getPrayerActive().contains(Prayer.PROTECT_FROM_MAGIC);
 			boolean shield = player.getEquipment().containsAny(1540, 11283);
-			boolean potion = player.getAntifireDetails().isPresent();
+			boolean potion = player.playerData.getAntifireDetails().isPresent();
 			
 			if(shield && potion) {
 				max = 0;
 			} else if(potion) {
-				AntifireDetails.AntifireType type = player.getAntifireDetails().get().getType();
+				AntifireDetails.AntifireType type = player.playerData.getAntifireDetails().get().getType();
 				max -= type.getReduction();
 				if(max <= 0) {
 					max = 0;

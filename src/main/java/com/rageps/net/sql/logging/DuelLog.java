@@ -24,7 +24,7 @@ public final class DuelLog extends DatabaseTransaction {
 
 	private final Player player;
 
-	private final String other;
+	private final Player other;
 
 	private final Position position;
 
@@ -36,7 +36,7 @@ public final class DuelLog extends DatabaseTransaction {
 
 	private final Timestamp timestamp = Timestamp.from(Instant.now(DateTimeUtil.CLOCK));
 
-	public DuelLog(Player player, String other, List<Item> staked, List<Item> received, boolean won) {
+	public DuelLog(Player player, Player other, List<Item> staked, List<Item> received, boolean won) {
 		super(TableRepresentation.LOGGING);
 		this.player = player;
 		this.other = other;
@@ -49,12 +49,14 @@ public final class DuelLog extends DatabaseTransaction {
 	@Override
 	public void execute(Connection connection) throws SQLException {
 		try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection,
-		 "INSERT INTO stakes (username, ip_address, uid, other, won, items_staked, items_received, x, y, z, timestamp) "
-			+ "VALUES (:username, :ip_address, :uid, :other, :won, :items_staked, :items_received, :x, :y, :z, :timestamp);")) {
+		 "INSERT INTO stakes (session_id, username, ip_address, uid, other, other_session_id, won, items_staked, items_received, x, y, z, timestamp) "
+			+ "VALUES (:session_id, :username, :ip_address, :uid, :other, other_session_id, :won, :items_staked, :items_received, :x, :y, :z, :timestamp);")) {
+			statement.setLong("session_id", player.getSession().getSessionId());
 			statement.setString("username", player.credentials.username);
 			statement.setString("ip_address", player.getSession().getHost());
 			statement.setString("uid", player.getSession().getUid());
-			statement.setString("other", other);
+			statement.setString("other_id", other.credentials.username);
+			statement.setLong("other_session", other.getSession().getSessionId());
 			statement.setBoolean("won", won);
 			statement.setString("items_staked", GSON.toJson(staked));
 			statement.setString("items_received", GSON.toJson(received));

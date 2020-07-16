@@ -72,8 +72,8 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 	 */
 	public static boolean startTeleport(Player player, Position destination, TeleportType type, boolean force) {
 		if(!force && type == OBELISK) {
-			if(player.getTeleblockTimer().get() > 0) {
-				int time = player.getTeleblockTimer().get() * 600;
+			if(player.playerData.getTeleblockTimer().get() > 0) {
+				int time = player.playerData.getTeleblockTimer().get() * 600;
 				if(time >= 1000 && time <= 60000) {
 					player.message("You must wait approximately " + ((time) / 1000) + " seconds in order to teleport!");
 					return false;

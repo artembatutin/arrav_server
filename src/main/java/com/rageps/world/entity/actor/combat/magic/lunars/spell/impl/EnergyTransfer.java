@@ -36,10 +36,10 @@ public final class EnergyTransfer extends LunarCombatSpell {
 		int hit = (int) ((caster.getCurrentHealth() / 100.0f) * 10.0f);
 		
 		caster.damage(new Hit(hit));
-		caster.toPlayer().getSpecialPercentage().set(0);
+		caster.toPlayer().playerData.getSpecialPercentage().set(0);
 		
 		target.graphic(new Graphic(734, 100));
-		target.getSpecialPercentage().set(100);
+		target.playerData.getSpecialPercentage().set(100);
 		target.setRunEnergy(100);
 		target.message("Your run and special attack energy have been restored by " + caster.toPlayer().getFormatUsername() + ".");
 	}
@@ -60,12 +60,12 @@ public final class EnergyTransfer extends LunarCombatSpell {
 			return false;
 		}
 		
-		if(caster.toPlayer().getSpecialPercentage().get() != 100) {
+		if(caster.toPlayer().playerData.getSpecialPercentage().get() != 100) {
 			caster.toPlayer().message("Your special attack percentage has not fully regenerated yet to cast this spell.");
 			return false;
 		}
 		
-		if(target.getSpecialPercentage().get() == 100 && target.getRunEnergy() == 100) {
+		if(target.playerData.getSpecialPercentage().get() == 100 && target.playerData.getRunEnergy() == 100) {
 			caster.toPlayer().message("This players run and special attack energy are fully replenished already.");
 			return false;
 		}

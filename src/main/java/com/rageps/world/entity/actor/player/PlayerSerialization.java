@@ -459,17 +459,17 @@
 //	}, new Token("antifire-details") {
 //		@Override
 //		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getAntifireDetails().orElse(null));
+//			s.writeVal(p.playerData.getAntifireDetails().orElse(null));
 //		}
 //
 //		@Override
 //		public void fromJson(Player p, Any n) {
-//			p.setAntifireDetail(n.as(AntifireDetails.class));
+//			p.playerData.setAntifireDetail(n.as(AntifireDetails.class));
 //		}
 //	}, new Token("run-energy") {
 //		@Override
 //		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getRunEnergy());
+//			s.writeVal(p.playerData.getRunEnergy());
 //		}
 //
 //		@Override
@@ -479,32 +479,32 @@
 //	}, new Token("special-amount") {
 //		@Override
 //		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getSpecialPercentage().get());
+//			s.writeVal(p.playerData.getSpecialPercentage().get());
 //		}
 //
 //		@Override
 //		public void fromJson(Player p, Any n) {
-//			p.getSpecialPercentage().set(n.toInt());
+//			p.playerData.getSpecialPercentage().set(n.toInt());
 //		}
 //	}, new Token("teleblock-timer") {
 //		@Override
 //		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getTeleblockTimer().get());
+//			s.writeVal(p.playerData.getTeleblockTimer().get());
 //		}
 //
 //		@Override
 //		public void fromJson(Player p, Any n) {
-//			p.getTeleblockTimer().set(n.toInt());
+//			p.playerData.getTeleblockTimer().set(n.toInt());
 //		}
 //	}, new Token("skull-timer") {
 //		@Override
 //		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getSkullTimer().get());
+//			s.writeVal(p.playerData.getSkullTimer().get());
 //		}
 //
 //		@Override
 //		public void fromJson(Player p, Any n) {
-//			p.getSkullTimer().set(n.toInt());
+//			p.playerData.getSkullTimer().set(n.toInt());
 //		}
 //	}, new Token("vengeance") {
 //		@Override

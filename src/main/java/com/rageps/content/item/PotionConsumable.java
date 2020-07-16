@@ -215,13 +215,13 @@ public enum PotionConsumable {
 		
 		@Override
 		public void onEffect(Player player) {
-			int value = 25 + player.getSpecialPercentage().get();
+			int value = 25 + player.playerData.getSpecialPercentage().get();
 			
 			if(value > 100) {
 				value = 100;
 			}
 			
-			player.getSpecialPercentage().set(value);
+			player.playerData.getSpecialPercentage().set(value);
 			player.getSpecialAttackRestoreTimer().reset();
 		}
 	}, ZAMORAK_BREW(2450, 189, 191, 193) {
@@ -555,29 +555,29 @@ public enum PotionConsumable {
 			player.message("You have been cured of your poison!");
 		}
 		if(superPotion) {
-			if(player.getPoisonImmunity().get() <= 0) {
+			if(player.playerData.getPoisonImmunity().get() <= 0) {
 				player.message("You have been granted immunity against poison.");
-				player.getPoisonImmunity().incrementAndGet(length);
+				player.playerData.getPoisonImmunity().incrementAndGet(length);
 				World.get().submit(new Task(50, false) {
 					@Override
 					public void execute() {
-						if(player.getPoisonImmunity().get() <= 0)
+						if(player.playerData.getPoisonImmunity().get() <= 0)
 							this.cancel();
-						if(player.getPoisonImmunity().decrementAndGet(50) <= 50)
+						if(player.playerData.getPoisonImmunity().decrementAndGet(50) <= 50)
 							player.message("Your resistance to poison is about to wear off!");
-						if(player.getPoisonImmunity().get() <= 0)
+						if(player.playerData.getPoisonImmunity().get() <= 0)
 							this.cancel();
 					}
 					
 					@Override
 					public void onCancel() {
 						player.message("Your resistance to poison has worn off!");
-						player.getPoisonImmunity().set(0);
+						player.playerData.getPoisonImmunity().set(0);
 					}
 				}.attach(player));
-			} else if(player.getPoisonImmunity().get() > 0) {
+			} else if(player.playerData.getPoisonImmunity().get() > 0) {
 				player.message("Your immunity against poison has been restored!");
-				player.getPoisonImmunity().set(length);
+				player.playerData.getPoisonImmunity().set(length);
 			}
 		}
 	}
@@ -590,7 +590,7 @@ public enum PotionConsumable {
 	 */
 	private static void onEnergyEffect(Player player, boolean superPotion) {
 		int amount = superPotion ? 100 : 50;
-		player.setRunEnergy(player.getRunEnergy() + amount);
+		player.setRunEnergy(player.playerData.getRunEnergy() + amount);
 		player.out(new SendEnergy());
 	}
 	

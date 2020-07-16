@@ -449,13 +449,13 @@ public abstract class Minigame {
 		player.getCombat().reset(true, true);
 		player.getCombat().getDamageCache().clear();
 		player.getTolerance().reset();
-		player.getSpecialPercentage().set(100);
+		player.playerData.getSpecialPercentage().set(100);
 		player.getPoisonDamage().set(0);
 		player.setRunEnergy(100D);
 		player.out(new SendConfig(301, 0));
 		player.setSpecialActivated(false);
-		player.getSkullTimer().set(0);
-		player.getTeleblockTimer().set(0);
+		player.playerData.getSkullTimer().set(0);
+		player.playerData.getTeleblockTimer().set(0);
 		player.animation(new Animation(65535));
 		player.out(new SendWalkable(-1));
 		Prayer.deactivateAll(player);

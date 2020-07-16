@@ -204,13 +204,13 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		getActor().closeWidget();
 		getActor().getCombat().getDamageCache().clear();
 		getActor().getTolerance().reset();
-		getActor().getSpecialPercentage().set(100);
+		getActor().playerData.getSpecialPercentage().set(100);
 		getActor().out(new SendConfig(301, 0));
 		getActor().setSpecialActivated(false);
-		getActor().getSkullTimer().set(0);
+		getActor().playerData.getSkullTimer().set(0);
 		getActor().setRunEnergy(100);
-		getActor().setAntifireDetail(Optional.empty());
-		getActor().getTeleblockTimer().set(0);
+		getActor().playerData.setAntifireDetail(Optional.empty());
+		getActor().playerData.getTeleblockTimer().set(0);
 		getActor().animation(new Animation(65535));
 		WeaponInterface.execute(getActor(), getActor().getEquipment().get(Equipment.WEAPON_SLOT));
 		if(deathMessage) {
@@ -286,7 +286,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		if(drop.size() > 0) {
 			player.getEquipment().clear();
 			player.getInventory().clear();
-			int amount = dropAll ? 0 : player.getSkullTimer().get() > 0 ? 0 : 3;
+			int amount = dropAll ? 0 : player.playerData.getSkullTimer().get() > 0 ? 0 : 3;
 			if(Prayer.isActivated(player, Prayer.PROTECT_ITEM) || Prayer.isActivated(player, Prayer.CURSES_PROTECT_ITEM)) {
 				if(!dropAll) {
 					amount++;

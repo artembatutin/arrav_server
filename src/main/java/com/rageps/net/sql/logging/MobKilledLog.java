@@ -45,8 +45,9 @@ public final class MobKilledLog extends DatabaseTransaction {
 	@Override
 	public void execute(Connection connection) throws SQLException {
 		try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection,
-		 "INSERT INTO npc_deaths (killer, ip_address, uid, npc_name, npc_id, items_dropped, x, y, z, timestamp) "
-			+ "VALUES (:killer, :ip_address, :uid, :npc_name, :npc_id, :items_dropped, :x, :y, :z, :timestamp);")) {
+		 "INSERT INTO npc_deaths (session_id, killer, ip_address, uid, npc_name, npc_id, items_dropped, x, y, z, timestamp) "
+			+ "VALUES (:session_id, :killer, :ip_address, :uid, :npc_name, :npc_id, :items_dropped, :x, :y, :z, :timestamp);")) {
+			statement.setLong("session_id", player.getSession().getSessionId());
 			statement.setString("killer", player.credentials.username);
 			statement.setString("ip_address", player.getSession().getHost());
 			statement.setString("uid", player.getSession().getUid());

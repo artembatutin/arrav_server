@@ -220,7 +220,7 @@ public enum FoodConsumable {
 		@Override
 		public void onEffect(Player player) {
 			super.onEffect(player);
-			player.setRunEnergy(player.getRunEnergy() * 0.20);
+			player.setRunEnergy(player.playerData.getRunEnergy() * 0.20);
 			Skill skill = player.getSkills()[Skills.AGILITY];
 			if(skill.getCurrentLevel() >= (skill.getRealLevel() + 5)) {
 				return;

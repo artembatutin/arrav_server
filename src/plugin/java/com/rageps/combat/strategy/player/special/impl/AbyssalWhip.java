@@ -31,12 +31,12 @@ public final class AbyssalWhip extends PlayerMeleeStrategy {
 			//Gathering the oponent's running energy.
 			final Player victimPlayer = target.toPlayer();
 			double energy = 0;
-			if(victimPlayer.getRunEnergy() != 0)
-				energy = victimPlayer.getRunEnergy() / 4;
+			if(victimPlayer.playerData.getRunEnergy() != 0)
+				energy = victimPlayer.playerData.getRunEnergy() / 4;
 			
 			//Decreasing oponent's energy and increasing the attacker's energy.
-			victimPlayer.setRunEnergy(victimPlayer.getRunEnergy() - energy);
-			player.setRunEnergy(player.getRunEnergy() + energy);
+			victimPlayer.setRunEnergy(victimPlayer.playerData.getRunEnergy() - energy);
+			player.setRunEnergy(player.playerData.getRunEnergy() + energy);
 		}
 	}
 	

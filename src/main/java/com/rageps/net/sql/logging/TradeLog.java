@@ -46,12 +46,14 @@ public final class TradeLog extends DatabaseTransaction {
 	@Override
 	public void execute(Connection connection) throws SQLException {
 		try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection,
-		 "INSERT INTO trades (username, ip_address, uid, other, items_gave, items_received, x, y, z, timestamp) "
-			+ "VALUES (:username, :ip_address, :uid, :other, :items_gave, :items_received, :x, :y, :z, :timestamp);")) {
+		 "INSERT INTO trades (session_id, username, ip_address, uid, other, other_session_id, items_gave, items_received, x, y, z, timestamp) "
+			+ "VALUES (session_id, :username, :ip_address, :uid, :other, :other_session_id, :items_gave, :items_received, :x, :y, :z, :timestamp);")) {
+			statement.setLong("session_id", player.getSession().getSessionId());
 			statement.setString("username", player.credentials.username);
 			statement.setString("ip_address", player.getSession().getHost());
 			statement.setString("uid", player.getSession().getUid());
 			statement.setString("other", other);
+			statement.setLong("other_session_id", player.getSession().getSessionId());
 			statement.setString("items_gave", GSON.toJson(gave));
 			statement.setString("items_received", GSON.toJson(received));
 			statement.setInt("x", position.getX());

@@ -46,8 +46,9 @@ public class ReceiveRewardLog extends DatabaseTransaction {
 	@Override
 	public void execute(Connection connection) throws SQLException {
 		try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection,
-		 "INSERT INTO received_rewards (username, ip_address, uid, reward_type, items, x, y, z, timestamp) "
-			+ "VALUES (:username, :ip_address, :uid, :reward_type, :items, :x, :y, :z, :timestamp);")) {
+		 "INSERT INTO received_rewards (session_id, username, ip_address, uid, reward_type, items, x, y, z, timestamp) "
+			+ "VALUES (:session_id, :username, :ip_address, :uid, :reward_type, :items, :x, :y, :z, :timestamp);")) {
+			statement.setLong("session_id", player.getSession().getSessionId());
 			statement.setString("username", player.credentials.username);
 			statement.setString("ip_address", player.getSession().getHost());
 			statement.setString("uid", player.getSession().getUid());
