@@ -37,28 +37,25 @@ public class ClanChannel implements Comparable<ClanChannel> {
 	private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 
 	/** The clan channel details. */
-	private ClanDetails details = new ClanDetails(this);
+	public ClanDetails details = new ClanDetails(this);
 
 	/** The clan channel management tab panel. */
-	private ClanManagement management = new ClanManagement(this);
+	public ClanManagement management = new ClanManagement(this);
 
 	/** The clan channel showcase items. */
-	private ClanShowcase showcase = new ClanShowcase(this);
+	public ClanShowcase showcase = new ClanShowcase(this);
 
 	/** The clan channel handler. */
 	private ClanChannelHandler handler = new ClanChannelHandler(this);
 
 	/** The clan channel member set. */
-	private final Set<ClanMember> members = new HashSet<>();
+	public final Set<ClanMember> members = new HashSet<>();
 
 	/** A list of banned members. */
-	final List<String> bannedMembers = new ArrayList<>();
+	public final List<String> bannedMembers = new ArrayList<>();
 
 	/** The total active logged in members. */
-	private int active;
-
-	private ClanChannel() {
-	}
+	public int active;
 
 	public static ClanChannel create(Player player) {
 		if (ClanRepository.getChannel(player.credentials.username) != null) {
@@ -73,8 +70,8 @@ public class ClanChannel implements Comparable<ClanChannel> {
 		channel.details.established = DateTimeUtil.getSimpleDate();
 		channel.details.type = ClanType.SOCIAL;
 		channel.details.level = ClanLevel.BRONZE;
-		channel.showcase.showcase = showcase;
-		Arrays.stream(showcase).forEach(i -> channel.showcase.showcaseItems.add(i));
+		//channel.showcase.showcase = showcase;
+		//Arrays.stream(showcase).forEach(i -> channel.showcase.showcaseItems.add(i));
 		channel.connect(player);
 		ClanRepository.addChannel(channel);
 		ClanRepository.ALLTIME.add(channel);
@@ -488,21 +485,29 @@ public class ClanChannel implements Comparable<ClanChannel> {
 	}
 
 	public Item[] getShowcaseItems() {
-		Item[] items = new Item[showcase.showcase.length];
-		int count = 0;
-		for (int iem : showcase.showcase) {
-			items[count] = new Item(iem, 1);
-			if (items[count].getDefinition().isStackable()) {
-				items[count].setAmount(250);
-			}
-			count++;
-		}
-		return items;
+		//Item[] items = new Item[showcase.showcase.length];
+		//int count = 0;
+		//
+		//for (int iem : showcase.showcase) {
+		//	items[count] = new Item(iem, 1);
+		//	if (items[count].getDefinition().isStackable()) {
+		//		items[count].setAmount(250);
+		//	}
+		//	count++;
+		//}
+		//return items;
+		return showcase.showcase;
 	}
 
 	public void setColor(String color) {
 		management.color = color;
 	}
+
+
+	public ClanChannel() {
+
+	}
+
 
 	public JsonObject toJson() {
 		JsonObject object = new JsonObject();
@@ -594,11 +599,12 @@ public class ClanChannel implements Comparable<ClanChannel> {
 				channel.management.locked = object.get("locked").getAsBoolean();
 				channel.management.lootshare = object.get("lootshare").getAsBoolean();
 				channel.management.loadRanks(object);
-				channel.showcase.showcase = GSON.fromJson(object.get("showcase"), int[].class);
+
+				//channel.showcase.showcase = GSON.fromJson(object.get("showcase"), int[].class);
 
 				JsonArray array = object.get("showcase-items").getAsJsonArray();
 				for (JsonElement element : array) {
-					channel.showcase.showcaseItems.add(element.getAsInt());
+					//channel.showcase.showcaseItems.add(element.getAsInt());
 				}
 
 				array = object.get("banned-members").getAsJsonArray();

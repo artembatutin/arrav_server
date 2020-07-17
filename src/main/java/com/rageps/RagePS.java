@@ -6,7 +6,9 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.rageps.action.impl.*;
 import com.rageps.combat.strategy.MobCombatStrategyManager;
 import com.rageps.combat.strategy.PlayerWeaponStrategyManager;
+import com.rageps.content.clanchannel.ClanRepository;
 import com.rageps.content.event.GameEventManager;
+import com.rageps.net.sql.clan.ClanLoaderTransaction;
 import com.rageps.util.Utility;
 import com.rageps.util.json.impl.*;
 import com.rageps.world.World;
@@ -206,7 +208,7 @@ public final class RagePS {
 		});
 		launch.execute(new AreaMultiLoader());
 		launch.execute(new ShopLoader());
-//		launch.execute(new ClanChatLoader());
+		launch.execute(ClanRepository::loadChannels);
 		launch.execute(new WeaponPoisonLoader());
 		launch.execute(new PacketOpcodeLoader());
 		launch.execute(new PacketSizeLoader());

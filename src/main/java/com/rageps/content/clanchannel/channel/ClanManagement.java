@@ -30,21 +30,21 @@ public class ClanManagement {
 	public String password = "";
 
 	/** The clan slogan. */
-	String slogan = "";
+	public String slogan = "";
 
 	/** The clan forum link. */
-	String forum = "";
+	public String forum = "";
 
 	/** The clan tag. */
-	String tag = "";
+	public String tag = "";
 
-	String color = "<col=ffffff>";
+	public String color = "<col=ffffff>";
 
 	/** The locked state of the clan. */
 	public boolean locked;
 
 	/** The lootshare state of the clan. */
-	boolean lootshare;
+	public boolean lootshare;
 
 	/** The channel to manage. */
 	private final ClanChannel channel;

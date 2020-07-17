@@ -1,6 +1,6 @@
 CREATE DATABASE IF NOT EXISTS `rage_game`;
 
-USE `game_server`;
+USE `rage_game`;
 
 CREATE TABLE IF NOT EXISTS `bought_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

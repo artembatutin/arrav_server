@@ -21,6 +21,15 @@ public enum ClanRank {
 		this.rank = rank;
 	}
 
+	public static ClanRank of(int id) {
+		for (ClanRank value : VALUES) {
+			if(value.rank == id)
+				return value;
+		}
+		throw new UnsupportedOperationException("Out of rank bounds");
+	}
+
+	public static ClanRank[] VALUES = values();
 	public boolean lessThan(ClanRank other) {
 		return rank < other.rank;
 	}

@@ -4,11 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rageps.content.clanchannel.channel.ClanChannel;
 import com.rageps.content.clanchannel.content.ClanViewer;
+import com.rageps.net.sql.clan.ClanLoaderTransaction;
+import com.rageps.world.World;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -114,24 +118,38 @@ public class ClanRepository {
 
 	/** Loads all clans and puts them into the map. */
 	public static void loadChannels() {
-		Path path = Paths.get("./data/content/clan/");
-		File[] files = path.toFile().listFiles();
+//		Path path = Paths.get("./data/content/clan/");
+//		File[] files = path.toFile().listFiles();
+//
+//		if (files == null) {
+//			return;
+//		}
+//
+//		for (File file : files) {
+//			/*
+//			 * ClanChannel channel = ClanChannel.fromJson(file.getName().replace(".json",
+//			 * "")); if (channel != null) { if (!channel.getTag().isEmpty())
+//			 * ACTIVE_TAGS.add(channel.getTag()); if (!channel.getName().isEmpty())
+//			 * ACTIVE_NAMES.add(channel.getName()); ALLTIME.add(channel);
+//			 * CHANNELS.put(channel.getOwner().toLowerCase().trim(), channel); }
+//			 */
+//
+//			ClanChannel.load(file.getName().replace(".json", ""));
+//		}
 
-		if (files == null) {
-			return;
+		long start = System.currentTimeMillis();
+		ClanLoaderTransaction clanLoaderTransaction = new ClanLoaderTransaction();
+		ObjectArrayList<ClanChannel> channels = clanLoaderTransaction.onExecute(clanLoaderTransaction.getRepresentation().getWrapper().open());
+		for (ClanChannel channel : channels) {
+			if (!channel.getTag().isEmpty())
+				ACTIVE_TAGS.add(channel.getTag());
+			if (!channel.getName().isEmpty())
+				ACTIVE_NAMES.add(channel.getName());
+			ALLTIME.add(channel);
+			addChannel(channel);
 		}
-
-		for (File file : files) {
-			/*
-			 * ClanChannel channel = ClanChannel.fromJson(file.getName().replace(".json",
-			 * "")); if (channel != null) { if (!channel.getTag().isEmpty())
-			 * ACTIVE_TAGS.add(channel.getTag()); if (!channel.getName().isEmpty())
-			 * ACTIVE_NAMES.add(channel.getName()); ALLTIME.add(channel);
-			 * CHANNELS.put(channel.getOwner().toLowerCase().trim(), channel); }
-			 */
-
-			ClanChannel.load(file.getName().replace(".json", ""));
-		}
+		long finish = System.currentTimeMillis() -  start;
+		World.getLogger().info("Loaded {} clans in {}", channels.size(), finish);
 	}
 
 	public static Optional<Set<ClanChannel>> getTopChanels(ClanType type) {
