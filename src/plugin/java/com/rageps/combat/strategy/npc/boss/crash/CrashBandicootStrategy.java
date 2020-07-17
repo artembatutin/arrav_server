@@ -9,14 +9,10 @@ import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.mob.Mob;
-import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import javafx.geometry.Pos;
 
-import java.util.Optional;
 
 /**
  * @author Tamatea <tamateea@gmail.com>

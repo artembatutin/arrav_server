@@ -23,6 +23,18 @@ public final class DatabaseTransactionWorker implements Runnable {
 
 	private final BlockingDeque<DatabaseTransaction> transactions = new LinkedBlockingDeque<>();
 
+
+	public DatabaseTransactionWorker() {
+		for (TableRepresentation value : TableRepresentation.values()) {
+			try {
+				value.getWrapper().open().close();
+			} catch (Exception e) {
+				logger.fatal("ERROR connecting to database!! db: {}", value.name(), e);
+				System.exit(1);
+			}
+		}
+	}
+
 	public void submit(DatabaseTransaction transaction) {
 		if (!World.get().getEnvironment().isSqlEnabled()) {
 			return;
