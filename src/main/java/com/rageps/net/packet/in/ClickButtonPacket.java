@@ -154,10 +154,10 @@ public final class ClickButtonPacket implements IncomingPacket {
 				else
 					player.out(new SendEnterName("Your clan chat name:", t -> () -> ClanManager.get().create(player, t)));
 				break;*/
-			case 83093:
+			case 21341://equipment screen
 				player.widget(15106);
 				break;
-			/*case 195209:
+			/*case 195209: todo reimplement
 				if(player.getClan().isPresent())
 					ClanManager.get().exit(player);
 				else

@@ -31,7 +31,7 @@ public class LogoutButton extends ActionInitializer {
 				return true;
 			}
 		};
-		e.register(9154);
+		e.register(2458);
 	}
 
 }

@@ -8,16 +8,27 @@ import com.rageps.net.packet.OutgoingPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.ItemContainer;
+import com.rageps.world.entity.item.container.impl.Bank;
 import io.netty.buffer.ByteBuf;
+
+import java.util.Arrays;
 
 public final class SendContainer implements OutgoingPacket {
 	
 	private final int id;
 	private final ItemContainer container;
+	private final int[] containerAmounts;
 	
 	public SendContainer(int id, ItemContainer container) {
 		this.id = id;
 		this.container = container;
+		containerAmounts = null;
+	}
+
+	public SendContainer(int id, int[] containerAmounts, ItemContainer container) {
+		this.id = id;
+		this.container = container;
+		this.containerAmounts =  containerAmounts;
 	}
 	
 	@Override
@@ -63,6 +74,12 @@ public final class SendContainer implements OutgoingPacket {
 				}
 			}
 		}
+				if (id == Bank.BANK_INVENTORY_ID && containerAmounts != null) {
+					for (final int amount : containerAmounts) {
+						out.put(amount >> 8);
+						out.putShort(amount & 0xFF);
+					}
+				}
 		out.endVarSize();
 		return out;
 	}

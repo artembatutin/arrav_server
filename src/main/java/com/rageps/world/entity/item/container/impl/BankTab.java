@@ -238,7 +238,7 @@ final class BankTab extends ItemContainer {
 		
 		@Override
 		public int widget() {
-			return Bank.BANK_INVENTORY_ID + slot;
+			return 270 + slot;
 		}
 		
 		@Override

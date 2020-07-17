@@ -18,7 +18,7 @@ public class BankingButton extends ActionInitializer {
 				return true;
 			}
 		};
-		e.register(82018);
+		e.register(60008);
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
@@ -26,16 +26,7 @@ public class BankingButton extends ActionInitializer {
 				return true;
 			}
 		};
-		e.register(58025);
-		e.register(58026);
-		e.register(58027);
-		e.register(58028);
-		e.register(58029);
-		e.register(58030);
-		e.register(58031);
-		e.register(58032);
-		e.register(58033);
-		e.register(58034);
+		e.register(60074);
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
@@ -43,7 +34,7 @@ public class BankingButton extends ActionInitializer {
 				return true;
 			}
 		};
-		e.register(231047);
+		e.register(60011);
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
@@ -51,7 +42,7 @@ public class BankingButton extends ActionInitializer {
 				return true;
 			}
 		};
-		e.register(231043);
+		//e.register(60007);
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
@@ -62,7 +53,7 @@ public class BankingButton extends ActionInitializer {
 				return true;
 			}
 		};
-		e.register(231041);
+		e.register(60007);
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
@@ -72,16 +63,25 @@ public class BankingButton extends ActionInitializer {
 				return true;
 			}
 		};
-		e.register(231037);
+		e.register(60006);
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.getBank().setTab(button - 100);
+				int tab = (button - 60032) / 4;
+				player.getBank().setTab(tab);
 				return true;
 			}
 		};
-		for(int i = 100; i <= 109; i++)
-			e.register(i);
+		e.register(60032);
+		e.register(60036);
+		e.register(60040);
+		e.register(60044);
+		e.register(60048);
+		e.register(60052);
+		e.register(60056);
+		e.register(60060);
+		e.register(60064);
+		e.register(60068);
 	}
 	
 }

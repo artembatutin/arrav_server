@@ -23,7 +23,7 @@ public final class Bank {
 	/**
 	 * The bank window id.
 	 */
-	public static final int BANK_WINDOW_ID = 5292;
+	public static final int BANK_WINDOW_ID = 60_000;
 
 	/**
 	 * The sidebar id.
@@ -122,7 +122,7 @@ public final class Bank {
 		player.out(new SendConfig(116, player.getAttributeMap().getBoolean(PlayerAttributes.INSERT_ITEM) ? 1 : 0));
 		player.getInterfaceManager().openInventory(BANK_WINDOW_ID, SIDEBAR_ID);
 		player.out(new SendContainer(SIDEBAR_INVENTORY_ID, this.player.getInventory()));
-		player.out(new SendContainer(BANK_INVENTORY_ID, bank.tabs[0]));
+		//player.out(new SendContainer(BANK_INVENTORY_ID, bank.tabs[0]));
 		viewing = Optional.of(p);
 
 		updateViewer(player, bank, false);
@@ -140,8 +140,8 @@ public final class Bank {
 				continue;
 			}
 
-			//viewing.out(new SendContainer(270 + i, bank.tabs[i]));
-			viewing.out(new SendContainer(BANK_INVENTORY_ID, bank.tabs[i]));
+			viewing.out(new SendContainer(270 + i, bank.tabs[i]));
+			//viewing.out(new SendContainer(BANK_INVENTORY_ID, bank.tabs[i]));
 		}
 	}
 
