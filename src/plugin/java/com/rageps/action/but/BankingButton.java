@@ -42,7 +42,7 @@ public class BankingButton extends ActionInitializer {
 				return true;
 			}
 		};
-		//e.register(60007);
+		e.register(60014);
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
@@ -53,7 +53,7 @@ public class BankingButton extends ActionInitializer {
 				return true;
 			}
 		};
-		e.register(60007);
+		e.register(60074);
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {

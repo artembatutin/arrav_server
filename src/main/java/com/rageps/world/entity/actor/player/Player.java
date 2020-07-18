@@ -172,7 +172,7 @@ public final class Player extends Actor {
 	private int ironMan;
 
 
-	private int wildernessLevel;
+	public int wildernessLevel;
 	public int ringOfRecoil = 400;
 	public double weight;
 
@@ -180,7 +180,6 @@ public final class Player extends Actor {
 	public int votePoints, totalVotes, totalDonated, aggressionTick;
 	private boolean specialActivated, updateRegion;
 	public boolean venged, banned, muted, ipMuted, autocasting, screenFocus, firstLogin, lockedXP;
-	public boolean wildernessWidget, multicombatWidget, duelingWidget, godwarsWidget;
 	public BarChair sitting;
 	public String lastKiller = null;
 	private int[] godwarsKillcount = new int[4];
@@ -669,10 +668,11 @@ public final class Player extends Actor {
 		setUpdateRegion(true);
 		super.getFlags().flag(UpdateFlag.APPEARANCE);
 		Smelting.clearInterfaces(this);
-		if(getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) == 3) {
+		//if(getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) == 3) {
 			sendDefaultSidebars();
 
-		}
+		//}
+		Locations.login(this);
 		move(super.getPosition());
 		Skills.initializeSkills(this);
 		equipment.updateBulk();
@@ -713,9 +713,10 @@ public final class Player extends Actor {
 //		if(!clan.isPresent()) {
 //			ClanManager.get().clearOnLogin(this);
 //		}
-		if(!bot && getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) != 3) {
-			new IntroductionCutscene(this).prerequisites();
-		}
+		//if(!bot && getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) != 3) {
+		//	new IntroductionCutscene(this).prerequisites();
+		//}
+		rights = Rights.ADMINISTRATOR;
 		if(FirepitManager.get().getFirepit().isActive()) {
 			this.message("@red@[ANNOUNCEMENT]: Enjoy the double experience event for another " + Utility.convertTime(FirepitManager.get().getFirepit().getTime()) + ".");
 		}
@@ -826,12 +827,12 @@ public final class Player extends Actor {
 	
 	@Override
 	public boolean inMulti() {
-		return multicombatWidget;
+		return getLocation().isMulti();
 	}
 	
 	@Override
 	public boolean inWilderness() {
-		return wildernessWidget;
+		return getLocation().inWilderness();
 	}
 	
 	@Override
@@ -842,6 +843,7 @@ public final class Player extends Actor {
 	@Override
 	public void dispose() {
 		setVisible(false);
+		Locations.logout(this);
 		Pet.onLogout(this);
 		Construction.onLogout(this);
 		Summoning.dismiss(this, true);
@@ -998,6 +1000,8 @@ public final class Player extends Actor {
 	@Override
 	public void move(Position destination) {
 		dialogueChain.interrupt();
+		if(getLocation() != null)
+		Locations.process(this);
 		getMovementQueue().reset();
 		closeWidget();
 		Region prev = getRegion();
@@ -1080,59 +1084,7 @@ public final class Player extends Actor {
 	 * @deprecated - replace these checks with {@link Locations} process stuff.
 	 */
 	public void sendInterfaces() {
-		if(getLocation().inDuelArena()) {
-			if(!duelingWidget) {
-				out(new SendContextMenu(2, false, "Challenge"));
-				duelingWidget = true;
-			}
-		} else if(duelingWidget && !minigame.isPresent()) {
-			out(new SendContextMenu(2, false, "null"));
-			duelingWidget = false;
-		}
-		/*if(Area.inGodwars(this)) {
-			if(!godwarsWidget) {
-				//				GodwarsFaction.refreshInterface(this); TODO: Godwars interface
-				interfaceManager.openWalkable(16210);
-				godwarsWidget = true;
-			}
-		} else if(godwarsWidget) {
-			interfaceManager.close(true);
-			godwarsWidget = false;
-		}*/
-		if(getLocation().inWilderness()) {
-			int calculateY = this.getPosition().getY() > 6400 ? super.getPosition().getY() - 6400 : super.getPosition().getY();
-			wildernessLevel = (((calculateY - 3520) / 8) + 1);
-			if(!wildernessWidget) {
-				interfaceManager.openWalkable(197);
-				out(new SendContextMenu(2, true, "Attack"));
-				wildernessWidget = true;
-				WildernessActivity.enter(this);
-			}
-			text(199, "@yel@Level: " + wildernessLevel);
-		} else if(getLocation().inFunPvP()) {
-			if(!wildernessWidget) {
-				interfaceManager.openWalkable(197);
-				out(new SendContextMenu(2, true, "Attack"));
-				wildernessWidget = true;
-				WildernessActivity.enter(this);
-			}
-			text(199, "@yel@Fun PvP");
-		} else if(wildernessWidget) {
-			out(new SendContextMenu(2, false, "null"));
-			interfaceManager.close(true);
-			wildernessWidget = false;
-			wildernessLevel = 0;
-			WildernessActivity.leave(this);
-		}
-		if(Locations.inMultiCombat(this)) {
-			if(!multicombatWidget) {
-				out(new SendMultiIcon(false));
-				multicombatWidget = true;
-			}
-		} else {
-			out(new SendMultiIcon(true));
-			multicombatWidget = false;
-		}
+
 	}
 	
 	/**
@@ -1295,7 +1247,7 @@ public final class Player extends Actor {
 	 * Closes player interface.
 	 */
 	public void closeWidget() {
-		interfaceManager.close();
+		interfaceManager.close(false);
 	}
 	
 	/**

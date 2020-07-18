@@ -41,7 +41,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 	/**
 	 * The flag that determines if this message should be read properly.
 	 */
-	private static final boolean PROPER_READ = false;
+	private static final boolean PROPER_READ = true;
 	
 	private static int hexToInt(byte[] data) {
 		int value = 0;

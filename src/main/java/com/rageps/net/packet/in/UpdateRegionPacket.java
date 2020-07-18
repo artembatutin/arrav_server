@@ -1,5 +1,6 @@
 package com.rageps.net.packet.in;
 
+import com.rageps.world.locale.loc.Locations;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
@@ -21,7 +22,7 @@ public final class UpdateRegionPacket implements IncomingPacket {
 	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		if(player.isUpdateRegion()) {
 			World.getRegions().updateRegionObjects(player);
-			player.sendInterfaces();
+			Locations.process(player);
 			player.getTolerance().reset();
 			player.setUpdates(false, false);
 			player.setUpdateRegion(false);

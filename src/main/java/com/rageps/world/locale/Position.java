@@ -5,7 +5,7 @@ import com.jsoniter.annotation.JsonProperty;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.Direction;
 import com.rageps.world.locale.loc.Area;
-import com.rageps.world.locale.loc.Location;
+import com.rageps.world.locale.loc.Locations;
 
 /**
  * The container class that represents a coordinate anywhere in the world.
@@ -473,7 +473,7 @@ public class Position {
 		return area.inArea(this);
 	}
 
-	public boolean inside(Location area) {
+	public boolean inside(Locations.Location area) {
 		return area.getArea().inArea(this);
 	}
 }

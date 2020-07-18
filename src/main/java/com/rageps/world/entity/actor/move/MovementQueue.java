@@ -11,6 +11,7 @@ import com.rageps.task.Task;
 import com.rageps.world.Direction;
 import com.rageps.world.entity.EntityType;
 import com.rageps.world.entity.actor.Actor;
+import com.rageps.world.locale.loc.Locations;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -102,14 +103,14 @@ public final class MovementQueue {
 			character.setLastDirection(walkPoint.getDirection());
 			
 			if(character.isPlayer()) {
-				character.toPlayer().sendInterfaces();
+				Locations.process(character);
 			}
 		}
 		
 		if(runPoint != null && runPoint.getDirection() != Direction.NONE) {
 			int x = runPoint.getDirection().getX();
 			int y = runPoint.getDirection().getY();
-			//boolean traversable = TraversalMap.isTraversable(character.getPosition(), runPoint.getDirection(), character.size());
+			//boolean traversable = TraversalMap.isTraversable(character.getPosition(), runPoint.getDirection(), character.size()); todo disable
 			//if(!traversable) {
 			//	reset();
 			//	return;
@@ -132,7 +133,7 @@ public final class MovementQueue {
 						double weightFactor = (weight > 1.371D ? (int) weight * 0.00729166D : 0.0D);
 						weightFactor = Math.round(weightFactor * 100.0D) / 100.0D;
 						player.setRunEnergy(player.playerData.getRunEnergy() - (drainRate + weightFactor));
-						player.sendInterfaces();
+						//player.sendInterfaces(); todo should we be sending interface?
 						player.out(new SendEnergy());
 					} else {
 						running = false;

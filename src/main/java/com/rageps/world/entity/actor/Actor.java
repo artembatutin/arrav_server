@@ -23,7 +23,7 @@ import com.rageps.util.MutableNumber;
 import com.rageps.util.Stopwatch;
 import com.rageps.world.entity.Entity;
 import com.rageps.world.entity.EntityType;
-import com.rageps.world.locale.loc.Location;
+import com.rageps.world.locale.loc.Locations;
 
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -154,7 +154,7 @@ public abstract class Actor extends Entity {
 	/**
 	 * The current location	of this entity.
 	 */
-	private Location location;
+	private Locations.Location location;
 	
 	/**
 	 * The current coordinates being face by this entity.
@@ -1038,7 +1038,11 @@ public abstract class Actor extends Entity {
 		return this.toPlayer().credentials.username;
 	}
 
-    public Location getLocation() {
+    public Locations.Location getLocation() {
 		return location;
+	}
+
+	public void setLocation(Locations.Location location) {
+		this.location = location;
 	}
 }

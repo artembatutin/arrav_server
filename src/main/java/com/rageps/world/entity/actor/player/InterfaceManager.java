@@ -5,6 +5,7 @@ import com.rageps.content.TabInterface;
 import com.rageps.content.market.MarketShop;
 import com.rageps.net.packet.out.*;
 import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
+import com.rageps.world.locale.loc.Locations;
 
 /**
  * Contains information about the state of interfaces enter in the client.
@@ -29,6 +30,8 @@ public class InterfaceManager {
 	private int dialogue = -1;
 
 	private int[] sidebars = new int[16];
+
+	private boolean wildernessWidgetOpen, duelingWidgetOpen, multiWidgetopen;
 
 	/** Creates a new <code>InterfaceManager<code>. */
 	InterfaceManager(Player player) {
@@ -77,6 +80,7 @@ public class InterfaceManager {
 
 	/** Opens a walkable-itemcontainer for the player. */
 	public void openWalkable(int identification) {
+		System.out.println(identification);
 		if (walkable == identification) {
 			return;
 		}
@@ -101,7 +105,7 @@ public class InterfaceManager {
 	}
 
 	/** Clears the player's screen. */
-	public void close() {
+	public void clearScreen() {
 		close(true);
 	}
 
@@ -143,6 +147,14 @@ public class InterfaceManager {
 		if (walkableFlag) {
 			walkable = -1;
 		}
+	}
+
+	public void handleMultiWidget() {
+			player.out(new SendMultiIcon(!player.getLocation().isMulti()));
+	}
+
+	public void handleDuelWidget() {
+
 	}
 
 	/** Checks if a certain interface is enter. */
@@ -213,5 +225,29 @@ public class InterfaceManager {
 			}
 		}
 		return false;
+	}
+
+	public void setWildernessWidget(boolean wildernessWidgetOpen) {
+		this.wildernessWidgetOpen = wildernessWidgetOpen;
+	}
+
+	public void setDuelingWidget(boolean duelingWidgetOpen) {
+		this.duelingWidgetOpen = duelingWidgetOpen;
+	}
+
+	public void setMultiWidget(boolean multiWidgetopen) {
+		this.multiWidgetopen = multiWidgetopen;
+	}
+
+	public boolean isWildernessWidgetOpen() {
+		return wildernessWidgetOpen;
+	}
+
+	public boolean isDuelingWidgetOpen() {
+		return duelingWidgetOpen;
+	}
+
+	public boolean isMultiWidgetopen() {
+		return multiWidgetopen;
 	}
 }
