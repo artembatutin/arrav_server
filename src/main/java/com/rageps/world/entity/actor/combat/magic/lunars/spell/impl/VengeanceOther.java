@@ -36,7 +36,7 @@ public final class VengeanceOther extends LunarCombatSpell {
 		player.message(caster.toPlayer().getFormatUsername() + " has casted vengeance on you. ");
 		
 		player.graphic(new Graphic(725, 100));
-		player.venged = true;
+		player.playerData.venged = true;
 		player.getCombat().addListener(VengeanceListener.get());
 	}
 	
@@ -55,7 +55,7 @@ public final class VengeanceOther extends LunarCombatSpell {
 			return false;
 		}
 		
-		if(player.venged) {
+		if(player.playerData.venged) {
 			caster.toPlayer().message(player.getFormatUsername() + " already has a vengeance spell casted...");
 			return false;
 		}

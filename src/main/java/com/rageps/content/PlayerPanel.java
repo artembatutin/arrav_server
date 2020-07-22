@@ -76,9 +76,9 @@ public enum PlayerPanel {
 	EXP_LOCK() {
 		@Override
 		public void onClick(Player player) {
-			player.lockedXP = !player.lockedXP;
-			player.message("Your experience is now : " + (player.lockedXP ? "Locked" : "Unlocked"));
-			this.refresh(player, "@or3@ - Experience Lock: @yel@" + (player.lockedXP ? "@gre@yes" : "@red@no"));
+			player.playerData.lockedXP = !player.playerData.lockedXP;
+			player.message("Your experience is now : " + (player.playerData.lockedXP ? "Locked" : "Unlocked"));
+			this.refresh(player, "@or3@ - Experience Lock: @yel@" + (player.playerData.lockedXP ? "@gre@yes" : "@red@no"));
 		}
 	},
 	NPC_TOOL() {
@@ -219,7 +219,7 @@ public enum PlayerPanel {
 		PlayerPanel.DISCORD.refresh(player, "@or3@ - Discord");
 		PlayerPanel.VOTE.refresh(player, "@or3@ - Vote points: @yel@" + player.votePoints + " points", true);
 		PlayerPanel.STORE.refresh(player, "@or3@ - Store");
-		PlayerPanel.EXP_LOCK.refresh(player, "@or3@ - Experience Lock: @yel@" + (player.lockedXP ? "@gre@yes" : "@red@no"));
+		PlayerPanel.EXP_LOCK.refresh(player, "@or3@ - Experience Lock: @yel@" + (player.playerData.lockedXP ? "@gre@yes" : "@red@no"));
 		PlayerPanel.NPC_TOOL.refresh(player, "@or3@ - Monster Database");
 		
 		PlayerPanel.SERVER_STATISTICS.refresh(player, "@or1@Server Information:");
@@ -240,10 +240,10 @@ public enum PlayerPanel {
 		PlayerPanel.TOTAL_VOTES.refresh(player, "@or2@ - Total votes: @yel@" + player.totalVotes);
 		
 		PlayerPanel.MONSTER_HEADER.refresh(player, "@or1@Killing Statistics:");
-		PlayerPanel.HIGHEST_KILLSTREAK.refresh(player, "@or2@ - Highest killstreak: @yel@" + player.getHighestKillstreak().get());
-		PlayerPanel.CURRENT_KILLSTREAK.refresh(player, "@or2@ - Current killstreak: @yel@" + player.getCurrentKillstreak().get());
-		PlayerPanel.TOTAL_PLAYER_KILLS.refresh(player, "@or2@ - Killed players: @yel@" + player.getPlayerKills().get());
-		PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(player, "@or2@ - Killed by players: @yel@" + player.getDeathsByPlayer().get());
+		//PlayerPanel.HIGHEST_KILLSTREAK.refresh(player, "@or2@ - Highest killstreak: @yel@" + player.getHighestKillstreak().get());
+		//PlayerPanel.CURRENT_KILLSTREAK.refresh(player, "@or2@ - Current killstreak: @yel@" + player.getCurrentKillstreak().get());
+		//PlayerPanel.TOTAL_PLAYER_KILLS.refresh(player, "@or2@ - Killed players: @yel@" + player.getPlayerKills().get());
+		//PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(player, "@or2@ - Killed by players: @yel@" + player.getDeathsByPlayer().get());
 		PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Mobs killed: @yel@" + player.getNpcKills().get());
 		PlayerPanel.TOTAL_NPC_DEATHS.refresh(player, "@or2@ - Killed by mobs: @yel@" + player.getDeathsByNpc().get());
 		

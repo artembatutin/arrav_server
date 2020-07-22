@@ -31,8 +31,6 @@ public class InterfaceManager {
 
 	private int[] sidebars = new int[16];
 
-	private boolean wildernessWidgetOpen, duelingWidgetOpen, multiWidgetopen;
-
 	/** Creates a new <code>InterfaceManager<code>. */
 	InterfaceManager(Player player) {
 		this.player = player;
@@ -227,27 +225,4 @@ public class InterfaceManager {
 		return false;
 	}
 
-	public void setWildernessWidget(boolean wildernessWidgetOpen) {
-		this.wildernessWidgetOpen = wildernessWidgetOpen;
-	}
-
-	public void setDuelingWidget(boolean duelingWidgetOpen) {
-		this.duelingWidgetOpen = duelingWidgetOpen;
-	}
-
-	public void setMultiWidget(boolean multiWidgetopen) {
-		this.multiWidgetopen = multiWidgetopen;
-	}
-
-	public boolean isWildernessWidgetOpen() {
-		return wildernessWidgetOpen;
-	}
-
-	public boolean isDuelingWidgetOpen() {
-		return duelingWidgetOpen;
-	}
-
-	public boolean isMultiWidgetopen() {
-		return multiWidgetopen;
-	}
 }

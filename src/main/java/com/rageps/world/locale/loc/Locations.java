@@ -55,26 +55,6 @@ public class Locations {
             }
         }
     }
-
-
-
-
-    /**
-     * Determines if {@code entity} is in any of the multicombat areas.
-     * @param entity the entity to determine if in the areas.
-     * @return {@code true} if the entity is in any of these areas,
-     * {@code false} otherwise.
-     * @deprecated - use {@link Location} with multi boolean instead.
-     */
-    @Deprecated
-    public static boolean inMultiCombat(Entity entity) {
-        for(Area area : MULTI_AREA) {
-            if(area.inArea(entity.getPosition()))
-                return true;
-        }
-        return Location.getLocation(entity).isMulti();
-    }
-
     /**
      * Determines if {@code pos} is in any of the wilderness areas.
      * @param pos the position to determine if in the areas.
@@ -100,7 +80,6 @@ public class Locations {
             public void enter(Player player) {
                 super.enter(player);
                 player.out(new SendContextMenu(2, false, "Challenge"));
-                player.getInterfaceManager().setDuelingWidget(true);
                 player.getInterfaceManager().openWalkable(201);
             }
 
@@ -108,7 +87,6 @@ public class Locations {
             public void process(Player player) {
                 if(player.getMinigame().isPresent()) {
                     player.out(new SendContextMenu(2, false, "null"));
-                    player.getInterfaceManager().setDuelingWidget(false);
                 }
                 super.process(player);
             }
@@ -116,7 +94,6 @@ public class Locations {
             @Override
             public void leave(Player player) {
                 player.out(new SendContextMenu(2, false, "null"));
-                player.getInterfaceManager().setDuelingWidget(false);
                 player.getInterfaceManager().close(true);
                 super.leave(player);
             }

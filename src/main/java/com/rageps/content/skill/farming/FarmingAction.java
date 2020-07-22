@@ -43,7 +43,7 @@ public class FarmingAction {
 								if(!farming.patch.hasAttribute(PatchAttribute.CHECKED_HEALTH)) {
 									final int experience = farming.patch.getSeedType().getExperience()[1];
 									farming.patch.addAttribute(PatchAttribute.CHECKED_HEALTH);
-									if(!player.lockedXP)
+									if(!player.playerData.lockedXP)
 										Skills.experience(player, experience, Skills.FARMING);
 									player.message("You check the tree's health and gain experience.");
 									FarmingManager.updatePatch(player, patchType);
@@ -140,7 +140,7 @@ public class FarmingAction {
 							}
 							if(!farming.patch.hasAttribute(PatchAttribute.CHECKED_HEALTH)) {
 								farming.patch.addAttribute(PatchAttribute.CHECKED_HEALTH);
-								if(!player.lockedXP)
+								if(!player.playerData.lockedXP)
 									Skills.experience(player, experience, Skills.FARMING);
 								player.message("You check the crop's health and gain experience.");
 							} else {
@@ -415,7 +415,7 @@ public class FarmingAction {
 								player.patches.put(patchType, newPatch);
 								FarmingManager.updatePatch(player, patchType);
 								newPatch.submitGrowthTask(player);
-								if(!player.lockedXP)
+								if(!player.playerData.lockedXP)
 									Skills.experience(player, finalSeedType.getExperience()[0], Skills.FARMING);
 								cancel();
 							}

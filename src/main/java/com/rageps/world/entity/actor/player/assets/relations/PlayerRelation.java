@@ -5,6 +5,7 @@ import com.rageps.util.StringUtil;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,9 @@ public final class PlayerRelation {
 	private PrivacyChatMode clanChatMode = PrivacyChatMode.ON;
 	private PrivacyChatMode tradeChatMode = PrivacyChatMode.ON;
 
-	private final List<Long> friendList = new ArrayList<>(200);
+	private final ObjectArrayList<Long> friendList = new ObjectArrayList<>(200);
 
-	private final List<Long> ignoreList = new ArrayList<>(100);
+	private final ObjectArrayList<Long> ignoreList = new ObjectArrayList<>(100);
 
 	private int privateMessageId = 1;
 
@@ -39,11 +40,11 @@ public final class PlayerRelation {
 		return this;
 	}
 
-	public List<Long> getFriendList() {
+	public ObjectArrayList<Long> getFriendList() {
 		return friendList;
 	}
 
-	public List<Long> getIgnoreList() {
+	public ObjectArrayList<Long> getIgnoreList() {
 		return ignoreList;
 	}
 

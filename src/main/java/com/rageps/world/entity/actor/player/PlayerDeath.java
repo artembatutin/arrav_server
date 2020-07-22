@@ -163,7 +163,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 				characterStatistic = new PlayerScoreboardStatistic(getActor().getFormatUsername());
 			}
 			PlayerPanel.PVP_DEATHS.refresh(getActor(), "@or2@ - Current Player deaths: @yel@" + characterStatistic.getDeaths().incrementAndGet());
-			PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(getActor(), "@or2@ - Killed by players: @yel@" + getActor().getDeathsByPlayer().incrementAndGet());
+			//PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(getActor(), "@or2@ - Killed by players: @yel@" + getActor().getDeathsByPlayer().incrementAndGet());
 			
 			//kills
 			PlayerScoreboardStatistic killerStatistic = ScoreboardManager.get().getPlayerScoreboard().putIfAbsent(k.getFormatUsername(), new PlayerScoreboardStatistic(k.getFormatUsername()));
@@ -172,15 +172,15 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			}
 			
 			PlayerPanel.PVP_KILLS.refresh(k, "@or2@ - Death: @yel@" + killerStatistic.getKills().incrementAndGet());
-			PlayerPanel.TOTAL_PLAYER_KILLS.refresh(k, "@or2@ - Killed players: @yel@" + k.getPlayerKills().incrementAndGet());
+			//PlayerPanel.TOTAL_PLAYER_KILLS.refresh(k, "@or2@ - Killed players: @yel@" + k.getPlayerKills().incrementAndGet());
 			
 			//killstreak
-			if(k.getCurrentKillstreak().incrementAndGet() > k.getHighestKillstreak().get()) {
-				k.getHighestKillstreak().set(k.getCurrentKillstreak().get());
-				PlayerPanel.HIGHEST_KILLSTREAK.refresh(k, "@or2@ - Highest killstreak: @yel@" + k.getHighestKillstreak());
-			}
-			
-			PlayerPanel.CURRENT_KILLSTREAK.refresh(k, "@or2@ - Current killstreak: @yel@" + k.getCurrentKillstreak().get());
+			//if(k.getCurrentKillstreak().incrementAndGet() > k.getHighestKillstreak().get()) {
+			//	k.getHighestKillstreak().set(k.getCurrentKillstreak().get());
+			//	PlayerPanel.HIGHEST_KILLSTREAK.refresh(k, "@or2@ - Highest killstreak: @yel@" + k.getHighestKillstreak());
+			//}
+			//
+			//PlayerPanel.CURRENT_KILLSTREAK.refresh(k, "@or2@ - Current killstreak: @yel@" + k.getCurrentKillstreak().get());
 			
 			if(killerStatistic.getCurrentKillstreak().incrementAndGet() > killerStatistic.getHighestKillstreak().get()) {
 				killerStatistic.getHighestKillstreak().set(killerStatistic.getCurrentKillstreak().get());

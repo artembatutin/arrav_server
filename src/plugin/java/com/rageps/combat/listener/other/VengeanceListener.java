@@ -28,7 +28,7 @@ public class VengeanceListener extends SimplifiedListener<Player> {
 		Hit recoil = new Hit((int) (hit.getDamage() * 0.75), Hitsplat.NORMAL_LOCAL);
 		attacker.damage(recoil);
 		attacker.getCombat().getDamageCache().add(defender, recoil);
-		defender.venged = false;
+		defender.playerData.venged = false;
 	}
 	
 	public static VengeanceListener get() {

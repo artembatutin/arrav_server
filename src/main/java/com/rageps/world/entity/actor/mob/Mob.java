@@ -267,7 +267,7 @@ public abstract class Mob extends Actor {
 	
 	@Override
 	public boolean inMulti() {
-		return Locations.inMultiCombat(this);
+		return getLocation().isMulti();
 	}
 	
 	@Override

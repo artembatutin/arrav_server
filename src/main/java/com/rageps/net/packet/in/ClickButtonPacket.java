@@ -26,6 +26,8 @@ import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
 
+import java.nio.ByteBuffer;
+
 /**
  * The message sent from the client when the player clicks some sort of button or
  * module.
@@ -60,7 +62,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 	public void handle(Player player, int opcode, int size, GamePacket buf) {
 		int button = PROPER_READ ? buf.getShort() : hexToInt(buf.getBytes(2));
 		if(World.get().getEnvironment().isDebug() && player.getRights().equals(Rights.ADMINISTRATOR)) {
-			player.message("Clicked button " + button + ".");
+			player.message("Clicked button " + button + ", old way:"+hexToInt(ByteBuffer.allocate(2).putShort((short) button).array()));
 		}
 		
 		if(button != 9154 && button != 200 && button != 201 && player.getActivityManager().contains(ActivityManager.ActivityType.CLICK_BUTTON)) {

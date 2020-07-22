@@ -23,7 +23,7 @@ public class RingOfRecoilListener extends SimplifiedListener<Player> {
 		}
 		
 		int recoil = hit.getDamage() / 10;
-		int charges = defender.ringOfRecoil;
+		int charges = defender.playerData.ringOfRecoil;
 		charges -= recoil;
 		
 		if(charges <= 0) {
@@ -36,7 +36,7 @@ public class RingOfRecoilListener extends SimplifiedListener<Player> {
 			charges = 400;
 		}
 		
-		defender.ringOfRecoil = charges;
+		defender.playerData.ringOfRecoil = charges;
 		attacker.damage(new Hit(recoil, Hitsplat.NORMAL_LOCAL));
 		attacker.getCombat().getDamageCache().add(defender, new Hit(recoil));
 	}

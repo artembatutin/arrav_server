@@ -182,7 +182,7 @@ public final class Skills {
 		experience *= getExperienceMultiplier(player, skill);
 
 
-		if(!player.lockedXP)
+		if(!player.playerData.lockedXP)
 			player.getSkills()[skill].increaseExperience(experience);
 		if(oldLevel < 99) {
 			int newLevel = player.getSkills()[skill].getLevelForExperience();

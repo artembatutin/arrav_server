@@ -22,6 +22,7 @@ public final class GetItemCommand implements Command {
 		String queryName = cmd[1].toLowerCase().replaceAll("_", " ");//this might be an issue with finding it.
 		ObjectArrayList<ItemDefinition> found = new ObjectArrayList<>();
 		for(ItemDefinition definition : ItemDefinition.DEFINITIONS) {
+			if(definition != null && definition.getName() != null)
 			if(definition.getName().toLowerCase().contains(queryName)) {
 				found.add(definition);
 			}

@@ -1,6 +1,10 @@
 package com.rageps.world.entity.actor.player.assets;
 
+import com.rageps.content.skill.magic.Spellbook;
+import com.rageps.content.skill.prayer.PrayerBook;
+import com.rageps.content.skill.slayer.Slayer;
 import com.rageps.util.MutableNumber;
+import com.rageps.world.entity.actor.mob.Mob;
 
 import java.util.Optional;
 
@@ -17,6 +21,9 @@ public class PlayerData {
      * The collection of counters used for various counting operations.
      */
     private final MutableNumber poisonImmunity = new MutableNumber(), teleblockTimer = new MutableNumber(), skullTimer = new MutableNumber(), specialPercentage = new MutableNumber(100);
+    public int ringOfRecoil = 400;
+
+    public boolean venged, lockedXP;
 
     /**
      * Holds an optional wrapped inside the Antifire details.
@@ -24,8 +31,47 @@ public class PlayerData {
     private Optional<AntifireDetails> antifireDetails = Optional.empty();
 
     public double runEnergy = 100D;
+    /**
+     * A list containing all the blocked slayer tasks of the player.
+     */
+    public String[] blockedTasks = new String[5];
 
+    /**
+     * The slayer instance for this player.
+     */
+    public Optional<Slayer> slayer = Optional.empty();
 
+    /**
+     * The current prayer type used by the player.
+     */
+    public PrayerBook prayerBook = PrayerBook.NORMAL;
+
+    /**
+     * The current spellbook used by the player.
+     */
+    public Spellbook spellbook = Spellbook.NORMAL;
+
+    /**
+     * The total amount of npcs this player has killed.
+     */
+    public final MutableNumber npcKills = new MutableNumber();
+
+    /**
+     * The total amount of times this player died to a {@link Mob}
+     */
+    public final MutableNumber npcDeaths = new MutableNumber();
+
+    public int[] godwarsKillcount = new int[4];
+
+    /**
+     * The amount of pest points the player has.
+     */
+    public int pestPoints;
+
+    /**
+     * The amount of slayer points the player has.
+     */
+    public int slayerPoints;
 
     /**
      * Gets the teleblock counter value.

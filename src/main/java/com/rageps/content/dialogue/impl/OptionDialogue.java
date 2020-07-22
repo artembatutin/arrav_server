@@ -81,9 +81,9 @@ public final class OptionDialogue extends Dialogue {
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum OptionType {
-		FIRST_OPTION(56109, 9167, 32017, 32029),
-		SECOND_OPTION(56110, 9168, 32018, 32030),
-		THIRD_OPTION(9169, 32019, 32031),
+		FIRST_OPTION(14445, 2473, 32017, 32029),
+		SECOND_OPTION(14446, 2472, 32018, 32030),
+		THIRD_OPTION(9169, 2471, 32031),
 		FOURTH_OPTION(32020, 32032),
 		FIFTH_OPTION(32033);
 		

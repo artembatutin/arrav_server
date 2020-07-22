@@ -56,7 +56,7 @@ import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.OutgoingPacket;
 import com.rageps.net.packet.out.*;
 import com.rageps.net.sql.forum.account.MultifactorAuthentication;
-import com.rageps.util.Utility;
+import com.rageps.util.*;
 import com.rageps.world.entity.actor.player.assets.PlayerData;
 import com.rageps.world.entity.actor.player.assets.group.ExperienceRate;
 import com.rageps.world.entity.actor.player.assets.group.GameMode;
@@ -78,9 +78,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.task.Task;
-import com.rageps.util.ActionListener;
-import com.rageps.util.MutableNumber;
-import com.rageps.util.Stopwatch;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.Graphic;
 import com.rageps.world.entity.EntityState;
@@ -173,17 +170,15 @@ public final class Player extends Actor {
 
 
 	public int wildernessLevel;
-	public int ringOfRecoil = 400;
 	public double weight;
 
 	public int headIcon = -1, skullIcon = -1;
 	public int votePoints, totalVotes, totalDonated, aggressionTick;
 	private boolean specialActivated, updateRegion;
-	public boolean venged, banned, muted, ipMuted, autocasting, screenFocus, firstLogin, lockedXP;
+	public boolean banned, muted, ipMuted, autocasting, screenFocus, firstLogin;
 	public BarChair sitting;
 	public String lastKiller = null;
-	private int[] godwarsKillcount = new int[4];
-	
+
 	/**
 	 * Uniquely spawned mob/npcs for this player.
 	 */
@@ -273,37 +268,7 @@ public final class Player extends Actor {
 	 * Represents the class that holds functionality regarding completing agility obstacle laps.
 	 */
 	private final AgilityCourseBonus agility_bonus = new AgilityCourseBonus();
-	
-	/**
-	 * The total amount of npcs this player has killed.
-	 */
-	private final MutableNumber npcKills = new MutableNumber();
-	
-	/**
-	 * The total amount of players this player has killed.
-	 */
-	private final MutableNumber playerKills = new MutableNumber();
-	
-	/**
-	 * The total amount of times this player died to a {@link Mob}
-	 */
-	private final MutableNumber npcDeaths = new MutableNumber();
-	
-	/**
-	 * The total amount of times this player has died to a {@link Player}.
-	 */
-	private final MutableNumber playerDeaths = new MutableNumber();
-	
-	/**
-	 * The current killstreak this player has ever had.
-	 */
-	private final MutableNumber currentKillstreak = new MutableNumber();
-	
-	/**
-	 * The highest killstreak this player has ever had.
-	 */
-	private final MutableNumber highestKillstreak = new MutableNumber();
-	
+
 	/**
 	 * The container of appearance values for this player.
 	 */
@@ -332,7 +297,7 @@ public final class Player extends Actor {
 	/**
 	 * The array of skills that can be trained by this player.
 	 */
-	private final Skill[] skills = new Skill[25];
+	private Skill[] skills = new Skill[25];
 	
 	/**
 	 * The I/O manager that manages I/O operations for this player.
@@ -367,7 +332,7 @@ public final class Player extends Actor {
 	/**
 	 * A data class designed to be saved as json for less important things.
 	 */
-	public final PlayerData playerData = new PlayerData();
+	public  PlayerData playerData = new PlayerData();
 
 	/**
 	 * Leech delay stopwatch.
@@ -386,26 +351,6 @@ public final class Player extends Actor {
 	 * The amount of authority this player has over others.
 	 */
 	private Rights rights = Rights.PLAYER;
-	
-	/**
-	 * The amount of pest points the player has.
-	 */
-	private int pestPoints;
-	
-	/**
-	 * The amount of slayer points the player has.
-	 */
-	private int slayerPoints;
-	
-	/**
-	 * The slayer instance for this player.
-	 */
-	private Optional<Slayer> slayer = Optional.empty();
-	
-	/**
-	 * A list containing all the blocked slayer tasks of the player.
-	 */
-	private String[] blockedTasks = new String[5];
 	
 	/**
 	 * The combat special that has been activated.
@@ -441,16 +386,6 @@ public final class Player extends Actor {
 	 * The shield animation for appearance updating.
 	 */
 	private ShieldAnimation shieldAnimation;
-	
-	/**
-	 * The current prayer type used by the player.
-	 */
-	private PrayerBook prayerBook = PrayerBook.NORMAL;
-	
-	/**
-	 * The current spellbook used by the player.
-	 */
-	private Spellbook spellbook = Spellbook.NORMAL;
 	
 	/**
 	 * The task that handles combat prayer draining.
@@ -589,6 +524,8 @@ public final class Player extends Actor {
 	 */
 	public Object2ObjectArrayMap<PatchType, Patch> patches = new Object2ObjectArrayMap<>(PatchType.VALUES.size());
 
+	//public Tuple<PatchType, Patch>[] patches;
+
 	/**
 	 * A {@link NpcDropChanceHandler} for handling the players drop chances.
 	 */
@@ -613,7 +550,7 @@ public final class Player extends Actor {
 	}
 	
 	public void sendDefaultSidebars() {
-		interfaceManager.setSidebar(TabInterface.CLAN_CHAT, 50128);
+		interfaceManager.setSidebar(TabInterface.CLAN_CHAT, 33500);//50128
 		interfaceManager.setSidebar(TabInterface.SKILL, 3917);
 		interfaceManager.setSidebar(TabInterface.QUEST, 638);
 		interfaceManager.setSidebar(TabInterface.INVENTORY, 3213);
@@ -1295,7 +1232,7 @@ public final class Player extends Actor {
 	 * @return the killcount that can be increased.
 	 */
 	public int[] getGodwarsKillcount() {
-		return godwarsKillcount;
+		return playerData.godwarsKillcount;
 	}
 	
 	/**
@@ -1303,7 +1240,7 @@ public final class Player extends Actor {
 	 * @param godwarsKillcount the array to set.
 	 */
 	public void setGodwarsKillcount(int[] godwarsKillcount) {
-		this.godwarsKillcount = godwarsKillcount;
+		playerData.godwarsKillcount = godwarsKillcount;
 	}
 	
 	/**
@@ -1343,7 +1280,11 @@ public final class Player extends Actor {
 	public Skill[] getSkills() {
 		return skills;
 	}
-	
+
+	public void setSkills(Skill[] skills) {
+		this.skills = skills;
+	}
+
 	/**
 	 * Gets the array of booleans determining which prayers are active.
 	 * @return the active prayers.
@@ -1575,11 +1516,11 @@ public final class Player extends Actor {
 	}
 	
 	/**
-	 * Sets the value for {@link Player#prayerBook}.
+	 * Sets the value for {@link PlayerData#prayerBook}.
 	 * @param prayerBook the new value to set.
 	 */
 	public void setPrayerBook(PrayerBook prayerBook) {
-		this.prayerBook = prayerBook;
+		playerData.prayerBook = prayerBook;
 	}
 	
 	/**
@@ -1587,15 +1528,15 @@ public final class Player extends Actor {
 	 * @return the player's prayer type.
 	 */
 	public PrayerBook getPrayerBook() {
-		return prayerBook;
+		return playerData.prayerBook;
 	}
 	
 	/**
-	 * Sets the value for {@link Player#spellbook}.
+	 * Sets the value for {@link PlayerData#spellbook}.
 	 * @param spellBook the new value to set.
 	 */
 	public void setSpellbook(Spellbook spellBook) {
-		this.spellbook = spellBook;
+		playerData.spellbook = spellBook;
 	}
 	
 	/**
@@ -1603,7 +1544,7 @@ public final class Player extends Actor {
 	 * @return the player's spellbook.
 	 */
 	public Spellbook getSpellbook() {
-		return spellbook;
+		return playerData.spellbook;
 	}
 	
 	/**
@@ -2035,54 +1976,26 @@ public final class Player extends Actor {
 	}
 	
 	/**
-	 * @return {@link #npcKills}.
+	 * @return {@link PlayerData#npcKills}.
 	 */
 	public MutableNumber getNpcKills() {
-		return npcKills;
+		return playerData.npcKills;
 	}
-	
+
 	/**
-	 * @return {@link #playerKills}.
-	 */
-	public MutableNumber getPlayerKills() {
-		return playerKills;
-	}
-	
-	/**
-	 * @return {@link #npcDeaths}.
+	 * @return {@link PlayerData#npcDeaths}.
 	 */
 	public MutableNumber getDeathsByNpc() {
-		return npcDeaths;
+		return playerData.npcDeaths;
 	}
 	
 	/**
-	 * @return {@link #playerDeaths}.
-	 */
-	public MutableNumber getDeathsByPlayer() {
-		return playerDeaths;
-	}
-	
-	/**
-	 * @return the currentKillstreak
-	 */
-	public MutableNumber getCurrentKillstreak() {
-		return currentKillstreak;
-	}
-	
-	/**
-	 * @return {@link #highestKillstreak}.
-	 */
-	public MutableNumber getHighestKillstreak() {
-		return highestKillstreak;
-	}
-	
-	/**
-	 * Updates the value for {@link Player#pestPoints}.
+	 * Updates the value for {@link PlayerData#pestPoints}.
 	 * @param points the new value to update.
 	 */
 	public void updatePest(int points) {
-		this.pestPoints += points;
-		PlayerPanel.PEST_POINTS.refresh(this, "@or2@ - Pest points: @yel@" + pestPoints);
+		playerData.pestPoints += points;
+		PlayerPanel.PEST_POINTS.refresh(this, "@or2@ - Pest points: @yel@" + playerData.pestPoints);
 	}
 	
 	/**
@@ -2090,16 +2003,16 @@ public final class Player extends Actor {
 	 * @return the pest points amount.
 	 */
 	public int getPest() {
-		return pestPoints;
+		return playerData.pestPoints;
 	}
 	
 	/**
-	 * Updates the value for {@link Player#slayerPoints}.
+	 * Updates the value for {@link PlayerData#slayerPoints}.
 	 * @param points the new value to update.
 	 */
 	public void updateSlayers(int points) {
-		this.slayerPoints += points;
-		PlayerPanel.SLAYER_POINTS.refresh(this, "@or2@ - Slayer points: @yel@" + slayerPoints, true);
+		playerData.slayerPoints += points;
+		PlayerPanel.SLAYER_POINTS.refresh(this, "@or2@ - Slayer points: @yel@" + playerData.slayerPoints, true);
 	}
 	
 	/**
@@ -2107,15 +2020,15 @@ public final class Player extends Actor {
 	 * @return the slayer points amount.
 	 */
 	public int getSlayerPoints() {
-		return slayerPoints;
+		return playerData.slayerPoints;
 	}
 	
 	/**
 	 * The current slayer instance.
-	 * @return {@link #slayer}.
+	 * @return {@link PlayerData#slayer}.
 	 */
 	public Optional<Slayer> getSlayer() {
-		return slayer;
+		return playerData.slayer;
 	}
 	
 	/**
@@ -2123,7 +2036,7 @@ public final class Player extends Actor {
 	 * @param slayer the slayer to set this current slayer to.
 	 */
 	public void setSlayer(Optional<Slayer> slayer) {
-		this.slayer = slayer;
+		playerData.slayer = slayer;
 		PlayerPanel.SLAYER_TASK.refresh(this, "@or2@ - Slayer task: @yel@" + (slayer.isPresent() ? (slayer.get().getAmount() + " " + slayer.get().toString()) : "none"));
 	}
 	
@@ -2132,7 +2045,7 @@ public final class Player extends Actor {
 	 * @return a list of the blocked slayer tasks.
 	 */
 	public String[] getBlockedTasks() {
-		return blockedTasks;
+		return playerData.blockedTasks;
 	}
 	
 	/**
@@ -2140,7 +2053,7 @@ public final class Player extends Actor {
 	 * @return sets the blocked slayer tasks.
 	 */
 	public void setBlockedTasks(String[] blockedTasks) {
-		this.blockedTasks = blockedTasks;
+		playerData.blockedTasks = blockedTasks;
 	}
 	
 	/**

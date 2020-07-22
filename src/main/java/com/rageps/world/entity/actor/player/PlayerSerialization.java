@@ -249,567 +249,567 @@
 //	}
 //
 //	private static final Token[] TOKENS = {new Token("username") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.credentials.username);
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.credentials.username);
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.credentials.setUsername(n.toString());
+//////		}
+//////	}, new Token("password") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.credentials.password);
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.credentials.password = n.toString();
+//////		}
+//////	}, new Token("banned") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.banned);
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.banned = n.toBoolean();
+//////		}
+//////	}, new Token("muted") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.muted);
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.muted = n.toBoolean();
+//////			if(HostManager.contains(p.credentials.username, HostListType.MUTED_IP)) {
+//////				p.ipMuted = true;
+//////			}
+//////		}
+//////	}, new Token("position") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getPosition());
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.setPosition(n.as(Position.class));
+//////		}
+//////	}, new Token("rights") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getRights().toString());
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.setRights(Rights.ADMINISTRATOR);
+//////			//p.setRights(Rights.valueOf(n.toString().toUpperCase()));
+//////		}
+//////	}, new Token("xp-lock") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.playerData.lockedXP);
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.playerData.lockedXP = n.toBoolean();
+//////		}
+//////	}, new Token("ironman") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getIronMan());
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.setIron(n.toInt(), true);
+//////		}
+//////	}, new Token("totalDonated") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getTotalDonated(false));
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.totalDonated += n.toInt();
+//////		}
+//////	}, new Token("totalVotes") {
+//////
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.totalVotes);
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.totalVotes += n.toInt();
+//////			PlayerPanel.TOTAL_VOTES.refresh(p, "@or2@ - Total votes: @yel@" + p.totalVotes);
+//////		}
+//////	}, new Token("vote") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.votePoints);
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.votePoints += n.toInt();
+//////		}
+//////	},/* new Token("clan") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getClan().map(clanMember -> clanMember.getClan().getOwner()).orElse(""));
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			String clan = n.toString();
+//////			if(clan.length() > 0)
+//////				ClanManager.get().join(p, n.toString());
+//////		}
+///////	},*/ new Token("appearance") {
+///////		@Override
+///////		public void toJson(Player p, JsonStream s) throws IOException {
+///////			s.writeVal(p.getAppearance().getValues());
+///////		}
+///////
+///////		@Override
+///////		public void fromJson(Player p, Any n) {
+///////			p.getAppearance().setValues(n.as(int[].class));
+///////		}
+///////	}, new Token("prayer-type") {
+///////		@Override
+///////		public void toJson(Player p, JsonStream s) throws IOException {
+///////			s.writeVal(p.getPrayerBook().toString());
+///////		}
+///////
+///////		@Override
+///////		public void fromJson(Player p, Any n) {
+///////			p.setPrayerBook(PrayerBook.valueOf(n.toString().toUpperCase()));
+///////		}
+///////	}, new Token("spell-book") {
+///////		@Override
+///////		public void toJson(Player p, JsonStream s) throws IOException {
+///////			s.writeVal(p.getSpellbook().toString());
+///////		}
+///////
+///////		@Override
+///////		public void fromJson(Player p, Any n) {
+///////			p.setSpellbook(Spellbook.valueOf(n.toString().toUpperCase()));
+///////		}
+///////	}, new Token("last-killer") {
+///////		@Override
+///////		public void toJson(Player p, JsonStream s) throws IOException {
+///////			s.writeVal(p.lastKiller);
+///////		}
+///////
+///////		@Override
+///////		public void fromJson(Player p, Any n) {
+///////			p.lastKiller = n.toString();
+///////		}
+///////	}, new Token("fight-type") {
+///////		@Override
+///////		public void toJson(Player p, JsonStream s) throws IOException {
+///////			s.writeVal(p.getCombat().getFightType().toString());
+///////		}
+///////
+///////		@Override
+///////		public void fromJson(Player p, Any n) {
+///////			p.getCombat().setFightType(FightType.valueOf(n.toString()));
+///////		}
+//////	}, new Token("poison-damage") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getPoisonDamage().get());
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.getPoisonDamage().set(n.toInt());
 //		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.credentials.setUsername(n.toString());
-//		}
-//	}, new Token("password") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.credentials.password);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.credentials.password = n.toString();
-//		}
-//	}, new Token("banned") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.banned);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.banned = n.toBoolean();
-//		}
-//	}, new Token("muted") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.muted);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.muted = n.toBoolean();
-//			if(HostManager.contains(p.credentials.username, HostListType.MUTED_IP)) {
-//				p.ipMuted = true;
-//			}
-//		}
-//	}, new Token("position") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getPosition());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.setPosition(n.as(Position.class));
-//		}
-//	}, new Token("rights") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getRights().toString());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.setRights(Rights.ADMINISTRATOR);
-//			//p.setRights(Rights.valueOf(n.toString().toUpperCase()));
-//		}
-//	}, new Token("xp-lock") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.lockedXP);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.lockedXP = n.toBoolean();
-//		}
-//	}, new Token("ironman") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getIronMan());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.setIron(n.toInt(), true);
-//		}
-//	}, new Token("totalDonated") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getTotalDonated(false));
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.totalDonated += n.toInt();
-//		}
-//	}, new Token("totalVotes") {
-//
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.totalVotes);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.totalVotes += n.toInt();
-//			PlayerPanel.TOTAL_VOTES.refresh(p, "@or2@ - Total votes: @yel@" + p.totalVotes);
-//		}
-//	}, new Token("vote") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.votePoints);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.votePoints += n.toInt();
-//		}
-//	},/* new Token("clan") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getClan().map(clanMember -> clanMember.getClan().getOwner()).orElse(""));
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			String clan = n.toString();
-//			if(clan.length() > 0)
-//				ClanManager.get().join(p, n.toString());
-//		}
-//	},*/ new Token("appearance") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getAppearance().getValues());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getAppearance().setValues(n.as(int[].class));
-//		}
-//	}, new Token("prayer-type") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getPrayerBook().toString());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.setPrayerBook(PrayerBook.valueOf(n.toString().toUpperCase()));
-//		}
-//	}, new Token("spell-book") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getSpellbook().toString());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.setSpellbook(Spellbook.valueOf(n.toString().toUpperCase()));
-//		}
-//	}, new Token("last-killer") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.lastKiller);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.lastKiller = n.toString();
-//		}
-//	}, new Token("fight-type") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getCombat().getFightType().toString());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getCombat().setFightType(FightType.valueOf(n.toString()));
-//		}
-//	}, new Token("poison-damage") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getPoisonDamage().get());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getPoisonDamage().set(n.toInt());
-//		}
-//	}, new Token("auto-retaliate") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.isAutoRetaliate());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.setAutoRetaliate(n.toBoolean());
-//		}
-//	}, new Token("running") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getMovementQueue().isRunning());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getMovementQueue().setRunning(n.toBoolean());
-//		}
-//	}, new Token("antifire-details") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.playerData.getAntifireDetails().orElse(null));
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.playerData.setAntifireDetail(n.as(AntifireDetails.class));
-//		}
-//	}, new Token("run-energy") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.playerData.getRunEnergy());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.setRunEnergy(n.toDouble());
-//		}
-//	}, new Token("special-amount") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.playerData.getSpecialPercentage().get());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.playerData.getSpecialPercentage().set(n.toInt());
-//		}
-//	}, new Token("teleblock-timer") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.playerData.getTeleblockTimer().get());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.playerData.getTeleblockTimer().set(n.toInt());
-//		}
-//	}, new Token("skull-timer") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.playerData.getSkullTimer().get());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.playerData.getSkullTimer().set(n.toInt());
-//		}
-//	}, new Token("vengeance") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.venged);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.venged = n.toBoolean();
-//			if(p.venged) {
-//				p.getCombat().addListener(VengeanceListener.get());
-//			}
-//		}
-//	}, new Token("ringOfRecoil") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.ringOfRecoil);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.ringOfRecoil = n.toInt();
-//		}
-//	}, new Token("skills") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getSkills());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			Skill[] skills = p.getSkills();
-//			System.arraycopy(n.as(Skill[].class), 0, skills, 0, skills.length);
-//		}
-//	}, new Token("inventory") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getInventory().getItems());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getInventory().fillItems(n.as(Item[].class));
-//		}
-//	}, new Token("equipment") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getEquipment().getItems());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getEquipment().fillItems(n.as(Item[].class));
-//			for(Item item : p.getEquipment().getItems()) {
-//				if(item != null) {
-//					CombatListenerDispatcher.CombatListenerSet listenerSet = CombatListenerDispatcher.ITEM_LISTENERS.get(item.getId());
-//
-//					if(listenerSet != null && p.getEquipment().containsAll(listenerSet.set)) {
-//						p.getCombat().addListener(listenerSet.listener);
-//					}
-//				}
-//			}
-//		}
+//////	}, new Token("auto-retaliate") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.isAutoRetaliate());
+//////		}
+////
+////		@Override
+////		public void fromJson(Player p, Any n) {
+////			p.setAutoRetaliate(n.toBoolean());
+////		}
+////	}, new Token("running") {
+////		@Override
+////		public void toJson(Player p, JsonStream s) throws IOException {
+////			s.writeVal(p.getMovementQueue().isRunning());
+////		}
+////
+////		@Override
+////		public void fromJson(Player p, Any n) {
+////			p.getMovementQueue().setRunning(n.toBoolean());
+////		}
+////	}, new Token("antifire-details") {
+////		@Override
+////		public void toJson(Player p, JsonStream s) throws IOException {
+////			s.writeVal(p.playerData.getAntifireDetails().orElse(null));
+////		}
+////
+////		@Override
+////		public void fromJson(Player p, Any n) {
+////			p.playerData.setAntifireDetail(n.as(AntifireDetails.class));
+////		}
+/////	}, new Token("run-energy") {
+/////		@Override
+/////		public void toJson(Player p, JsonStream s) throws IOException {
+/////			s.writeVal(p.playerData.getRunEnergy());
+/////		}
+/////
+/////		@Override
+/////		public void fromJson(Player p, Any n) {
+/////			p.setRunEnergy(n.toDouble());
+/////		}
+/////	}, new Token("special-amount") {
+/////		@Override
+/////		public void toJson(Player p, JsonStream s) throws IOException {
+/////			s.writeVal(p.playerData.getSpecialPercentage().get());
+/////		}
+/////
+/////		@Override
+/////		public void fromJson(Player p, Any n) {
+/////			p.playerData.getSpecialPercentage().set(n.toInt());
+/////		}
+/////	}, new Token("teleblock-timer") {
+/////		@Override
+/////		public void toJson(Player p, JsonStream s) throws IOException {
+/////			s.writeVal(p.playerData.getTeleblockTimer().get());
+/////		}
+/////
+/////		@Override
+/////		public void fromJson(Player p, Any n) {
+/////			p.playerData.getTeleblockTimer().set(n.toInt());
+/////		}
+/////	}, new Token("skull-timer") {
+/////		@Override
+/////		public void toJson(Player p, JsonStream s) throws IOException {
+/////			s.writeVal(p.playerData.getSkullTimer().get());
+/////		}
+/////
+/////		@Override
+/////		public void fromJson(Player p, Any n) {
+/////			p.playerData.getSkullTimer().set(n.toInt());
+/////		}
+////////	}, new Token("vengeance") {
+////////		@Override
+////////		public void toJson(Player p, JsonStream s) throws IOException {
+////////			s.writeVal(p.venged);
+////////		}
+////////
+////////		@Override
+////////		public void fromJson(Player p, Any n) {
+////////			p.venged = n.toBoolean();
+////////			if(p.venged) {
+////////				p.getCombat().addListener(VengeanceListener.get());
+////////			}
+////////		}
+////////	}, new Token("ringOfRecoil") {
+////////		@Override
+////////		public void toJson(Player p, JsonStream s) throws IOException {
+////////			s.writeVal(p.ringOfRecoil);
+////////		}
+////////
+////////		@Override
+////////		public void fromJson(Player p, Any n) {
+////////			p.ringOfRecoil = n.toInt();
+////////		}
+////////	}, new Token("skills") {
+////////		@Override
+////////		public void toJson(Player p, JsonStream s) throws IOException {
+////////			s.writeVal(p.getSkills());
+////////		}
+////////
+////////		@Override
+////////		public void fromJson(Player p, Any n) {
+////////			Skill[] skills = p.getSkills();
+////////			System.arraycopy(n.as(Skill[].class), 0, skills, 0, skills.length);
+////////		}
+////////	}, new Token("inventory") {
+////////		@Override
+////////		public void toJson(Player p, JsonStream s) throws IOException {
+////////			s.writeVal(p.getInventory().getItems());
+////////		}
+////////
+////////		@Override
+////////		public void fromJson(Player p, Any n) {
+////////			p.getInventory().fillItems(n.as(Item[].class));
+////////		}
+////////	}, new Token("equipment") {
+/////////		@Override
+/////////		public void toJson(Player p, JsonStream s) throws IOException {
+/////////			s.writeVal(p.getEquipment().getItems());
+/////////		}
+/////////
+/////////		@Override
+/////////		public void fromJson(Player p, Any n) {
+/////////			p.getEquipment().fillItems(n.as(Item[].class));
+/////////			for(Item item : p.getEquipment().getItems()) {
+/////////				if(item != null) {
+/////////					CombatListenerDispatcher.CombatListenerSet listenerSet = CombatListenerDispatcher.ITEM_LISTENERS.get(item.getId());
+/////////
+/////////					if(listenerSet != null && p.getEquipment().containsAll(listenerSet.set)) {
+/////////						p.getCombat().addListener(listenerSet.listener);
+/////////					}
+/////////				}
+/////////			}
+/////////		}
 //	}, bank(0), bank(1), bank(2), bank(3), bank(4), bank(5), bank(6), bank(7), bank(8),
-//			/*		new Token("friends") {
-//          	@Override
-//                public void toJson(Player p, JsonStream s) throws IOException {
-//                    s.writeVal(p.getFriends().toArray());
-//                }
-//
-//                @Override
-//                public void fromJson(Player p, Any n) {
-//                    Collections.addAll(p.getFriends(), n.as(Long[].class));
-//                }
-//            }, new Token("ignores") {
-//                @Override
-//                public void toJson(Player p, JsonStream s) throws IOException {
-//                    s.writeVal(p.getIgnores().toArray());
-//                }
-//
-//                @Override
-//                public void fromJson(Player p, Any n) {
-//                    Collections.addAll(p.getIgnores(), n.as(Long[].class));
-//                }
-//            },*/ new Token("total-player-kills") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getPlayerKills().get());
+////			/*		new Token("friends") {
+////          	@Override
+////                public void toJson(Player p, JsonStream s) throws IOException {
+////                    s.writeVal(p.getFriends().toArray());
+////                }
+////
+////                @Override
+////                public void fromJson(Player p, Any n) {
+////                    Collections.addAll(p.getFriends(), n.as(Long[].class));
+////                }
+////            }, new Token("ignores") {
+////                @Override
+////                public void toJson(Player p, JsonStream s) throws IOException {
+////                    s.writeVal(p.getIgnores().toArray());
+////                }
+////
+////                @Override
+////                public void fromJson(Player p, Any n) {
+////                    Collections.addAll(p.getIgnores(), n.as(Long[].class));
+////                }
+//////            },*/ new Token("total-player-kills") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getPlayerKills().get());
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.getPlayerKills().set(n.toInt());
+//////		}
+//////	}, new Token("total-player-deaths") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getDeathsByPlayer().get());
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.getDeathsByPlayer().set(n.toInt());
+//////		}
+//////	}, new Token("total-npc-kills") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getNpcKills().get());
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.getNpcKills().set(n.toInt());
+//////		}
+//////	}, new Token("total-npc-deaths") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getDeathsByNpc().get());
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.getDeathsByNpc().set(n.toInt());
+//////		}
+//////	}, new Token("total-player-kills") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getPlayerKills().get());
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.getPlayerKills().set(n.toInt());
+//////		}
+//////	}, new Token("current-killstreak") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getCurrentKillstreak().get());
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.getCurrentKillstreak().set(n.toInt());
+//////		}
+//////	}, new Token("highest-killstreak") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getHighestKillstreak().get());
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.getHighestKillstreak().set(n.toInt());
 //		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getPlayerKills().set(n.toInt());
-//		}
-//	}, new Token("total-player-deaths") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getDeathsByPlayer().get());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getDeathsByPlayer().set(n.toInt());
-//		}
-//	}, new Token("total-npc-kills") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getNpcKills().get());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getNpcKills().set(n.toInt());
-//		}
-//	}, new Token("total-npc-deaths") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getDeathsByNpc().get());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getDeathsByNpc().set(n.toInt());
-//		}
-//	}, new Token("total-player-kills") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getPlayerKills().get());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getPlayerKills().set(n.toInt());
-//		}
-//	}, new Token("current-killstreak") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getCurrentKillstreak().get());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getCurrentKillstreak().set(n.toInt());
-//		}
-//	}, new Token("highest-killstreak") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getHighestKillstreak().get());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getHighestKillstreak().set(n.toInt());
-//		}
-//	}, new Token("godwars-killcount") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getGodwarsKillcount());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.setGodwarsKillcount(n.as(int[].class));
-//		}
-//	}, new Token("killed-brothers") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			EnumSet<BarrowsData> barrows = p.getMinigameContainer().getBarrowsContainer().getKilledBrothers();
-//			s.writeVal(barrows.toArray());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			EnumSet<BarrowsData> barrows = p.getMinigameContainer().getBarrowsContainer().getKilledBrothers();
-//			Collections.addAll(barrows, n.as(BarrowsData[].class));
-//		}
-//	}, new Token("slayerPoints") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getSlayerPoints());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.updateSlayers(n.toInt());
-//		}
-//	}, new Token("slayer") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getSlayer().orElse(null));
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			Slayer s = n.as(Slayer.class);
-//			p.setSlayer(s == null ? Optional.empty() : Optional.of(s));
-//		}
-//	}, new Token("blocked-tasks") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getBlockedTasks());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.setBlockedTasks(n.as(String[].class));
-//		}
-//	}, new Token("pets") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			s.writeVal(p.getPetManager().getProgress().toArray());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			Collections.addAll(p.getPetManager().getProgress(), n.as(PetProgress[].class));
-//		}
-//	}, new Token("pet") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			PetManager pets = p.getPetManager();
-//			s.writeVal(pets.getPet().isPresent() ? pets.getPet().get().getProgress() : null);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			PetProgress progress = n.as(PetProgress.class);
-//			if(progress != null) {
-//				PetManager pets = p.getPetManager();
-//				pets.put(new Pet(progress, new Position(0, 0)));
-//			}
-//		}
-//	}, new Token("familiar") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			Familiar familiar = p.getFamiliar().orElse(null);
-//			s.writeVal(familiar != null ? familiar.getData() : null);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			String fam = n.toString();
-//			if(fam == null || fam.equals("null")) {
-//				p.setFamiliar(Optional.empty());
-//			} else {
-//				SummoningData data = SummoningData.valueOf(fam.toUpperCase());
-//				Familiar familiar = data.create();
-//				p.setFamiliar(Optional.of(familiar));
-//			}
-//		}
-//	}, new Token("familiar-life") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			Familiar familiar = p.getFamiliar().orElse(null);
-//			s.writeVal(familiar != null ? familiar.getCurrentHealth() : 0);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getFamiliar().ifPresent(ffs -> ffs.setCurrentHealth(n.toInt()));
-//		}
-//	}, new Token("familiar-duration") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			Familiar familiar = p.getFamiliar().orElse(null);
-//			s.writeVal(familiar != null ? familiar.getDuration() : 0);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			p.getFamiliar().ifPresent(ffs -> ffs.setDuration(n.toInt()));
-//		}
-//	}, new Token("familiar-storage") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			Familiar familiar = p.getFamiliar().orElse(null);
-//			s.writeVal(familiar != null && familiar.getAbilityType().getType() == FamiliarAbility.FamiliarAbilityType.BEAST_OF_BURDEN ? ((FamiliarContainer) familiar.getAbilityType()).getContainer().getItems() : null);
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			//if(!n.isJsonNull()) {
-//			p.getFamiliar().ifPresent(ffs -> {
-//				FamiliarAbility ability = ffs.getAbilityType();
-//				if(ability.getType() == FamiliarAbility.FamiliarAbilityType.BEAST_OF_BURDEN) {
-//					((FamiliarContainer) ability).getContainer().fillItems((n.as(Item[].class)));
-//				}
-//			});
-//			//}
-//		}
-//	}, new Token("house-rooms") {
-//		@Override
-//		public void toJson(Player p, JsonStream s) throws IOException {
-//			House house = p.getHouse();
-//			s.writeVal(house.get().getRooms());
-//		}
-//
-//		@Override
-//		public void fromJson(Player p, Any n) {
-//			//if(!n.isJsonNull()) {
-//			p.getHouse().get().setRooms(n.as(Room[][][].class));
-//			//}
-//		}
-//	}};
+////	}, new Token("godwars-killcount") {
+////		@Override
+////		public void toJson(Player p, JsonStream s) throws IOException {
+////			s.writeVal(p.getGodwarsKillcount());
+////		}
+////
+////		@Override
+////		public void fromJson(Player p, Any n) {
+////			p.setGodwarsKillcount(n.as(int[].class));
+////		}
+////	}, new Token("killed-brothers") {
+////		@Override
+////		public void toJson(Player p, JsonStream s) throws IOException {
+////			EnumSet<BarrowsData> barrows = p.getMinigameContainer().getBarrowsContainer().getKilledBrothers();
+////			s.writeVal(barrows.toArray());
+////		}
+////
+////		@Override
+////		public void fromJson(Player p, Any n) {
+////			EnumSet<BarrowsData> barrows = p.getMinigameContainer().getBarrowsContainer().getKilledBrothers();
+////			Collections.addAll(barrows, n.as(BarrowsData[].class));
+////		}
+////	}, new Token("slayerPoints") {
+//////		@Override
+//////		public void toJson(Player p, JsonStream s) throws IOException {
+//////			s.writeVal(p.getSlayerPoints());
+//////		}
+//////
+//////		@Override
+//////		public void fromJson(Player p, Any n) {
+//////			p.updateSlayers(n.toInt());
+//////		}
+//////	}, new Token("slayer") {
+////		@Override
+////		public void toJson(Player p, JsonStream s) throws IOException {
+////			s.writeVal(p.getSlayer().orElse(null));
+////		}
+////
+////		@Override
+////		public void fromJson(Player p, Any n) {
+////			Slayer s = n.as(Slayer.class);
+////			p.setSlayer(s == null ? Optional.empty() : Optional.of(s));
+////		}
+////	}, new Token("blocked-tasks") {
+////		@Override
+////		public void toJson(Player p, JsonStream s) throws IOException {
+////			s.writeVal(p.getBlockedTasks());
+////		}
+////
+////		@Override
+////		public void fromJson(Player p, Any n) {
+////			p.setBlockedTasks(n.as(String[].class));
+////		}
+////	}, new Token("pets") {
+/////		@Override
+/////		public void toJson(Player p, JsonStream s) throws IOException {
+/////			s.writeVal(p.getPetManager().getProgress().toArray());
+/////		}
+/////
+/////		@Override
+/////		public void fromJson(Player p, Any n) {
+/////			Collections.addAll(p.getPetManager().getProgress(), n.as(PetProgress[].class));
+/////		}
+/////	}, new Token("pet") {
+////		@Override
+////		public void toJson(Player p, JsonStream s) throws IOException {
+////			PetManager pets = p.getPetManager();
+////			s.writeVal(pets.getPet().isPresent() ? pets.getPet().get().getProgress() : null);
+////		}
+////
+////		@Override
+////		public void fromJson(Player p, Any n) {
+////			PetProgress progress = n.as(PetProgress.class);
+////			if(progress != null) {
+////				PetManager pets = p.getPetManager();
+////				pets.put(new Pet(progress, new Position(0, 0)));
+////			}
+////		}
+////	}, new Token("familiar") {
+////		@Override
+////		public void toJson(Player p, JsonStream s) throws IOException {
+////			Familiar familiar = p.getFamiliar().orElse(null);
+////			s.writeVal(familiar != null ? familiar.getData() : null);
+////		}
+////
+////		@Override
+////		public void fromJson(Player p, Any n) {
+////			String fam = n.toString();
+////			if(fam == null || fam.equals("null")) {
+////				p.setFamiliar(Optional.empty());
+////			} else {
+////				SummoningData data = SummoningData.valueOf(fam.toUpperCase());
+////				Familiar familiar = data.create();
+////				p.setFamiliar(Optional.of(familiar));
+////			}
+////		}
+////	}, new Token("familiar-life") {
+////		@Override
+////		public void toJson(Player p, JsonStream s) throws IOException {
+////			Familiar familiar = p.getFamiliar().orElse(null);
+////			s.writeVal(familiar != null ? familiar.getCurrentHealth() : 0);
+////		}
+////
+////		@Override
+////		public void fromJson(Player p, Any n) {
+////			p.getFamiliar().ifPresent(ffs -> ffs.setCurrentHealth(n.toInt()));
+////		}
+////	}, new Token("familiar-duration") {
+/////		@Override
+/////		public void toJson(Player p, JsonStream s) throws IOException {
+/////			Familiar familiar = p.getFamiliar().orElse(null);
+/////			s.writeVal(familiar != null ? familiar.getDuration() : 0);
+/////		}
+/////
+/////		@Override
+/////		public void fromJson(Player p, Any n) {
+/////			p.getFamiliar().ifPresent(ffs -> ffs.setDuration(n.toInt()));
+/////		}
+/////	}, new Token("familiar-storage") {
+///////		@Override
+///////		public void toJson(Player p, JsonStream s) throws IOException {
+///////			Familiar familiar = p.getFamiliar().orElse(null);
+///////			s.writeVal(familiar != null && familiar.getAbilityType().getType() == FamiliarAbility.FamiliarAbilityType.BEAST_OF_BURDEN ? ((FamiliarContainer) familiar.getAbilityType()).getContainer().getItems() : null);
+///////		}
+///////
+///////		@Override
+///////		public void fromJson(Player p, Any n) {
+///////			//if(!n.isJsonNull()) {
+///////			p.getFamiliar().ifPresent(ffs -> {
+///////				FamiliarAbility ability = ffs.getAbilityType();
+///////				if(ability.getType() == FamiliarAbility.FamiliarAbilityType.BEAST_OF_BURDEN) {
+///////					((FamiliarContainer) ability).getContainer().fillItems((n.as(Item[].class)));
+///////				}
+///////			});
+///////			//}
+///////		}
+///////	}, new Token("house-rooms") {
+///////		@Override
+///////		public void toJson(Player p, JsonStream s) throws IOException {
+///////			House house = p.getHouse();
+///////			s.writeVal(house.get().getRooms());
+///////		}
+///////
+///////		@Override
+///////		public void fromJson(Player p, Any n) {
+///////			//if(!n.isJsonNull()) {
+///////			p.getHouse().get().setRooms(n.as(Room[][][].class));
+///////			//}
+///////		}
+///////	}};
 //
 //	/**
 //	 * The container that represents a token that can be both serialized and deserialized.
