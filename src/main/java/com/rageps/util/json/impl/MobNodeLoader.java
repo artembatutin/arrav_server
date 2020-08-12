@@ -45,7 +45,7 @@ public final class MobNodeLoader extends JsonLoader {
 			mob.getMovementCoordinator().setFacingDirection(dir);
 		}
 		mob.setRespawn(true);
-		if(!World.get().getMobs().add(mob))
+		if(!World.get().getMobRepository().add(mob))
 			throw new IllegalStateException(mob.toString() + " could not be added to the world!");
 	}
 	

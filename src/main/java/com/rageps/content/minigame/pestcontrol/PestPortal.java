@@ -3,7 +3,6 @@ package com.rageps.content.minigame.pestcontrol;
 import com.rageps.content.minigame.pestcontrol.pest.*;
 import com.rageps.world.World;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.content.minigame.pestcontrol.pest.*;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
@@ -73,7 +72,7 @@ public class PestPortal extends DefaultMob {
 				break;
 		}
 		if(pest != null) {
-			World.get().getMobs().add(pest);
+			World.get().getMobRepository().add(pest);
 			pests.add(pest);
 		}
 	}

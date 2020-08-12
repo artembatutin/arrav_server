@@ -142,7 +142,7 @@ public class House {
 			servant = new Servant(Butlers.BUTLER.getNpcId(), visitor.getPosition().move(-2, -1).copy());
 			servant.setOriginalRandomWalk(true);
 			servant.getMovementCoordinator().setRadius(30);
-			World.get().getMobs().add(servant);
+			World.get().getMobRepository().add(servant);
 			addNpc(servant);
 		}
 		visitor.setInstance(instance);

@@ -42,7 +42,7 @@ public final class GameShutdownHook extends Thread {
 				for(Player p : World.get().getPlayers()) {
 					if(p == null)
 						continue;
-					PlayerPersistenceManager.save(p);
+					World.get().getPersistenceManager().save(p);
 				}
 			});
 			exit.submit(() -> {

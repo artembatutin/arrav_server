@@ -43,7 +43,7 @@ public final class UpdateCommand implements Command {
 					for(Player p : World.get().getPlayers()) {
 						if(p == null)
 							continue;
-						PlayerPersistenceManager.save(p);
+						World.get().getPersistenceManager().save(p);
 						p.out(new SendLogout());
 					}
 					System.out.println("Waiting for shutdown.");

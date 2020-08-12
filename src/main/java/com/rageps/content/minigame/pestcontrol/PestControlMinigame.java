@@ -274,12 +274,12 @@ public final class PestControlMinigame extends SequencedMinigame {
 				p.getDialogueBuilder().append(new NpcDialogue(3784, "All is Lost!", "You could not take down the portals in time.", "Try Harder next time."));
 			}
 		}
-		World.get().getMobs().remove(voidKnight);
+		World.get().getMobRepository().remove(voidKnight);
 		for(PestPortal portal : portals) {
-			World.get().getMobs().remove(portal);
+			World.get().getMobRepository().remove(portal);
 		}
 		for(Pest pest : pests) {
-			World.get().getMobs().remove(pest);
+			World.get().getMobRepository().remove(pest);
 		}
 		for(PestGate gate : gates) {
 			gate.reset();
@@ -298,13 +298,13 @@ public final class PestControlMinigame extends SequencedMinigame {
 	
 	private void start() {
 		voidKnight.setGame(this);
-		World.get().getMobs().add(voidKnight);
+		World.get().getMobRepository().add(voidKnight);
 		for(Player p : getPlayers()) {
 			spawn(p);
 		}
 		for(PestPortal portal : portals) {
 			portal.setGame(this);
-			World.get().getMobs().add(portal);
+			World.get().getMobRepository().add(portal);
 			portal.spawn(pests);
 		}
 	}

@@ -9,20 +9,12 @@ import com.rageps.net.sql.TableRepresentation;
 import com.rageps.net.sql.player.PlayerAccountLoadTransaction;
 import com.rageps.net.sql.player.PlayerAccountSaveTransaction;
 import com.rageps.net.sql.player.UpdateForumAccountTransaction;
-import com.rageps.net.sql.statement.NamedPreparedStatement;
-import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.persist.PlayerPersistable;
-import com.rageps.world.entity.actor.player.persist.property.PlayerPersistanceProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-import static com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager.PROPERTIES;
 
 /**
  * Handles persistence using a MySQL database.

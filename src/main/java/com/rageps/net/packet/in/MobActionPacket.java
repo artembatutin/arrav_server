@@ -1,6 +1,5 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.RagePS;
 import com.rageps.action.ActionContainer;
 import com.rageps.action.impl.MobAction;
 import com.rageps.content.item.pets.Pet;
@@ -69,7 +68,7 @@ public final class MobActionPacket implements IncomingPacket {
 	 */
 	private void attackOther(Player player, GamePacket buf) {
 		int index = buf.getShort(false, ByteTransform.A);
-		Mob mob = World.get().getMobs().get(index - 1);
+		Mob mob = World.get().getMobRepository().get(index - 1);
 		if(mob == null || !checkAttack(player, mob))
 			return;
 		player.getTolerance().reset();
@@ -84,7 +83,7 @@ public final class MobActionPacket implements IncomingPacket {
 	private void attackMagic(Player player, GamePacket buf) {
 		int index = buf.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int spellId = buf.getShort(true, ByteTransform.A);
-		Mob mob = World.get().getMobs().get(index - 1);
+		Mob mob = World.get().getMobRepository().get(index - 1);
 		CombatSpell spell = CombatSpell.get(spellId);
 		if(mob == null || spell == null || !checkAttack(player, mob)) {
 			return;
@@ -101,7 +100,7 @@ public final class MobActionPacket implements IncomingPacket {
 	 */
 	private void firstClick(Player player, GamePacket buf) {
 		int index = buf.getShort(true, ByteOrder.LITTLE);
-		Mob mob = World.get().getMobs().get(index - 1);
+		Mob mob = World.get().getMobRepository().get(index - 1);
 		if(mob == null)
 			return;
 		Position position = mob.getPosition().copy();
@@ -138,7 +137,7 @@ public final class MobActionPacket implements IncomingPacket {
 	 */
 	private void secondClick(Player player, GamePacket buf) {
 		int index = buf.getShort(false, ByteTransform.A, ByteOrder.LITTLE);
-		Mob mob = World.get().getMobs().get(index - 1);
+		Mob mob = World.get().getMobRepository().get(index - 1);
 		if(mob == null)
 			return;
 		Position position = mob.getPosition().copy();
@@ -169,7 +168,7 @@ public final class MobActionPacket implements IncomingPacket {
 	 */
 	private void thirdClick(Player player, GamePacket buf) {
 		int index = buf.getShort(true);
-		Mob mob = World.get().getMobs().get(index - 1);
+		Mob mob = World.get().getMobRepository().get(index - 1);
 		if(mob == null)
 			return;
 		Position position = mob.getPosition().copy();
@@ -197,7 +196,7 @@ public final class MobActionPacket implements IncomingPacket {
 	 */
 	private void fourthClick(Player player, GamePacket buf) {
 		int index = buf.getShort(true, ByteOrder.LITTLE);
-		Mob mob = World.get().getMobs().get(index - 1);
+		Mob mob = World.get().getMobRepository().get(index - 1);
 		if(mob == null)
 			return;
 		Position position = mob.getPosition();

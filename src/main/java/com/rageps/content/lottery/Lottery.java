@@ -167,7 +167,7 @@ public final class Lottery extends Task {
 			}
 			if (time.isAfter(nextLottieAnnouncement)) {
 				nextLottieAnnouncement = time.plusMinutes(5);
-				World.get().getMobs().stream().filter(Objects::nonNull).forEach(mob ->
+				World.get().getMobRepository().stream().filter(Objects::nonNull).forEach(mob ->
 						mob.forceChat("Talk to me to win " + NumberUtil.format(session.getPotAfterTax()) + "gp."));
 			}
 		}

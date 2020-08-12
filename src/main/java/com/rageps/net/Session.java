@@ -323,7 +323,7 @@ public class Session {
 		// Deserialization
 		if(code == LoginCode.NORMAL) {
 			player.credentials.setUsername(request.getUsername());
-			code = PlayerPersistenceManager.load(player);
+			code = World.get().getPersistenceManager().load(player);
 		}
 
 		//future.awaitUninterruptibly();

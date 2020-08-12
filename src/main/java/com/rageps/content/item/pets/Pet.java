@@ -130,7 +130,7 @@ public final class Pet extends Follower {
 		
 		Pet pet = new Pet(data, player.getPosition());
 		pet = player.getPetManager().put(pet);
-		World.get().getMobs().add(pet);
+		World.get().getMobRepository().add(pet);
 		pet.getMovementQueue().follow(player);
 		setInterface(player, pet);
 		pet.forceChat(pet.getProgress().getData().getType().getShout());
@@ -152,7 +152,7 @@ public final class Pet extends Follower {
 		}
 		
 		pet.setPosition(player.getPosition());
-		World.get().getMobs().add(pet);
+		World.get().getMobRepository().add(pet);
 		pet.getMovementQueue().follow(player);
 		setInterface(player, pet);
 		pet.forceChat(pet.getProgress().getData().getType().getShout());
@@ -169,7 +169,7 @@ public final class Pet extends Follower {
 		if(pet == null) {
 			return;
 		}
-		World.get().getMobs().remove(pet);
+		World.get().getMobRepository().remove(pet);
 		pet.task.cancel();
 		TabInterface.SUMMONING.sendInterface(player, -1);
 		player.out(new SendForceTab(TabInterface.INVENTORY));
@@ -203,7 +203,7 @@ public final class Pet extends Follower {
 			return false;
 		}
 		
-		World.get().getMobs().remove(pet);
+		World.get().getMobRepository().remove(pet);
 		player.getInventory().add(data.getPolicy().getItem());
 		player.getPetManager().reset();
 		TabInterface.SUMMONING.sendInterface(player, -1);

@@ -113,7 +113,7 @@ public abstract class Familiar extends Follower {
 		/* Caches the familiar instance to this player. */
 		player.setFamiliar(Optional.of(this));
 		/* Add the npc to the world */
-		World.get().getMobs().add(this);
+		World.get().getMobRepository().add(this);
 		/* Make the familiar follow the player */
 		this.getMovementQueue().follow(player);
 		/* Play the graphic when the familiar is spawned */
@@ -177,7 +177,7 @@ public abstract class Familiar extends Follower {
 			/* Set the follow task to null */
 			this.setFollowEntity(null);
 			/* Remove this npc from the world */
-			World.get().getMobs().remove(this);
+			World.get().getMobRepository().remove(this);
 			/* Closing the task */
 			task.ifPresent(Task::cancel);
 			/* Disable the familiars task. */

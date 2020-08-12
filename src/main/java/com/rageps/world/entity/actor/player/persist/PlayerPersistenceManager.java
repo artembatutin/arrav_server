@@ -1,49 +1,35 @@
 package com.rageps.world.entity.actor.player.persist;
 
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.rageps.combat.listener.CombatListenerDispatcher;
-import com.rageps.content.achievements.Achievement;
 import com.rageps.content.item.pets.Pet;
 import com.rageps.content.item.pets.PetManager;
 import com.rageps.content.item.pets.PetProgress;
 import com.rageps.content.minigame.barrows.BarrowsData;
 import com.rageps.content.skill.Skill;
-import com.rageps.content.skill.construction.House;
 import com.rageps.content.skill.construction.room.Room;
-import com.rageps.content.skill.farming.patch.Patch;
-import com.rageps.content.skill.farming.patch.PatchType;
-import com.rageps.content.skill.magic.Spellbook;
-import com.rageps.content.skill.prayer.PrayerBook;
 import com.rageps.content.skill.summoning.SummoningData;
 import com.rageps.content.skill.summoning.familiar.Familiar;
 import com.rageps.content.skill.summoning.familiar.FamiliarAbility;
 import com.rageps.content.skill.summoning.familiar.FamiliarContainer;
 import com.rageps.net.codec.login.LoginCode;
-import com.rageps.util.Tuple;
 import com.rageps.util.json.GsonUtils;
 import com.rageps.world.World;
-import com.rageps.world.attr.*;
 import com.rageps.world.entity.actor.combat.attack.FightType;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAppearance;
 import com.rageps.world.entity.actor.player.PlayerCredentials;
-import com.rageps.world.entity.actor.player.assets.AntifireDetails;
 import com.rageps.world.entity.actor.player.assets.PlayerData;
 import com.rageps.world.entity.actor.player.persist.impl.PlayerPersistDB;
 import com.rageps.world.entity.actor.player.persist.impl.PlayerPersistFile;
 import com.rageps.world.entity.actor.player.persist.property.PlayerPersistanceProperty;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.locale.Position;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.rageps.world.entity.actor.player.persist.property.PersistancePropertyType.*;
@@ -60,18 +46,18 @@ public final class PlayerPersistenceManager {
 	/**
 	 * Logging for this class.
 	 */
-	private static final Logger LOGGER = LogManager.getLogger();
+	private final Logger LOGGER = LogManager.getLogger();
 
 	/**
 	 * The method of persistence, will use {@link PlayerPersistDB} if SQL is enabled, otherwise {@link PlayerPersistFile}.
 	 */
-	private static final PlayerPersistable PERSISTABLE =  World.get().getEnvironment().isSqlEnabled() ? new PlayerPersistDB() : new PlayerPersistFile();
+	private final PlayerPersistable PERSISTABLE =  World.get().getEnvironment().isSqlEnabled() ? new PlayerPersistDB() : new PlayerPersistFile();
 
 	/**
 	 * Attempts to save a player.
 	 * @param player The player being saved.
 	 */
-	public static void save(Player player) {
+	public void save(Player player) {
 		//if (player.isBot) {
 		//	return;
 		//}
@@ -83,7 +69,7 @@ public final class PlayerPersistenceManager {
 	 * @param player The player being loaded.
 	 * @return The {@link LoginCode} which will be sent to the player.
 	 */
-	public static LoginCode load(Player player) {
+	public PlayerLoaderResponse load(PlayerCredentials player) {
 		//if (player.isBot) {
 		//	return LoginCode.COULD_NOT_COMPLETE_LOGIN;
 		//}
@@ -96,7 +82,7 @@ public final class PlayerPersistenceManager {
 	 * @param name The name of the player being loaded.
 	 * @return The loaded player.
 	 */
-	public static Player loadPlayer(String name) {
+	public Player loadPlayer(String name) {
 		PlayerCredentials credentials = new PlayerCredentials(name, null);
 
 		final Player other = new Player(credentials);
@@ -112,7 +98,6 @@ public final class PlayerPersistenceManager {
 	}
 
 	private static final Gson GSON = GsonUtils.JSON_ALLOW_NULL;
-
 
 	/**
 	 * Represents all of the properties present in a save file, along with their handling

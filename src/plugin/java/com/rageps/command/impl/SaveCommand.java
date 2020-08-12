@@ -25,7 +25,7 @@ public final class SaveCommand implements Command {
 				Player other;
 				Iterator<Player> it = World.get().getPlayers().iterator();
 				while((other = it.next()) != null) {
-					PlayerPersistenceManager.save(other);
+					World.get().getPersistenceManager().save(other);
 				}
 				player.message("Character files have been saved for everyone online!");
 				break;

@@ -67,7 +67,7 @@ public final class KreeArra extends Mob {
 			aviantese.getMovementCoordinator().setCoordinate(true);
 			aviantese.getMovementCoordinator().setRadius(3);
 			MobAggression.AGGRESSIVE.add(aviantese.getId());
-			World.get().getMobs().add(aviantese);
+			World.get().getMobRepository().add(aviantese);
 		});
 		MobAggression.AGGRESSIVE.add(this.getId());
 	}

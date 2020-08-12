@@ -69,7 +69,7 @@ public class CrashBandicootStrategy extends MultiStrategy {
                 hasFamiliar = false;
             }
         };
-        World.get().getMobs().add(akuAku);
+        World.get().getMobRepository().add(akuAku);
         hasFamiliar = true;
         familiarStage++;
         akuAku.delay(1, () -> {

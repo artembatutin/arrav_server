@@ -1,8 +1,7 @@
 package com.rageps.world.entity.actor.player.persist;
 
-
-import com.rageps.net.codec.login.LoginCode;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerCredentials;
 
 /**
  * A simple interface for saving/loading players.
@@ -25,6 +24,6 @@ public interface PlayerPersistable {
 	 * @param player The player being loaded.
 	 * @return A login code to return to the player.
 	 */
-	LoginCode load(Player player);
+	PlayerLoaderResponse load(PlayerCredentials player);
 
 }

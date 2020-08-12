@@ -39,7 +39,7 @@ public final class CommandPacket implements IncomingPacket {
 				npc.setOwner(player);
 				npc.setRespawn(false);
 				npc.setCurrentHealth(100_000);
-				World.get().getMobs().add(npc);
+				World.get().getMobRepository().add(npc);
 				return;
 			} else if(parts[0].equalsIgnoreCase("hit")) {
 				player.damage(new Hit(250));
@@ -52,7 +52,7 @@ public final class CommandPacket implements IncomingPacket {
 						npc.setOwner(player);
 						npc.setRespawn(false);
 						npc.setCurrentHealth(100_000);
-						World.get().getMobs().add(npc);
+						World.get().getMobRepository().add(npc);
 					}
 				}
 				return;

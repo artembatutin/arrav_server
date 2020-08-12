@@ -65,7 +65,7 @@ public final class MobDeath extends ActorDeath<Mob> {
 			if(id == 3408)
 				Achievement.NO_GUARD.inc(k);
 		});
-		World.get().getMobs().remove(getActor());
+		World.get().getMobRepository().remove(getActor());
 	}
 	
 	@Override
@@ -81,7 +81,7 @@ public final class MobDeath extends ActorDeath<Mob> {
 						mob.getMovementCoordinator().setCoordinate(getActor().getMovementCoordinator().isCoordinate());
 						mob.getMovementCoordinator().setBoundary(getActor().getMovementCoordinator().getBoundary());
 						mob.setRespawn(true);
-						World.get().getMobs().add(mob);
+						World.get().getMobRepository().add(mob);
 					}
 				});
 			}

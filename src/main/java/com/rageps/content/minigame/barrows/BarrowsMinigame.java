@@ -72,7 +72,7 @@ public final class BarrowsMinigame extends Minigame {
 		
 		BarrowBrother current = new BarrowBrother(data, player, data.getSpawn());
 		player.getMinigameContainer().getBarrowsContainer().setCurrent(current);
-		World.get().getMobs().add(current);
+		World.get().getMobRepository().add(current);
 		current.forceChat("How dare you disturb our grave!");
 		current.getCombat().attack(player);
 	}
@@ -109,7 +109,7 @@ public final class BarrowsMinigame extends Minigame {
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
 		if(current.isPresent() && current.get().getState() != EntityState.ACTIVE)
 			return true;
-		current.ifPresent(World.get().getMobs()::remove);
+		current.ifPresent(World.get().getMobRepository()::remove);
 		return true;
 	}
 	
@@ -142,7 +142,7 @@ public final class BarrowsMinigame extends Minigame {
 		if(stair != null) {
 			current.ifPresent(c -> {
 				if(c.getState() == EntityState.ACTIVE)
-					World.get().getMobs().remove(c);
+					World.get().getMobRepository().remove(c);
 			});
 			player.out(new SendMinimapState(0));
 			player.move(new Position(stair.getLocation().getX(), stair.getLocation().getY(), stair.getLocation().getZ()));
@@ -179,7 +179,7 @@ public final class BarrowsMinigame extends Minigame {
 					return false;
 				}
 				player.getMinigameContainer().getBarrowsContainer().setCurrent(container.getCurrent().get());
-				World.get().getMobs().add(container.getCurrent().get());
+				World.get().getMobRepository().add(container.getCurrent().get());
 				container.getCurrent().get().forceChat("How dare you steal from us!");
 				container.getCurrent().get().getCombat().attack(player);
 				return true;
@@ -223,7 +223,7 @@ public final class BarrowsMinigame extends Minigame {
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
 		if(current.isPresent() && current.get().getState() != EntityState.ACTIVE)
 			return;
-		current.ifPresent(World.get().getMobs()::remove);
+		current.ifPresent(World.get().getMobRepository()::remove);
 	}
 	
 	@Override
@@ -259,7 +259,7 @@ public final class BarrowsMinigame extends Minigame {
 		if(current.isPresent() && current.get().getState() != EntityState.ACTIVE) {
 			return;
 		}
-		current.ifPresent(World.get().getMobs()::remove);
+		current.ifPresent(World.get().getMobRepository()::remove);
 	}
 	
 	@Override

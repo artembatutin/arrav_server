@@ -15,6 +15,11 @@ public final class PlayerCredentials {
 	public long usernameHash;
 	public String username;
 	public String password;
+	private String hostAddress;
+	private String macAddress;
+
+
+
 	public int databaseId;
 	private PlayerEmail playerEmail;
 
@@ -23,6 +28,14 @@ public final class PlayerCredentials {
 		this.usernameHash = TextUtils.nameToHash(username);
 		this.username = username;
 		this.password = password;
+	}
+
+	public PlayerCredentials(String username, String password, long usernameHash, String mac, String hostAddress) {
+		this.username = username;
+		this.password = password;
+		this.usernameHash = usernameHash;
+		this.macAddress = mac;
+		this.hostAddress = hostAddress;
 	}
 
 	public void setEmail(PlayerEmail playerEmail) {
@@ -38,5 +51,36 @@ public final class PlayerCredentials {
 		this.formattedUsername = TextUtils.capitalize(username);
 		this.usernameHash = TextUtils.nameToHash(username);
 	}
-	
+
+	public String getUsername() {
+		return username;
+	}
+
+	public int getDatabaseId() {
+		return databaseId;
+	}
+
+	public long getUsernameHash() {
+		return usernameHash;
+	}
+
+	public PlayerEmail getPlayerEmail() {
+		return playerEmail;
+	}
+
+	public String getFormattedUsername() {
+		return formattedUsername;
+	}
+
+	public String getHostAddress() {
+		return hostAddress;
+	}
+
+	public String getMacAddress() {
+		return macAddress;
+	}
+
+	public String getPassword() {
+		return password;
+	}
 }

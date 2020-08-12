@@ -3,8 +3,14 @@ package com.rageps.world;
 import com.google.common.util.concurrent.AbstractScheduledService;
 import com.rageps.net.discord.Discord;
 import com.rageps.net.packet.out.SendBroadcast;
+import com.rageps.net.refactor.release.Release;
+import com.rageps.net.refactor.release.Release317;
 import com.rageps.net.sql.DatabaseTransactionWorker;
+import com.rageps.service.ServiceManager;
+import com.rageps.service.impl.GameService;
+import com.rageps.service.impl.LoginService;
 import com.rageps.world.attr.AttributeMap;
+import com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager;
 import com.rageps.world.env.Environment;
 import com.rageps.world.env.JsonEnvironmentProvider;
 import com.rageps.world.text.ColorConstants;
@@ -29,22 +35,17 @@ import com.rageps.world.entity.actor.move.path.SimplePathChecker;
 import com.rageps.world.entity.actor.move.path.impl.SimplePathFinder;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
-import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.entity.region.RegionManager;
-import com.rageps.world.sync.Synchronizer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
-import static com.rageps.net.Session.UPDATE_LIMIT;
 import static com.rageps.world.entity.EntityState.AWAITING_REMOVAL;
-import static com.rageps.world.entity.EntityState.IDLE;
 
 /**
  * The static utility class that contains functions to manage and process game characters.
@@ -64,6 +65,8 @@ public final class World extends AbstractScheduledService {
 	 */
 	private static final World singleton = new World();
 
+	private static final Release RELEASE = new Release317();
+
 	/**
 	 * An environment provided with configuration related to the specific
 	 * environment the server is running on.
@@ -76,19 +79,26 @@ public final class World extends AbstractScheduledService {
 	private static final Discord discord = new Discord();
 
 	/**
+	 * The service manager.
+	 */
+	private final ServiceManager services = new ServiceManager(this);
+
+	/**
 	 * Responsible for asynchronously executing all database transactions.
 	 */
 	private static final DatabaseTransactionWorker DATABASE_WORKER = new DatabaseTransactionWorker();
+
+	/**
+	 * Responsible for all saving/loading of character files using it's delegated method.
+	 */
+	private static final PlayerPersistenceManager PERSISTENCE_MANAGER = new PlayerPersistenceManager();
 
 	/**
 	 * World attributes.
 	 */
 	private static final AttributeMap attributeMap = new AttributeMap();
 
-	/**
-	 * Main game synchronizer.
-	 */
-	private final Synchronizer sync = new Synchronizer();
+
 	
 	/**
 	 * The manager for the queue of game tasks.
@@ -98,27 +108,39 @@ public final class World extends AbstractScheduledService {
 	/**
 	 * The queue of {@link Player}s waiting to be logged in.
 	 */
-	private final Queue<Player> logins = new ConcurrentLinkedQueue<>();
+	//private final Queue<Player> logins = new ConcurrentLinkedQueue<>();
 	
 	/**
 	 * The queue of {@link Player}s waiting to be logged out.
 	 */
-	private final Queue<Player> logouts = new ConcurrentLinkedQueue<>();
+	//private final Queue<Player> logouts = new ConcurrentLinkedQueue<>();
 	
 	/**
 	 * The queue of {@link Actor}s waiting to be added to the world.
 	 */
-	private final Queue<Actor> registeringActors = new ConcurrentLinkedQueue<>();
+	//private final Queue<Actor> registeringActors = new ConcurrentLinkedQueue<>();
 	
 	/**
 	 * The queue of {@link Actor}s waiting to be removed from the world.
 	 */
-	private final Queue<Actor> disposingActors = new ConcurrentLinkedQueue<>();
-	
+	//private final Queue<Actor> disposingActors = new ConcurrentLinkedQueue<>();
+
+
+	/**
+	 * The Queue of Npcs that have yet to be added to the repository.
+	 */
+	private final Queue<Mob> queuedNpcs = new ArrayDeque<>();
+
+	/**
+	 * The Queue of Npcs that have yet to be removed from the repository.
+	 */
+	private final Queue<Mob> oldNpcs = new ArrayDeque<>();
+
+
 	/**
 	 * The collection of active NPCs.
 	 */
-	private final ActorList<Mob> mobs = new ActorList<>(16384);
+	private final ActorList<Mob> mobRepository = new ActorList<>(16384);
 	
 	/**
 	 * The collection of active players.
@@ -135,15 +157,7 @@ public final class World extends AbstractScheduledService {
 	 */
 	private int staffCount;
 	
-	/**
-	 * The regional tick counter for processing such as {@link GroundItem} in a region.
-	 */
-	private int regionalTick;
-	
-	/**
-	 * The time it took in milliseconds to do the sync.
-	 */
-	public static long millis;
+
 	
 	@Override
 	protected String serviceName() {
@@ -152,32 +166,7 @@ public final class World extends AbstractScheduledService {
 	
 	@Override
 	protected void runOneIteration() {
-		final long start = System.currentTimeMillis();
-		int logs = logins.size();
-		synchronized(this) {
-			dequeueLogins();
-			registerActors();
-			taskManager.sequence();
-			sync.preUpdate(players, mobs);
-			sync.update(players);
-			sync.postUpdate(players, mobs);
-			dequeueLogout();
-			disposeActors();
-			regionalTick++;
-			if(regionalTick == 10) {
-				Region.cleanup();
-				regionalTick = 0;
-			}
-		}
-		
-		millis = System.currentTimeMillis() - start;
-		if(millis > 400) {
-			UPDATE_LIMIT -= 20;
-			if(UPDATE_LIMIT < 40)
-				UPDATE_LIMIT = 40;
-		} else if(UPDATE_LIMIT < 200) {
-			UPDATE_LIMIT += 20;
-		}
+
 		//System.out.println("took: " + millis + " - players: " + players.size() + " - mobs: " + mobs.size() + " - logins: " + logs);
 	}
 	
@@ -185,21 +174,31 @@ public final class World extends AbstractScheduledService {
 	protected Scheduler scheduler() {
 		return Scheduler.newFixedDelaySchedule(600, 600, TimeUnit.MILLISECONDS);
 	}
-	
+
+	/**
+	 * Pulses this World.
+	 */
+	public void pulse() {
+		unregisterNpcs();
+		registerNpcs();
+		taskManager.sequence();
+	}
+
+
 	/**
 	 * Queues {@code player} to be logged in on the next server sequence.
 	 * @param player the player to log in.
 	 */
-	public void queueLogin(Player player) {
+	/*public void queueLogin(Player player) {
 		if(player.getState() == IDLE) {
 			logins.offer(player);
 		}
-	}
+	}*/
 	
 	/**
 	 * Dequeue all incoming connecting players.
 	 */
-	private void dequeueLogins() {
+	/*private void dequeueLogins() {
 		if(!logins.isEmpty()) {
 			for(int i = 0; i < GameConstants.LOGIN_THRESHOLD; i++) {
 				Player player = logins.poll();
@@ -220,7 +219,7 @@ public final class World extends AbstractScheduledService {
 			}
 			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + players.size());
 		}
-	}
+	}*/
 	
 	/**
 	 * Queues {@code actor} to be added to the world.
@@ -247,6 +246,66 @@ public final class World extends AbstractScheduledService {
 			}
 		}
 	}
+
+	/**
+	 * Registers all of the {@link Mob}s in the {@link #queuedNpcs queue}.
+	 */
+	private void registerNpcs() {
+		while (!queuedNpcs.isEmpty()) {
+			Mob npc = queuedNpcs.poll();
+			boolean success = mobRepository.add(npc);
+
+			if (success) {
+				Region region = npc.getRegion();//regions.fromPosition(npc.getPosition());
+				region.add(npc);
+
+				//if (npc.hasBoundaries()) {
+				//	npcMovement.addNpc(npc);
+				//}
+			} else {
+				getLogger().warn("Failed to register npc (capacity reached): [count={}]",mobRepository.size());
+			}
+		}
+	}
+
+	/**
+	 * Unregisters all of the {@link Mob}s in the {@link #oldNpcs queue}.
+	 */
+	private void unregisterNpcs() {
+		while (!oldNpcs.isEmpty()) {
+			Mob npc = oldNpcs.poll();
+
+			Region region = npc.getRegion();//regions.fromPosition(npc.getPosition());
+			region.remove(npc);
+
+			mobRepository.remove(npc);
+		}
+	}
+
+	/**
+	 * Registers the specified {@link Mob}.
+	 *
+	 * @param npc The Npc.
+	 */
+	public void register(Mob npc) {
+		queuedNpcs.add(npc);
+	}
+
+	/**
+	 * Registers the specified {@link Player}.
+	 *
+	 * @param player The Player.
+	 */
+	public void register(Player player) {
+		String username = player.getUsername();
+
+		playerRepository.add(player);
+		players.put(NameUtil.encodeBase37(username), player);
+
+		logger.finest("Registered player: " + player + " [count=" + playerRepository.size() + "]");
+	}
+
+
 	
 	/**
 	 * Queues {@code actor} to be removed to the world.
@@ -256,10 +315,11 @@ public final class World extends AbstractScheduledService {
 		disposingActors.add(actor);
 	}
 	
+
 	/**
 	 * Dequeue all old disposed mobs.
 	 */
-	private void disposeActors() {
+	/*private void disposeActors() {
 		if(!disposingActors.isEmpty()) {
 			for(int i = 0; i < disposingActors.size(); i++) {
 				Actor actor = disposingActors.poll();
@@ -272,8 +332,8 @@ public final class World extends AbstractScheduledService {
 				}
 			}
 		}
-	}
-	
+//	}*/
+
 	/**
 	 * Queues {@code player} to be logged out on the next server sequence.
 	 * @param player the player to log out.
@@ -370,7 +430,7 @@ public final class World extends AbstractScheduledService {
 	public Iterator<Mob> getLocalMobs(Actor character) {
 		if(character.isPlayer())
 			return character.toPlayer().getLocalMobs().iterator();
-		return mobs.iterator();
+		return mobRepository.iterator();
 	}
 	
 	/**
@@ -380,7 +440,7 @@ public final class World extends AbstractScheduledService {
 	 */
 	public Set<Actor> getActors() {
 		Set<Actor> actors = new HashSet<>();
-		mobs.forEach(actors::add);
+		mobRepository.forEach(actors::add);
 		players.forEach(actors::add);
 		return actors;
 	}
@@ -456,7 +516,7 @@ public final class World extends AbstractScheduledService {
 			}
 			boolean response = players.remove(player);
 			for(Mob mob : player.getMobs()) {
-				mobs.remove(mob);
+				mobRepository.remove(mob);
 			}
 			player.getMobs().clear();
 			if(response) {
@@ -469,7 +529,36 @@ public final class World extends AbstractScheduledService {
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Get's a players alt accounts.
+	 * Todo - move to some other world util class
+	 */
+	public ObjectArrayList<Player> getAlts(Player player) {
+		ObjectArrayList<Player> alts = new ObjectArrayList<>();
+
+		for(Player p : getPlayers()) {
+			if(samePerson(player, p))
+				alts.add(p);
+		}
+		return alts;
+	}
+
+	/** Gets a player by name.
+	 * Todo - move to some other world util class
+	 * */
+	public Optional<Player> search(String name) {
+		for (Player player : players) {
+			if (player == null) {
+				continue;
+			}
+
+			if (player.credentials.username.equalsIgnoreCase(name)) {
+				return Optional.of(player);
+			}
+		}
+		return Optional.empty();
+	}
 	/**
 	 * Gets the manager for the queue of game tasks.
 	 * @return the queue of tasks.
@@ -514,8 +603,8 @@ public final class World extends AbstractScheduledService {
 	 * Gets the collection of active mobs.
 	 * @return the active mobs.
 	 */
-	public ActorList<Mob> getMobs() {
-		return mobs;
+	public ActorList<Mob> getMobRepository() {
+		return mobRepository;
 	}
 	
 	
@@ -633,19 +722,10 @@ public final class World extends AbstractScheduledService {
 		return DATABASE_WORKER;
 	}
 
-
-	/**
-	 * Get's a players alt accounts.
-	 */
-	public ObjectArrayList<Player> getAlts(Player player) {
-    	ObjectArrayList<Player> alts = new ObjectArrayList<>();
-
-    	for(Player p : getPlayers()) {
-    		if(samePerson(player, p))
-    			alts.add(p);
-		}
-    	return alts;
+	public PlayerPersistenceManager getPersistenceManager() {
+		return PERSISTENCE_MANAGER;
 	}
+
 
 	/**
 	 * Get's the logger used by the world to log various happenings.
@@ -655,25 +735,37 @@ public final class World extends AbstractScheduledService {
 		return LOGGER;
 	}
 
-	/** Gets a player by name. */
-	public Optional<Player> search(String name) {
-		for (Player player : players) {
-			if (player == null) {
-				continue;
-			}
 
-			if (player.credentials.username.equalsIgnoreCase(name)) {
-				return Optional.of(player);
-			}
-		}
-		return Optional.empty();
-	}
 
 	public Discord getDiscord() {
 		return discord;
 	}
 
+
 	public static AttributeMap getAttributeMap() {
 		return attributeMap;
+	}
+
+
+	/**
+	 * Gets the {@link GameService}.
+	 *
+	 * @return The GameService.
+	 */
+	public GameService getGameService() {
+		return services.getGame();
+	}
+
+	/**
+	 * Gets the {@link LoginService}.
+	 *
+	 * @return The LoginService.
+	 */
+	public LoginService getLoginService() {
+		return services.getLogin();
+	}
+
+	public Release getRelease() {
+		return RELEASE;
 	}
 }

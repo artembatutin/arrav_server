@@ -138,7 +138,7 @@ public final class AnimationRoom extends GuildRoom {
 		});
 		seq.connect(3, () -> {
 			arm.setOwner(player);
-			World.get().getMobs().add(arm);
+			World.get().getMobRepository().add(arm);
 		});
 		seq.connect(2, () -> {
 			arm.animation(4166);
@@ -151,7 +151,7 @@ public final class AnimationRoom extends GuildRoom {
 	
 	@Override
 	public void onDestruct(Player player) {
-		armour.ifPresent(World.get().getMobs()::remove);
+		armour.ifPresent(World.get().getMobRepository()::remove);
 	}
 	
 	@Override
@@ -181,7 +181,7 @@ public final class AnimationRoom extends GuildRoom {
 		}
 		player.getInventory().addOrDrop(new Item(WARRIOR_GUILD_TOKEN, armour.get().data.tokens));
 		player.getInventory().addOrDrop(armour.get().data.set);
-		armour.ifPresent(World.get().getMobs()::remove);
+		armour.ifPresent(World.get().getMobRepository()::remove);
 		armour = Optional.empty();
 	}
 	

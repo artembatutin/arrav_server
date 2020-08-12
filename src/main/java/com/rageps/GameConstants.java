@@ -29,8 +29,12 @@ public final class GameConstants {
 	 * If MySQL should be used or not.
 	 */
 	public static final boolean SQL_CONNECTED  = false;
-	
-	/**
+
+	public static final int MESSAGES_PER_PULSE = 60;
+
+	public static final int PULSE_DELAY = 600;
+
+    /**
 	 * The experience multiplier for the game.
 	 */
 	public static double EXPERIENCE_MULTIPLIER = 1;

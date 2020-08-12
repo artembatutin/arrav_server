@@ -61,7 +61,7 @@ public final class ReloadCommand implements Command {
 					protected void execute() {
 						if(!removed) {
 							//Removing npcs.
-							World.get().getMobs().clear();
+							World.get().getMobRepository().clear();
 							for(Player p : World.get().getPlayers()) {
 								if(p == null)
 									continue;

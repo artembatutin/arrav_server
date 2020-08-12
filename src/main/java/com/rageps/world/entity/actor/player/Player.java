@@ -51,10 +51,10 @@ import com.rageps.content.teleport.TeleportType;
 import com.rageps.content.teleport.impl.DefaultTeleportSpell;
 import com.rageps.content.trivia.TriviaTask;
 import com.rageps.content.wilderness.WildernessActivity;
-import com.rageps.net.Session;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.OutgoingPacket;
 import com.rageps.net.packet.out.*;
+import com.rageps.net.refactor.session.impl.GameSession;
 import com.rageps.net.sql.forum.account.MultifactorAuthentication;
 import com.rageps.util.*;
 import com.rageps.world.entity.actor.player.assets.PlayerData;
@@ -302,7 +302,7 @@ public final class Player extends Actor {
 	/**
 	 * The I/O manager that manages I/O operations for this player.
 	 */
-	private Session session;
+	private GameSession session;
 	
 	/**
 	 * The overload effect for this player.
@@ -749,7 +749,7 @@ public final class Player extends Actor {
 	
 	@Override
 	public String toString() {
-		return credentials.username == null ? session.toString() : "PLAYER[username= " + credentials.username + ", host= " + session.getHost() + ", rights= " + rights + "]";
+		return credentials.username == null ? session.toString() : "PLAYER[username= " + credentials.username + ", host= " + credentials.getHostAddress() + ", rights= " + rights + "]";
 	}
 	
 	@Override
@@ -970,7 +970,7 @@ public final class Player extends Actor {
 	 * Saves the character file for this player.
 	 */
 	private void save() {
-		PlayerPersistenceManager.save(this);
+		World.get().getPersistenceManager().save(this);
 	}
 	
 	/**
@@ -1135,14 +1135,14 @@ public final class Player extends Actor {
 	/**
 	 * @return The {@link Session} assigned to this {@code Player}.
 	 */
-	public Session getSession() {
+	public GameSession getSession() {
 		return session;
 	}
 	
 	/**
 	 * Sets the value for {@link #session}.
 	 */
-	public void setSession(Session session) {
+	public void setSession(GameSession session) {
 		checkState(this.session == null, "session already set!");
 		this.session = session;
 	}

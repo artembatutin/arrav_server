@@ -4,7 +4,6 @@ import com.rageps.content.achievements.Achievement;
 import com.rageps.net.packet.out.SendFade;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.MobAttributes;
-import com.rageps.world.entity.actor.player.PlayerAttributes;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.content.minigame.Minigame;
@@ -83,7 +82,7 @@ public class Hororis extends Minigame {
 			if(!player.playerData.lockedXP) {
 				player.getSkills()[Skills.PRAYER].increaseExperience(300);
 			}
-			World.get().getMobs().remove(mob);
+			World.get().getMobRepository().remove(mob);
 			return true;
 		}
 		player.message("You cannot interact with this mob in here!");
@@ -111,7 +110,7 @@ public class Hororis extends Minigame {
 	
 	public void over() {
 		for(Mob m : minions) {
-			World.get().getMobs().remove(m);
+			World.get().getMobRepository().remove(m);
 		}
 		minions.clear();
 		//		horror.getRegion().ifPresent(reg -> {
@@ -135,7 +134,7 @@ public class Hororis extends Minigame {
 	
 	public void drop(int part) {
 		Mob mob = new DefaultMob(part, getRandom());
-		World.get().getMobs().add(mob);
+		World.get().getMobRepository().add(mob);
 		minions.add(mob);
 		if(players.size() > 0) {
 			Player p = RandomUtils.random(players);
@@ -161,7 +160,7 @@ public class Hororis extends Minigame {
 	
 	public void minion() {
 		Mob mob = new DefaultMob(RandomUtils.inclusive(10629, 10641), getRandom());
-		World.get().getMobs().add(mob);
+		World.get().getMobRepository().add(mob);
 		minions.add(mob);
 		mob.animation(new Animation(9598));
 	}
