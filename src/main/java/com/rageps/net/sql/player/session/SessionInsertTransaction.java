@@ -37,23 +37,23 @@ public class SessionInsertTransaction extends DatabaseTransactionFuture<Long> {
         try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection, CREATE_SESSION, Statement.RETURN_GENERATED_KEYS)) {
             statement.setLong(1, user.credentials.databaseId);
             statement.setString(2, user.credentials.username);
-            statement.setString(3, user.getSession().getHost());
-            statement.setString(4, user.getSession().getMacAddress());
-            statement.setString(5, user.getSession().getUid());
+            statement.setString(3, user.credentials.getHostAddress());
+            statement.setString(4, user.credentials.getMacAddress());
+            statement.setString(5, user.credentials.getUid());
             statement.setInt(6, code.getCode());
             statement.executeUpdate();
             connection.commit();
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Failed to insert session: " + user.credentials.username+" "+user.getSession().getHost()+" response: "+code.name());
+                throw new SQLException("Failed to insert session: " + user.credentials.username+" "+user.credentials.getHostAddress()+" response: "+code.name());
             }
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 return generatedKeys.getLong(1);
             }
             throw new SQLException("No keys generated for session ["
-                    + user + "] from " + user.getSession().getHost() + " [response: " + code.getCode() + "]");
+                    + user + "] from " + user.credentials.getHostAddress() + " [response: " + code.getCode() + "]");
         }
     }
 }

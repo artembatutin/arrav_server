@@ -33,7 +33,7 @@ public final class ReceivedStarterManager {
             return false;
         }
 
-        Map<GameMode, Integer> counts = receivedStarters.computeIfAbsent(player.getSession().getUid(), __ -> new HashMap<>());
+        Map<GameMode, Integer> counts = receivedStarters.computeIfAbsent(player.credentials.getUid(), __ -> new HashMap<>());
 
         if (counts.getOrDefault(gameMode, 0) < threshold) {
             counts.merge(gameMode, 1, Integer::sum);

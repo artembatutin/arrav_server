@@ -3,7 +3,7 @@ package com.rageps.action.obj;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.action.ActionInitializer;
 import com.rageps.task.LinkedTaskSequence;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.Position;

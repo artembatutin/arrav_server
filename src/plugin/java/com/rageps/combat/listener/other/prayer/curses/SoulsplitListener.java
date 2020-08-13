@@ -1,7 +1,7 @@
 package com.rageps.combat.listener.other.prayer.curses;
 
 import com.rageps.combat.listener.SimplifiedListener;
-import com.rageps.world.Projectile;
+import com.rageps.world.model.Projectile;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.player.Player;

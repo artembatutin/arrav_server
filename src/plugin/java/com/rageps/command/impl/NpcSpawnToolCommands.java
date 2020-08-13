@@ -2,7 +2,7 @@ package com.rageps.command.impl;
 
 import com.rageps.command.Command;
 import com.rageps.command.CommandSignature;
-import com.rageps.world.Direction;
+import com.rageps.world.model.Direction;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 

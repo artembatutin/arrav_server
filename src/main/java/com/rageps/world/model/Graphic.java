@@ -1,4 +1,4 @@
-package com.rageps.world;
+package com.rageps.world.model;
 
 /**
  * The container class that represents an graphic.

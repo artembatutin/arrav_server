@@ -189,7 +189,7 @@ public abstract class GameEvent {
         }
         MessageBuilder mb = new MessageBuilder();
         mb.appendPrefix("Global", ColorConstants.GREEN1, ColorConstants.YELLOW).append(message, ColorConstants.DEEP_PINK);
-        World.get().message(mb.toString());
+        World.get().getWorldUtil().message(mb.toString());
         lastEventMessage = System.currentTimeMillis();
     }
 

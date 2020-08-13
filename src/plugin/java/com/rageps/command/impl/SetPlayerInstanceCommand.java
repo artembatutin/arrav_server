@@ -11,7 +11,7 @@ public final class SetPlayerInstanceCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player p = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player p = World.get().getWorldUtil().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(p == null)
 			return;
 		int instance = Integer.parseInt(cmd[2]);

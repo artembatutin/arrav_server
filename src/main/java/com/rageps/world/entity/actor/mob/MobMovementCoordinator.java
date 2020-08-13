@@ -1,7 +1,7 @@
 package com.rageps.world.entity.actor.mob;
 
 import com.rageps.world.locale.Boundary;
-import com.rageps.world.Direction;
+import com.rageps.world.model.Direction;
 
 /**
  * The movement coordinator that makes all {@link Mob}s pseudo-randomly move

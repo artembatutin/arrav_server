@@ -39,7 +39,7 @@ public final class LoginService extends Service {
 	/**
 	 * The current {@link PlayerPersistenceManager}.
 	 */
-	private PlayerPersistenceManager serializer;
+	private final PlayerPersistenceManager serializer = World.get().getPersistenceManager();
 
 	/**
 	 * Creates the login service.
@@ -53,7 +53,6 @@ public final class LoginService extends Service {
 
 	@Override
 	public void start() {
-
 	}
 
 	/**

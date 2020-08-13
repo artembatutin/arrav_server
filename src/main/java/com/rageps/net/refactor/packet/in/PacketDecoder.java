@@ -1,16 +1,16 @@
-package com.rageps.net.refactor.release;
+package com.rageps.net.refactor.packet.in;
 
 import com.rageps.net.refactor.codec.game.GamePacket;
-import com.rageps.net.refactor.message.Message;
+import com.rageps.net.refactor.packet.Packet;
 
 /**
- * A {@link MessageDecoder} decodes a {@link GamePacket} into a {@link Message} object which can be processed by the
+ * A {@link PacketDecoder} decodes a {@link GamePacket} into a {@link Packet} object which can be processed by the
  * server.
  *
  * @author Graham
  * @param <M> The type of message.
  */
-public abstract class MessageDecoder<M extends Message> {
+public abstract class PacketDecoder<M extends Packet> {
 
 	/**
 	 * Decodes the specified packet into a message.

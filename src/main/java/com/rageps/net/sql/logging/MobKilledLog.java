@@ -49,8 +49,8 @@ public final class MobKilledLog extends DatabaseTransaction {
 			+ "VALUES (:session_id, :killer, :ip_address, :uid, :npc_name, :npc_id, :items_dropped, :x, :y, :z, :timestamp);")) {
 			statement.setLong("session_id", player.getSession().getSessionId());
 			statement.setString("killer", player.credentials.username);
-			statement.setString("ip_address", player.getSession().getHost());
-			statement.setString("uid", player.getSession().getUid());
+			statement.setString("ip_address", player.credentials.getHostAddress());
+			statement.setString("uid", player.credentials.getUid());
 			statement.setString("npc_name", npc.getDefinition().getName());
 			statement.setInt("npc_id", npc.getId());
 			statement.setString("items_dropped", GSON.toJson(dropped));

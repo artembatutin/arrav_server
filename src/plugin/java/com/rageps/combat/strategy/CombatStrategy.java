@@ -2,7 +2,7 @@ package com.rageps.combat.strategy;
 
 import com.rageps.world.entity.actor.combat.formula.FormulaFactory;
 import com.rageps.world.entity.actor.combat.projectile.CombatProjectile;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatConstants;
 import com.rageps.world.entity.actor.combat.CombatType;

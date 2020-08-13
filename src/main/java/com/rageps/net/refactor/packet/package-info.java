@@ -1,4 +1,4 @@
 /**
  * Contains message-related classes.
  */
-package com.rageps.net.refactor.message;
+package com.rageps.net.refactor.packet;

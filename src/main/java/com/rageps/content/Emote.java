@@ -1,8 +1,8 @@
 package com.rageps.content;
 
 import com.rageps.action.impl.ButtonAction;
-import com.rageps.world.Animation;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.player.Player;
 
 /**

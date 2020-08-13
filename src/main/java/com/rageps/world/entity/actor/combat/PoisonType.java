@@ -1,4 +1,4 @@
-package com.rageps.world;
+package com.rageps.world.entity.actor.combat;
 
 /**
  * The enumerated type whose elements represent the different levels of poison.

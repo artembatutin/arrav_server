@@ -11,7 +11,7 @@ import com.rageps.content.skill.action.impl.ProducingSkillAction;
 import com.rageps.net.packet.out.SendItemOnInterfaceSlot;
 import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;

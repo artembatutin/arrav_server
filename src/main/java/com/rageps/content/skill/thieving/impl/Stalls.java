@@ -7,7 +7,7 @@ import com.rageps.content.skill.thieving.Thieving;
 import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;

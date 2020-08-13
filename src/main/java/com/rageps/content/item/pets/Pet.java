@@ -9,7 +9,7 @@ import com.rageps.content.TabInterface;
 import com.rageps.content.item.FoodConsumable;
 import com.rageps.net.packet.out.SendInterfaceNpcModel;
 import com.rageps.util.TextUtils;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.mob.Follower;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;

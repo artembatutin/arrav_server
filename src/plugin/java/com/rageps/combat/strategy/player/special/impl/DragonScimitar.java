@@ -2,8 +2,8 @@ package com.rageps.combat.strategy.player.special.impl;
 
 import com.rageps.content.skill.prayer.Prayer;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.Animation;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.attack.FightType;
 import com.rageps.world.entity.actor.combat.hit.Hit;

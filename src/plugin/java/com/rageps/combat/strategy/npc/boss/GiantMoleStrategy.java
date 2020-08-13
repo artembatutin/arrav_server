@@ -7,7 +7,7 @@ import com.rageps.world.locale.Position;
 import com.rageps.net.packet.out.SendGraphic;
 import com.rageps.task.Task;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.combat.hit.Hit;

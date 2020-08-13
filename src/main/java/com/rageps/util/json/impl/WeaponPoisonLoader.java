@@ -2,7 +2,7 @@ package com.rageps.util.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.rageps.world.PoisonType;
+import com.rageps.world.entity.actor.combat.PoisonType;
 import com.rageps.world.entity.actor.combat.effect.impl.CombatPoisonEffect;
 import com.rageps.util.json.JsonLoader;
 

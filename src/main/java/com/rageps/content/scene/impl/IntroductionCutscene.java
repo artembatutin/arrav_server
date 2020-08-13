@@ -1,6 +1,5 @@
 package com.rageps.content.scene.impl;
 
-import com.rageps.content.clanchannel.ClanRepository;
 import com.rageps.content.clanchannel.channel.ClanChannelHandler;
 import com.rageps.content.dialogue.Dialogue;
 import com.rageps.content.dialogue.impl.GiveItemDialogue;
@@ -12,8 +11,8 @@ import com.rageps.content.TabInterface;
 import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
 import com.rageps.task.Task;
-import com.rageps.world.Animation;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
@@ -41,7 +40,7 @@ public final class IntroductionCutscene extends Cutscene {
 	 */
 	public IntroductionCutscene(Player player) {
 		this.player = player;
-		this.player.firstLogin = !HostManager.contains(player.getSession().getHost(), HostListType.STARTER_RECEIVED);
+		this.player.firstLogin = !HostManager.contains(player.credentials.getHostAddress(), HostListType.STARTER_RECEIVED);
 	}
 	
 	@Override

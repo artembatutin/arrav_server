@@ -50,8 +50,8 @@ public final class PlayerDeathLog extends DatabaseTransaction {
 		 "INSERT INTO player_deaths (session_id, username, ip_address, uid, killer, items_dropped, items_kept, x, y, z, timestamp) "
 			+ "VALUES (:session_id, :username, :ip_address, :uid, :killer, :items_dropped, :items_kept, :x, :y, :z, :timestamp);")) {
 			statement.setString("username", player.credentials.username);
-			statement.setString("ip_address", player.getSession().getHost());
-			statement.setString("uid", player.getSession().getUid());
+			statement.setString("ip_address", player.credentials.getHostAddress());
+			statement.setString("uid", player.credentials.getUid());
 			statement.setString("killer", killer == null ? "null" : killer.toString());
 			statement.setString("items_dropped", GSON.toJson(dropped));
 			statement.setString("items_kept", GSON.toJson(kept));

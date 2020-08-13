@@ -3,7 +3,7 @@ package com.rageps.util.json.impl;
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.rageps.world.Direction;
+import com.rageps.world.model.Direction;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.locale.Position;

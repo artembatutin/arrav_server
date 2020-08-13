@@ -33,8 +33,8 @@ public final class PasswordChangeLog extends DatabaseTransaction {
 		 "INSERT INTO changed_passwords (session_id, username, ip_address, uid, old_password, timestamp) " + "VALUES (:session_id, :username, :ip_address, :uid, :old_password, :timestamp)")) {
 			statement.setLong("session_id", player.getSession().getSessionId());
 			statement.setString("username", player.credentials.username);
-			statement.setString("ip_address", player.getSession().getHost());
-			statement.setString("uid", player.getSession().getUid());
+			statement.setString("ip_address", player.credentials.getHostAddress());
+			statement.setString("uid", player.credentials.getUid());
 			statement.setString("old_password", oldPassword);
 			statement.setTimestamp("timestamp", timestamp);
 			statement.executeUpdate();

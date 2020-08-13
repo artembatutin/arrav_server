@@ -1,5 +1,7 @@
 package com.rageps.net.refactor.session.impl;
 
+import com.google.common.base.Objects;
+import com.rageps.net.NetworkConstants;
 import com.rageps.net.refactor.codec.handshake.HandshakeConstants;
 import com.rageps.net.refactor.codec.handshake.HandshakeMessage;
 import com.rageps.net.refactor.session.Session;
@@ -35,7 +37,7 @@ public final class ApolloHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) {
 		Channel channel = ctx.channel();
-		Session session = channel.attr(ApolloHandler.SESSION_KEY).getAndRemove();
+		Session session = channel.attr(ApolloHandler.SESSION_KEY).getAndSet(null);
 		if (session != null) {
 			session.destroy();
 		}
@@ -45,10 +47,10 @@ public final class ApolloHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) {
-		if (!e.getMessage().contains("An existing connection was forcibly closed by the remote host")) {
+		if(NetworkConstants.IGNORED_NETWORK_EXCEPTIONS.stream().noneMatch($it -> Objects.equal($it, e.getMessage()))) {
 			logger.warn("Exception occured for channel: {}, closing...",ctx.channel(), e);
 		}
-		ctx.channel().close();
+		ctx.close();
 	}
 
 	@Override

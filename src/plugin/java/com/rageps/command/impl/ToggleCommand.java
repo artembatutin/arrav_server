@@ -34,7 +34,7 @@ public class ToggleCommand implements Command {
 						FirepitManager.get().getFirepit().data = FirepitData.PHASE_FIVE;
 						FirepitManager.get().getFirepit().setId(38821);
 						FirepitManager.get().getFirepit().publish();
-						World.get().message("Fire pit has been filled up, you can light it up.");
+						World.get().getWorldUtil().message("Fire pit has been filled up, you can light it up.");
 					}
 				} else if(command.equals("disable")) {
 					if(FirepitManager.get().getFirepit() != null) {

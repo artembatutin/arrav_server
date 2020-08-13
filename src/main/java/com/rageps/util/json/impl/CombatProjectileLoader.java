@@ -2,8 +2,8 @@ package com.rageps.util.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.rageps.world.Animation;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.combat.CombatImpact;
 import com.rageps.world.entity.actor.combat.magic.MagicImpact;
 import com.rageps.world.entity.actor.combat.projectile.CombatProjectile;

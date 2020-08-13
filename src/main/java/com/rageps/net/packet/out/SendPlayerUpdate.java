@@ -6,7 +6,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.codec.game.GamePacketType;
 import com.rageps.net.packet.OutgoingPacket;
-import com.rageps.world.Direction;
+import com.rageps.world.model.Direction;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.update.UpdateManager;

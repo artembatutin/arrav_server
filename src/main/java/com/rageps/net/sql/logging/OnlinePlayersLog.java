@@ -47,16 +47,16 @@ public final class OnlinePlayersLog extends DatabaseTransaction {
 			case LOGIN:
 				try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection, "INSERT INTO online_players (username, ip_address, uid, timestamp) VALUES (:username, :ip_address, :uid, :timestamp);")) {
 					statement.setString("username", player.credentials.username);
-					statement.setString("ip_address", player.getSession().getHost());
-					statement.setString("uid", player.getSession().getUid());
+					statement.setString("ip_address", player.credentials.getHostAddress());
+					statement.setString("uid", player.credentials.getUid());
 					statement.setTimestamp("timestamp", timestamp);
 					statement.executeUpdate();
 				}
 
 				try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection, "INSERT INTO logins (username, ip_address, uid, timestamp) VALUES (:username, :ip_address, :uid, :timestamp)")) {
 					statement.setString("username", player.credentials.username);
-					statement.setString("ip_address", player.getSession().getHost());
-					statement.setString("uid", player.getSession().getUid());
+					statement.setString("ip_address", player.credentials.getHostAddress());
+					statement.setString("uid", player.credentials.getUid());
 					statement.setTimestamp("timestamp", timestamp);
 					statement.executeUpdate();
 				}
@@ -72,8 +72,8 @@ public final class OnlinePlayersLog extends DatabaseTransaction {
 
 				try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection, "INSERT INTO logouts (username, ip_address, uid, session_duration, timestamp) VALUES (:username, :ip_address, :uid, :session_duration, :timestamp);")) {
 					statement.setString("username", player.credentials.username);
-					statement.setString("ip_address", player.getSession().getHost());
-					statement.setString("uid", player.getSession().getUid());
+					statement.setString("ip_address", player.credentials.getHostAddress());
+					statement.setString("uid", player.credentials.getUid());
 					statement.setLong("session_duration", player.getAttributeMap().getLong(PlayerAttributes.SESSION_DURATION));
 					statement.setTimestamp("timestamp", timestamp);
 					statement.executeUpdate();

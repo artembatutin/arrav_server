@@ -3,7 +3,7 @@ package com.rageps.content.skill.summoning.familiar.ability;
 import com.rageps.world.World;
 import com.rageps.content.skill.summoning.familiar.FamiliarAbility;
 import com.rageps.task.Task;
-import com.rageps.world.Visualize;
+import com.rageps.world.model.Visualize;
 import com.rageps.world.entity.actor.player.Player;
 
 import java.util.Optional;

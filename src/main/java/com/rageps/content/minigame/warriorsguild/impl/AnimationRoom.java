@@ -8,7 +8,7 @@ import com.rageps.content.dialogue.impl.StatementDialogue;
 import com.rageps.content.minigame.Minigame;
 import com.rageps.content.minigame.warriorsguild.GuildRoom;
 import com.rageps.task.LinkedTaskSequence;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.mob.Mob;

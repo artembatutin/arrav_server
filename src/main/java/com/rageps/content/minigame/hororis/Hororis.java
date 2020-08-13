@@ -10,7 +10,7 @@ import com.rageps.content.minigame.Minigame;
 import com.rageps.content.skill.Skills;
 import com.rageps.net.packet.out.SendGraphic;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;

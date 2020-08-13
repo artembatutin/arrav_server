@@ -1,6 +1,6 @@
 package com.rageps.content.skill.farming;
 
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 
 public final class FarmingConstants {
 	

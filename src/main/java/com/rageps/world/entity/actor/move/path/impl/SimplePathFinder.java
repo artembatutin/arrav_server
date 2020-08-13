@@ -9,7 +9,7 @@ import com.rageps.world.entity.actor.move.path.Path;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import static com.rageps.world.Direction.*;
+import static com.rageps.world.model.Direction.*;
 
 /**
  * Represents a simple path finder which determines a straight path to the first blocked tile or it's destination.

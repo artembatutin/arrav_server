@@ -9,7 +9,7 @@ import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Boundary;
 import com.rageps.world.locale.Position;
 import com.rageps.task.Task;
-import com.rageps.world.Direction;
+import com.rageps.world.model.Direction;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.mob.Mob;

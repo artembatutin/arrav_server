@@ -1,6 +1,6 @@
 package com.rageps.world.entity.actor.combat.projectile;
 
-import com.rageps.world.Projectile;
+import com.rageps.world.model.Projectile;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 

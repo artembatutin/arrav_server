@@ -1,13 +1,10 @@
 package com.rageps.combat.listener.other.prayer.curses;
 
-import com.rageps.combat.listener.SimplifiedListener;
 import com.rageps.combat.listener.other.prayer.regular.ProtectionPrayerListener;
-import com.rageps.content.skill.Skill;
-import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.prayer.Prayer;
-import com.rageps.world.Animation;
-import com.rageps.world.Graphic;
-import com.rageps.world.Visualize;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
+import com.rageps.world.model.Visualize;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.combat.CombatUtil;
@@ -15,8 +12,6 @@ import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.player.Player;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 public class DeflectListener extends ProtectionPrayerListener {
 

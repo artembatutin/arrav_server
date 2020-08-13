@@ -40,8 +40,8 @@ public final class CommandLog extends DatabaseTransaction {
 		 "INSERT INTO commands (session_id, username, ip_address, uid, command, arguments, x, y, z, timestamp) VALUES (:session_id, :username, :ip_address, :uid, :command, :arguments, :x, :y, :z, :timestamp);")) {
 			statement.setLong("session_id", player.getSession().getSessionId());
 			statement.setString("username", player.credentials.username);
-			statement.setString("ip_address", player.getSession().getHost());
-			statement.setString("uid", player.getSession().getUid());
+			statement.setString("ip_address", player.credentials.getHostAddress());
+			statement.setString("uid", player.credentials.getUid());
 			statement.setString("command", command);
 			statement.setString("arguments", arguments);
 			statement.setInt("x", position.getX());

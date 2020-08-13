@@ -2,8 +2,8 @@ package com.rageps.content.minigame.pestcontrol.pest;
 
 import com.rageps.content.minigame.pestcontrol.defence.PestGate;
 import com.rageps.content.minigame.pestcontrol.PestControlMinigame;
-import com.rageps.world.Animation;
-import com.rageps.world.Direction;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Direction;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;

@@ -11,7 +11,7 @@ public final class UnMutingCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player mute = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player mute = World.get().getWorldUtil().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(mute != null && mute != player) {
 			player.message("Successfully un-muted " + mute.getFormatUsername() + ".");
 			mute.message("@red@You have been un-muted by " + player.getFormatUsername() + ".");

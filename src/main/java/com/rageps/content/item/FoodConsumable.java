@@ -9,7 +9,7 @@ import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.Skills;
 import com.rageps.action.impl.ItemAction;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.impl.Inventory;

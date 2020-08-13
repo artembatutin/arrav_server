@@ -10,6 +10,8 @@ import com.rageps.net.sql.player.PlayerAccountLoadTransaction;
 import com.rageps.net.sql.player.PlayerAccountSaveTransaction;
 import com.rageps.net.sql.player.UpdateForumAccountTransaction;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerCredentials;
+import com.rageps.world.entity.actor.player.persist.PlayerLoaderResponse;
 import com.rageps.world.entity.actor.player.persist.PlayerPersistable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -51,7 +53,7 @@ public final class PlayerPersistDB implements PlayerPersistable {
 	}
 
 	@Override
-	public LoginCode load(Player player) {
+	public PlayerLoaderResponse load(PlayerCredentials player) {
 			//if (!MysqlUserDao.INSTANCE.playerSaveExist(player.getUser())) {
 			//	player.firstSession = true;
 			//	player.doingTutorial = true;

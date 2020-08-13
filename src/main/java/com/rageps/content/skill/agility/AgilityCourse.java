@@ -7,7 +7,7 @@ import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.action.SkillAction;
 import com.rageps.net.packet.out.SendMessage;
 import com.rageps.task.Task;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.move.ForcedMovement;
 import com.rageps.world.entity.actor.move.ForcedMovementManager;

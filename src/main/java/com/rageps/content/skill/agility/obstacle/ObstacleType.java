@@ -1,6 +1,6 @@
 package com.rageps.content.skill.agility.obstacle;
 
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 
 import java.util.Optional;
 

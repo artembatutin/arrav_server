@@ -2,7 +2,7 @@ package com.rageps.world.entity.actor.move.path;
 
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
-import com.rageps.world.Direction;
+import com.rageps.world.model.Direction;
 
 /**
  * An algorithm used to find a path between two {@link Position}s.

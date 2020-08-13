@@ -3,7 +3,7 @@ package com.rageps.content.skill.agility.impl.gnome.impl;
 import com.rageps.content.skill.agility.obstacle.ObstacleActivity;
 import com.rageps.content.skill.agility.obstacle.ObstacleType;
 import com.rageps.task.LinkedTaskSequence;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.move.ForcedMovement;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.locale.Position;

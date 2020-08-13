@@ -9,7 +9,7 @@ import com.rageps.net.packet.out.SendObjectAnimation;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.agility.test.Agility;
 import com.rageps.task.LinkedTaskSequence;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.move.ForcedMovement;
 import com.rageps.world.entity.actor.move.ForcedMovementManager;
 import com.rageps.world.entity.actor.player.Player;

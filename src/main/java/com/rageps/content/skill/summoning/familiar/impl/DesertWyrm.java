@@ -8,8 +8,8 @@ import com.rageps.content.skill.summoning.familiar.Familiar;
 import com.rageps.content.skill.summoning.familiar.FamiliarAbility;
 import com.rageps.task.LinkedTaskSequence;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Animation;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 

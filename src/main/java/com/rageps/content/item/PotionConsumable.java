@@ -11,7 +11,7 @@ import com.rageps.action.impl.ItemAction;
 import com.rageps.net.packet.out.SendConfig;
 import com.rageps.net.packet.out.SendEnergy;
 import com.rageps.task.Task;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.combat.CombatUtil;
 import com.rageps.world.entity.actor.combat.effect.CombatEffectType;
 import com.rageps.world.entity.actor.player.Player;

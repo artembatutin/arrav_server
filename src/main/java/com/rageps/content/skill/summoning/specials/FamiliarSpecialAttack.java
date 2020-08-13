@@ -1,7 +1,7 @@
 package com.rageps.content.skill.summoning.specials;
 
-import com.rageps.world.Animation;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 
 import java.util.Optional;
 

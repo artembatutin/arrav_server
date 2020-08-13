@@ -84,17 +84,15 @@ public final class PlayerPersistenceManager {
 	 */
 	public Player loadPlayer(String name) {
 		PlayerCredentials credentials = new PlayerCredentials(name, null);
-
-		final Player other = new Player(credentials);
-
+			Optional<Player> other;
 		try {
-			load(other);
+			other = load(credentials).getPlayer();
 		} catch (Exception ex) {
 			LOGGER.error("Error using player loader to get another player {}", name);
 			ex.printStackTrace();
 			return null;
 		}
-		return other;
+		return other.orElse(null);
 	}
 
 	private static final Gson GSON = GsonUtils.JSON_ALLOW_NULL;

@@ -2,14 +2,14 @@ package com.rageps.net.refactor.codec.game;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
-import com.rageps.net.refactor.message.Message;
-import com.rageps.net.refactor.release.MessageDecoder;
+import com.rageps.net.refactor.packet.Packet;
+import com.rageps.net.refactor.packet.in.PacketDecoder;
 import com.rageps.net.refactor.release.Release;
 
 import java.util.List;
 
 /**
- * A {@link MessageToMessageDecoder} that decodes {@link GamePacket}s into {@link Message}s.
+ * A {@link MessageToMessageDecoder} that decodes {@link GamePacket}s into {@link Packet}s.
  *
  * @author Graham
  */
@@ -31,7 +31,7 @@ public final class GameMessageDecoder extends MessageToMessageDecoder<GamePacket
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, GamePacket packet, List<Object> out) {
-		MessageDecoder<?> decoder = release.getMessageDecoder(packet.getOpcode());
+		PacketDecoder<?> decoder = release.getMessageDecoder(packet.getOpcode());
 		if (decoder != null) {
 			out.add(decoder.decode(packet));
 		} else {

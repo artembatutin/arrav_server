@@ -22,8 +22,8 @@ public class PunishmentHandler {
             return LoginCode.NORMAL;
         }
 
-        String host = player.getSession().getHost();
-        String serialNumber = player.getSession().getUid();
+        String host = player.credentials.getHostAddress();
+        String serialNumber = player.credentials.getUid();
 
         try {
             LoginCode result = QuerySanctionsTransaction.execute(player.credentials.username, host, serialNumber);

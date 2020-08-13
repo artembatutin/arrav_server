@@ -5,7 +5,7 @@ import com.rageps.content.skill.farming.FarmingConstants;
 import com.rageps.content.skill.farming.seed.SeedClass;
 import com.rageps.content.skill.farming.seed.SeedType;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.item.Item;
 
 public enum AllotmentSeed implements SeedType {

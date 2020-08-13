@@ -1,7 +1,7 @@
 package com.rageps.content.skill.summoning.familiar.ability;
 
 import com.rageps.content.skill.summoning.familiar.FamiliarAbility;
-import com.rageps.world.Direction;
+import com.rageps.world.model.Direction;
 import com.rageps.world.entity.actor.player.Player;
 
 import java.util.Optional;

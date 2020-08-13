@@ -13,7 +13,7 @@ public final class MacBanningCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player banned = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player banned = World.get().getWorldUtil().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(banned != null && banned.same(player)) {
 			player.message("Successfully Mac banned " + banned.getFormatUsername() + ".");
 			if(HostManager.add(banned, HostListType.BANNED_MAC))

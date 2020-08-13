@@ -106,8 +106,8 @@ public final class ScoreboardManager {
 		this.setBoardResetted(true);
 		
 		if(player_scoreboard.size() < 10) {
-			World.get().message("There weren't enough players participating in the player scoreboard event.", true);
-			World.get().message("The event has been extended by another week.", true);
+			World.get().getWorldUtil().message("There weren't enough players participating in the player scoreboard event.", true);
+			World.get().getWorldUtil().message("The event has been extended by another week.", true);
 			return;
 		}
 		

@@ -8,7 +8,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.task.Task;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Direction;
+import com.rageps.world.model.Direction;
 
 /**
  * An implementation of a {@link Task} that handles randomized {@link Mob} movements.

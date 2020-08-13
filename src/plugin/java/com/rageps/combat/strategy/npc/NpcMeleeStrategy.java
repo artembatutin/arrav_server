@@ -1,7 +1,7 @@
 package com.rageps.combat.strategy.npc;
 
 import com.rageps.combat.strategy.basic.MeleeStrategy;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.combat.attack.FightType;

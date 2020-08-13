@@ -6,7 +6,7 @@ import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.magic.Spellbook;
 import com.rageps.content.skill.prayer.PrayerBook;
 import com.rageps.action.ActionInitializer;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.object.GameObject;
 

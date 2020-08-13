@@ -3,7 +3,7 @@ package com.rageps.net.packet.out;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.codec.game.GamePacketType;
 import com.rageps.net.packet.OutgoingPacket;
-import com.rageps.world.Direction;
+import com.rageps.world.model.Direction;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;

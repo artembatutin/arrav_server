@@ -5,6 +5,7 @@ import com.rageps.world.*;
 import com.rageps.world.attr.AttributeMap;
 import com.rageps.world.entity.actor.combat.Combat;
 import com.rageps.world.entity.actor.combat.CombatUtil;
+import com.rageps.world.entity.actor.combat.PoisonType;
 import com.rageps.world.entity.actor.combat.effect.CombatEffectType;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.combat.strategy.CombatStrategy;
@@ -24,6 +25,9 @@ import com.rageps.util.Stopwatch;
 import com.rageps.world.entity.Entity;
 import com.rageps.world.entity.EntityType;
 import com.rageps.world.locale.loc.Locations;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Direction;
+import com.rageps.world.model.Graphic;
 
 import java.util.Set;
 import java.util.concurrent.TimeUnit;

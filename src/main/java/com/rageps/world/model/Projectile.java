@@ -1,5 +1,6 @@
-package com.rageps.world;
+package com.rageps.world.model;
 
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.region.Region;

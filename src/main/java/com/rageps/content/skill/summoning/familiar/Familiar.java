@@ -13,7 +13,7 @@ import com.rageps.net.packet.out.SendInterfaceNpcModel;
 import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.mob.Follower;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.mob.MobDeath;

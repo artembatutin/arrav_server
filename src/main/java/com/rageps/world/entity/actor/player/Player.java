@@ -29,7 +29,6 @@ import com.rageps.content.object.cannon.Multicannon;
 import com.rageps.content.object.pit.FirepitManager;
 import com.rageps.content.object.star.ShootingStarManager;
 import com.rageps.content.quest.QuestManager;
-import com.rageps.content.scene.impl.IntroductionCutscene;
 import com.rageps.content.skill.Skill;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.action.SkillActionTask;
@@ -54,6 +53,7 @@ import com.rageps.content.wilderness.WildernessActivity;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.OutgoingPacket;
 import com.rageps.net.packet.out.*;
+import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.session.impl.GameSession;
 import com.rageps.net.sql.forum.account.MultifactorAuthentication;
 import com.rageps.util.*;
@@ -63,11 +63,9 @@ import com.rageps.world.entity.actor.player.assets.group.GameMode;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.MobSpawner;
 import com.rageps.world.entity.actor.mob.drop.chance.NpcDropChanceHandler;
-import com.rageps.world.entity.actor.player.assets.AntifireDetails;
 import com.rageps.world.entity.actor.player.assets.relations.PlayerRelation;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
-import com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
@@ -79,7 +77,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.task.Task;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.EntityType;
 import com.rageps.world.entity.actor.Actor;
@@ -1157,13 +1155,28 @@ public final class Player extends Actor {
 		if(packet.onSent(this))
 			getSession().queue(packet);
 	}
-	
+
 	/**
-	 * Writes a {@link OutgoingPacket}.
-	 * @param packet packet to be written.
+	 * A temporary queue of messages sent during the login process.
 	 */
-	public void write(OutgoingPacket packet) {
-		getSession().write(packet);
+	private final Deque<Packet> queuedPackets = new ArrayDeque<>();
+
+	/**
+	 * Sends a {@link Packet} to this player.
+	 *
+	 * @param packet The message..
+	 */
+	public void send(Packet packet) {
+		if (!active()) {
+			queuedPackets.add(packet);
+			return;
+		}
+
+		if (!queuedPackets.isEmpty()) {
+			CollectionUtil.pollAll(queuedPackets, session::dispatchMessage);
+		}
+
+		session.dispatchMessage(packet);
 	}
 	
 	/**

@@ -23,7 +23,7 @@ public final class LoginEncoder extends MessageToByteEncoder<LoginResponse> {
 		out.writeByte(response.getStatus());
 
 		if (response.getStatus() == LoginConstants.STATUS_OK) {
-			out.writeByte(response.getRights());
+			out.writeByte(response.getRights().getProtocolValue());
 			out.writeByte(response.isFlagged() ? 1 : 0);
 		}
 	}

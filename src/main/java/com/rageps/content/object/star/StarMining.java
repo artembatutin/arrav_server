@@ -4,7 +4,7 @@ import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.impl.HarvestingSkillAction;
 import com.rageps.content.skill.mining.PickaxeData;
 import com.rageps.task.Task;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 

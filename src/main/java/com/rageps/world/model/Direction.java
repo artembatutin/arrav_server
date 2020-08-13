@@ -1,4 +1,4 @@
-package com.rageps.world;
+package com.rageps.world.model;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;

@@ -7,7 +7,7 @@ import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.prayer.Prayer;
 import com.rageps.net.packet.out.SendConfig;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.combat.hit.Hit;

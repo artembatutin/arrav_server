@@ -65,7 +65,7 @@ public final class NetworkConstants {
 	/**
 	 * The list of exceptions that are ignored and discarded by the {@link RageChannelHandler}.
 	 */
-	static final ImmutableList<String> IGNORED_NETWORK_EXCEPTIONS = ImmutableList.of("An existing connection was forcibly closed by the remote host", "An established connection was aborted by the software in your host machine");
+	public static final ImmutableList<String> IGNORED_NETWORK_EXCEPTIONS = ImmutableList.of("An existing connection was forcibly closed by the remote host", "An established connection was aborted by the software in your host machine");
 	
 	/**
 	 * Invalid constants of an unknown mac address.

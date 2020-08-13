@@ -134,7 +134,7 @@ public class LoginDecoder extends StatefulFrameDecoder<LoginState> {
 				String password = getCString(rsaBuffer).toLowerCase();
 				long usernameHash = TextUtils.nameToHash(username);
 				
-				if(World.get().getPlayer(usernameHash).isPresent()) {
+				if(World.get().getWorldUtil().getPlayer(usernameHash).isPresent()) {
 					write(ctx, LoginCode.ACCOUNT_ONLINE);
 					return;
 				}

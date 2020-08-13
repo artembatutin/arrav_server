@@ -31,7 +31,7 @@ public final class HostManager {
 	 * @return {@code true} if the two players are connected from same network, {@code false} otherwise.
 	 */
 	public static boolean same(Player player, Player other) {
-		return !(player.getSession() == null || other.getSession() == null) && (player.getSession().getHost().equals(other.getSession().getHost()) || player.getSession().getHost().equals(other.getSession().getMacAddress()));
+		return !(player.getSession() == null || other.getSession() == null) && (player.credentials.getHostAddress().equals(other.credentials.getHostAddress()) || player.credentials.getHostAddress().equals(other.credentials.getMacAddress()));
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public final class HostManager {
 	 * Adds a blocked entry to the desired type.
 	 */
 	public static boolean add(Player player, HostListType type) {
-		if(type == HostListType.BANNED_MAC && !Session.validMac(player.getSession().getMacAddress())) {
+		if(type == HostListType.BANNED_MAC && !Session.validMac(player.credentials.getMacAddress())) {
 			return false;
 		}
 		HostList list = lists[type.getIndex()];

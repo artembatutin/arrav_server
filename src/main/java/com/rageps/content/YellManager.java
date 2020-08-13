@@ -36,7 +36,7 @@ public class YellManager {
         yb.getMb().terminateShade();
         yb.appentMessage(message, yellColor);
 
-        World.get().message(yb.toString());
+        World.get().getWorldUtil().message(yb.toString());
     }
 
 }

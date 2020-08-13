@@ -11,7 +11,7 @@ public final class KickCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player kick = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player kick = World.get().getWorldUtil().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(kick != null && kick != player) {
 			player.message("Successfully kicked " + kick.getFormatUsername() + ".");
 			World.get().queueLogout(kick);

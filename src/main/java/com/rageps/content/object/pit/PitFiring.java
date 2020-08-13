@@ -6,7 +6,7 @@ import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.SkillAction;
 import com.rageps.task.Task;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 
@@ -107,8 +107,8 @@ public final class PitFiring extends SkillAction {
 		player.animation(null);
 		player.message("You successfully fired the pit!");
 		GameConstants.EXPERIENCE_MULTIPLIER = 2;
-		World.get().message("@red@ " + player.getFormatUsername() + " @blu@ has ignited the fire pit!", true);
-		World.get().message("@red@ Enjoy the double experience for five hours.", true);
+		World.get().getWorldUtil().message("@red@ " + player.getFormatUsername() + " @blu@ has ignited the fire pit!", true);
+		World.get().getWorldUtil().message("@red@ Enjoy the double experience for five hours.", true);
 	}
 
 	@Override

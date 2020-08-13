@@ -6,7 +6,7 @@ import com.rageps.world.entity.actor.player.Player;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.combat.attack.FightType;
@@ -99,7 +99,7 @@ public class GeneralGraardorStrategy extends MultiStrategy {
 		@Override
 		public CombatHit[] getHits(Mob attacker, Actor defender) {
 			ObjectList<Player> toHit = new ObjectArrayList<>();
-			World.get().getLocalPlayers(defender).forEachRemaining(player -> {
+			World.get().getWorldUtil().getLocalPlayers(defender).forEachRemaining(player -> {
 				if(GeneralGraardor.CHAMBER.inArea(player.getPosition())) {
 					toHit.add(player);
 				}

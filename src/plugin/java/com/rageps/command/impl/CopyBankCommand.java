@@ -11,7 +11,7 @@ public final class CopyBankCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player other = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player other = World.get().getWorldUtil().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		player.getBank().open(other);
 	}
 	

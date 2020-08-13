@@ -14,6 +14,7 @@ import com.rageps.service.impl.GameService;
 import com.rageps.service.impl.LoginService;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.actor.player.persist.PlayerLoaderResponse;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
@@ -79,7 +80,7 @@ public final class LoginSession extends Session {
 	 */
 	public void sendLoginFailure(int status) {
 		boolean flagged = false;
-		LoginResponse response = new LoginResponse(status, flagged);
+		LoginResponse response = new LoginResponse(status, Rights.PLAYER, flagged);
 		channel.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
 	}
 
@@ -98,7 +99,7 @@ public final class LoginSession extends Session {
 		channel.attr(ApolloHandler.SESSION_KEY).set(session);
 		player.setSession(session);
 
-		channel.writeAndFlush(new LoginResponse(LoginConstants.STATUS_OK, flagged));
+		channel.writeAndFlush(new LoginResponse(LoginConstants.STATUS_OK, player.getRights(), flagged));
 
 		channel.pipeline().addFirst("messageEncoder", new GameMessageEncoder(release));
 		channel.pipeline().addBefore("messageEncoder", "gameEncoder", new GamePacketEncoder(randomPair.getEncodingRandom()));

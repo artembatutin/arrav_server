@@ -2,18 +2,18 @@ package com.rageps.net.refactor.codec.game;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
-import com.rageps.net.refactor.message.Message;
-import com.rageps.net.refactor.release.MessageEncoder;
+import com.rageps.net.refactor.packet.Packet;
+import com.rageps.net.refactor.packet.out.PacketEncoder;
 import com.rageps.net.refactor.release.Release;
 
 import java.util.List;
 
 /**
- * A {@link MessageToMessageEncoder} which encodes {@link Message}s into {@link GamePacket}s.
+ * A {@link MessageToMessageEncoder} which encodes {@link Packet}s into {@link GamePacket}s.
  *
  * @author Graham
  */
-public final class GameMessageEncoder extends MessageToMessageEncoder<Message> {
+public final class GameMessageEncoder extends MessageToMessageEncoder<Packet> {
 
 	/**
 	 * The current release.
@@ -31,10 +31,10 @@ public final class GameMessageEncoder extends MessageToMessageEncoder<Message> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void encode(ChannelHandlerContext ctx, Message message, List<Object> out) {
-		MessageEncoder<Message> encoder = (MessageEncoder<Message>) release.getMessageEncoder(message.getClass());
+	protected void encode(ChannelHandlerContext ctx, Packet packet, List<Object> out) {
+		PacketEncoder<Packet> encoder = (PacketEncoder<Packet>) release.getMessageEncoder(packet.getClass());
 		if (encoder != null) {
-			out.add(encoder.encode(message));
+			out.add(encoder.encode(packet));
 		}
 	}
 

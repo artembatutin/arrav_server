@@ -11,7 +11,7 @@ public final class MutingCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player muted = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player muted = World.get().getWorldUtil().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(muted != null && muted != player) {
 			player.message("Successfully muted " + muted.getFormatUsername() + ".");
 			muted.message("@red@You have been muted by " + player.getFormatUsername() + ".");

@@ -13,7 +13,7 @@ public final class IPUnMutingCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player muted = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player muted = World.get().getWorldUtil().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(HostManager.remove(cmd[1], HostListType.MUTED_IP)) {
 			player.message("Successfully IP unmuted " + cmd[1] + ".");
 			if(muted != null) {

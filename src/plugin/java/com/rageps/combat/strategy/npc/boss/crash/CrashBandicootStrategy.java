@@ -3,7 +3,7 @@ package com.rageps.combat.strategy.npc.boss.crash;
 import com.rageps.combat.strategy.MobCombatStrategyMeta;
 import com.rageps.combat.strategy.npc.MultiStrategy;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;

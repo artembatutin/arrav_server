@@ -1,7 +1,7 @@
 package com.rageps.content.minigame.pestcontrol.pest;
 
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;

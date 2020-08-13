@@ -99,7 +99,7 @@ public final class Vote4Rewards {
 				if (sites > 0) {
 					voted.set(voted.get() + 1);
 					if (voted.get() >= 10) {
-						World.get().message("<img=10><col=f9fe11><shad> Another 10 votes have been claimed, type ::vote to claim yours now!</shad></col>");
+						World.get().getWorldUtil().message("<img=10><col=f9fe11><shad> Another 10 votes have been claimed, type ::vote to claim yours now!</shad></col>");
 						voted.set(0);
 					}
 

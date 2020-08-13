@@ -9,6 +9,7 @@ import com.rageps.combat.strategy.PlayerWeaponStrategyManager;
 import com.rageps.content.clanchannel.ClanRepository;
 import com.rageps.content.event.GameEventManager;
 import com.rageps.net.sql.clan.ClanLoaderTransaction;
+import com.rageps.service.ServiceManager;
 import com.rageps.util.Utility;
 import com.rageps.util.json.impl.*;
 import com.rageps.world.World;
@@ -130,7 +131,7 @@ public final class RagePS {
 			initTasks();
 			launch.shutdown();
 			launch.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			World.get().startAsync().awaitRunning();
+			World.get().getServices().startAll();
 			InstanceManager.get().close(0);
 			TriviaTask.getBot().submit();
 			World.get().submit(World.getNpcMovementTask());

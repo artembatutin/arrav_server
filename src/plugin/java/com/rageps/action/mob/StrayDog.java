@@ -2,7 +2,7 @@ package com.rageps.action.mob;
 
 import com.rageps.action.impl.MobAction;
 import com.rageps.action.ActionInitializer;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.region.TraversalMap;

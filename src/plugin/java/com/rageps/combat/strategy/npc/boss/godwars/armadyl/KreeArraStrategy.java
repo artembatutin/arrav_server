@@ -5,7 +5,7 @@ import com.rageps.world.entity.actor.combat.projectile.CombatProjectile;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.attack.FightType;

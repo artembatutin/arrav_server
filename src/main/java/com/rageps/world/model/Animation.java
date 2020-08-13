@@ -1,4 +1,4 @@
-package com.rageps.world;
+package com.rageps.world.model;
 
 import com.google.common.collect.Iterables;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;

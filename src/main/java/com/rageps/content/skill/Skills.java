@@ -5,7 +5,7 @@ import com.rageps.content.item.Skillcape;
 import com.rageps.net.packet.out.SendSkillGoal;
 import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.player.assets.group.ExperienceRate;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 
@@ -206,7 +206,7 @@ public final class Skills {
 					//SKILL_MASTERY.inc(player);
 					//String append_max = TextUtils.appendIndefiniteArticleNoVowel(data.toString());
 					player.graphic(new Graphic(MAXED_GRAPHICS));
-					//World.get().message("@blu@[Global Announcements] @red@" + player.getFormatUsername() + "@blu@ has just reached level " + newLevel + " " + append_max + ".");
+					//World.get().getWorldUtil().message("@blu@[Global Announcements] @red@" + player.getFormatUsername() + "@blu@ has just reached level " + newLevel + " " + append_max + ".");
 				} else {
 					player.graphic(new Graphic(199));
 				}

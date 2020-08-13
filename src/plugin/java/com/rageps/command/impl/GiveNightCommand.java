@@ -11,7 +11,7 @@ public final class GiveNightCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player night = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player night = World.get().getWorldUtil().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(night == null)
 			return;
 		night.setIron(1, true);

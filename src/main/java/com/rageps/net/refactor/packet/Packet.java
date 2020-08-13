@@ -1,4 +1,4 @@
-package com.rageps.net.refactor.message;
+package com.rageps.net.refactor.packet;
 
 /**
  * A message sent by the client that can be intercepted.
@@ -6,7 +6,7 @@ package com.rageps.net.refactor.message;
  * @author Graham
  * @author Major
  */
-public abstract class Message {
+public abstract class Packet {
 
 	/**
 	 * Indicates whether or not the Message chain has been terminated.

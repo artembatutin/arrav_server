@@ -8,7 +8,7 @@ import com.rageps.world.locale.Position;
 import com.rageps.net.packet.out.SendConfig;
 import com.rageps.net.packet.out.SendEnergy;
 import com.rageps.task.Task;
-import com.rageps.world.Direction;
+import com.rageps.world.model.Direction;
 import com.rageps.world.entity.EntityType;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.locale.loc.Locations;

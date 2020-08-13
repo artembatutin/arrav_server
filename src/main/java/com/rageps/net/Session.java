@@ -92,11 +92,6 @@ public class Session {
 	private final Channel channel;
 
 	/**
-	 * A stopwatch to measure the length of the session.
-	 */
-	private final Stopwatch sessionStart = Stopwatch.createStarted();
-
-	/**
 	 * The player associated with this session.
 	 */
 	private Player player;
@@ -241,7 +236,7 @@ public class Session {
 		code = invalidCredentials ? LoginCode.INVALID_CREDENTIALS : World.get().getPlayers().remaining() < 1 ? LoginCode.WORLD_FULL : code;
 
 		// Validating player login possibility.
-		if(code == LoginCode.NORMAL && World.get().getPlayer(request.getUsernameHash()).isPresent()) {
+		if(code == LoginCode.NORMAL && World.get().getWorldUtil().getPlayer(request.getUsernameHash()).isPresent()) {
 			code = LoginCode.ACCOUNT_ONLINE;
 		}
 		if (World.get().getEnvironment().isSqlEnabled()) {
@@ -431,7 +426,5 @@ public class Session {
 		return !mac.equals(NetworkConstants.INVALID_MAC);
 	}
 
-	public Duration getSessionDuration() {
-		return sessionStart.elapsed();
-	}
+
 }

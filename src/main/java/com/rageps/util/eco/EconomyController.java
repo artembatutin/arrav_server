@@ -50,7 +50,7 @@ public class EconomyController {
 						bank[i][i2] = controller.change(bank[i][i2]);
 					}
 				}
-				Optional<Player> active = World.get().getPlayer(username);
+				Optional<Player> active = World.get().getWorldUtil().getPlayer(username);
 				active.ifPresent(a -> {
 					System.out.println(a.getFormatUsername() + " was updated with economy controller.");
 					a.getInventory().fillItems(inv);

@@ -163,7 +163,7 @@ public final class Lottery extends Task {
 				MessageBuilder mb = new MessageBuilder();
 				mb.appendPrefix("Lottery", ColorConstants.PALE_ORANGE, ColorConstants.MAGENTA);
 				mb.append("The current lottery pot size is: " + NumberUtil.format(session.getPotAfterTax()) + ".", ColorConstants.BURGUNDY);
-				World.get().message(mb.toString());
+				World.get().getWorldUtil().message(mb.toString());
 			}
 			if (time.isAfter(nextLottieAnnouncement)) {
 				nextLottieAnnouncement = time.plusMinutes(5);
@@ -221,7 +221,7 @@ public final class Lottery extends Task {
 				MessageBuilder mb = new MessageBuilder();
 				mb.appendPrefix("Lottery", ColorConstants.PALE_ORANGE, ColorConstants.MAGENTA);
 				mb.append("The lottery is over, total pot was " + NumberUtil.format(session.getPotAfterTax()) + ".", ColorConstants.BURGUNDY);
-				World.get().message(mb.toString());
+				World.get().getWorldUtil().message(mb.toString());
 				for (LotterySessionWinner winner : session.getWinners().values().stream().sorted(Comparator.comparing(LotterySessionWinner::getPlacement)).collect(Collectors.toList())) {
 					mb = new MessageBuilder();
 					mb.appendPrefix("Lottery", ColorConstants.PALE_ORANGE, ColorConstants.MAGENTA);

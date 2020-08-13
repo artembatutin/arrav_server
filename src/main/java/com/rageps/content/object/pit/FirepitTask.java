@@ -41,7 +41,7 @@ public final class FirepitTask extends Task {
 	
 	@Override
 	protected void onCancel() {
-		World.get().message("@red@The double experience event has ended due to the fire pit being distinguised!", true);
+		World.get().getWorldUtil().message("@red@The double experience event has ended due to the fire pit being distinguised!", true);
 		GameConstants.EXPERIENCE_MULTIPLIER = 1;
 	}
 }

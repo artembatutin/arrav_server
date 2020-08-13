@@ -27,8 +27,8 @@ public final class StarterInsertTransaction extends DatabaseTransaction {
         try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection, INSERT_SQL)) {
             statement.setString("username", player.credentials.username);
             statement.setString("game_mode", player.getGameMode().name());
-            statement.setString("ip_address", player.getSession().getHost());
-            statement.setString("uid", player.getSession().getUid());
+            statement.setString("ip_address", player.credentials.getHostAddress());
+            statement.setString("uid", player.credentials.getUid());
             statement.setTimestamp("timestamp", timestamp);
             statement.execute();
             connection.commit();

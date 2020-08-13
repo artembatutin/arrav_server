@@ -1,6 +1,6 @@
 package com.rageps.world.entity.actor.mob;
 
-import com.rageps.world.Direction;
+import com.rageps.world.model.Direction;
 import com.rageps.world.attr.Attr;
 import com.rageps.world.attr.AttributeKey;
 import com.rageps.world.attr.Attributes;

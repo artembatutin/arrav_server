@@ -130,7 +130,7 @@ public final class PlayerRelation {
 			friendList.add(username);
 			sendAddFriend(username);
 			updateLists(true);
-			Optional<Player> result = World.get().search(name);
+			Optional<Player> result = World.get().getWorldUtil().getPlayer(name);
 
 			result.ifPresent(it -> it.relations.updateLists(true));
 		}
@@ -177,7 +177,7 @@ public final class PlayerRelation {
 			ignoreList.add(username);
 			updateLists(true);
 
-			Optional<Player> result = World.get().search(name);
+			Optional<Player> result = World.get().getWorldUtil().getPlayer(name);
 			result.ifPresent(it -> it.relations.updateLists(false));
 		}
 	}
@@ -191,7 +191,7 @@ public final class PlayerRelation {
 			ignoreList.remove(username);
 			updateLists(true);
 			if (privateChatMode.equals(PrivacyChatMode.ON)) {
-				Optional<Player> result = World.get().search(name);
+				Optional<Player> result = World.get().getWorldUtil().getPlayer(name);
 				result.ifPresent(it -> it.relations.updateLists(true));
 			}
 		} else {

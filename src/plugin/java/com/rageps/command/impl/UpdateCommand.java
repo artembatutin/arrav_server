@@ -51,7 +51,9 @@ public final class UpdateCommand implements Command {
 						@Override
 						protected void execute() {
 							System.out.println("Terminating server instance - Players online: " + World.get().getPlayers().size());
-							World.get().stopAsync().awaitRunning();
+
+							World.get().getGameService().shutdown(true);
+							//World.get().stopAsync().awaitRunning();
 							System.exit(0);
 							this.cancel();
 						}

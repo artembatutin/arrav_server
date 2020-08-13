@@ -7,7 +7,7 @@ import com.rageps.world.entity.actor.player.Player;
 import java.util.Optional;
 
 /**
- * A response for the {@link PlayerSerializer#loadPlayer} call.
+ * A response for the {@link PlayerPersistable#load} call.
  *
  * @author Graham
  * @author Major

@@ -2,7 +2,7 @@ package com.rageps.action.item;
 
 import com.rageps.action.ActionInitializer;
 import com.rageps.action.impl.ItemAction;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;

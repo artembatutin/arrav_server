@@ -2,8 +2,8 @@ package com.rageps.combat.strategy.npc;
 
 import com.rageps.world.entity.actor.combat.projectile.CombatProjectile;
 import com.rageps.combat.strategy.basic.MagicStrategy;
-import com.rageps.world.Animation;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatImpact;
 import com.rageps.world.entity.actor.combat.CombatType;

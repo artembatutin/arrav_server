@@ -40,7 +40,7 @@ public final class TriviaEntry {
 		mb.appendShade().appendPrefix("Trivia Bot", ColorConstants.BLACK, ColorConstants.PURPLE).append(": ").
 				append(current.question, ColorConstants.MAGENTA).terminateShade();
 
-		World.get().message(mb.toString());
+		World.get().getWorldUtil().message(mb.toString());
 	}
 	
 	/**
@@ -50,7 +50,7 @@ public final class TriviaEntry {
 		MessageBuilder mb = new MessageBuilder();
 		mb.appendShade().appendPrefix("Trivia Bot", ColorConstants.BLACK, ColorConstants.PURPLE).append(": ").
 				append("The last question hasn't been answered yet!", ColorConstants.MAGENTA).terminateShade();
-		World.get().message(mb.toString());
+		World.get().getWorldUtil().message(mb.toString());
 		ask();
 	}
 	
@@ -111,15 +111,15 @@ public final class TriviaEntry {
 		mb.appendShade().appendPrefix("Trivia Bot", ColorConstants.BLACK, ColorConstants.PURPLE).append(": ").
 				append(player.getFormatUsername(), ColorConstants.PALE_GREEN).append("has answered the question correctly! ", ColorConstants.MAGENTA)
 				.append(answer, ColorConstants.RED).terminateShade();
-		World.get().message(mb.toString());
+		World.get().getWorldUtil().message(mb.toString());
 		if(!attempted_answers.isEmpty()) {
 			List<String> attemptedAnswers = attempted_answers.stream().filter(a -> Arrays.stream(GameConstants.BAD_STRINGS).noneMatch(a::contains)).collect(Collectors.toList());
-			World.get().message("@red@[Trivia Bot]: @blu@Attempted answers: @red@" + attemptedAnswers.toString() + "@blu@!");
+			World.get().getWorldUtil().message("@red@[Trivia Bot]: @blu@Attempted answers: @red@" + attemptedAnswers.toString() + "@blu@!");
 			mb = new MessageBuilder();
 			mb.appendShade().appendPrefix("Trivia Bot", ColorConstants.BLACK, ColorConstants.PURPLE).append(": ").
 					append("Attempted answers: ", ColorConstants.DARK_BLUE)
 					.appendPrefix(attemptedAnswers.toString(), ColorConstants.BURGUNDY, ColorConstants.ORA).terminateShade();
-			World.get().message(mb.toString());
+			World.get().getWorldUtil().message(mb.toString());
 		}
 		Achievement.TRIVIABOT.inc(player);
 		int amount = RandomUtils.inclusive(100_000, 500_000);

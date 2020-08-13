@@ -164,7 +164,7 @@ public class PollManager extends Task {
 				createPollTransaction = null;
 				MessageBuilder mb = new MessageBuilder();
 				mb.appendPrefix("Poll", ColorConstants.BLUE, ColorConstants.CYAN).append("New poll available; "+newPoll.getQuestion());
-				World.get().message(mb.toString());
+				World.get().getWorldUtil().message(mb.toString());
 			} else if (createPollTransaction != null) {
 				if (createPollTransaction.isFinished()) {
 					Poll poll = createPollTransaction.getResult();
@@ -184,7 +184,7 @@ public class PollManager extends Task {
 							createPollTransaction = null;
 							MessageBuilder mb = new MessageBuilder();
 							mb.appendPrefix("Poll", ColorConstants.BLUE, ColorConstants.CYAN).append("New poll available; "+poll.getQuestion());
-							World.get().message(mb.toString());
+							World.get().getWorldUtil().message(mb.toString());
 						}
 					} else {
 						phase = Phase.ACTIVE;
@@ -234,7 +234,7 @@ public class PollManager extends Task {
 		poll.close();
 		MessageBuilder mb = new MessageBuilder();
 		mb.appendPrefix("Poll", ColorConstants.BLUE, ColorConstants.CYAN).append("A poll has completed. Please review below for more information.");
-		World.get().message(mb.toString());
+		World.get().getWorldUtil().message(mb.toString());
 		mb = new MessageBuilder();
 		mb.appendPrefix("Poll", ColorConstants.BLUE, ColorConstants.CYAN).append("Question: " + poll.getQuestion());
 		mb = new MessageBuilder();
@@ -244,7 +244,7 @@ public class PollManager extends Task {
 		} else {
 			mb.append("A majority vote could not be made for this poll unfortunately.");
 		}
-		World.get().message(mb.toString());
+		World.get().getWorldUtil().message(mb.toString());
 	}
 
 	public boolean isEligibleToVote(Player player, PollOrder order) {

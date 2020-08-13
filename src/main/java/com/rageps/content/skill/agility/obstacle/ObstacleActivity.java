@@ -1,7 +1,7 @@
 package com.rageps.content.skill.agility.obstacle;
 
 import com.rageps.task.Task;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.move.ForcedMovement;
 import com.rageps.world.entity.actor.move.ForcedMovementManager;
 import com.rageps.world.entity.actor.player.Player;

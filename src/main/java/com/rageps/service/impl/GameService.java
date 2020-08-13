@@ -2,8 +2,9 @@ package com.rageps.service.impl;
 
 import com.rageps.GameConstants;
 import com.rageps.GamePulseHandler;
+import com.rageps.GameShutdownHook;
 import com.rageps.net.refactor.codec.login.LoginConstants;
-import com.rageps.net.refactor.message.MessageHandlerChainSet;
+import com.rageps.net.refactor.packet.PacketHandlerChainSet;
 import com.rageps.net.refactor.session.impl.GameSession;
 import com.rageps.net.refactor.session.impl.LoginSession;
 import com.rageps.service.Service;
@@ -90,9 +91,9 @@ public final class GameService extends Service {
 	private final Queue<Player> oldPlayers = new ConcurrentLinkedQueue<>();
 
 	/**
-	 * The {@link MessageHandlerChainSet}.
+	 * The {@link PacketHandlerChainSet}.
 	 */
-	private MessageHandlerChainSet handlers;
+	private PacketHandlerChainSet handlers;
 
 	/**
 	 * Main game synchronizer.
@@ -113,11 +114,15 @@ public final class GameService extends Service {
 	/**
 	 * Finalizes the registration of a player.
 	 *
+	 * Note mine
+	 *
 	 * @param player The player.
+	 *
 	 */
 	public synchronized void finalizePlayerRegistration(Player player) {
-		world.register(player);
-		Region region = player.getRegion();//world.getRegionRepository().fromPosition(player.getPosition());
+		//world.register(player);
+		world.getPlayers().add(player);
+		Region region = player.getRegion();
 		region.add(player);
 
 		if (!player.getSession().isReconnecting()) {
@@ -139,7 +144,7 @@ public final class GameService extends Service {
 	 *
 	 * @return The MessageHandlerChainSet.
 	 */
-	public MessageHandlerChainSet getMessageHandlerChainSet() {
+	public PacketHandlerChainSet getMessageHandlerChainSet() {
 		return handlers;
 	}
 
@@ -159,15 +164,15 @@ public final class GameService extends Service {
 	 * Called every pulse.
 	 */
 	public synchronized void pulse() {
-		finalizeRegistrations();
-		finalizeUnregistrations();
+		finalizePlayerRegistrations();//not mine
+		finalizePlayerUnregistrations();//not mine
 
 
 		final long start = System.currentTimeMillis();
 		//int logs = logins.size();
 		synchronized(this) {
-			//dequeueLogins();
-			//registerActors();
+			world.dequeueLogins();
+			world.registerActors();
 
 			//register
 
@@ -177,8 +182,8 @@ public final class GameService extends Service {
 
 			//deregister
 
-			//dequeueLogout();
-			//disposeActors();
+			world.dequeueLogout();
+			world.disposeActors();
 			regionalTick++;
 			if(regionalTick == 10) {
 				Region.cleanup();
@@ -211,6 +216,8 @@ public final class GameService extends Service {
 	/**
 	 * Registers a {@link Player} at the end of the next cycle.
 	 *
+	 * NOTE MINE
+	 *
 	 * @param player The Player to register.
 	 * @param session the {@link LoginSession} of the Player.
 	 */
@@ -225,6 +232,7 @@ public final class GameService extends Service {
 	 */
 	public void shutdown(boolean natural) {
 		executor.shutdownNow();
+		new GameShutdownHook().start();
 		// TODO: Other events that should happen upon natural or unexpected shutdown.
 	}
 
@@ -237,6 +245,8 @@ public final class GameService extends Service {
 	/**
 	 * Unregisters a player. Returns immediately. The player is unregistered at the start of the next cycle.
 	 *
+	 * NOT MINE
+	 *
 	 * @param player The player.
 	 */
 	public void unregisterPlayer(Player player) {
@@ -245,8 +255,10 @@ public final class GameService extends Service {
 
 	/**
 	 * Finalizes the registration of Player's queued to be registered.
+	 *
+	 * NOT MINE
 	 */
-	private void finalizeRegistrations() {
+	private void finalizePlayerRegistrations() {
 		for (int count = 0; count < REGISTRATIONS_PER_CYCLE; count++) {
 			LoginPlayerRequest request = newPlayers.poll();
 			if (request == null) {
@@ -267,8 +279,11 @@ public final class GameService extends Service {
 
 	/**
 	 * Finalizes the unregistration of Player's queued to be unregistered.
+	 *
+	 * NOT MINE
+	 *
 	 */
-	private void finalizeUnregistrations() {
+	private void finalizePlayerUnregistrations() {
 		LoginService loginService = world.getLoginService();
 
 		for (int count = 0; count < DEREGISTRATIONS_PER_CYCLE; count++) {

@@ -50,8 +50,8 @@ public final class TradeLog extends DatabaseTransaction {
 			+ "VALUES (session_id, :username, :ip_address, :uid, :other, :other_session_id, :items_gave, :items_received, :x, :y, :z, :timestamp);")) {
 			statement.setLong("session_id", player.getSession().getSessionId());
 			statement.setString("username", player.credentials.username);
-			statement.setString("ip_address", player.getSession().getHost());
-			statement.setString("uid", player.getSession().getUid());
+			statement.setString("ip_address", player.credentials.getHostAddress());
+			statement.setString("uid", player.credentials.getUid());
 			statement.setString("other", other);
 			statement.setLong("other_session_id", player.getSession().getSessionId());
 			statement.setString("items_gave", GSON.toJson(gave));

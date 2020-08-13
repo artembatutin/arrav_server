@@ -1,15 +1,15 @@
-package com.rageps.net.refactor.release;
+package com.rageps.net.refactor.packet.out;
 
 import com.rageps.net.refactor.codec.game.GamePacket;
-import com.rageps.net.refactor.message.Message;
+import com.rageps.net.refactor.packet.Packet;
 
 /**
- * A {@link MessageEncoder} encodes {@link Message} objects into {@link GamePacket}s which can be sent over the network.
+ * A {@link PacketEncoder} encodes {@link Packet} objects into {@link GamePacket}s which can be sent over the network.
  *
  * @author Graham
  * @param <M> The type of message.
  */
-public abstract class MessageEncoder<M extends Message> {
+public abstract class PacketEncoder<M extends Packet> {
 
 	/**
 	 * Encodes the specified message into a packet.

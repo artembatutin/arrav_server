@@ -1,7 +1,7 @@
 package com.rageps.world.entity.actor.combat.magic.lunars.spell.impl;
 
-import com.rageps.world.Animation;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.magic.MagicRune;
 import com.rageps.world.entity.actor.combat.magic.RequiredRune;

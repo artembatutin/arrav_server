@@ -3,6 +3,7 @@ package com.rageps.world.entity.actor.player.persist.impl;
 import com.google.gson.*;
 import com.rageps.net.codec.login.LoginCode;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerCredentials;
 import com.rageps.world.entity.actor.player.persist.PlayerLoaderResponse;
 import com.rageps.world.entity.actor.player.persist.PlayerPersistable;
 import com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager;
@@ -75,7 +76,7 @@ public final class PlayerPersistFile implements PlayerPersistable {
 	}
 
 	@Override
-	public PlayerLoaderResponse load(Player player) {
+	public PlayerLoaderResponse load(PlayerCredentials player) {
 		final File dir = FILE_DIR.toFile();
 
 		if (!dir.exists()) {

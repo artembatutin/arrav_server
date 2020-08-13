@@ -1,5 +1,8 @@
 package com.rageps.net.refactor.codec.login;
 
+import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.assets.Rights;
+
 /**
  * Represents a login response.
  *
@@ -18,14 +21,20 @@ public final class LoginResponse {
 	private final int status;
 
 	/**
+	 * The {@link Player}s authority level.
+	 */
+	private final Rights rights;
+
+	/**
 	 * Creates the login response.
 	 *
 	 * @param status The login status.
 	 * @param flagged The flagged flag.
 	 */
-	public LoginResponse(int status, boolean flagged) {
+	public LoginResponse(int status, Rights rights, boolean flagged) {
 		this.status = status;
 		this.flagged = flagged;
+		this.rights = rights;
 	}
 
 	/**
@@ -46,4 +55,10 @@ public final class LoginResponse {
 		return flagged;
 	}
 
+	/**
+	 * @return The {@link Player}s authority level.
+	 */
+	public Rights getRights() {
+		return rights;
+	}
 }

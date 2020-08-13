@@ -3,7 +3,7 @@ package com.rageps.combat.strategy.npc.boss;
 import com.rageps.combat.strategy.MobCombatStrategyMeta;
 import com.rageps.world.entity.actor.combat.projectile.CombatProjectile;
 import com.rageps.combat.strategy.npc.impl.DragonfireStrategy;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.combat.CombatUtil;

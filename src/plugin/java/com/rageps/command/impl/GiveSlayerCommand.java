@@ -11,7 +11,7 @@ public final class GiveSlayerCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player slayer = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player slayer = World.get().getWorldUtil().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		int amount = Integer.parseInt(cmd[2]);
 		slayer.updateSlayers(amount);
 		player.message("You gave " + amount + " slayer points to " + slayer.getFormatUsername());

@@ -8,7 +8,7 @@ import com.rageps.content.dialogue.test.DialogueAppender;
 import com.rageps.content.market.MarketCounter;
 import com.rageps.content.skill.Skills;
 import com.rageps.action.ActionInitializer;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 

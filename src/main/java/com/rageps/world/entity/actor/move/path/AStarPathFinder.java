@@ -49,7 +49,7 @@ public final class AStarPathFinder extends PathFinder {
 				break;
 			}
 			
-			//World.getRegions().getRegion(pos).get().register(new GroundItem(new Item(995, active.getCost()), pos, World.get().getPlayer("rogue").get()));
+			//World.getRegions().getRegion(pos).get().register(new GroundItem(new Item(995, active.getCost()), pos, World.get().getWorldUtil().getPlayer("rogue").get()));
 			
 			open.remove(active);
 			active.close();

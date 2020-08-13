@@ -3,8 +3,8 @@ package com.rageps.content.skill.agility.impl.wild.impl;
 import com.rageps.content.skill.agility.obstacle.ObstacleActivity;
 import com.rageps.content.skill.agility.obstacle.ObstacleType;
 import com.rageps.task.LinkedTaskSequence;
-import com.rageps.world.Animation;
-import com.rageps.world.Direction;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Direction;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.locale.Position;
 

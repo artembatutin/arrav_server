@@ -50,8 +50,8 @@ public class ReceiveRewardLog extends DatabaseTransaction {
 			+ "VALUES (:session_id, :username, :ip_address, :uid, :reward_type, :items, :x, :y, :z, :timestamp);")) {
 			statement.setLong("session_id", player.getSession().getSessionId());
 			statement.setString("username", player.credentials.username);
-			statement.setString("ip_address", player.getSession().getHost());
-			statement.setString("uid", player.getSession().getUid());
+			statement.setString("ip_address", player.credentials.getHostAddress());
+			statement.setString("uid", player.credentials.getUid());
 			statement.setString("reward_type", type.name());
 			statement.setString("items", GSON.toJson(items));
 			statement.setInt("x", position.getX());

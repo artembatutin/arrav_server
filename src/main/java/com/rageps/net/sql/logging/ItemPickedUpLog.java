@@ -37,8 +37,8 @@ public final class ItemPickedUpLog extends DatabaseTransaction {
 			+ "VALUES (:session_id, :username, :ip_address, :uid, :dropped_by, :item_id, :amount, :x, :y, :z, :timestamp);")) {
 			statement.setLong("session_id", player.getSession().getSessionId());
 			statement.setString("username", player.credentials.username);
-			statement.setString("ip_address", player.getSession().getHost());
-			statement.setString("uid", player.getSession().getUid());
+			statement.setString("ip_address", player.credentials.getHostAddress());
+			statement.setString("uid", player.credentials.getUid());
 			statement.setString("dropped_by", item.getPlayer().credentials.username);
 			Item dropped = item.getItem();
 			statement.setInt("item_id", dropped.getId());

@@ -22,7 +22,7 @@ public final class YellCommand implements Command {
 		}
 		String c = cmd[0];
 		String message = TextUtils.capitalize(command.substring(c.length(), command.length()).substring(1));
-		World.get().yell(player.getFormatUsername(), message, player.getRights());
+		World.get().getWorldUtil().yell(player.getFormatUsername(), message, player.getRights());
 	}
 	
 }

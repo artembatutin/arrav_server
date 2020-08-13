@@ -1,9 +1,10 @@
 package com.rageps.net.refactor.session.impl;
 
+import com.google.common.base.Stopwatch;
 import com.rageps.GameConstants;
-import com.rageps.net.refactor.message.Message;
-import com.rageps.net.refactor.message.MessageHandlerChainSet;
-import com.rageps.net.refactor.message.impl.LogoutMessage;
+import com.rageps.net.refactor.packet.Packet;
+import com.rageps.net.refactor.packet.PacketHandlerChainSet;
+import com.rageps.net.refactor.packet.out.model.LogoutPacket;
 import com.rageps.net.refactor.session.Session;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
@@ -13,6 +14,7 @@ import io.netty.channel.ChannelFutureListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.Duration;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -30,9 +32,9 @@ public final class GameSession extends Session {
 
 
 	/**
-	 * The queue of pending {@link Message}s.
+	 * The queue of pending {@link Packet}s.
 	 */
-	private final BlockingQueue<Message> messages = new ArrayBlockingQueue<>(GameConstants.MESSAGES_PER_PULSE);
+	private final BlockingQueue<Packet> packets = new ArrayBlockingQueue<>(GameConstants.MESSAGES_PER_PULSE);
 
 	/**
 	 * The player.
@@ -43,6 +45,16 @@ public final class GameSession extends Session {
 	 * If the player was reconnecting.
 	 */
 	private final boolean reconnecting;
+
+	/**
+	 * A unique identification associated with this {@link GameSession}.
+	 */
+	private long sessionId;
+
+	/**
+	 * A stopwatch to measure the length of the session.
+	 */
+	private final Stopwatch sessionStart = Stopwatch.createStarted();
 
 	/**
 	 * Creates a login session for the specified channel.
@@ -65,13 +77,13 @@ public final class GameSession extends Session {
 	/**
 	 * Encodes and dispatches the specified message.
 	 *
-	 * @param message The message.
+	 * @param packet The message.
 	 */
-	public void dispatchMessage(Message message) {
+	public void dispatchMessage(Packet packet) {
 		Channel channel = getChannel();
 		if (channel.isActive() && channel.isOpen()) {
-			ChannelFuture future = channel.writeAndFlush(message);
-			if (message.getClass() == LogoutMessage.class) {
+			ChannelFuture future = channel.writeAndFlush(packet);
+			if (packet.getClass() == LogoutPacket.class) {
 				future.addListener(ChannelFutureListener.CLOSE);
 			}
 		}
@@ -80,16 +92,16 @@ public final class GameSession extends Session {
 	/**
 	 * Handles pending messages for this session.
 	 *
-	 * @param chainSet The {@link MessageHandlerChainSet}
+	 * @param chainSet The {@link PacketHandlerChainSet}
 	 */
-	public void handlePendingMessages(MessageHandlerChainSet chainSet) {
-		while (!messages.isEmpty()) {
-			Message message = messages.poll();
+	public void handlePendingMessages(PacketHandlerChainSet chainSet) {
+		while (!packets.isEmpty()) {
+			Packet packet = packets.poll();
 
 			try {
-				chainSet.notify(player, message);
+				chainSet.notify(player, packet);
 			} catch (Exception reason) {
-				logger.fatal("Uncaught exception thrown while handling message: {}", message, reason);
+				logger.fatal("Uncaught exception thrown while handling message: {}", packet, reason);
 			}
 		}
 	}
@@ -114,11 +126,23 @@ public final class GameSession extends Session {
 
 	@Override
 	public void messageReceived(Object message) {
-		if (messages.size() >= GameConstants.MESSAGES_PER_PULSE) {
-			logger.warn("Too many messages in queue for game session, dropping...");
+		if (packets.size() >= GameConstants.MESSAGES_PER_PULSE) {
+			logger.warn("Too many messages in queue for game session, player={} dropping...", player.credentials.username);
 		} else {
-			messages.add((Message) message);
+			packets.add((Packet) message);
 		}
 	}
 
+	/**
+	 * And identifier used to identify this specific session and tie
+	 * and ingame events to it.
+	 * @return the session id.
+	 */
+	public long getSessionId() {
+		return sessionId;
+	}
+
+	public Duration getSessionDuration() {
+		return sessionStart.elapsed();
+	}
 }

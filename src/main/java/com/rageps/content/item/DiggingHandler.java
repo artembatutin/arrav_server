@@ -1,7 +1,7 @@
 package com.rageps.content.item;
 
 import com.rageps.task.Task;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 
 import java.util.function.Consumer;

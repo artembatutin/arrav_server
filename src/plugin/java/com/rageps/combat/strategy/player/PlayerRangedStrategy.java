@@ -4,7 +4,7 @@ import com.rageps.content.item.Requirement;
 import com.rageps.combat.strategy.basic.RangedStrategy;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.net.packet.out.SendMessage;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatImpact;
 import com.rageps.world.entity.actor.combat.CombatType;

@@ -64,7 +64,7 @@ public class ActivityLogger {
             player.message(mb.toString());
 
             if(type.isBroadcast() && type.getMessage() != null) {
-                World.get().message(type.getMessage());
+                World.get().getWorldUtil().message(type.getMessage());
             }
         }
 

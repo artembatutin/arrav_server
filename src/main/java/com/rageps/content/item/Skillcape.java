@@ -10,7 +10,7 @@ import com.rageps.content.dialogue.impl.PlayerDialogue;
 import com.rageps.content.skill.Skills;
 import com.rageps.action.impl.ButtonAction;
 import com.rageps.action.impl.MobAction;
-import com.rageps.world.Visualize;
+import com.rageps.world.model.Visualize;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;

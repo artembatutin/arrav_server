@@ -52,7 +52,7 @@ public class PlayerAccountSaveTransaction extends DatabaseTransaction {
                         player.firstLogin = false;
                     player.saved.set(true);//don't ever remove this.
                 } else {
-                    throw new SQLException("Couldn't save player:"+player.getName()+" id:"+player.credentials.databaseId+" host:"+player.getSession().getHost());
+                    throw new SQLException("Couldn't save player:"+player.getName()+" id:"+player.credentials.databaseId+" host:"+player.credentials.getHostAddress());
                 }
             } catch (Exception e) {
                 if(e instanceof MySQLIntegrityConstraintViolationException) {

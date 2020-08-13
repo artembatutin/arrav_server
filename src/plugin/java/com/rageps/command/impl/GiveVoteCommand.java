@@ -12,7 +12,7 @@ public final class GiveVoteCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player vote = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player vote = World.get().getWorldUtil().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(vote == null)
 			return;
 		int amount = Integer.parseInt(cmd[2]);

@@ -3,7 +3,7 @@ package com.rageps.world.entity.actor.combat.effect.impl;
 import com.rageps.world.entity.actor.player.Player;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.net.packet.out.SendConfig;
-import com.rageps.world.PoisonType;
+import com.rageps.world.entity.actor.combat.PoisonType;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.effect.CombatEffect;
 import com.rageps.world.entity.actor.combat.hit.Hit;

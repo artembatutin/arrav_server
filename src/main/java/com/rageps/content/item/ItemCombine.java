@@ -2,8 +2,8 @@ package com.rageps.content.item;
 
 import com.google.common.collect.ImmutableSet;
 import com.rageps.content.skill.Skills;
-import com.rageps.world.Animation;
-import com.rageps.world.Graphic;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;

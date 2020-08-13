@@ -17,6 +17,8 @@ public final class PlayerCredentials {
 	public String password;
 	private String hostAddress;
 	private String macAddress;
+	private String uid;
+
 
 
 
@@ -82,5 +84,9 @@ public final class PlayerCredentials {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public String getUid() {
+		return uid;
 	}
 }

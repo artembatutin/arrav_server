@@ -4,7 +4,7 @@ import com.rageps.content.minigame.barrows.BarrowsMinigame;
 import com.rageps.action.ActionInitializer;
 import com.rageps.action.impl.ItemAction;
 import com.rageps.task.LinkedTaskSequence;
-import com.rageps.world.Animation;
+import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.impl.Inventory;

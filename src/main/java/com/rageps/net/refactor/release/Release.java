@@ -1,9 +1,11 @@
 package com.rageps.net.refactor.release;
 
 import com.google.common.base.Preconditions;
-import com.rageps.net.refactor.message.Message;
+import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.meta.PacketMetaData;
 import com.rageps.net.refactor.meta.PacketMetaDataGroup;
+import com.rageps.net.refactor.packet.in.PacketDecoder;
+import com.rageps.net.refactor.packet.out.PacketEncoder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,12 +20,12 @@ public abstract class Release {
 	/**
 	 * The array of message decoders.
 	 */
-	private final MessageDecoder<?>[] decoders = new MessageDecoder<?>[256];
+	private final PacketDecoder<?>[] decoders = new PacketDecoder<?>[256];
 
 	/**
 	 * The map of message classes to message encoders.
 	 */
-	private final Map<Class<? extends Message>, MessageEncoder<?>> encoders = new HashMap<>();
+	private final Map<Class<? extends Packet>, PacketEncoder<?>> encoders = new HashMap<>();
 
 	/**
 	 * The incoming packet meta data.
@@ -57,26 +59,26 @@ public abstract class Release {
 	}
 
 	/**
-	 * Gets the {@link MessageDecoder} for the specified opcode.
+	 * Gets the {@link PacketDecoder} for the specified opcode.
 	 *
 	 * @param opcode The opcode.
 	 * @return The message decoder.
 	 * @throws IndexOutOfBoundsException If the opcode is less than 0, or greater than 255.
 	 */
-	public final MessageDecoder<?> getMessageDecoder(int opcode) {
+	public final PacketDecoder<?> getMessageDecoder(int opcode) {
 		Preconditions.checkElementIndex(opcode, decoders.length, "Opcode out of bounds.");
 		return decoders[opcode];
 	}
 
 	/**
-	 * Gets the {@link MessageEncoder} for the specified message type.
+	 * Gets the {@link PacketEncoder} for the specified message type.
 	 *
 	 * @param type The type of message.
 	 * @return The message encoder.
 	 */
 	@SuppressWarnings("unchecked")
-	public <M extends Message> MessageEncoder<M> getMessageEncoder(Class<M> type) {
-		return (MessageEncoder<M>) encoders.get(type);
+	public <M extends Packet> PacketEncoder<M> getMessageEncoder(Class<M> type) {
+		return (PacketEncoder<M>) encoders.get(type);
 	}
 
 	/**
@@ -89,23 +91,23 @@ public abstract class Release {
 	}
 
 	/**
-	 * Registers a {@link MessageEncoder} for the specified message type.
+	 * Registers a {@link PacketEncoder} for the specified message type.
 	 *
 	 * @param type The message type.
 	 * @param encoder The message encoder.
 	 */
-	public final <M extends Message> void register(Class<M> type, MessageEncoder<M> encoder) {
+	public final <M extends Packet> void register(Class<M> type, PacketEncoder<M> encoder) {
 		encoders.put(type, encoder);
 	}
 
 	/**
-	 * Registers a {@link MessageDecoder} for the specified opcode.
+	 * Registers a {@link PacketDecoder} for the specified opcode.
 	 *
 	 * @param opcode The opcode, between 0 and 255 inclusive.
 	 * @param decoder The message decoder.
 	 * @throws IndexOutOfBoundsException If the opcode is less than 0, or greater than 255.
 	 */
-	public final <M extends Message> void register(int opcode, MessageDecoder<M> decoder) {
+	public final <M extends Packet> void register(int opcode, PacketDecoder<M> decoder) {
 		Preconditions.checkElementIndex(opcode, decoders.length, "Opcode out of bounds.");
 		decoders[opcode] = decoder;
 	}

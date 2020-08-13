@@ -43,7 +43,7 @@ public final class ShootingStarManager {
 		}
 		stopwatch.reset();
 		if(star != null && !star.isDisabled()) {
-			World.get().message(star.locationData.messageActive, true);
+			World.get().getWorldUtil().message(star.locationData.messageActive, true);
 			return;
 		}
 		spawn();
@@ -59,7 +59,7 @@ public final class ShootingStarManager {
 			star = null;
 		} else {
 			star.publish();
-			World.get().message(star.locationData.message, true);
+			World.get().getWorldUtil().message(star.locationData.message, true);
 		}
 	}
 	
