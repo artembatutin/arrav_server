@@ -50,7 +50,7 @@ public final class NetworkConstants {
 	 * The {@link AttributeKey} value that is used to retrieve the session
 	 * instance from the attribute map of a {@link io.netty.channel.Channel}.
 	 */
-	static final AttributeKey<Session> SESSION_KEY = AttributeKey.valueOf("session.KEY");
+	//static final AttributeKey<Session> SESSION_KEY = AttributeKey.valueOf("session.KEY");
 	
 	/**
 	 * The private RSA modulus value.

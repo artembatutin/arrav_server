@@ -8,6 +8,9 @@ import com.rageps.combat.strategy.MobCombatStrategyManager;
 import com.rageps.combat.strategy.PlayerWeaponStrategyManager;
 import com.rageps.content.clanchannel.ClanRepository;
 import com.rageps.content.event.GameEventManager;
+import com.rageps.net.refactor.NetworkConstants;
+import com.rageps.net.refactor.ServiceChannelInitializer;
+import com.rageps.net.refactor.session.impl.ApolloHandler;
 import com.rageps.net.sql.clan.ClanLoaderTransaction;
 import com.rageps.service.ServiceManager;
 import com.rageps.util.Utility;
@@ -15,11 +18,13 @@ import com.rageps.util.json.impl.*;
 import com.rageps.world.World;
 import com.rageps.world.attr.Attributes;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.ResourceLeakDetector;
 import com.rageps.action.ActionInitializer;
@@ -36,7 +41,6 @@ import com.rageps.content.object.pit.FirepitManager;
 import com.rageps.content.object.star.ShootingStarManager;
 import com.rageps.content.scoreboard.ScoreboardTask;
 import com.rageps.content.trivia.TriviaTask;
-import com.rageps.net.RagePSChannelInitializer;
 import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
 import com.rageps.task.Task;
@@ -46,6 +50,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -157,28 +163,39 @@ public final class RagePS {
 			System.exit(1);
 		}
 	}
+
+	/**
+	 * The event loop group.
+	 */
+	private final EventLoopGroup loopGroup = new NioEventLoopGroup();
+
+	/**
+	 * The {@link ServerBootstrap} for the service listener.
+	 */
+	private final ServerBootstrap serviceBootstrap = new ServerBootstrap();
 	
 	/**
 	 * Initializes the Netty implementation. Will block indefinitely until the {@link ServerBootstrap} is bound.
 	 * @throws Exception If any exceptions are thrown while binding.
 	 */
 	private void bind() {
+
+		ApolloHandler handler = new ApolloHandler();
+
+
+
+
+		ChannelInitializer<SocketChannel> service = new ServiceChannelInitializer(handler);
+		serviceBootstrap.channel(NioServerSocketChannel.class);
+		serviceBootstrap.childHandler(service);
+
 		LOGGER.info("Binding RagePs on port " + World.get().getEnvironment().getPort() + ".");
-		ServerBootstrap bootstrap = new ServerBootstrap();
-		EventLoopGroup loopGroup;
-		//If epoll possible, better to use it (for linux systems).
-		if(Epoll.isAvailable()) {
-			loopGroup = new EpollEventLoopGroup();
-			bootstrap.channel(EpollServerSocketChannel.class);
-		} else {
-			loopGroup = new NioEventLoopGroup();
-			bootstrap.channel(NioServerSocketChannel.class);
-		}
-		bootstrap.group(loopGroup);
+
+		SocketAddress address = new InetSocketAddress(World.get().getEnvironment().getPort());
+
+		serviceBootstrap.bind(address);
+
 		ResourceLeakDetector.setLevel(World.get().getEnvironment().isDebug() ? PARANOID : DISABLED);
-		bootstrap.childHandler(new RagePSChannelInitializer());
-		bootstrap.bind(World.get().getEnvironment().getPort()).syncUninterruptibly();
-		
 	}
 	
 	/**

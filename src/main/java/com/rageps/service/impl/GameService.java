@@ -3,8 +3,10 @@ package com.rageps.service.impl;
 import com.rageps.GameConstants;
 import com.rageps.GamePulseHandler;
 import com.rageps.GameShutdownHook;
+import com.rageps.net.packet.out.SendLogout;
 import com.rageps.net.refactor.codec.login.LoginConstants;
 import com.rageps.net.refactor.packet.PacketHandlerChainSet;
+import com.rageps.net.refactor.packet.out.model.LogoutPacket;
 import com.rageps.net.refactor.session.impl.GameSession;
 import com.rageps.net.refactor.session.impl.LoginSession;
 import com.rageps.service.Service;
@@ -21,8 +23,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import static com.rageps.net.Session.UPDATE_LIMIT;
 
 /**
  * The {@link GameService} class schedules and manages the execution of the {@link GamePulseHandler} class.
@@ -136,7 +136,8 @@ public final class GameService extends Service {
 	 * @param player The player.
 	 */
 	public synchronized void finalizePlayerUnregistration(Player player) {
-		world.unregister(player);
+		world.logout(player);
+		//world.unregister(player);
 	}
 
 	/**
@@ -161,6 +162,11 @@ public final class GameService extends Service {
 	public static long millis;
 
 	/**
+	 * The cap limit of outgoing packets per session.
+	 */
+	public static int UPDATE_LIMIT = 200;
+
+	/**
 	 * Called every pulse.
 	 */
 	public synchronized void pulse() {
@@ -171,7 +177,7 @@ public final class GameService extends Service {
 		final long start = System.currentTimeMillis();
 		//int logs = logins.size();
 		synchronized(this) {
-			world.dequeueLogins();
+			//world.dequeueLogins();
 			world.registerActors();
 
 			//register
@@ -182,7 +188,7 @@ public final class GameService extends Service {
 
 			//deregister
 
-			world.dequeueLogout();
+			//world.dequeueLogout();
 			world.disposeActors();
 			regionalTick++;
 			if(regionalTick == 10) {
@@ -250,6 +256,10 @@ public final class GameService extends Service {
 	 * @param player The player.
 	 */
 	public void unregisterPlayer(Player player) {
+		if(player.getCombat().inCombat())
+			player.getLogoutTimer().reset();
+		//player.setState(AWAITING_REMOVAL);
+		player.send(new LogoutPacket());
 		oldPlayers.add(player);
 	}
 
@@ -266,7 +276,7 @@ public final class GameService extends Service {
 			}
 
 			Player player = request.player;
-			if (world.isPlayerOnline(player.getUsername())) {
+			if (world.getWorldUtil().isPlayerOnline(player.credentials.usernameHash)) {
 				request.session.sendLoginFailure(LoginConstants.STATUS_ACCOUNT_ONLINE);
 			} else if (world.getPlayers().isFull()) {
 				request.session.sendLoginFailure(LoginConstants.STATUS_SERVER_FULL);

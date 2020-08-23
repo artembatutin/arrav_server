@@ -248,6 +248,26 @@ public class Position {
 	public final int getRegionY() {
 		return (y >> 3) - 6;
 	}
+
+	/**
+	 * Gets the x coordinate of the central region.
+	 *
+	 * @return The x coordinate of the central region.
+	 */
+	@JsonIgnore
+	public int getCentralRegionX() {
+		return getX() / 8;
+	}
+
+	/**
+	 * Gets the y coordinate of the central region.
+	 *
+	 * @return The y coordinate of the central region.
+	 */
+	@JsonIgnore
+	public int getCentralRegionY() {
+		return getY() / 8;
+	}
 	
 	/**
 	 * Gets the local {@code X} coordinate relative to {@code base}.

@@ -17,7 +17,7 @@ public final class IPBanningCommand implements Command {
 		if(banned != null && banned != player) {
 			player.message("Successfully IP banned " + banned.getFormatUsername() + ".");
 			HostManager.add(banned, HostListType.BANNED_IP);
-			World.get().queueLogout(banned);
+			World.get().getGameService().unregisterPlayer(banned);
 		} else {
 			player.message("Can't find " + cmd[1].replaceAll("_", " ") + ".");
 		}

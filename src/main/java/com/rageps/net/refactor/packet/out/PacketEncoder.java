@@ -1,7 +1,10 @@
 package com.rageps.net.refactor.packet.out;
 
+import com.rageps.net.packet.OutgoingPacket;
 import com.rageps.net.refactor.codec.game.GamePacket;
 import com.rageps.net.refactor.packet.Packet;
+import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.locale.Position;
 
 /**
  * A {@link PacketEncoder} encodes {@link Packet} objects into {@link GamePacket}s which can be sent over the network.
@@ -9,7 +12,15 @@ import com.rageps.net.refactor.packet.Packet;
  * @author Graham
  * @param <M> The type of message.
  */
-public abstract class PacketEncoder<M extends Packet> {
+public abstract interface PacketEncoder<M extends Packet> {
+
+	default boolean onSent(M message) {
+		return true;
+	}
+
+	default GamePacket coordinatePacket(M message, Position lastRegion) {
+		return null;
+	}
 
 	/**
 	 * Encodes the specified message into a packet.
@@ -17,6 +28,8 @@ public abstract class PacketEncoder<M extends Packet> {
 	 * @param message The message.
 	 * @return The packet.
 	 */
-	public abstract GamePacket encode(M message);
+	GamePacket encode(M message);
+
+
 
 }

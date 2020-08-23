@@ -1,7 +1,6 @@
 package com.rageps.content.clanchannel;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.rageps.content.clanchannel.channel.ClanChannel;
 import com.rageps.content.clanchannel.content.ClanViewer;
 import com.rageps.net.sql.clan.ClanLoaderTransaction;
@@ -10,9 +9,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.SQLException;
 import java.util.*;
 
 /**

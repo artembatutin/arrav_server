@@ -42,7 +42,7 @@ public abstract class Session {
 	 *
 	 * @return The channel.
 	 */
-	protected final Channel getChannel() {
+	public final Channel getChannel() {
 		return channel;
 	}
 

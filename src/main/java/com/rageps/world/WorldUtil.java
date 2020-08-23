@@ -130,6 +130,10 @@ public class WorldUtil {
         return Optional.ofNullable(world.playerByNames.get(username));
     }
 
+    public boolean isPlayerOnline(long username) {
+        return world.playerByNames.containsKey(username);
+    }
+
     /**
      * Checks if one player is the same person or is logged in from the same machine/host as
      * the other player.

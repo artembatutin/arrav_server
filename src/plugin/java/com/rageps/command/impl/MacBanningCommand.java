@@ -17,7 +17,7 @@ public final class MacBanningCommand implements Command {
 		if(banned != null && banned.same(player)) {
 			player.message("Successfully Mac banned " + banned.getFormatUsername() + ".");
 			if(HostManager.add(banned, HostListType.BANNED_MAC))
-				World.get().queueLogout(banned);
+			World.get().getGameService().unregisterPlayer(banned);
 			else
 				player.message("User has an invalid mac address, try something else.");
 		} else {

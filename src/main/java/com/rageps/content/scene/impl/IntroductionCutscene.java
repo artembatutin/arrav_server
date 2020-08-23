@@ -10,6 +10,7 @@ import com.rageps.net.packet.out.*;
 import com.rageps.content.TabInterface;
 import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
+import com.rageps.net.refactor.packet.out.model.CameraResetPacket;
 import com.rageps.task.Task;
 import com.rageps.world.model.Animation;
 import com.rageps.world.model.Graphic;
@@ -121,7 +122,8 @@ public final class IntroductionCutscene extends Cutscene {
 			player.setInstance(0);
 			player.out(new SendFade(10, 100, 120));
 			player.facePosition(new Position(3221, 3432));
-			player.out(new SendCameraReset());
+			player.send(new CameraResetPacket());
+
 			player.setVisible(true);
 			player.getAttributeMap().set(PlayerAttributes.INTRODUCTION_STAGE, 2);
 			player.graphic(new Graphic(2189));

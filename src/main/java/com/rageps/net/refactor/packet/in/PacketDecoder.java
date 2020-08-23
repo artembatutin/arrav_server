@@ -10,7 +10,7 @@ import com.rageps.net.refactor.packet.Packet;
  * @author Graham
  * @param <M> The type of message.
  */
-public abstract class PacketDecoder<M extends Packet> {
+public interface PacketDecoder<M extends Packet> {
 
 	/**
 	 * Decodes the specified packet into a message.
@@ -18,6 +18,6 @@ public abstract class PacketDecoder<M extends Packet> {
 	 * @param packet The packet.
 	 * @return The message.
 	 */
-	public abstract M decode(GamePacket packet);
+	M decode(GamePacket packet);
 
 }

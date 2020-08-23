@@ -1,6 +1,7 @@
 package com.rageps.world.entity.object;
 
 import com.rageps.net.packet.out.SendObjectRemoval;
+import com.rageps.net.refactor.packet.out.model.RemoveObjectPacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.entity.region.TraversalMap;
@@ -72,7 +73,7 @@ public abstract class GameObject {
 							if(on)
 								p.out(new SendObject(this));
 							else
-								p.out(new SendObjectRemoval(this));
+								p.send(new RemoveObjectPacket(this));
 						}
 					}
 				}

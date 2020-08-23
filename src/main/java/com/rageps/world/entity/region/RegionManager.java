@@ -1,6 +1,7 @@
 package com.rageps.world.entity.region;
 
 import com.rageps.net.packet.out.SendObjectRemoval;
+import com.rageps.net.refactor.packet.out.model.RemoveObjectPacket;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -87,7 +88,8 @@ public final class RegionManager {
 			for(Region region : allRegions) {
 				if(!region.getRemovedObjects().isEmpty()) {
 					for(GameObject obj : region.getRemovedObjects()) {
-						player.out(new SendObjectRemoval(obj));
+						player.send(new RemoveObjectPacket(obj));
+
 					}
 				}
 				region.dynamicAction(o -> {

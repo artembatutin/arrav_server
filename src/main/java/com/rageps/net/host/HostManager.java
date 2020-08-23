@@ -1,6 +1,5 @@
 package com.rageps.net.host;
 
-import com.rageps.net.Session;
 import com.rageps.world.entity.actor.player.Player;
 
 /**
@@ -46,7 +45,7 @@ public final class HostManager {
 	 * Adds a blocked entry to the desired type.
 	 */
 	public static boolean add(Player player, HostListType type) {
-		if(type == HostListType.BANNED_MAC && !Session.validMac(player.credentials.getMacAddress())) {
+		if(type == HostListType.BANNED_MAC/* && !Session.validMac(player.credentials.getMacAddress())*/) {
 			return false;
 		}
 		HostList list = lists[type.getIndex()];

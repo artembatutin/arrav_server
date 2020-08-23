@@ -54,6 +54,9 @@ import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.OutgoingPacket;
 import com.rageps.net.packet.out.*;
 import com.rageps.net.refactor.packet.Packet;
+import com.rageps.net.refactor.packet.out.model.CameraResetPacket;
+import com.rageps.net.refactor.packet.out.model.MapRegionPacket;
+import com.rageps.net.refactor.packet.out.model.SlotPacket;
 import com.rageps.net.refactor.session.impl.GameSession;
 import com.rageps.net.sql.forum.account.MultifactorAuthentication;
 import com.rageps.util.*;
@@ -813,7 +816,7 @@ public final class Player extends Actor {
 			setLastRegion(getPosition().copy());
 			setUpdates(true, false);
 			setUpdateRegion(true);
-			write(new SendMapRegion(getLastRegion().copy()));
+			send(new MapRegionPacket(getLastRegion().copy()));
 			if(getTeleportStage() == -1)
 				setTeleportStage(0);
 		}
@@ -827,9 +830,9 @@ public final class Player extends Actor {
 		if(session != null) {
 			//ensuring the player receives a map update first.
 			if(!getInitialUpdate().get()) {
-				session.write(new SendSlot());
-				session.write(new SendMapRegion(this.getLastRegion().copy()));
-				session.write(new SendCameraReset());
+				//session.dispatchMessage();
+				send(new SlotPacket(getSlot()));
+				send(new MapRegionPacket(this.getLastRegion().copy()));
 				getInitialUpdate().set(true);
 			}
 			session.writeUpdate(new SendPlayerUpdate(), new SendMobUpdate());
@@ -1131,7 +1134,7 @@ public final class Player extends Actor {
 	}
 	
 	/**
-	 * @return The {@link Session} assigned to this {@code Player}.
+	 * @return The {@link GameSession} assigned to this {@code Player}.
 	 */
 	public GameSession getSession() {
 		return session;

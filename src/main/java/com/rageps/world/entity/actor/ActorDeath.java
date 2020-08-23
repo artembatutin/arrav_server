@@ -97,7 +97,7 @@ public abstract class ActorDeath<T extends Actor> extends Task {
 	public final void onException(Exception e) {
 		e.printStackTrace();
 		if(getActor().isPlayer()) {
-			World.get().queueLogout(getActor().toPlayer());
+			World.get().getGameService().unregisterPlayer(actor.toPlayer());
 		} else if(getActor().isMob()) {
 			World.get().getMobRepository().remove(getActor().toMob());
 		}

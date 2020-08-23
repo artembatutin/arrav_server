@@ -14,7 +14,7 @@ public final class KickCommand implements Command {
 		Player kick = World.get().getWorldUtil().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(kick != null && kick != player) {
 			player.message("Successfully kicked " + kick.getFormatUsername() + ".");
-			World.get().queueLogout(kick);
+			World.get().getGameService().unregisterPlayer(kick);
 		} else {
 			player.message("Can't find " + cmd[1].replaceAll("_", " ") + ".");
 		}
