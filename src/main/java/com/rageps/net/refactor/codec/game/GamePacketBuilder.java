@@ -1,6 +1,8 @@
 package com.rageps.net.refactor.codec.game;
 
 import com.google.common.base.Preconditions;
+import com.rageps.net.codec.ByteOrder;
+import com.rageps.net.codec.ByteTransform;
 import com.rageps.util.BufferUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -393,6 +395,52 @@ public final class GamePacketBuilder {
 			buffer.writeByte((byte) c);
 		}
 		buffer.writeByte(BufferUtil.STRING_TERMINATOR);
+	}
+
+	/**
+	 * Writes a value as a {@code long}.
+	 * @param value The value to write.
+	 */
+	public void putLong(long value) {
+		put(DataType.LONG, value);
+	}
+
+	/**
+	 * Writes a value as a normal big-endian {@code short}.
+	 * @param value The value to write.
+	 * @return An instance of this byte message.
+	 */
+	public void putShort(int value) {
+		put(DataType.SHORT, value);
+	}
+
+	/**
+	 * Writes a value as a normal {@code byte}.
+	 * @param value The value to write.
+	 * @return An instance of this byte message.
+	 */
+	public void put(int value) {
+		put(DataType.BYTE, value);
+	}
+
+	/**
+	 * Writes a value as a standard {@code short}.
+	 * @param value The value to write.
+	 * @param order The byte endianness type.
+	 * @return An instance of this byte message.
+	 */
+	public void putShort(int value, DataOrder order) {
+		put(DataType.SHORT, order, value);
+	}
+
+	/**
+	 * Writes a value as a big-endian {@code short}.
+	 * @param value The value to write.
+	 * @param type The byte transformation type
+	 * @return An instance of this byte message.
+	 */
+	public void putShort(int value, DataTransformation type) {
+		put(DataType.SHORT, type, value);
 	}
 
 	/**

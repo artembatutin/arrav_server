@@ -151,8 +151,8 @@ public abstract class Familiar extends Follower {
 		/* Time of our familiar. */
 		player.interfaceText(18043, getDuration() + " minutes");
 		/* We set the familiars face */
-		player.send(new InterfaceNpcModel(18021, this.getId()));
-		player.send(new InterfaceAnimation(18021, Expression.CALM.getExpression()));
+		player.send(new InterfaceNpcModelPacket(18021, this.getId()));
+		player.send(new InterfaceAnimationPacket(18021, Expression.CALM.getExpression()));
 		/* We don't know all the face animation for familiars so it's disabled for now TODO */
 		//encoder.sendInterfaceAnimation(18021, Expression.DEFAULT.getExpression());
 		/* We can't force the tab to be viewed because we have multiple gameframes TODO*/

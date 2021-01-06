@@ -9,6 +9,9 @@ import com.rageps.content.clanchannel.content.*;
 import com.rageps.net.packet.out.SendScrollbar;
 import com.rageps.net.packet.out.SendText;
 import com.rageps.net.packet.out.SendTooltip;
+import com.rageps.net.refactor.packet.out.model.MessagePacket;
+import com.rageps.net.refactor.packet.out.model.ScrollBarPacket;
+import com.rageps.net.refactor.packet.out.model.TooltipPacket;
 import com.rageps.util.DateTimeUtil;
 import com.rageps.util.Difficulty;
 import com.rageps.util.StringUtil;
@@ -210,7 +213,7 @@ public class ClanChannel implements Comparable<ClanChannel> {
 			for (int idx = 0; idx < size; idx++) {
 				boolean valid = idx < bannedMembers.size();
 				Optional<String> banned = valid ? Optional.of(bannedMembers.get(idx)) : Optional.empty();
-				player.send(new TextPacket(banned.orElse(""), string));
+				player.send(new MessagePacket(banned.orElse(""), string));
 				player.send(new TooltipPacket(valid ? "Unban " + bannedMembers.get(idx) : "", string));
 				string++;
 			}

@@ -12,7 +12,11 @@ public class CameraShakePacketEncoder implements PacketEncoder<CameraShakePacket
 
     @Override
     public GamePacket encode(CameraShakePacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(35);
+        builder.put(message.getParameter());
+        builder.put(message.getJitter());
+        builder.put(message.getAmplitude());
+        builder.put(message.getFrequency());
         return builder.toGamePacket();
     }
 }

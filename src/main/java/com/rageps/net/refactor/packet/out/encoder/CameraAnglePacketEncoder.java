@@ -12,7 +12,12 @@ public class CameraAnglePacketEncoder implements PacketEncoder<CameraAnglePacket
 
     @Override
     public GamePacket encode(CameraAnglePacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(177);
+        builder.put(message.getPosition().getLocalX(message.getBase()));
+        builder.put(message.getPosition().getLocalY(message.getBase()));
+        builder.putShort(message.getHeight());
+        builder.put(message.getMovementSpeed());
+        builder.put(message.getRotationSpeed());
         return builder.toGamePacket();
     }
 }

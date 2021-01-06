@@ -13,7 +13,11 @@ public class AddFriendPacketEncoder implements PacketEncoder<AddFriendPacket> {
 
     @Override
     public GamePacket encode(AddFriendPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(50);
+        int world = message.getWorld() != 0 ? message.getWorld() + 9 : message.getWorld();
+        builder.putLong(message.getUsername());
+        builder.put(world);
+        builder.put(message.isDisplay()? 1 : 0);
         return builder.toGamePacket();
     }
 }

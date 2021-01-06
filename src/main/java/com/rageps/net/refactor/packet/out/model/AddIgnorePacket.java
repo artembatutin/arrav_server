@@ -7,6 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class AddIgnorePacket extends Packet {
 
-    public AddIgnorePacket() {
+    private final long username;
+
+    public AddIgnorePacket(long username) {
+        this.username = username;
+    }
+
+    public long getUsername() {
+        return username;
     }
 }

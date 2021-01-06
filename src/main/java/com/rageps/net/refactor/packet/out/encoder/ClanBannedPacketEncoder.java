@@ -12,7 +12,6 @@ public class ClanBannedPacketEncoder implements PacketEncoder<ClanBannedPacket> 
 
     @Override
     public GamePacket encode(ClanBannedPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
-        return builder.toGamePacket();
+        throw new UnsupportedOperationException("No longer used, remove this from client.");
     }
 }

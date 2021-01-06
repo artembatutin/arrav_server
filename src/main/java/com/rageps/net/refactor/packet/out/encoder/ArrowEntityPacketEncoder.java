@@ -12,7 +12,10 @@ public class ArrowEntityPacketEncoder implements PacketEncoder<ArrowEntityPacket
 
     @Override
     public GamePacket encode(ArrowEntityPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(248);
+        builder.put(message.getEntity().isMob() ? 1 : 10);
+        builder.putShort(message.getEntity().getSlot());
+        builder.put(0);
         return builder.toGamePacket();
     }
 }

@@ -224,8 +224,8 @@ public final class Pet extends Follower {
 			player.interfaceText(19032, "-");
 		else
 			player.interfaceText(19032, (int) pet.progress.getHunger() + "%");
-		player.send(new InterfaceNpcModel(19019, pet.getId()));
-		player.send(new InterfaceAnimation(19019, Expression.CALM.getExpression()));
+		player.send(new InterfaceNpcModelPacket(19019, pet.getId()));
+		player.send(new InterfaceAnimationPacket(19019, Expression.CALM.getExpression()));
 		TabInterface.SUMMONING.sendInterface(player, 19017);
 	}
 	

@@ -12,7 +12,8 @@ public class ClearContainerPacketEncoder implements PacketEncoder<ClearContainer
 
     @Override
     public GamePacket encode(ClearContainerPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(40);
+        builder.putShort(message.getId());
         return builder.toGamePacket();
     }
 }

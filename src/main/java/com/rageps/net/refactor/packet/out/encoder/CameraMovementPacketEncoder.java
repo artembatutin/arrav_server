@@ -12,7 +12,12 @@ public class CameraMovementPacketEncoder implements PacketEncoder<CameraMovement
 
     @Override
     public GamePacket encode(CameraMovementPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(166);
+        builder.put(message.getPosition().getLocalX(message.getBase()));
+        builder.put(message.getPosition().getLocalY(message.getBase()));
+        builder.putShort(message.getHeight());
+        builder.put(message.getMovementSpeed());
+        builder.put(message.getRotationSpeed());
         return builder.toGamePacket();
     }
 }

@@ -2,6 +2,7 @@ package com.rageps.content.clanchannel;
 
 import com.rageps.content.clanchannel.channel.ClanChannel;
 import com.rageps.net.packet.out.SendClanDetails;
+import com.rageps.net.refactor.packet.out.model.ClanDetailsPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.relations.PrivacyChatMode;
 
@@ -58,7 +59,7 @@ public class ClanMember {
 		player.ifPresent(p -> {
 			ClanChannel channel = p.clanChannel;
 			for (Object message : messages) {
-				p.send(new ClanDetails(String.valueOf(message), channel.getName(), ClanRank.SYSTEM));
+				p.send(new ClanDetailsPacket(String.valueOf(message), channel.getName(), ClanRank.SYSTEM));
 			}
 		});
 	}
@@ -82,7 +83,7 @@ public class ClanMember {
 				return;
 			}
 
-			p.send(new ClanDetails(speaker.name, String.valueOf(message), channel.getName(), speaker.rank));
+			p.send(new ClanDetailsPacket(speaker.name, String.valueOf(message), channel.getName(), speaker.rank));
 		});
 	}
 

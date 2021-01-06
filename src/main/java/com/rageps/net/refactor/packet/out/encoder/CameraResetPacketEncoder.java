@@ -12,7 +12,7 @@ public class CameraResetPacketEncoder implements PacketEncoder<CameraResetPacket
 
     @Override
     public GamePacket encode(CameraResetPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(107);
         return builder.toGamePacket();
     }
 }

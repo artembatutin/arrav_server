@@ -12,7 +12,13 @@ public class CloseInterfacePacketEncoder implements PacketEncoder<CloseInterface
 
     @Override
     public GamePacket encode(CloseInterfacePacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(219);
         return builder.toGamePacket();
+    }
+
+    @Override
+    public boolean onSent(CloseInterfacePacket message) {
+        message.getDialogueBuilder().interrupt();
+        return true;
     }
 }

@@ -2,6 +2,8 @@ package com.rageps.world;
 
 import com.rageps.net.packet.out.SendBroadcast;
 import com.rageps.net.packet.out.SendYell;
+import com.rageps.net.refactor.packet.out.model.BroadcastPacket;
+import com.rageps.net.refactor.packet.out.model.YellPacket;
 import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.mob.Mob;
@@ -34,8 +36,9 @@ public class WorldUtil {
      * @param countdown
      */
     public void sendBroadcast(int time, String message, boolean countdown) {
+        BroadcastPacket broadcastPacket = new BroadcastPacket(countdown ? 0 : 1, time, message);
         world.getPlayers().stream().forEach($it -> {
-            $it.send(new Broadcast(countdown ? 0 : 1, time, (message)));
+            $it.send(broadcastPacket);
             $it.message("<img=29>["+ ColorConstants.MAGENTA +"RagePS</col>]" + (message));
         });
     }
@@ -70,8 +73,9 @@ public class WorldUtil {
     public void yell(String author, String message, Rights rights) {
         Player p;
         Iterator<Player> it = world.getPlayers().iterator();
+        YellPacket yellPacket = new YellPacket(author, message, rights);
         while((p = it.next()) != null) {
-            p.send(new Yell(author, message, rights));
+            p.send(yellPacket);
         }
     }
 
@@ -79,7 +83,8 @@ public class WorldUtil {
         world.getPlayers().stream().filter(Objects::nonNull).filter(filter).forEach(p -> p.message(message));
     }
     public void broadcastIf(Predicate<? super Player> filter, int time, String message, boolean countdown) {
-        world.getPlayers().stream().filter(Objects::nonNull).filter(filter).forEach(p -> p.send(new Broadcast(countdown ? 0 : 1, time, (message))));
+        BroadcastPacket broadcastPacket = new BroadcastPacket(countdown ? 0 : 1, time, message);
+        world.getPlayers().stream().filter(Objects::nonNull).filter(filter).forEach(p -> p.send(broadcastPacket));
     }
 
     /**

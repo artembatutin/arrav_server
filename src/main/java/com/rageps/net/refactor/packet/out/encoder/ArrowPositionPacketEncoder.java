@@ -12,7 +12,11 @@ public class ArrowPositionPacketEncoder implements PacketEncoder<ArrowPositionPa
 
     @Override
     public GamePacket encode(ArrowPositionPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(254);
+        builder.put(message.getDirection());
+        builder.putShort(message.getPosition().getX());
+        builder.putShort(message.getPosition().getY());
+        builder.put(message.getPosition().getZ());
         return builder.toGamePacket();
     }
 }

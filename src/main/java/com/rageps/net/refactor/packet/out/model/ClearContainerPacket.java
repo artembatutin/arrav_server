@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class ClearContainerPacket extends Packet {
 
+    private final int id;
 
-public ClearContainerPacket() {}
+    public ClearContainerPacket(int id) {
+        this.id = id;
+    }
 
-
-
-
+    public int getId() {
+        return id;
+    }
 }

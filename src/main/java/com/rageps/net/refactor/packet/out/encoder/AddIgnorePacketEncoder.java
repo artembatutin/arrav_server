@@ -13,7 +13,8 @@ public class AddIgnorePacketEncoder implements PacketEncoder<AddIgnorePacket> {
 
     @Override
     public GamePacket encode(AddIgnorePacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(214);
+        builder.putLong(message.getUsername());
         return builder.toGamePacket();
     }
 }

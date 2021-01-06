@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class ChatInterfacePacket extends Packet {
 
+    private final int id;
 
-public ChatInterfacePacket() {}
+    public ChatInterfacePacket(int id) {
+        this.id = id;
+    }
 
-
-
-
+    public int getId() {
+        return id;
+    }
 }

@@ -1,5 +1,6 @@
 package com.rageps.net.refactor.packet.out.model;
 
+import com.rageps.content.dialogue.DialogueBuilder;
 import com.rageps.net.refactor.packet.Packet;
 
 /**
@@ -7,10 +8,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class CloseInterfacePacket extends Packet {
 
+    private final DialogueBuilder dialogueBuilder;
 
-public CloseInterfacePacket() {}
+    public CloseInterfacePacket(DialogueBuilder dialogueBuilder) {
+        this.dialogueBuilder = dialogueBuilder;
+    }
 
-
-
-
+    public DialogueBuilder getDialogueBuilder() {
+        return dialogueBuilder;
+    }
 }
