@@ -106,7 +106,7 @@ public final class BarbAgility extends Agility {
 			@Override
 			public void initialize(Player player) {
 				super.initialize(player);
-				player.out(new SendObjectAnimation(new Position(player.getPosition().getX(), 3550), 497, ObjectType.GENERAL_PROP, ObjectDirection.WEST));
+				player.send(new ObjectAnimationPacket(new Position(player.getPosition().getX(), 3550), 497, ObjectType.GENERAL_PROP, ObjectDirection.WEST));
 			}
 		}),
 		LOG_BALANCE(43595, p -> new WalkableObstacle(new Position(2551, 3546, 0), new Position(2541, 3546, 0), 762, 35, 13.7) {
@@ -169,7 +169,7 @@ public final class BarbAgility extends Agility {
 			@Override
 			public void initialize(Player player) {
 				player.facePosition(new Position(player.getPosition().getX(), player.getPosition().getY() + 1));
-				player.out(new SendObjectAnimation(new Position(2532, 3544, 3), 11819, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
+				player.send(new ObjectAnimationPacket(new Position(2532, 3544, 3), 11819, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
 				
 				super.initialize(player);
 			}

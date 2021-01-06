@@ -3,7 +3,7 @@ package com.rageps.action.but;
 import com.rageps.action.impl.ButtonAction;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.action.ActionInitializer;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.entity.actor.player.Player;
 
 public class CombatSpecialButton extends ActionInitializer {
@@ -21,7 +21,7 @@ public class CombatSpecialButton extends ActionInitializer {
 				}
 
 				if(player.isSpecialActivated()) {
-					player.out(new SendConfig(301, 0));
+					player.send(new ConfigPacket(301, 0));
 					player.setSpecialActivated(false);
 				} else {
 					if(player.playerData.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
@@ -30,7 +30,7 @@ public class CombatSpecialButton extends ActionInitializer {
 					}
 
 					player.setSpecialActivated(true);
-					player.out(new SendConfig(301, 1));
+					player.send(new ConfigPacket(301, 1));
 					player.getCombatSpecial().enable(player);
 				}
 				return true;

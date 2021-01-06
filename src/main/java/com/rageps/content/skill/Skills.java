@@ -213,7 +213,7 @@ public final class Skills {
 				player.getFlags().flag(UpdateFlag.APPEARANCE);
 				if(newLevel >= player.getSkills()[skill].getGoal()) {
 					player.getSkills()[skill].setGoal(0);
-					player.out(new SendSkillGoal(skill, 0));
+					player.send(new SkillGoal(skill, 0));
 				}
 			}
 		}
@@ -290,7 +290,7 @@ public final class Skills {
 			}
 			player.getSkills()[skill] = s;
 		}
-		player.out(new SendSkill(skill, s.getCurrentLevel(), (int) s.getExperience(), false));
+		player.send(new Skill(skill, s.getCurrentLevel(), (int) s.getExperience(), false));
 	}
 
 	public static long getTotalExp(Player player) {
@@ -326,7 +326,7 @@ public final class Skills {
 	public static void refreshAll(Player player) {
 		for(int i = 0; i < player.getSkills().length; i++) {
 			refresh(player, i);
-			player.out(new SendSkillGoal(i, player.getSkills()[i].getGoal()));
+			player.send(new SkillGoal(i, player.getSkills()[i].getGoal()));
 		}
 	}
 
@@ -341,8 +341,8 @@ public final class Skills {
 				}
 				player.getSkills()[skill] = s;
 			}
-			player.out(new SendSkill(skill, s.getCurrentLevel(), (int) s.getExperience(), true));
-			player.out(new SendSkillGoal(skill, player.getSkills()[skill].getGoal()));
+			player.send(new Skill(skill, s.getCurrentLevel(), (int) s.getExperience(), true));
+			player.send(new SkillGoal(skill, player.getSkills()[skill].getGoal()));
 		}
 	}
 	

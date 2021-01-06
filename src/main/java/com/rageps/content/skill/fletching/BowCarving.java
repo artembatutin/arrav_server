@@ -7,7 +7,7 @@ import com.rageps.net.packet.out.SendItemModelInterface;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
-import com.rageps.net.packet.out.SendEnterAmount;
+import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
 import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
 import com.rageps.world.model.Animation;
@@ -77,7 +77,7 @@ public final class BowCarving extends ProducingSkillAction {
 		if(Log.getAmount(buttonId) == 28) {
 			BowCarving fletch = player.getAttributeMap().getObject(PlayerAttributes.FLETCHING_BOWCARVING);
 			fletch.current = pol.get();
-			player.out(new SendEnterAmount("How many you would like to make?", s -> () -> BowCarving.fletch(player, fletch.getCurrent(), Integer.parseInt(s))));
+			player.send(new EnterAmount("How many you would like to make?", s -> () -> BowCarving.fletch(player, fletch.getCurrent(), Integer.parseInt(s))));
 			return true;
 		}
 		fletch(player, pol.get(), Log.getAmount(buttonId));
@@ -119,26 +119,26 @@ public final class BowCarving extends ProducingSkillAction {
 			player.getAttributeMap().set(PlayerAttributes.FLETCHING_BOWS, true);
 			if(log.get().producibles.length == 2) {
 				player.interfaceText(8879, "What would you like to make?");
-				player.out(new SendItemModelInterface(8870, 200, fletching.definition.producibles[0].producible.getId()));
-				player.out(new SendItemModelInterface(8869, 200, fletching.definition.producibles[1].producible.getId()));
+				player.send(new ItemModelInterface(8870, 200, fletching.definition.producibles[0].producible.getId()));
+				player.send(new ItemModelInterface(8869, 200, fletching.definition.producibles[1].producible.getId()));
 				player.interfaceText(8874, "\\n\\n\\n\\n\\nShortbow");
 				player.interfaceText(8878, "\\n\\n\\n\\n\\nLongbow");
 				player.chatWidget(8866);
 			} else if(log.get().producibles.length == 3) {
 				player.interfaceText(8898, "What would you like to make?");
-				player.out(new SendItemModelInterface(8884, 200, fletching.definition.producibles[0].producible.getId()));
-				player.out(new SendItemModelInterface(8883, 200, fletching.definition.producibles[1].producible.getId()));
-				player.out(new SendItemModelInterface(8885, 200, fletching.definition.producibles[2].producible.getId()));
+				player.send(new ItemModelInterface(8884, 200, fletching.definition.producibles[0].producible.getId()));
+				player.send(new ItemModelInterface(8883, 200, fletching.definition.producibles[1].producible.getId()));
+				player.send(new ItemModelInterface(8885, 200, fletching.definition.producibles[2].producible.getId()));
 				player.interfaceText(8889, "\\n\\n\\n\\n\\nShortbow");
 				player.interfaceText(8893, "\\n\\n\\n\\n\\nLongbow");
 				player.interfaceText(8897, "\\n\\n\\n\\n\\nCrossbow Stock");
 				player.chatWidget(8880);
 			} else if(log.get().producibles.length == 4) {
 				player.interfaceText(8922, "What would you like to make?");
-				player.out(new SendItemModelInterface(8902, 200, fletching.definition.producibles[0].producible.getId()));
-				player.out(new SendItemModelInterface(8903, 200, fletching.definition.producibles[1].producible.getId()));
-				player.out(new SendItemModelInterface(8904, 200, fletching.definition.producibles[2].producible.getId()));
-				player.out(new SendItemModelInterface(8905, 200, fletching.definition.producibles[3].producible.getId()));
+				player.send(new ItemModelInterface(8902, 200, fletching.definition.producibles[0].producible.getId()));
+				player.send(new ItemModelInterface(8903, 200, fletching.definition.producibles[1].producible.getId()));
+				player.send(new ItemModelInterface(8904, 200, fletching.definition.producibles[2].producible.getId()));
+				player.send(new ItemModelInterface(8905, 200, fletching.definition.producibles[3].producible.getId()));
 				player.interfaceText(8906, "\\n\\n\\n\\n\\nShortbow");
 				player.interfaceText(8910, "\\n\\n\\n\\n\\nLongbow");
 				player.interfaceText(8914, "\\n\\n\\n\\n\\nCrossbow Stock");

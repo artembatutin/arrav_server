@@ -172,7 +172,7 @@ public final class Pet extends Follower {
 		World.get().getMobRepository().remove(pet);
 		pet.task.cancel();
 		TabInterface.SUMMONING.sendInterface(player, -1);
-		player.out(new SendForceTab(TabInterface.INVENTORY));
+		player.send(new ForceTab(TabInterface.INVENTORY));
 		pet.postUpdate();
 	}
 	
@@ -224,8 +224,8 @@ public final class Pet extends Follower {
 			player.interfaceText(19032, "-");
 		else
 			player.interfaceText(19032, (int) pet.progress.getHunger() + "%");
-		player.out(new SendInterfaceNpcModel(19019, pet.getId()));
-		player.out(new SendInterfaceAnimation(19019, Expression.CALM.getExpression()));
+		player.send(new InterfaceNpcModel(19019, pet.getId()));
+		player.send(new InterfaceAnimation(19019, Expression.CALM.getExpression()));
 		TabInterface.SUMMONING.sendInterface(player, 19017);
 	}
 	

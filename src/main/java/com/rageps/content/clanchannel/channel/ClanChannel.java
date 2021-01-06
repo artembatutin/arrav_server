@@ -151,7 +151,7 @@ public class ClanChannel implements Comparable<ClanChannel> {
 						player.clanTag = "";
 						player.clanChannel = null;
 						player.getFlags().flag(UpdateFlag.APPEARANCE);
-						player.out(new SendScrollbar(33530, 189));
+						player.send(new ScrollBarPacket(33530, 189));
 						player.message("You have disconnected from the clan chat channel.");
 					}
 					if (member.rank != ClanRank.SYSTEM) {
@@ -210,11 +210,11 @@ public class ClanChannel implements Comparable<ClanChannel> {
 			for (int idx = 0; idx < size; idx++) {
 				boolean valid = idx < bannedMembers.size();
 				Optional<String> banned = valid ? Optional.of(bannedMembers.get(idx)) : Optional.empty();
-				player.out(new SendText(banned.orElse(""), string));
-				player.out(new SendTooltip(valid ? "Unban " + bannedMembers.get(idx) : "", string));
+				player.send(new TextPacket(banned.orElse(""), string));
+				player.send(new TooltipPacket(valid ? "Unban " + bannedMembers.get(idx) : "", string));
 				string++;
 			}
-			player.out(new SendScrollbar(51410, size * 23));
+			player.send(new ScrollBarPacket(51410, size * 23));
 			player.message("You have unbanned " + name + " from the clan chat channel.");
 		}
 	}

@@ -40,7 +40,7 @@
 //		for(long name : player.getFriends()) {
 //			if(name == 0)
 //				continue;
-//			player.out(new SendAddFriend(name, World.get().getWorldUtil().getPlayer(name).isPresent()));
+//			player.send(new AddFriend(name, World.get().getWorldUtil().getPlayer(name).isPresent()));
 //		}
 //	}
 //
@@ -54,7 +54,7 @@
 //		Iterator<Player> it = World.get().getPlayers().iterator();
 //		while((p = it.next()) != null) {
 //			if(p.getFriends().contains(player.credentials.usernameHash))
-//				p.out(new SendAddFriend(player.credentials.usernameHash, online));
+//				p.send(new AddFriend(player.credentials.usernameHash, online));
 //		}
 //	}
 //
@@ -68,7 +68,7 @@
 //			return;
 //		}
 //		if(player.getFriends().add(name)) {
-//			player.out(new SendAddFriend(name, World.get().getWorldUtil().getPlayer(name).isPresent()));
+//			player.send(new AddFriend(name, World.get().getWorldUtil().getPlayer(name).isPresent()));
 //		} else {
 //			player.message("They are already on your friends" + " list!");
 //		}
@@ -116,7 +116,7 @@
 //	public void sendPrivateMessage(long name, byte[] message, int size) {
 //		int rights = player.getRights() == Rights.PLAYER && player.isIronMan() ? Rights.IRON_MAN.getProtocolValue() : player.getRights().getProtocolValue();
 //		long hash = player.credentials.usernameHash;
-//		World.get().getWorldUtil().getPlayer(name).ifPresent(p -> p.out(new SendPrivateMessage(hash, rights, message, size)));
+//		World.get().getWorldUtil().getPlayer(name).ifPresent(p -> p.send(new PrivateMessage(hash, rights, message, size)));
 //	}
 //
 //	/**

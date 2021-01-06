@@ -2,7 +2,7 @@ package com.rageps.world.entity.actor.combat.effect.impl;
 
 import com.rageps.world.entity.actor.player.Player;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.entity.actor.combat.PoisonType;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.effect.CombatEffect;
@@ -45,7 +45,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 			Player player = (Player) t;
 			if(player.playerData.getPoisonImmunity().get() > 0 || t.isDead())
 				return false;
-			player.out(new SendConfig(174, 1));
+			player.send(new ConfigPacket(174, 1));
 			player.message("You have been poisoned!");//u dont have tosend message
 		}
 		t.getPoisonDamage().set(t.getPoisonType().getDamage());
@@ -61,7 +61,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 	public void process(Actor t) {
 		if(t.getPoisonDamage().get() <= 0) {
 			if(t.isPlayer()) {
-				t.toPlayer().out(new SendConfig(174, 0));
+				t.toPlayer().send(new ConfigPacket(174, 0));
 			}
 			this.removeOn(t);
 			return;

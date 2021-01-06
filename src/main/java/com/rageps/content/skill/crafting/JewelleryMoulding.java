@@ -97,19 +97,19 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 					for(int i = 0; i < rings.length; i++) {
 						boolean check = rings[i].required.isPresent() ? player.getInventory().contains(rings[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(rings[i].requirement) : player.getSkills()[Skills.CRAFTING].reqLevel(rings[i].requirement);
 						if(check && player.getInventory().contains(GOLD_BAR)) {
-							player.out(new SendItemOnInterfaceSlot(4233, rings[i].product, i));
+							player.send(new ItemOnInterfaceSlotPacket(4233, rings[i].product, i));
 						} else {
-							player.out(new SendItemOnInterfaceSlot(4233, new Item(-1, 1), i));
+							player.send(new ItemOnInterfaceSlotPacket(4233, new Item(-1, 1), i));
 						}
 						
 						player.interfaceText(4230, player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft rings.");
-						player.out(new SendItemModelInterface(4229, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
+						player.send(new ItemModelInterface(4229, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
 					}
 					;
 				} else {
-					player.out(new SendItemModelInterface(4229, 120, RING_MOULD.getId()));
+					player.send(new ItemModelInterface(4229, 120, RING_MOULD.getId()));
 					for(int i = 0; i < rings.length; i++) {
-						player.out(new SendItemOnInterfaceSlot(4233, new Item(-1), i));
+						player.send(new ItemOnInterfaceSlotPacket(4233, new Item(-1), i));
 					}
 					player.interfaceText(4230, "You need a ring mould to craft rings.");
 				}
@@ -120,18 +120,18 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 					for(int i = 0; i < necklaces.length; i++) {
 						boolean check = necklaces[i].required.isPresent() ? player.getInventory().contains(necklaces[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(necklaces[i].requirement) : player.getSkills()[Skills.CRAFTING].reqLevel(necklaces[i].requirement);
 						if(check && player.getInventory().contains(GOLD_BAR)) {
-							player.out(new SendItemOnInterfaceSlot(4239, necklaces[i].product, i));
+							player.send(new ItemOnInterfaceSlotPacket(4239, necklaces[i].product, i));
 						} else {
-							player.out(new SendItemOnInterfaceSlot(4239, new Item(-1, 1), i));
+							player.send(new ItemOnInterfaceSlotPacket(4239, new Item(-1, 1), i));
 						}
 						
 						player.interfaceText(4236, player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.");
-						player.out(new SendItemModelInterface(4235, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
+						player.send(new ItemModelInterface(4235, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
 					}
 				} else {
-					player.out(new SendItemModelInterface(4235, 120, NECKLACE_MOULD.getId()));
+					player.send(new ItemModelInterface(4235, 120, NECKLACE_MOULD.getId()));
 					for(int i = 0; i < rings.length; i++) {
-						player.out(new SendItemOnInterfaceSlot(4239, new Item(-1), i));
+						player.send(new ItemOnInterfaceSlotPacket(4239, new Item(-1), i));
 					}
 					
 					player.interfaceText(4236, "You need a necklace mould to craft necklaces.");
@@ -142,18 +142,18 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 					for(int i = 0; i < amulets.length; i++) {
 						boolean check = amulets[i].required.isPresent() ? player.getInventory().contains(amulets[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(amulets[i].requirement) : player.getSkills()[Skills.CRAFTING].reqLevel(amulets[i].requirement);
 						if(check && player.getInventory().contains(GOLD_BAR)) {
-							player.out(new SendItemOnInterfaceSlot(4245, amulets[i].product, i));
+							player.send(new ItemOnInterfaceSlotPacket(4245, amulets[i].product, i));
 						} else {
-							player.out(new SendItemOnInterfaceSlot(4245, new Item(-1, 1), i));
+							player.send(new ItemOnInterfaceSlotPacket(4245, new Item(-1, 1), i));
 						}
 						
 						player.interfaceText(4242, player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.");
-						player.out(new SendItemModelInterface(4241, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
+						player.send(new ItemModelInterface(4241, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
 					}
 				} else {
-					player.out(new SendItemModelInterface(4241, 120, AMULET_MOULD.getId()));
+					player.send(new ItemModelInterface(4241, 120, AMULET_MOULD.getId()));
 					for(int i = 0; i < rings.length; i++) {
-						player.out(new SendItemOnInterfaceSlot(4245, new Item(-1), i));
+						player.send(new ItemOnInterfaceSlotPacket(4245, new Item(-1), i));
 					}
 					
 					player.interfaceText(4242, "You need an amulet mould to craft amulets.");

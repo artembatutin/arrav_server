@@ -4,7 +4,7 @@ import com.rageps.GameConstants;
 import com.rageps.action.impl.ButtonAction;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.action.ActionInitializer;
-import com.rageps.net.packet.out.SendLogout;
+import com.rageps.net.refactor.packet.out.model.LogoutPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 
@@ -27,7 +27,7 @@ public class LogoutButton extends ActionInitializer {
 					player.message("You can't log out right now.");
 					return true;
 				}
-				player.out(new SendLogout());
+				player.send(new LogoutPacket());
 				return true;
 			}
 		};

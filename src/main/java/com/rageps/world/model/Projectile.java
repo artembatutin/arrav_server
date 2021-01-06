@@ -1,5 +1,6 @@
 package com.rageps.world.model;
 
+import com.rageps.net.refactor.packet.out.model.ProjectilePacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
@@ -133,11 +134,11 @@ public final class Projectile {
 	public Projectile sendProjectile() {
 		Region r = World.getRegions().getRegion(start.getRegion());
 		if(r != null) {
-			r.getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
+			r.getPlayers().forEach(p -> p.send(new ProjectilePacket(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
 			ObjectList<Region> surrounding = r.getSurroundingRegions();
 			if(surrounding != null) {
 				for(Region s : surrounding) {
-					s.getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
+					s.getPlayers().forEach(p -> p.send(new ProjectilePacket(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
 				}
 			}
 		}

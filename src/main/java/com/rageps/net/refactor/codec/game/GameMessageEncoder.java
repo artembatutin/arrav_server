@@ -36,7 +36,7 @@ public final class GameMessageEncoder extends MessageToMessageEncoder<Packet> {
 		if (encoder != null) {
 			if(encoder.coordinatePacket() != null)
 				out.add(encoder.coordinatePacket());
-			if(encoder.onSent())
+			if(encoder.onSent(packet))
 				out.add(encoder.encode(packet));
 		}
 	}

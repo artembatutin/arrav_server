@@ -5,7 +5,7 @@ import com.rageps.world.entity.actor.move.path.Path;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.locale.Position;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.net.packet.out.SendEnergy;
 import com.rageps.task.Task;
 import com.rageps.world.model.Direction;
@@ -134,10 +134,10 @@ public final class MovementQueue {
 						weightFactor = Math.round(weightFactor * 100.0D) / 100.0D;
 						player.setRunEnergy(player.playerData.getRunEnergy() - (drainRate + weightFactor));
 						//player.sendInterfaces(); todo should we be sending interface?
-						player.out(new SendEnergy());
+						player.send(new Energy());
 					} else {
 						running = false;
-						player.out(new SendConfig(173, 0));
+						player.send(new ConfigPacket(173, 0));
 					}
 				}
 			}
@@ -346,7 +346,7 @@ public final class MovementQueue {
 	public void setRunning(boolean runToggled) {
 		if(character.getType().equals(EntityType.PLAYER)) {
 			Player player = (Player) character;
-			player.out(new SendConfig(173, runToggled ? 0 : 1));
+			player.send(new ConfigPacket(173, runToggled ? 0 : 1));
 		}
 		this.running = runToggled;
 	}

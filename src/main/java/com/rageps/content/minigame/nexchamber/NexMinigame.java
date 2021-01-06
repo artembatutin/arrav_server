@@ -49,7 +49,7 @@ public class NexMinigame extends Minigame {
 	@Override
 	public void onLogout(Player player) {
 		getPlayers().remove(player);
-		player.out(new SendFade(20, 100, 160));
+		player.send(new Fade(20, 100, 160));
 		player.task(2, pl -> pl.move(new Position(2907, 5204)));
 		player.setMinigame(Optional.empty());
 	}
@@ -57,7 +57,7 @@ public class NexMinigame extends Minigame {
 	@Override
 	public void onEnter(Player player) {
 		getPlayers().add(player);
-		player.out(new SendFade(20, 100, 160));
+		player.send(new Fade(20, 100, 160));
 		player.task(2, pl -> pl.move(new Position(2911, 5204)));
 		player.setMinigame(this);
 	}

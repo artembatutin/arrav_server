@@ -123,11 +123,11 @@ public class ClanManagement {
 		for (int index = 0; index < size; index++) {
 			boolean valid = index < channel.bannedMembers.size();
 			Optional<String> banned = valid ? Optional.of(channel.bannedMembers.get(index)) : Optional.empty();
-			player.out(new SendText(banned.orElse(""), string));
-			player.out(new SendTooltip(valid ? "Unban " + channel.bannedMembers.get(index) : "", string));
+			player.send(new TextPacket(banned.orElse(""), string));
+			player.send(new TooltipPacket(valid ? "Unban " + channel.bannedMembers.get(index) : "", string));
 			string++;
 		}
-		player.out(new SendScrollbar(58310, size * 23));
+		player.send(new ScrollBarPacket(58310, size * 23));
 		player.getInterfaceManager().open(58300);
 	}
 

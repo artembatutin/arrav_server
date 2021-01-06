@@ -15,7 +15,7 @@ import com.rageps.content.market.currency.Currency;
 import com.rageps.content.minigame.SequencedMinigame;
 import com.rageps.content.object.door.DoorHandler;
 import com.rageps.content.skill.Skills;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.hit.Hit;
@@ -107,10 +107,10 @@ public final class PestControlMinigame extends SequencedMinigame {
 		getPlayers().remove(player);
 		player.setMinigame(Optional.empty());
 		player.setInstance(0);
-		player.out(new SendWalkable((-1)));
+		player.send(new Walkable((-1)));
 		if(player.isPoisoned()) {
 			player.getPoisonDamage().set(0);
-			player.out(new SendConfig(174, 0));
+			player.send(new ConfigPacket(174, 0));
 		}
 		player.getAttributeMap().set(PlayerAttributes.PARTICIPATION, 0);
 		player.getAttributeMap().set(PlayerAttributes.MASTER_ARCHERY, false);
@@ -244,7 +244,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	@Override
 	public void postDeath(Player player) {
 		player.getMovementQueue().reset();
-		player.out(new SendWalkable((21100)));
+		player.send(new Walkable((21100)));
 	}
 	
 	@Override
@@ -312,7 +312,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	private void spawn(Player p) {
 		p.move(new Position(2656 + RandomUtils.inclusive(3), 2609 + RandomUtils.inclusive(4)));
 		p.interfaceText(21116, "" + p.getAttributeMap().getInt(PlayerAttributes.PARTICIPATION));
-		p.out(new SendWalkable((21100)));
+		p.send(new Walkable((21100)));
 		p.getMovementQueue().reset();
 	}
 	

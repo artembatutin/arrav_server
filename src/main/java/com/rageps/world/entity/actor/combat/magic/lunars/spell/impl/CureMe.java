@@ -1,6 +1,6 @@
 package com.rageps.world.entity.actor.combat.magic.lunars.spell.impl;
 
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.model.Animation;
 import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.Actor;
@@ -38,7 +38,7 @@ public final class CureMe extends LunarButtonSpell {
 		super.effect(caster, victim);
 		
 		caster.toPlayer().message("You are no longer poisoned...");
-		caster.toPlayer().out(new SendConfig(174, 0));
+		caster.toPlayer().send(new ConfigPacket(174, 0));
 		caster.getPoisonDamage().set(0);
 	}
 	

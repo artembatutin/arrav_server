@@ -3,6 +3,8 @@ package com.rageps.world.locale.loc;
 import com.rageps.content.wilderness.WildernessActivity;
 import com.rageps.net.packet.out.SendContextMenu;
 import com.rageps.net.packet.out.SendMultiIcon;
+import com.rageps.net.refactor.packet.out.model.ContextMenuPacket;
+import com.rageps.net.refactor.packet.out.model.MultiIconPacket;
 import com.rageps.world.entity.Entity;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.mob.Mob;
@@ -44,7 +46,7 @@ public class Locations {
                 previous.leave(player);
                 newLocation.enter(player);
                 newLocation.process(player);
-                player.out(new SendMultiIcon(!newLocation.isMulti()));
+                player.send(new MultiIconPacket(!newLocation.isMulti()));
             }
         } else {
             if (entity.isPlayer()) {
@@ -77,21 +79,21 @@ public class Locations {
             @Override
             public void enter(Player player) {
                 super.enter(player);
-                player.out(new SendContextMenu(2, false, "Challenge"));
+                player.send(new ContextMenuPacket(2, false, "Challenge"));
                 player.getInterfaceManager().openWalkable(201);
             }
 
             @Override
             public void process(Player player) {
                 if(player.getMinigame().isPresent()) {
-                    player.out(new SendContextMenu(2, false, "null"));
+                    player.send(new ContextMenuPacket(2, false, "null"));
                 }
                 super.process(player);
             }
 
             @Override
             public void leave(Player player) {
-                player.out(new SendContextMenu(2, false, "null"));
+                player.send(new ContextMenuPacket(2, false, "null"));
                 player.getInterfaceManager().close(true);
                 super.leave(player);
             }
@@ -105,7 +107,7 @@ public class Locations {
             public void enter(Player player) {
                 super.enter(player);
                 player.getInterfaceManager().openWalkable(197);
-                player.out(new SendContextMenu(2, true, "Attack"));
+                player.send(new ContextMenuPacket(2, true, "Attack"));
                 WildernessActivity.enter(player);
                 player.interfaceText(199, "@yel@Fun PvP");
             }
@@ -113,7 +115,7 @@ public class Locations {
             @Override
             public void leave(Player player) {
                 super.leave(player);
-                player.out(new SendContextMenu(2, false, "null"));
+                player.send(new ContextMenuPacket(2, false, "null"));
                 player.getInterfaceManager().close(true);
                 player.getInterfaceManager().closeWalkable();
                 player.wildernessLevel = 0;
@@ -140,7 +142,7 @@ public class Locations {
                  int calculateY = player.getPosition().getY() > 6400 ? player.getPosition().getY() - 6400 : player.getPosition().getY();
                  player.wildernessLevel = (((calculateY - 3520) / 8) + 1);
                  player.getInterfaceManager().openWalkable(197);
-                 player.out(new SendContextMenu(2, true, "Attack"));
+                 player.send(new ContextMenuPacket(2, true, "Attack"));
                  WildernessActivity.enter(player);
                  player.interfaceText(199, "@yel@Level: " + player.wildernessLevel);
             }
@@ -148,7 +150,7 @@ public class Locations {
             @Override
             public void leave(Player player) {
                 super.leave(player);
-                player.out(new SendContextMenu(2, false, "null"));
+                player.send(new ContextMenuPacket(2, false, "null"));
                 player.getInterfaceManager().close(true);
                 player.getInterfaceManager().closeWalkable();
                 player.wildernessLevel = 0;

@@ -162,7 +162,7 @@ public final class World {
 		if(player.getCombat().inCombat())
 			player.getLogoutTimer().reset();
 		player.setState(AWAITING_REMOVAL);
-		player.out(new SendLogout());
+		player.send(new Logout());
 		logouts.add(player);
 	}
 	

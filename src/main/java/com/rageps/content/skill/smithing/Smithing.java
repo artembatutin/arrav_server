@@ -191,7 +191,7 @@ public final class Smithing extends ProducingSkillAction {
 			if(i >= values.length) {
 				player.interfaceText(FRAME_DATA[i][0], "");
 				player.interfaceText(FRAME_DATA[i][1], "");
-				player.out(new SendItemOnInterfaceSlot(FRAME_DATA[i][3], new Item(-1, 0), FRAME_DATA[i][2]));
+				player.send(new ItemOnInterfaceSlotPacket(FRAME_DATA[i][3], new Item(-1, 0), FRAME_DATA[i][2]));
 				continue;
 			}
 			
@@ -207,7 +207,7 @@ public final class Smithing extends ProducingSkillAction {
 			
 			player.interfaceText(FRAME_DATA[i][0], bar_color + table.getBarsRequired() + " Bar" + (table.getBarsRequired() != 1 ? "s" : ""));
 			player.interfaceText(FRAME_DATA[i][1], name_color + TextUtils.capitalize(table.getName().toLowerCase()));
-			player.out(new SendItemOnInterfaceSlot(FRAME_DATA[i][3], table.getProduced(), FRAME_DATA[i][2]));
+			player.send(new ItemOnInterfaceSlotPacket(FRAME_DATA[i][3], table.getProduced(), FRAME_DATA[i][2]));
 		}
 		if(table == null || table.getBar() == null) {
 			return false;

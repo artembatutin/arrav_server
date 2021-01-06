@@ -2,12 +2,14 @@ package com.rageps.world.entity.item.container.session.impl;
 
 import com.rageps.content.minigame.dueling.DuelMinigame;
 import com.rageps.content.minigame.dueling.DuelingRules;
+import com.rageps.net.refactor.packet.out.model.ItemOnInterfaceSlotPacket;
+import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.container.session.ExchangeSessionActionType;
 import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.net.packet.out.SendContainer;
 import com.rageps.net.packet.out.SendItemOnInterfaceSlot;
 import com.rageps.util.Stopwatch;
@@ -119,14 +121,14 @@ public final class DuelSession extends ExchangeSession {
 				session.rules.remove(rule);
 				session.setAttachment(null);
 				p.interfaceText(37927, "");
-				p.out(new SendConfig(780 + rule.ordinal(), 0));
+				p.send(new ConfigPacket(780 + rule.ordinal(), 0));
 				session.lastRuleModification.reset();
 			});
 			return true;
 		}
 		
 		if(!rule.meets(player, session)) {
-			player.out(new SendConfig(780 + rule.ordinal(), 0));
+			player.send(new ConfigPacket(780 + rule.ordinal(), 0));
 			return false;
 		}
 		
@@ -134,7 +136,7 @@ public final class DuelSession extends ExchangeSession {
 			session.rules.add(rule);
 			session.setAttachment(null);
 			p.interfaceText(37927, "");
-			p.out(new SendConfig(780 + rule.ordinal(), 1));
+			p.send(new ConfigPacket(780 + rule.ordinal(), 1));
 		});
 		session.lastRuleModification.reset();
 		return true;
@@ -220,18 +222,18 @@ public final class DuelSession extends ExchangeSession {
 			for(Player player : getPlayers()) {
 				IntStream.range(0, 14).forEach(order -> {
 					if(player.getEquipment().get(order) != null) {
-						player.out(new SendItemOnInterfaceSlot(13824, player.getEquipment().get(order), order));
+						player.send(new ItemOnInterfaceSlotPacket(13824, player.getEquipment().get(order), order));
 					}
 				});
 				
 				Player recipient = getOther(player);
 				int remaining = recipient.getInventory().remaining();
 				
-				recipient.out(new SendContainer(6669, getExchangeSession().get(player)));
-				recipient.out(new SendContainer(6670, getExchangeSession().get(player)));
-				player.out(new SendContainer(6669, getExchangeSession().get(player)));
-				player.out(new SendContainer(6670, getExchangeSession().get(player)));
-				player.out(new SendContainer(3322, player.getInventory()));
+				recipient.send(new ItemsOnInterfacePacket(6669, getExchangeSession().get(player)));
+				recipient.send(new ItemsOnInterfacePacket(6670, getExchangeSession().get(player)));
+				player.send(new ItemsOnInterfacePacket(6669, getExchangeSession().get(player)));
+				player.send(new ItemsOnInterfacePacket(6670, getExchangeSession().get(player)));
+				player.send(new ItemsOnInterfacePacket(3322, player.getInventory()));
 				player.getInterfaceManager().openInventory(37888, 3321);
 				player.interfaceText(37927, "");
 				player.interfaceText(37928, "Dueling with: " + name(recipient) + " (level-" + recipient.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots");
@@ -282,7 +284,7 @@ public final class DuelSession extends ExchangeSession {
 				}
 				player.interfaceText(6517, getItemNames(recipient, this.getExchangeSession().get(recipient).getItems()));
 				player.interfaceText(6516, getItemNames(player, this.getExchangeSession().get(player).getItems()));
-				player.out(new SendContainer(3322, player.getInventory()));
+				player.send(new ItemsOnInterfacePacket(3322, player.getInventory()));
 				player.getInterfaceManager().openInventory(6412, 3321);
 			}
 		}
@@ -316,10 +318,10 @@ public final class DuelSession extends ExchangeSession {
 		for(Player player : getExchangeSession().keySet()) {
 			Player recipient = getOther(player);
 			int remaining = recipient.getInventory().remaining();
-			player.out(new SendContainer(3322, player.getInventory()));
+			player.send(new ItemsOnInterfacePacket(3322, player.getInventory()));
 			player.getInterfaceManager().openInventory(37888, 3321);
-			player.out(new SendContainer(6669, getExchangeSession().get(player)));
-			player.out(new SendContainer(6670, getExchangeSession().get(recipient)));
+			player.send(new ItemsOnInterfacePacket(6669, getExchangeSession().get(player)));
+			player.send(new ItemsOnInterfacePacket(6670, getExchangeSession().get(recipient)));
 			player.interfaceText(37927, "");
 			player.interfaceText(6671, "Dueling with: " + name(recipient) + " (level-" + recipient.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots");
 		}
@@ -330,7 +332,7 @@ public final class DuelSession extends ExchangeSession {
 		this.rules.clear();
 		this.lastRuleModification.reset();
 		for(DuelingRules r : DuelingRules.VALUES) {
-			this.getPlayers().forEach(p -> p.out(new SendConfig(780 + r.ordinal(), 0)));
+			this.getPlayers().forEach(p -> p.send(new ConfigPacket(780 + r.ordinal(), 0)));
 		}
 	}
 	

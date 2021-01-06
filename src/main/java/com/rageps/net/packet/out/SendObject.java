@@ -35,7 +35,7 @@ public final class SendObject implements OutgoingPacket {
 				player.message("Couldn't find type, " + objectType);
 			return;
 		}
-		player.out(new SendObject(new DynamicObject(objectId, new Position(objectX, objectY, height), dir.get(), type.get(), false, 0, player.getInstance())));
+		player.send(new Object(new DynamicObject(objectId, new Position(objectX, objectY, height), dir.get(), type.get(), false, 0, player.getInstance())));
 	}
 	
 	@Override

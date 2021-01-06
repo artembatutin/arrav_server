@@ -5,7 +5,7 @@ import com.rageps.net.packet.out.SendItemModelInterface;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
-import com.rageps.net.packet.out.SendEnterAmount;
+import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
 import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
 import com.rageps.world.model.Animation;
@@ -84,7 +84,7 @@ public final class LeatherWorking extends ProducingSkillAction {
 		}
 		
 		if(data.amount == -1) {
-			player.out(new SendEnterAmount("How many would you like to craft?", s -> () -> {
+			player.send(new EnterAmount("How many would you like to craft?", s -> () -> {
 				LeatherWorking leatherWorking = new LeatherWorking(player, data, Integer.parseInt(s));
 				leatherWorking.start();
 			}));
@@ -106,7 +106,7 @@ public final class LeatherWorking extends ProducingSkillAction {
 	public static boolean openInterface(Player player, Item itemUsed, Item usedOn) {
 		if(itemUsed.getId() == NEEDLE.getId() && usedOn.getId() == HARD_LEATHER.getId() || itemUsed.getId() == HARD_LEATHER.getId() && usedOn.getId() == NEEDLE.getId()) {
 			player.interfaceText(2799, "\\n\\n\\n\\n\\n" + HARD_LEATHER.getDefinition().getName());
-			player.out(new SendItemModelInterface(1746, 150, 1131));
+			player.send(new ItemModelInterface(1746, 150, 1131));
 			player.interfaceText(2800, "How many would you like to make?");
 			player.chatWidget(4429);
 			return true;

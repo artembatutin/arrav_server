@@ -78,8 +78,8 @@ public class Construction {
 			house.createPalette();
 		me.getHouse().get().setBuilding(building);
 		me.closeWidget();
-		me.out(new SendMinimapState(2));
-		me.out(new SendFade(20, 300, 200));
+		me.send(new MinimapState(2));
+		me.send(new Fade(20, 300, 200));
 		Task delay = new Task(1) {
 			int x = -1, y = -1, tick = 0;
 			
@@ -91,7 +91,7 @@ public class Construction {
 						me.move(new Position(Constants.MIDDLE_X, Constants.MIDDLE_Y, 0));
 						break;
 					case 3:
-						me.out(new SendPaletteMap(house.getPalette()));
+						me.send(new PaletteMap(house.getPalette()));
 						break;
 					case 4:
 						placeAllFurniture(me, 0);
@@ -111,7 +111,7 @@ public class Construction {
 							}
 						}
 						house.addPlayer(me);
-						me.out(new SendMinimapState(0));
+						me.send(new MinimapState(0));
 						cancel();
 						break;
 				}

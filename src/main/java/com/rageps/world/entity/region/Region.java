@@ -1,8 +1,8 @@
 package com.rageps.world.entity.region;
 
 import com.google.common.collect.Sets;
-import com.rageps.net.packet.out.SendItemNode;
-import com.rageps.net.packet.out.SendItemNodeRemoval;
+import com.rageps.net.refactor.packet.out.model.ItemNodePacket;
+import com.rageps.net.refactor.packet.out.model.ItemNodeRemovalPacket;
 import com.rageps.util.Utility;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -184,12 +184,12 @@ public final class Region extends Entity {
 				continue;
 			if(item.getInstance() != player.getInstance())
 				continue;
-			player.out(new SendItemNodeRemoval(item));
+			player.send(new ItemNodeRemovalPacket(item));
 			if(item.getPosition().withinDistance(player.getPosition(), 60)) {
 				if(item.getItemState() == GroundItemState.SEEN_BY_EVERYONE) {
-					player.out(new SendItemNode(item));
+					player.send(new ItemNodePacket(item));
 				} else if(item.getPlayer().same(player) && item.getItemState() == GroundItemState.SEEN_BY_OWNER) {
-					player.out(new SendItemNode(item));
+					player.send(new ItemNodePacket(item));
 				}
 			}
 		}

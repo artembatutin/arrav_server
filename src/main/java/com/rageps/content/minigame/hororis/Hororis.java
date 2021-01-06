@@ -62,7 +62,7 @@ public class Hororis extends Minigame {
 	public void onLogout(Player player) {
 		players.remove(player);
 		player.getAttributeMap().set(MobAttributes.IGNORED_AGGRESSION_LEVEL, false);
-		player.out(new SendFade(20, 100, 160));
+		player.send(new Fade(20, 100, 160));
 		player.task(2, pl -> pl.move(new Position(3367, 3513)));
 		player.setMinigame(Optional.empty());
 	}
@@ -71,7 +71,7 @@ public class Hororis extends Minigame {
 	public void onEnter(Player player) {
 		players.add(player);
 		player.getAttributeMap().set(MobAttributes.IGNORED_AGGRESSION_LEVEL, true);
-		player.out(new SendFade(20, 100, 160));
+		player.send(new Fade(20, 100, 160));
 		player.task(2, pl -> pl.move(new Position(3380, 3513)));
 		player.setMinigame(this);
 	}
@@ -120,7 +120,7 @@ public class Hororis extends Minigame {
 		//		});
 		bones.clear();
 		for(Player p : players) {
-			p.out(new SendFade(20, 100, 160));
+			p.send(new Fade(20, 100, 160));
 			p.task(2, pl -> pl.move(new Position(3367, 3513)));
 			if(!p.playerData.lockedXP) {
 				p.getSkills()[Skills.PRAYER].increaseExperience(400);
@@ -148,7 +148,7 @@ public class Hororis extends Minigame {
 			Position pos = getRandom();
 			GroundItemStatic item = new GroundItemStatic(new Item(526), pos, GroundItemPolicy.TIMEOUT);
 			for(Player p : players) {
-				p.out(new SendGraphic(520, pos, 0));
+				p.send(new Graphic(520, pos, 0));
 				if(p.getPosition().same(pos)) {
 					p.damage(new Hit(RandomUtils.inclusive(20, 100), Hitsplat.DISEASE, HitIcon.MAGIC));
 				}

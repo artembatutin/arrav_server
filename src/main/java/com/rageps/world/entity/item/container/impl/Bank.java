@@ -3,7 +3,7 @@ package com.rageps.world.entity.item.container.impl;
 import com.rageps.content.BankPin;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.net.packet.out.SendContainer;
 import com.rageps.net.packet.out.SendInventoryInterface;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
@@ -99,10 +99,10 @@ public final class Bank {
 			return;
 		}
 		player.getAttributeMap().set(PlayerAttributes.BANKING, true);
-		player.out(new SendConfig(115, player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE) ? 1 : 0));
-		player.out(new SendConfig(116, player.getAttributeMap().getBoolean(PlayerAttributes.INSERT_ITEM) ? 1 : 0));
+		player.send(new ConfigPacket(115, player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE) ? 1 : 0));
+		player.send(new ConfigPacket(116, player.getAttributeMap().getBoolean(PlayerAttributes.INSERT_ITEM) ? 1 : 0));
 		player.getInterfaceManager().openInventory(BANK_WINDOW_ID, SIDEBAR_ID);
-		player.out(new SendContainer(SIDEBAR_INVENTORY_ID, this.player.getInventory()));
+		player.send(new ItemsOnInterfacePacket(SIDEBAR_INVENTORY_ID, this.player.getInventory()));
 		if(!bulkStartSent) {
 			refreshAll();
 			bulkStartSent = true;
@@ -118,11 +118,11 @@ public final class Bank {
 
 		p.getBank().shiftAll();
 		player.getAttributeMap().set(PlayerAttributes.BANKING, true);
-		player.out(new SendConfig(115, player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE) ? 1 : 0));
-		player.out(new SendConfig(116, player.getAttributeMap().getBoolean(PlayerAttributes.INSERT_ITEM) ? 1 : 0));
+		player.send(new ConfigPacket(115, player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE) ? 1 : 0));
+		player.send(new ConfigPacket(116, player.getAttributeMap().getBoolean(PlayerAttributes.INSERT_ITEM) ? 1 : 0));
 		player.getInterfaceManager().openInventory(BANK_WINDOW_ID, SIDEBAR_ID);
-		player.out(new SendContainer(SIDEBAR_INVENTORY_ID, this.player.getInventory()));
-		//player.out(new SendContainer(BANK_INVENTORY_ID, bank.tabs[0]));
+		player.send(new ItemsOnInterfacePacket(SIDEBAR_INVENTORY_ID, this.player.getInventory()));
+		//player.send(new ItemsOnInterfacePacket(BANK_INVENTORY_ID, bank.tabs[0]));
 		viewing = Optional.of(p);
 
 		updateViewer(player, bank, false);
@@ -140,8 +140,8 @@ public final class Bank {
 				continue;
 			}
 
-			viewing.out(new SendContainer(270 + i, bank.tabs[i]));
-			//viewing.out(new SendContainer(BANK_INVENTORY_ID, bank.tabs[i]));
+			viewing.send(new ItemsOnInterfacePacket(270 + i, bank.tabs[i]));
+			//viewing.send(new ItemsOnInterfacePacket(BANK_INVENTORY_ID, bank.tabs[i]));
 		}
 	}
 

@@ -6,7 +6,7 @@ import com.rageps.net.codec.ByteOrder;
 import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
-import com.rageps.net.packet.out.SendEnterAmount;
+import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
@@ -31,7 +31,7 @@ public final class InputXOptionPacket implements IncomingPacket {
 		player.getAttributeMap().set(PlayerAttributes.ENTER_X_ITEM_TAB, 0);//bank tab
 		player.getAttributeMap().set(PlayerAttributes.ENTER_X_ITEM_SLOT, slot);
 		if(interfaceId == Bank.BANK_INVENTORY_ID && player.getAttributeMap().getBoolean(PlayerAttributes.BANKING)) {
-				player.out(new SendEnterAmount("How many you would like to withdraw?", s -> () -> {
+				player.send(new EnterAmount("How many you would like to withdraw?", s -> () -> {
 					if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING)) {
 						player.getBank().withdraw(player, player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_TAB), player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT), Integer.parseInt(s));
 					}
@@ -44,14 +44,14 @@ public final class InputXOptionPacket implements IncomingPacket {
 				if(player.getMarketShop() == null)
 					return;
 				player.getAttributeMap().set(PlayerAttributes.SHOP_ITEM, player.getInventory().get(slot).getId());
-				player.out(new SendEnterAmount("How many you would like to sell?", t -> () -> player.getMarketShop().sell(player, new Item(player.getAttributeMap().getInt(PlayerAttributes.SHOP_ITEM), Integer.parseInt(t)), player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT))));
+				player.send(new EnterAmount("How many you would like to sell?", t -> () -> player.getMarketShop().sell(player, new Item(player.getAttributeMap().getInt(PlayerAttributes.SHOP_ITEM), Integer.parseInt(t)), player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT))));
 				break;
 
 			case MarketShop.SHOP_CONTAINER_ID:
 				if(player.getMarketShop() == null)
 					return;
 				player.getAttributeMap().set(PlayerAttributes.BUYING_SHOP_ITEM, player.getMarketShop().getItems().getInt(slot));
-				player.out(new SendEnterAmount("How many you would like to buy?", t -> () -> {
+				player.send(new EnterAmount("How many you would like to buy?", t -> () -> {
 					if(player.getMarketShop() != null)
 					player.getMarketShop().purchase(player, new Item(player.getAttributeMap().getInt(PlayerAttributes.BUYING_SHOP_ITEM), Integer.parseInt(t)));
 				}));
@@ -59,7 +59,7 @@ public final class InputXOptionPacket implements IncomingPacket {
 
 			case Bank.SIDEBAR_INVENTORY_ID:
 				if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING)) {
-					player.out(new SendEnterAmount("How many you would like to deposit?", t -> () -> {
+					player.send(new EnterAmount("How many you would like to deposit?", t -> () -> {
 						int amount = Integer.parseInt(t);
 						if(player.getAttributeMap().getBoolean(PlayerAttributes.BANKING)) {
 							player.getBank().deposit(player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT), amount, player.getInventory(), true);
@@ -71,7 +71,7 @@ public final class InputXOptionPacket implements IncomingPacket {
 
 			case 5064://Beast of burden inventory
 				if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB)) {
-					player.out(new SendEnterAmount("How many you would like to store?", t -> () -> {
+					player.send(new EnterAmount("How many you would like to store?", t -> () -> {
 						int amount = Integer.parseInt(t);
 						if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB)) {
 							Summoning.store(player, player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT), amount);
@@ -82,7 +82,7 @@ public final class InputXOptionPacket implements IncomingPacket {
 				break;
 			case 3322://Inventory -> trade or duel
 				if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent() || ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
-					player.out(new SendEnterAmount("How many you would like to deposit?", t -> () -> {
+					player.send(new EnterAmount("How many you would like to deposit?", t -> () -> {
 						int amount = Integer.parseInt(t);
 						if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
 							ExchangeSession session = ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).get();
@@ -99,7 +99,7 @@ public final class InputXOptionPacket implements IncomingPacket {
 				break;
 			case 2702:
 				if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB)) {
-					player.out(new SendEnterAmount("How many you would like to withdraw?", t -> () -> {
+					player.send(new EnterAmount("How many you would like to withdraw?", t -> () -> {
 						if(player.getAttributeMap().getBoolean(PlayerAttributes.BOB)) {
 							Summoning.withdraw(player, player.getAttributeMap().getInt(PlayerAttributes.ENTER_X_ITEM_SLOT), Integer.parseInt(t));
 						}
@@ -108,7 +108,7 @@ public final class InputXOptionPacket implements IncomingPacket {
 				break;
 			case 6669://Duel -> inventory
 				if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
-					player.out(new SendEnterAmount("How many you would like to withdraw?", t -> () -> {
+					player.send(new EnterAmount("How many you would like to withdraw?", t -> () -> {
 						int amount = Integer.parseInt(t);
 						if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
 							ExchangeSession session = ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).get();
@@ -120,7 +120,7 @@ public final class InputXOptionPacket implements IncomingPacket {
 				break;
 			case 3415://Trade -> inventory
 				if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
-					player.out(new SendEnterAmount("How many you would like to withdraw?", t -> () -> {
+					player.send(new EnterAmount("How many you would like to withdraw?", t -> () -> {
 						int amount = Integer.parseInt(t);
 						if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
 							ExchangeSession session = ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).get();

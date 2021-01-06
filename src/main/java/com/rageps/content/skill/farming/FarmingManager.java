@@ -6,7 +6,7 @@ import com.rageps.content.skill.farming.patch.Patch;
 import com.rageps.content.skill.farming.patch.PatchType;
 import com.rageps.content.skill.farming.seed.SeedClass;
 import com.rageps.content.skill.farming.seed.impl.MushroomSeed;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.entity.actor.player.Player;
 
 public final class FarmingManager {
@@ -33,7 +33,7 @@ public final class FarmingManager {
 				final Patch faladorTree = player.patches.get(PatchType.HOME_EAST_TREE_PATCH);
 				final Patch taverleyTree = player.patches.get(PatchType.HOME_WEST_TREE_PATCH);
 				value = ((0 << 24)) + (getPatchValue(varrockTree) << 16) + (getPatchValue(faladorTree) << 8) + (getPatchValue(taverleyTree));
-				player.out(new SendConfig(patchType.getConfigId(), value));
+				player.send(new ConfigPacket(patchType.getConfigId(), value));
 				break;
 			case CATHERBY_NORTH_ALLOTMENT:
 			case CATHERBY_SOUTH_ALLOTMENT:
@@ -44,7 +44,7 @@ public final class FarmingManager {
 				final Patch faladorNW = player.patches.get(PatchType.FALADOR_NORTH_WEST_ALLOTMENT);
 				final Patch faladorSE = player.patches.get(PatchType.FALADOR_SOUTH_EAST_ALLOTMENT);
 				value = ((getPatchValue(catherbyS) << 24)) + (getPatchValue(catherbyN) << 16) + (getPatchValue(faladorSE) << 8) + (getPatchValue(faladorNW));
-				player.out(new SendConfig(patchType.getConfigId(), value));
+				player.send(new ConfigPacket(patchType.getConfigId(), value));
 				break;
 			case ARDOUGNE_NORTH_ALLOTMENT:
 			case ARDOUGNE_SOUTH_ALLOTMENT:
@@ -55,7 +55,7 @@ public final class FarmingManager {
 				final Patch canafisNW = player.patches.get(PatchType.CANIFIS_NORTH_WEST_ALLOTMENT);
 				final Patch canafisSE = player.patches.get(PatchType.CANIFIS_SOUTH_EAST_ALLOTMENT);
 				value = ((getPatchValue(canafisSE) << 24)) + (getPatchValue(canafisNW) << 16) + (getPatchValue(ardougneS) << 8) + (getPatchValue(ardougneN));
-				player.out(new SendConfig(patchType.getConfigId(), value));
+				player.send(new ConfigPacket(patchType.getConfigId(), value));
 				break;
 			case FALADOR_FLOWER_PATCH:
 			case CATHERBY_FLOWER_PATCH:
@@ -66,7 +66,7 @@ public final class FarmingManager {
 				final Patch ardougneFlower = player.patches.get(PatchType.ARDOUGNE_FLOWER_PATCH);
 				final Patch canifisFlower = player.patches.get(PatchType.CANIFIS_FLOWER_PATCH);
 				value = ((getPatchValue(canifisFlower) << 24)) + (getPatchValue(ardougneFlower) << 16) + (getPatchValue(catherbyFlower) << 8) + (getPatchValue(faladorFlower));
-				player.out(new SendConfig(patchType.getConfigId(), value));
+				player.send(new ConfigPacket(patchType.getConfigId(), value));
 				break;
 			case FALADOR_HERB_PATCH: //3057, 3310
 			case CATHERBY_HERB_PATCH: //2812, 3463
@@ -77,7 +77,7 @@ public final class FarmingManager {
 				final Patch ardougneHerb = player.patches.get(PatchType.ARDOUGNE_HERB_PATCH);
 				final Patch canifisHerb = player.patches.get(PatchType.CANIFIS_HERB_PATCH);
 				value = ((getPatchValue(canifisHerb) << 24)) + (getPatchValue(ardougneHerb) << 16) + (getPatchValue(catherbyHerb) << 8) + (getPatchValue(faladorHerb));
-				player.out(new SendConfig(patchType.getConfigId(), value));
+				player.send(new ConfigPacket(patchType.getConfigId(), value));
 				break;
 			case VARROCK_BUSH_PATCH:
 			case RIMMINGTON_BUSH_PATCH:
@@ -88,12 +88,12 @@ public final class FarmingManager {
 				final Patch ardougneBush = player.patches.get(PatchType.ARDOUGNE_BUSH_PATCH);
 				final Patch etceteriaBush = player.patches.get(PatchType.ETCETERIA_BUSH_PATCH);
 				value = ((getPatchValue(ardougneBush) << 24)) + (getPatchValue(etceteriaBush) << 16) + (getPatchValue(rimmingtonBush) << 8) + (getPatchValue(varrockBush));
-				player.out(new SendConfig(patchType.getConfigId(), value));
+				player.send(new ConfigPacket(patchType.getConfigId(), value));
 				break;
 			case CANAFIS_MUSHROOM_PATCH:
 				final Patch canafisMushroom = player.patches.get(PatchType.CANAFIS_MUSHROOM_PATCH);
 				value = (getPatchValue(canafisMushroom) << 8);
-				player.out(new SendConfig(patchType.getConfigId(), value));
+				player.send(new ConfigPacket(patchType.getConfigId(), value));
 				break;
 		}
 	}

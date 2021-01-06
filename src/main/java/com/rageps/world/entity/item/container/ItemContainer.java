@@ -779,7 +779,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param widget The widget to send the {@code Item}s on.
 	 */
 	public final void refreshBulk(Player player, int widget) {
-		player.out(new SendContainer(widget, this));
+		player.send(new ItemsOnInterfacePacket(widget, this));
 	}
 	
 	/**
@@ -789,7 +789,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param slot The slot id of the new item to be sent.
 	 */
 	public final void refreshSingle(Player player, int widget, int slot) {
-		player.out(new SendItemOnInterfaceSlot(widget, items[slot], slot));
+		player.send(new ItemOnInterfaceSlotPacket(widget, items[slot], slot));
 	}
 	
 	/**

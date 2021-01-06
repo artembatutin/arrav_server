@@ -90,7 +90,7 @@ public final class DuelMinigame extends Minigame {
 	 * @param logout whether the duel was won through the opponent logging out.
 	 */
 	private void applyWin(Player loser, Player winner, boolean logout) {
-		loser.out(new SendContextMenu(2, false, "Challenge"));
+		loser.send(new ContextMenuPacket(2, false, "Challenge"));
 		loser.move(deathPosition(loser));
 		loser.setMinigame(Optional.empty());
 		this.restore(loser);
@@ -99,7 +99,7 @@ public final class DuelMinigame extends Minigame {
 			loser.message("You have been defeated by " + winner.getFormatUsername() + ".");
 		}
 		
-		winner.out(new SendContextMenu(2, false, "Challenge"));
+		winner.send(new ContextMenuPacket(2, false, "Challenge"));
 		winner.move(deathPosition(winner));
 		winner.message("You have successfully defeated " + loser.getFormatUsername() + " to win the duel.");
 		
@@ -116,7 +116,7 @@ public final class DuelMinigame extends Minigame {
 		winner.interfaceText(6840, loser.getFormatUsername());
 		winner.interfaceText(6839, Integer.toString(loser.determineCombatLevel()));
 		
-		winner.out(new SendContainer(6822, session.getExchangeSession().get(loser)));
+		winner.send(new ItemsOnInterfacePacket(6822, session.getExchangeSession().get(loser)));
 		winner.widget(6733);
 		claim = true;
 	}
@@ -181,7 +181,7 @@ public final class DuelMinigame extends Minigame {
 	 */
 	private void startCountdown() {
 		session.getPlayers().forEach(player -> {
-			player.out(new SendContextMenu(2, true, "Attack"));
+			player.send(new ContextMenuPacket(2, true, "Attack"));
 			LinkedTaskSequence seq = new LinkedTaskSequence();
 			seq.connect(2, () -> player.forceChat("3"));
 			seq.connect(2, () -> player.forceChat("2"));

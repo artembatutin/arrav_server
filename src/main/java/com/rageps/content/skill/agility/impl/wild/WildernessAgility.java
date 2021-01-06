@@ -98,7 +98,7 @@ public final class WildernessAgility extends AgilityCourse {
 			@Override
 			public void prerequisites(Player player1) {
 				player1.facePosition(new Position(3005, 3958, 0));
-				player1.out(new SendObjectAnimation(new Position(3005, 3952, 0), 497, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
+				player1.send(new ObjectAnimationPacket(new Position(3005, 3952, 0), 497, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
 			}
 		}),
 		STEPPING_STONES(new int[]{37704}, ObstacleType.STEPPING_STONE, player1 -> new Steppable(new Position(3002, 3960, 0), new Position[]{new Position(3001, 3960, 0), new Position(3000, 3960, 0), new Position(2999, 3960, 0), new Position(2998, 3960, 0), new Position(2997, 3960, 0)}, new Position(2996, 3960, 0), ObstacleType.STEPPING_STONE.getAnimation(), 52, 20)),

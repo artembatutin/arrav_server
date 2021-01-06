@@ -30,7 +30,7 @@ public class AchievementHandler {
 				continue;
 			}
 			if(curr >= i) {
-				player.out(new SendTask(String.format(achievement.getTask(), achievement.getAmount()[dif])));
+				player.send(new Task(String.format(achievement.getTask(), achievement.getAmount()[dif])));
 				player.getBank().deposit(new Item(995, AchievementDifficulty.DIF[dif].getReward()));
 				player.message(AchievementDifficulty.DIF[dif].getOut() + " coins have been added into your bank.");
 				update(player, achievement);

@@ -54,7 +54,7 @@ public final class DropItemPacket implements IncomingPacket {
 			return;
 		}
 		if(!item.getDefinition().isTradable() || item.getDefinition().destroyable()) {
-			player.out(new SendItemOnInterfaceSlot(14171, item, 0));
+			player.send(new ItemOnInterfaceSlotPacket(14171, item, 0));
 			player.interfaceText(14174, "Are you sure you want to destroy this item?");
 			player.interfaceText(14175, "Yes");
 			player.interfaceText(14176, "No");

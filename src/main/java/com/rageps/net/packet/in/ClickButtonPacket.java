@@ -154,7 +154,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 					else
 						player.getClan().get().sendMessage("You don't have the requirements to do that.");
 				else
-					player.out(new SendEnterName("Your clan chat name:", t -> () -> ClanManager.get().create(player, t)));
+					player.send(new EnterName("Your clan chat name:", t -> () -> ClanManager.get().create(player, t)));
 				break;*/
 			case 21341://equipment screen
 				player.widget(15106);
@@ -163,7 +163,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 				if(player.getClan().isPresent())
 					ClanManager.get().exit(player);
 				else
-					player.out(new SendEnterName("Enter the name of the chat you wish to join.", s -> () -> ClanManager.get().join(player, s)));
+					player.send(new EnterName("Enter the name of the chat you wish to join.", s -> () -> ClanManager.get().join(player, s)));
 				break;*/
 			case 24017:
 			case 7212:

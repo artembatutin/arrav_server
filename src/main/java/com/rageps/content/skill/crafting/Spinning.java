@@ -7,7 +7,7 @@ import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import com.rageps.action.impl.ItemOnObjectAction;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
-import com.rageps.net.packet.out.SendEnterAmount;
+import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
 import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
 import com.rageps.world.model.Animation;
@@ -57,7 +57,7 @@ public final class Spinning extends ProducingSkillAction {
 		}
 		int amount = BUTTON_FOR_AMOUNT.get(buttonId);
 		if(amount == -1) {
-			player.out(new SendEnterAmount("How many you would like to spin?", s -> () -> Spinning.create(player, player.getAttributeMap().getObject(PlayerAttributes.CRAFTING_SPINNING), Integer.parseInt(s))));
+			player.send(new EnterAmount("How many you would like to spin?", s -> () -> Spinning.create(player, player.getAttributeMap().getObject(PlayerAttributes.CRAFTING_SPINNING), Integer.parseInt(s))));
 			return true;
 		}
 		if(amount == -2) {
@@ -87,7 +87,7 @@ public final class Spinning extends ProducingSkillAction {
 						return false;
 					}
 					player.interfaceText(2799, "\\n\\n\\n\\n\\n" + data.produced.getDefinition().getName());
-					player.out(new SendItemModelInterface(1746, 200, data.produced.getId()));
+					player.send(new ItemModelInterface(1746, 200, data.produced.getId()));
 					player.getAttributeMap().set(PlayerAttributes.CRAFTING_SPIN, true);
 					player.getAttributeMap().set(PlayerAttributes.CRAFTING_SPINNING, data);
 					player.chatWidget(4429);

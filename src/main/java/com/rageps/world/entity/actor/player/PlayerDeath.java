@@ -19,7 +19,7 @@ import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.net.packet.out.SendGraphic;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.model.Animation;
@@ -204,7 +204,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		getActor().getCombat().getDamageCache().clear();
 		getActor().getTolerance().reset();
 		getActor().playerData.getSpecialPercentage().set(100);
-		getActor().out(new SendConfig(301, 0));
+		getActor().send(new ConfigPacket(301, 0));
 		getActor().setSpecialActivated(false);
 		getActor().playerData.getSkullTimer().set(0);
 		getActor().setRunEnergy(100);
@@ -215,7 +215,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		if(deathMessage) {
 			getActor().message(getActor().getRights().less(Rights.ADMINISTRATOR) ? "Oh dear, you're dead!" : "You are unaffected by death because of your rank.");
 		}
-		getActor().out(new SendWalkable(-1));
+		getActor().send(new Walkable(-1));
 		Prayer.deactivateAll(getActor());
 		
 		Optional<Minigame> minigame = MinigameHandler.getMinigame(getActor());

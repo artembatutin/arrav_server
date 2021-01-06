@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import com.rageps.net.packet.out.SendItemModelInterface;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
-import com.rageps.net.packet.out.SendEnterAmount;
+import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
 import com.rageps.task.Task;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
@@ -57,7 +57,7 @@ public final class DoughCreation extends ProducingSkillAction {
 		
 		if(data.get().amount == -1) {
 			player.getAttributeMap().set(PlayerAttributes.CREATING_DOUGH_DATA, data.get());
-			player.out(new SendEnterAmount("How many you would like to make?", s -> () -> DoughCreation.create(player, player.getAttributeMap().getObject(PlayerAttributes.CREATING_DOUGH_DATA), Integer.parseInt(s))));
+			player.send(new EnterAmount("How many you would like to make?", s -> () -> DoughCreation.create(player, player.getAttributeMap().getObject(PlayerAttributes.CREATING_DOUGH_DATA), Integer.parseInt(s))));
 			return true;
 		}
 		create(player, data.get(), data.get().amount);
@@ -97,7 +97,7 @@ public final class DoughCreation extends ProducingSkillAction {
 		
 		DoughData.VALUES.forEach(dough -> {
 			if(dough.amount == 1) {
-				player.out(new SendItemModelInterface(dough.modelFrame, 150, dough.produced.getId()));
+				player.send(new ItemModelInterface(dough.modelFrame, 150, dough.produced.getId()));
 				player.interfaceText(dough.nameFrame, "\\n\\n\\n\\n\\n" + dough.toString());
 			}
 		});

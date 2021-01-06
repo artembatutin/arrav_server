@@ -26,7 +26,7 @@ public class ExperienceLamp extends ActionInitializer {
 			public boolean click(Player player, int button) {
 				if(skill > 24 && skill < 0) {
 					player.message("You must choose a skill you wish to add experience to.");
-					player.out(new SendCloseInterface());
+					player.send(new CloseInterface());
 					return false;
 				}
 				if(!player.getInventory().contains(4447)) {
@@ -36,7 +36,7 @@ public class ExperienceLamp extends ActionInitializer {
 				player.getInventory().remove(new Item(4447, 1));
 				player.getSkills()[getSkill()].increaseExperience(800000.0);
 				player.message("You gained some experience.");
-				player.out(new SendCloseInterface());
+				player.send(new CloseInterface());
 				setSkill(-1);
 				return true;
 			}

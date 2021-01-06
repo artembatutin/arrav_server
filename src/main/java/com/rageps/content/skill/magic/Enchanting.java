@@ -181,7 +181,7 @@ public final class Enchanting extends ProducingSkillAction {
 			public void onCast(Player player, Item item, int slot) {
 				player.getInventory().remove(new Item(item.getId(), 1), slot);
 				player.getInventory().add(new Item(995, item.getDefinition().getLowAlchValue()));
-				player.out(new SendForceTab(TabInterface.MAGIC));
+				player.send(new ForceTab(TabInterface.MAGIC));
 			}
 		},
 		LEVEL_2_ENCHANT(1165, 27, 37, new Item[]{}, new Item[]{new Item(556, 3), new Item(564, 1)}, new Animation(719), new Graphic(114, 75)) {
@@ -219,7 +219,7 @@ public final class Enchanting extends ProducingSkillAction {
 				Optional<Smelting.SmeltingData> data = Smelting.SmeltingData.getDefinitionByItem(item.getId());
 				Smelting smelting = new Smelting(player, data.get(), 1, true);
 				smelting.start();
-				player.out(new SendForceTab(TabInterface.MAGIC));
+				player.send(new ForceTab(TabInterface.MAGIC));
 			}
 		},
 		LEVEL_3_ENCHANT(1176, 49, 59, new Item[]{}, new Item[]{new Item(554, 5), new Item(564)}, new Animation(720), new Graphic(115, 75)) {
@@ -255,7 +255,7 @@ public final class Enchanting extends ProducingSkillAction {
 			public void onCast(Player player, Item item, int slot) {
 				player.getInventory().remove(new Item(item.getId(), 1), slot);
 				player.getInventory().add(new Item(995, item.getDefinition().getHighAlchValue()));
-				player.out(new SendForceTab(TabInterface.MAGIC));
+				player.send(new ForceTab(TabInterface.MAGIC));
 				Achievement.HIGH_ALCHEMY.inc(player);
 			}
 		},

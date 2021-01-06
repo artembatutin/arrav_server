@@ -1,6 +1,7 @@
 package com.rageps.world.entity.actor.player.assets.relations;
 
 import com.rageps.net.packet.out.*;
+import com.rageps.net.refactor.packet.out.model.*;
 import com.rageps.util.StringUtil;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
@@ -54,7 +55,7 @@ public final class PlayerRelation {
 			online = false;
 		}
 
-		player.out(new SendPrivateMessageListStatus(PrivateMessageListStatus.LOADED.ordinal()));
+		player.send(new PrivateMessageStatusPacket(PrivateMessageListStatus.LOADED.ordinal()));
 		for (Player players : World.get().getPlayers()) {
 			if (players == null) {
 				continue;
@@ -65,7 +66,7 @@ public final class PlayerRelation {
 						|| privateChatMode.equals(PrivacyChatMode.OFF) || ignoreList.contains(players.credentials.usernameHash)) {
 					temporaryOnlineStatus = false;
 				}
-				players.out(new SendAddFriend(player.credentials.usernameHash, temporaryOnlineStatus ? 1 : 0));
+				players.send(new AddFriendPacket(player.credentials.usernameHash, temporaryOnlineStatus ? 1 : 0));
 			}
 			boolean tempOn = true;
 			if (player.relations.friendList.contains(players.credentials.usernameHash)) {
@@ -75,30 +76,30 @@ public final class PlayerRelation {
 						|| players.relations.getIgnoreList().contains(players.credentials.usernameHash)) {
 					tempOn = false;
 				}
-				player.out(new SendAddFriend(players.credentials.usernameHash, tempOn ? 1 : 0));
+				player.send(new AddFriendPacket(players.credentials.usernameHash, tempOn ? 1 : 0));
 			}
 		}
 		return this;
 	}
 
 	private void updatePrivacyChatOptions() {
-		player.out(new SendChatOption(publicChatMode, privateChatMode, clanChatMode, tradeChatMode));
+		player.send(new ChatOptionPacket(publicChatMode, privateChatMode, clanChatMode, tradeChatMode));
 	}
 
 	private void sendFriends() {
 		for (long l : friendList) {
-			player.out(new SendAddFriend(l, 0));
+			player.send(new AddFriendPacket(l, 0));
 		}
 	}
 
 	private void sendIgnores() {
 		for (long l : ignoreList) {
-			player.out(new SendAddIgnore(l));
+			player.send(new AddIgnorePacket(l));
 		}
 	}
 
 	private void sendAddFriend(long name) {
-		player.out(new SendAddFriend(name, 0));
+		player.send(new AddFriendPacket(name, 0));
 	}
 
 	public PlayerRelation onLogin() {
@@ -220,7 +221,7 @@ public final class PlayerRelation {
 			setPrivateChatMode(PrivacyChatMode.FRIENDS_ONLY, true);
 		}
 		int rights = player.getRights() == Rights.PLAYER && player.isIronMan() ? Rights.IRON_MAN.getProtocolValue() : player.getRights().getProtocolValue();
-		friend.out(new SendPrivateMessage(player.credentials.usernameHash, rights, message.getCompressed(), message.getCompressed().length));
+		friend.send(new PrivateMessagePacket(player.credentials.usernameHash, rights, message.getCompressed(), message.getCompressed().length));
 		//World.getDataBus().publish(new PrivateMessageChatLogEvent(player, friend, message.getDecompressed()));
 	}
 

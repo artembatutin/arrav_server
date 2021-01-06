@@ -37,10 +37,10 @@ public class GiantMoleStrategy extends NpcMeleeStrategy {
 			int coords = RandomUtils.random(COORDINATES.length - 1);
 			defender.animation(new Animation(3314, Animation.AnimationPriority.HIGH));
 			for(int i = 0; i < 3; i++) {
-				attacker.toPlayer().out(new SendGraphic(1271, new Position((defender.getPosition().getX() + 1 - i), (defender.getPosition().getY() + 1 - i)), 0));
+				attacker.toPlayer().send(new Graphic(1271, new Position((defender.getPosition().getX() + 1 - i), (defender.getPosition().getY() + 1 - i)), 0));
 				
 			}
-			//attacker.toPlayer().out(new SendArrowEntity(defender));
+			//attacker.toPlayer().send(new ArrowEntity(defender));
 			World.get().submit(new Task(3, false) {
 				@Override
 				public void execute() {
@@ -49,7 +49,7 @@ public class GiantMoleStrategy extends NpcMeleeStrategy {
 					defender.animation(new Animation(3315, Animation.AnimationPriority.HIGH));
 				}
 			});
-			//attacker.toPlayer().out(new SendArrowPosition(npc.getPosition(), 6));
+			//attacker.toPlayer().send(new ArrowPosition(npc.getPosition(), 6));
 		}
 		// defender.getCombat().attack(attacker);
 	}

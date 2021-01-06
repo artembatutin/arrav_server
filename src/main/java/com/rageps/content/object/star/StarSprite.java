@@ -8,7 +8,7 @@ import com.rageps.content.dialogue.test.DialogueAppender;
 import com.rageps.world.World;
 import com.rageps.action.impl.MobAction;
 import com.rageps.content.market.MarketCounter;
-import com.rageps.net.packet.out.SendEnterAmount;
+import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
 import com.rageps.task.Task;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
@@ -103,7 +103,7 @@ public final class StarSprite extends Mob {
 	}
 	
 	private static void sendEnterAmount(Player player) {
-		player.out(new SendEnterAmount("How much would you like to convert?", s -> () -> {
+		player.send(new EnterAmount("How much would you like to convert?", s -> () -> {
 			int selectedAmount = Integer.parseInt(s);
 			
 			if(selectedAmount < EXCHANGE_FOR_BLOOD_COINS) {

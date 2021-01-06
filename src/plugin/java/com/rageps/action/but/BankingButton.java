@@ -3,7 +3,8 @@ package com.rageps.action.but;
 import com.rageps.action.impl.ButtonAction;
 import com.rageps.content.BankPin;
 import com.rageps.action.ActionInitializer;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 
@@ -49,7 +50,8 @@ public class BankingButton extends ActionInitializer {
 
 				boolean val = player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE);
 				player.getAttributeMap().set(PlayerAttributes.WITHDRAW_AS_NOTE, !val);
-				player.out(new SendConfig(115, player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE)? 1 : 0));
+				
+				player.send(new ConfigPacket(115, player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE)? 1 : 0));
 				return true;
 			}
 		};
@@ -59,7 +61,7 @@ public class BankingButton extends ActionInitializer {
 			public boolean click(Player player, int button) {
 				//player.getAttr().get("insert_item").set(!(player.getAttr().get("insert_item").getBoolean()));
 				player.message("Temporary disabled feature.");
-				//player.out(new SendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0));
+				//player.send(new ConfigPacket(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0));
 				return true;
 			}
 		};

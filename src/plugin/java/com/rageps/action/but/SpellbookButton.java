@@ -82,7 +82,7 @@ public class SpellbookButton extends ActionInitializer {
 				player.widget(-15);
 				//if(player.getWildernessActivity().elapsed(5, TimeUnit.MINUTES)) {
 				player.message("Wilderness map has been updated! Next update in 5 minutes.");
-				player.out(new SendWildernessActivity(WildernessActivity.getPlayers()));
+				player.send(new WildernessActivity(WildernessActivity.getPlayers()));
 				player.getWildernessActivity().reset();
 				//}
 				return true;

@@ -41,7 +41,7 @@ public abstract class TeleportSpell {
 	public final void resetPlayerFlags(Player player) {
 		//FightCavesHandler.remove(player);
 		player.widget(-1);
-		player.out(new SendWalkable(-1));
+		player.send(new Walkable(-1));
 		player.setTeleportStage(1);
 		player.getCombat().reset(true, true);
 		player.faceEntity(null);

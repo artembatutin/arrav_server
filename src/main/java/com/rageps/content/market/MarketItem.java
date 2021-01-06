@@ -136,7 +136,7 @@ public class MarketItem {
 		for(Player p : viewers) {
 			if(p == null)
 				continue;
-			p.out(new SendShopStock(this));
+			p.send(new ShopStock(this));
 		}
 	}
 	
@@ -144,7 +144,7 @@ public class MarketItem {
 		for(Player p : viewers) {
 			if(p == null)
 				continue;
-			p.out(new SendShopPrice(this));
+			p.send(new ShopPrice(this));
 		}
 	}
 	

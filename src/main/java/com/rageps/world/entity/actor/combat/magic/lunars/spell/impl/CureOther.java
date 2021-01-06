@@ -1,7 +1,7 @@
 package com.rageps.world.entity.actor.combat.magic.lunars.spell.impl;
 
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.model.Animation;
 import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.Actor;
@@ -32,7 +32,7 @@ public final class CureOther extends LunarCombatSpell {
 		Player player = victim.get().toPlayer();
 		caster.facePosition(player.getPosition());
 		
-		player.out(new SendConfig(174, 0));
+		player.send(new ConfigPacket(174, 0));
 		player.graphic(new Graphic(748, 90));
 		player.getPoisonDamage().set(0);
 		player.message("Your poison has been cured by " + caster.toPlayer().getFormatUsername());

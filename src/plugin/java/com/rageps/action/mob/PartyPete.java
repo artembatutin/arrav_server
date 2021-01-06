@@ -21,7 +21,7 @@ public class PartyPete extends ActionInitializer {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						player.getDialogueBuilder().advance();
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.out(new SendLink("store/"));
+						player.send(new Link("store/"));
 						player.getDialogueBuilder().last();
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 						player.closeWidget();

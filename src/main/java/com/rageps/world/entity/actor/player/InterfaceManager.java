@@ -71,7 +71,7 @@ public class InterfaceManager {
 		}
 		main = identification;
 		player.getMovementQueue().reset();
-		player.out(new SendInterface(identification));
+		player.send(new Interface(identification));
 		//player.send(new SendInterface(identification));
 		//player.send(new SendString("[CLOSE_MENU]", 0));
 	}
@@ -83,7 +83,7 @@ public class InterfaceManager {
 			return;
 		}
 		setWalkable(identification);
-		player.out(new SendWalkable(identification));
+		player.send(new Walkable(identification));
 	}
 	/** close a walkable-itemcontainer for the player. */
 	public void closeWalkable() {
@@ -99,7 +99,7 @@ public class InterfaceManager {
 		main = identification;
 		this.overlay = overlay;
 		player.getMovementQueue().reset();
-		player.out(new SendInventoryInterface(identification, overlay));
+		player.send(new InventoryInterface(identification, overlay));
 	}
 
 	/** Clears the player's screen. */
@@ -124,9 +124,9 @@ public class InterfaceManager {
 		clean(walkable);
 		player.getDialogueBuilder().getChain().clear();
 		//player.dialogueFactory.clear();
-		player.out(new SendCloseInterface());
+		player.send(new CloseInterface());
 		if(walkable)
-			player.out(new SendWalkable(-1));
+			player.send(new Walkable(-1));
 	}
 
 	public void setSidebar(TabInterface tab, int id) {
@@ -134,7 +134,7 @@ public class InterfaceManager {
 			return;
 		}
 		sidebars[tab.ordinal()] = id;
-		player.out(new SendTab(id, tab));
+		player.send(new Tab(id, tab));
 
 	}
 
@@ -148,7 +148,7 @@ public class InterfaceManager {
 	}
 
 	public void handleMultiWidget() {
-			player.out(new SendMultiIcon(!player.getLocation().isMulti()));
+			player.send(new MultiIcon(!player.getLocation().isMulti()));
 	}
 
 	public void handleDuelWidget() {

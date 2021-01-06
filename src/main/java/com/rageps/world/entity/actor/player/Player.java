@@ -616,8 +616,8 @@ public final class Player extends Actor {
 		relations.onLogin();
 //		privateMessage.updateThisList();
 //		privateMessage.updateOtherList(true);
-		out(new SendContextMenu(3, false, "Follow"));
-		out(new SendContextMenu(4, false, "Trade with"));
+		send( new ContextMenu(3, false, "Follow"));
+		send( new ContextMenu(4, false, "Trade with"));
 		CombatEffect.values().forEach($it -> {
 			if($it.onLogin(this))
 				World.get().submit(new CombatEffectTask(this, $it));
@@ -631,16 +631,16 @@ public final class Player extends Actor {
 		WeaponInterface.execute(this, equipment.get(Equipment.WEAPON_SLOT));
 		WeaponAnimation.execute(this, equipment.get(Equipment.WEAPON_SLOT));
 		ShieldAnimation.execute(this, equipment.get(Equipment.SHIELD_SLOT));
-		out(new SendConfig(173, super.getMovementQueue().isRunning() ? 0 : 1));
-		out(new SendConfig(174, super.isPoisoned() ? 1 : 0));
-		out(new SendConfig(172, super.isAutoRetaliate() ? 1 : 0));
-		out(new SendConfig(combat.getFightType().getParent(), combat.getFightType().getChild()));
-		out(new SendConfig(427, getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID) ? 0 : 1));
-		out(new SendConfig(108, 0));
-		out(new SendConfig(301, 0));
+		send( new Config(173, super.getMovementQueue().isRunning() ? 0 : 1));
+		send( new Config(174, super.isPoisoned() ? 1 : 0));
+		send( new Config(172, super.isAutoRetaliate() ? 1 : 0));
+		send( new Config(combat.getFightType().getParent(), combat.getFightType().getChild()));
+		send( new Config(427, getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID) ? 0 : 1));
+		send( new Config(108, 0));
+		send( new Config(301, 0));
 		interfaceText(149, (int) this.playerData.runEnergy + "%");
-		out(new SendEnergy());
-		Prayer.VALUES.forEach(c -> out(new SendConfig(c.getConfig(), 0)));
+		send( new Energy());
+		Prayer.VALUES.forEach(c -> send( new Config(c.getConfig(), 0)));
 		if(getPetManager().getPet().isPresent()) {
 			Pet.onLogin(this);
 		}
@@ -661,7 +661,7 @@ public final class Player extends Actor {
 		}
 		TriviaTask.getBot().onLogin(this);
 		if(RagePS.UPDATING > 0) {
-			out(new SendBroadcast(0, (int) (RagePS.UPDATING * 60), true));
+			send( new Broadcast(0, (int) (RagePS.UPDATING * 60), true));
 		}
 		Summoning.login(this);
 		FarmingManager.login(this);
@@ -791,7 +791,7 @@ public final class Player extends Actor {
 		resetOverloadEffect(true);
 		MinigameHandler.executeVoid(this, m -> m.onLogout(this));
 		relations.updateLists(false);
-//		privateMessage.updateOtherList(false);
+//		privateMessage.updateOtherList(false); todo check this
 //		clan.ifPresent(c -> c.getClan().remove(this, true));
 		cannon.ifPresent(c -> c.pickup(true));
 		WildernessActivity.leave(this);
@@ -801,7 +801,7 @@ public final class Player extends Actor {
 	@Override
 	public void preUpdate() {
 		if(session != null) {
-//			session.pollIncomingMessages();
+//			session.pollIncomingMessages(); todo check thsi
 		}
 
 		getAttributeMap().plus(PlayerAttributes.SESSION_DURATION, 600L);
@@ -914,7 +914,7 @@ public final class Player extends Actor {
 	@Override
 	public void setAutoRetaliate(boolean autoRetaliate) {
 		super.setAutoRetaliate(autoRetaliate);
-		out(new SendConfig(172, super.isAutoRetaliate() ? 1 : 0));
+		send( new Config(172, super.isAutoRetaliate() ? 1 : 0));
 	}
 	
 	/**
@@ -1033,7 +1033,7 @@ public final class Player extends Actor {
 			double agilityFactor = 0.01 * skills[Skills.AGILITY].getCurrentLevel();
 			setRunEnergy(this.playerData.runEnergy + (restoreRate + agilityFactor));
 			lastEnergy.reset();
-			out(new SendEnergy());
+			send( new Energy());
 		}
 	}
 	
@@ -1193,7 +1193,7 @@ public final class Player extends Actor {
 	 * Opens up a new chat interface.
 	 */
 	public void chatWidget(int widget) {
-		out(new SendChatInterface(widget));
+		send( new ChatInterfacePacket(widget));
 	}
 	
 	/**
@@ -1228,7 +1228,7 @@ public final class Player extends Actor {
 	 * @param message the text to send.
 	 */
 	public void message(String message) {
-		send(new TextMessagePacket(message));
+		send(new MessagePacket(message));
 	}
 	
 	/**

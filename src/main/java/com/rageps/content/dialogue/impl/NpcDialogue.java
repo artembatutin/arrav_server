@@ -49,37 +49,37 @@ public final class NpcDialogue extends Dialogue {
 	public void accept(DialogueBuilder dialogue) {
 		switch(getText().length) {
 			case 1:
-				dialogue.getPlayer().out(new SendInterfaceAnimation(4883, expression.getExpression()));
+				dialogue.getPlayer().send(new InterfaceAnimation(4883, expression.getExpression()));
 				dialogue.getPlayer().interfaceText(4884, MobDefinition.DEFINITIONS[npc].getName());
 				dialogue.getPlayer().interfaceText(4885, getText()[0]);
-				dialogue.getPlayer().out(new SendInterfaceNpcModel(4883, npc));
+				dialogue.getPlayer().send(new InterfaceNpcModel(4883, npc));
 				dialogue.getPlayer().chatWidget(4882);
 				break;
 			case 2:
-				dialogue.getPlayer().out(new SendInterfaceAnimation(4888, expression.getExpression()));
+				dialogue.getPlayer().send(new InterfaceAnimation(4888, expression.getExpression()));
 				dialogue.getPlayer().interfaceText(4889, MobDefinition.DEFINITIONS[npc].getName());
 				dialogue.getPlayer().interfaceText(4890, getText()[0]);
 				dialogue.getPlayer().interfaceText(4891, getText()[1]);
-				dialogue.getPlayer().out(new SendInterfaceNpcModel(4888, npc));
+				dialogue.getPlayer().send(new InterfaceNpcModel(4888, npc));
 				dialogue.getPlayer().chatWidget(4887);
 				break;
 			case 3:
-				dialogue.getPlayer().out(new SendInterfaceAnimation(4894, expression.getExpression()));
+				dialogue.getPlayer().send(new InterfaceAnimation(4894, expression.getExpression()));
 				dialogue.getPlayer().interfaceText(4895, MobDefinition.DEFINITIONS[npc].getName());
 				dialogue.getPlayer().interfaceText(4896, getText()[0]);
 				dialogue.getPlayer().interfaceText(4897, getText()[1]);
 				dialogue.getPlayer().interfaceText(4898, getText()[2]);
-				dialogue.getPlayer().out(new SendInterfaceNpcModel(4894, npc));
+				dialogue.getPlayer().send(new InterfaceNpcModel(4894, npc));
 				dialogue.getPlayer().chatWidget(4893);
 				break;
 			case 4:
-				dialogue.getPlayer().out(new SendInterfaceAnimation(4901, expression.getExpression()));
+				dialogue.getPlayer().send(new InterfaceAnimation(4901, expression.getExpression()));
 				dialogue.getPlayer().interfaceText(4902, MobDefinition.DEFINITIONS[npc].getName());
 				dialogue.getPlayer().interfaceText(4903, getText()[0]);
 				dialogue.getPlayer().interfaceText(4904, getText()[1]);
 				dialogue.getPlayer().interfaceText(4905, getText()[2]);
 				dialogue.getPlayer().interfaceText(4906, getText()[3]);
-				dialogue.getPlayer().out(new SendInterfaceNpcModel(4901, npc));
+				dialogue.getPlayer().send(new InterfaceNpcModel(4901, npc));
 				dialogue.getPlayer().chatWidget(4900);
 				break;
 			default:

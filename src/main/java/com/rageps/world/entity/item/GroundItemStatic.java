@@ -1,6 +1,7 @@
 package com.rageps.world.entity.item;
 
 import com.rageps.net.packet.out.SendItemNode;
+import com.rageps.net.refactor.packet.out.model.ItemNodePacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.region.Region;
@@ -56,7 +57,7 @@ public final class GroundItemStatic extends GroundItem {
 				for(Player p : r.getPlayers()) {
 					if(p == null)
 						continue;
-					p.out(new SendItemNode(this));
+					p.send(new ItemNodePacket(this));
 				}
 			}
 		}

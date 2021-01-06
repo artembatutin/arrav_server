@@ -1,6 +1,6 @@
 package com.rageps.world.entity.object;
 
-import com.rageps.net.packet.out.SendObjectRemoval;
+import com.rageps.net.refactor.packet.out.model.ObjectPacket;
 import com.rageps.net.refactor.packet.out.model.RemoveObjectPacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.region.Region;
@@ -71,7 +71,7 @@ public abstract class GameObject {
 							continue;
 						if(getZ() == p.getPosition().getZ() && getInstance() == p.getInstance()) {
 							if(on)
-								p.out(new SendObject(this));
+								p.send(new ObjectPacket(this));
 							else
 								p.send(new RemoveObjectPacket(this));
 						}

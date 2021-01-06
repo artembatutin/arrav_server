@@ -76,7 +76,7 @@ public final class ViewingOrb {
 		//player.getMessages().sendSidebarInterface(v, -1, 2));
 		//player.getMessages().sendSidebarInterface(10, 3209, 0);
 		//player.getMessages().sendSidebarInterface(5, 3209, 1);
-		player.out(new SendForceTab(TabInterface.INVENTORY));
+		player.send(new ForceTab(TabInterface.INVENTORY));
 		player.interfaceText(15239, "@yel@Centre");
 		player.interfaceText(15240, "@yel@North-West");
 		player.interfaceText(15241, "@yel@North-East");
@@ -85,7 +85,7 @@ public final class ViewingOrb {
 		player.getMovementQueue().setLockMovement(true);
 		player.setVisible(false);
 		player.getActivityManager().disable();
-		player.out(new SendMinimapState(2));
+		player.send(new MinimapState(2));
 		player.setPlayerNpc(2982);
 		player.getFlags().flag(UpdateFlag.APPEARANCE);
 		move("Centre", 15239, centre);
@@ -102,7 +102,7 @@ public final class ViewingOrb {
 		player.getActivityManager().enable();
 		player.setPlayerNpc(-1);
 		player.getFlags().flag(UpdateFlag.APPEARANCE);
-		player.out(new SendMinimapState(0));
+		player.send(new MinimapState(0));
 		player.move(start);
 	}
 	

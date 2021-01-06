@@ -160,7 +160,7 @@
 //		for(ClanMember member : clan.getMembers()) {
 //			if(member == null)
 //				continue;
-//			member.getPlayer().out(new SendClanDetails(author, message, clanName, rank));
+//			member.getPlayer().send(new ClanDetails(author, message, clanName, rank));
 //		}
 //	}
 //
@@ -194,11 +194,11 @@
 //		}
 //		if(rank.isPresent()) {
 //			if(member.getRank().getValue() < rank.get().getValue()) {
-//				member.getPlayer().out(new SendClanDetails("", "You were promoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER));
+//				member.getPlayer().send(new ClanDetails("", "You were promoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER));
 //				member.setRank(rank.get());
 //				ClanManager.get().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, clan, member);
 //			} else if(member.getRank().getValue() > rank.get().getValue()) {
-//				member.getPlayer().out(new SendClanDetails("", "You were demoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER));
+//				member.getPlayer().send(new ClanDetails("", "You were demoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER));
 //				member.setRank(rank.get());
 //				ClanManager.get().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, clan, member);
 //			}
@@ -264,7 +264,7 @@
 //	 * @param text the text to send.
 //	 */
 //	public void sendMessage(String text) {
-//		player.out(new SendClanDetails("", text, clan.getName(), Rights.PLAYER));
+//		player.send(new ClanDetails("", text, clan.getName(), Rights.PLAYER));
 //	}
 //
 //	public int getPos() {

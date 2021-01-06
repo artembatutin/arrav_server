@@ -11,7 +11,7 @@ public final class VoteCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		player.out(new SendLink("vote"));
+		player.send(new Link("vote"));
 		player.message("@red@Do '::redeem auth' once you're done. Thank you for voting!");
 	}
 	

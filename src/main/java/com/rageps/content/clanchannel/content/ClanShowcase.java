@@ -30,10 +30,10 @@ public class ClanShowcase {
 		//for (int index = 0; index < showcaseItems.size(); index++) {
 		//	showcase[index] = new Item(showcaseItems.get(index));
 		//}
-		player.out(new SendText(channel.getName() + "'s Showcase", 57702));
-		player.out(new SendText(showcaseItems.size() + "/28", 57718));
-		player.out(new SendItemsOnInterface(57716, 28, showcase));
-		player.out(new SendItemsOnInterface(57717));
+		player.send(new TextPacket(channel.getName() + "'s Showcase", 57702));
+		player.send(new TextPacket(showcaseItems.size() + "/28", 57718));
+		player.send(new ItemsOnInterfacePacket(57716, 28, showcase));
+		player.send(new ItemsOnInterfacePacket(57717));
 		player.getInterfaceManager().open(57700);
 	}
 
@@ -45,7 +45,7 @@ public class ClanShowcase {
 		if (item == selected.getId()) {
 			//currentSlot = slot;
 			//currentItem = selected;
-			player.out(new SendItemsOnInterface(57717, selected));
+			player.send(new ItemsOnInterfacePacket(57717, selected));
 		}
 	}
 
@@ -64,8 +64,8 @@ public class ClanShowcase {
 		for (int index = 0; index < showcaseItems.size(); index++) {
 		//	showcase[index] = new Item(showcaseItems.get(index));
 		}
-		player.out(new SendItemsOnInterface(57716));
-		player.out(new SendItemsOnInterface(57716, showcase));
+		player.send(new ItemsOnInterfacePacket(57716));
+		player.send(new ItemsOnInterfacePacket(57716, showcase));
 		player.message("You have successfully changed your showcase.");
 	}
 

@@ -97,7 +97,7 @@ public class Combat<T extends Actor> {
 		}
 		if(attacker.isPlayer() && attacker.getCombat().getDefender() != null)
 		if (defender != null && defender.getCombat().getDefender() != null && attacker.isPlayer()) {
-		attacker.toPlayer().out(new SendCombatTarget(defender));
+		attacker.toPlayer().send(new CombatTarget(defender));
 		}
 	}
 	
@@ -361,7 +361,7 @@ public class Combat<T extends Actor> {
 
 	public void reset(boolean fullCombat, boolean resetWalk) {
 		if(attacker.isPlayer())
-			attacker.toPlayer().out(new SendCombatTarget(null));
+			attacker.toPlayer().send(new CombatTarget(null));
 
 		if(defender != null) {
 			if(fullCombat) {

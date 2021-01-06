@@ -533,7 +533,7 @@ public enum HotSpots {
 				public boolean click(Player player, GameObject object, int click) {
 					if(!player.getHouse().get().isBuilding())
 						return true;
-					player.out(new SendObjectsConstruction(spot));
+					player.send(new ObjectsConstruction(spot));
 					return true;
 				}
 			};

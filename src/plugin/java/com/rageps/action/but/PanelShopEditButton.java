@@ -4,7 +4,8 @@ import com.rageps.action.impl.ButtonAction;
 import com.rageps.content.market.MarketCounter;
 import com.rageps.content.market.MarketShop;
 import com.rageps.action.ActionInitializer;
-import com.rageps.net.packet.out.SendEnterAmount;
+import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
+import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
 import com.rageps.world.entity.actor.player.Player;
 
 public class PanelShopEditButton extends ActionInitializer {
@@ -14,7 +15,7 @@ public class PanelShopEditButton extends ActionInitializer {
 		ButtonAction e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.out(new SendEnterAmount("Item id:", t -> () -> {
+				player.send(new EnterAmountPacket("Item id:", t -> () -> {
 					int id = Integer.parseInt(t);
 					if(player.getMarketShop() != null && player.getMarketShop().getId() != -1) {
 						int shopId = player.getMarketShop().getId();

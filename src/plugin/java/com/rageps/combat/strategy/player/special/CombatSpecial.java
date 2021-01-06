@@ -4,7 +4,7 @@ import com.rageps.content.skill.Skills;
 import com.rageps.net.packet.out.SendInterfaceLayer;
 import com.rageps.combat.strategy.player.special.impl.*;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.net.packet.out.SendMessage;
 import com.rageps.net.packet.out.SendUpdateSpecial;
 import com.rageps.world.model.Animation;
@@ -251,7 +251,7 @@ public enum CombatSpecial {
 			}
 			
 			player.setSpecialActivated(true);
-			player.out(new SendConfig(301, 1));
+			player.send(new ConfigPacket(301, 1));
 			
 			Combat<Player> combat = player.getCombat();
 			Actor defender = combat.getLastDefender();
@@ -323,7 +323,7 @@ public enum CombatSpecial {
 		int specialAmount = player.playerData.getSpecialPercentage().get() / 10;
 		
 		for(int i = 0; i < 10; i++) {
-			player.out(new SendUpdateSpecial(--specialBar, specialAmount >= specialCheck ? 500 : 0));
+			player.send(new UpdateSpecial(--specialBar, specialAmount >= specialCheck ? 500 : 0));
 			specialCheck--;
 		}
 	}
@@ -356,12 +356,12 @@ public enum CombatSpecial {
 				player.getCombatSpecial().disable(player);
 			}
 			
-			player.out(new SendInterfaceLayer(player.getWeapon().getSpecialBar(), false));
+			player.send(new InterfaceLayer(player.getWeapon().getSpecialBar(), false));
 			player.setCombatSpecial(special.get());
 			return;
 		}
 		
-		player.out(new SendInterfaceLayer(player.getWeapon().getSpecialBar(), true));
+		player.send(new InterfaceLayer(player.getWeapon().getSpecialBar(), true));
 		player.setCombatSpecial(null);
 		
 		if(player.getCombatSpecial() != null) {
@@ -376,14 +376,14 @@ public enum CombatSpecial {
 				return;
 			}
 			
-			player.out(new SendConfig(301, 1));
+			player.send(new ConfigPacket(301, 1));
 			player.setSpecialActivated(true);
 		}
 	}
 	
 	public void disable(Player player) {
 		if(player.isSpecialActivated()) {
-			player.out(new SendConfig(301, 0));
+			player.send(new ConfigPacket(301, 0));
 			player.setSpecialActivated(false);
 		}
 	}

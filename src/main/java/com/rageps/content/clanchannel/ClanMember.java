@@ -58,7 +58,7 @@ public class ClanMember {
 		player.ifPresent(p -> {
 			ClanChannel channel = p.clanChannel;
 			for (Object message : messages) {
-				p.out(new SendClanDetails(String.valueOf(message), channel.getName(), ClanRank.SYSTEM));
+				p.send(new ClanDetails(String.valueOf(message), channel.getName(), ClanRank.SYSTEM));
 			}
 		});
 	}
@@ -82,7 +82,7 @@ public class ClanMember {
 				return;
 			}
 
-			p.out(new SendClanDetails(speaker.name, String.valueOf(message), channel.getName(), speaker.rank));
+			p.send(new ClanDetails(speaker.name, String.valueOf(message), channel.getName(), speaker.rank));
 		});
 	}
 

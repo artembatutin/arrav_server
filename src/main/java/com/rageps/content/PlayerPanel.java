@@ -34,13 +34,13 @@ public enum PlayerPanel {
 	COMMUNITY() {
 		@Override
 		public void onClick(Player player) {
-			player.out(new SendLink("community/"));
+			player.send(new Link("community/"));
 		}
 	},
 	DISCORD() {
 		@Override
 		public void onClick(Player player) {
-			player.out(new SendLink("discord"));
+			player.send(new Link("discord"));
 		}
 	},
 	VOTE() {
@@ -48,10 +48,10 @@ public enum PlayerPanel {
 		public void onClick(Player player) {
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-					player.out(new SendLink("vote"));
+					player.send(new Link("vote"));
 					player.closeWidget();
 				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-					player.out(new SendEnterName("Auth code:", s -> () -> {
+					player.send(new EnterName("Auth code:", s -> () -> {
 						try {
 							new RedeemCommand().execute(player, new String[]{"", s}, "");
 							player.closeWidget();
@@ -70,7 +70,7 @@ public enum PlayerPanel {
 	STORE() {
 		@Override
 		public void onClick(Player player) {
-			player.out(new SendLink("store/"));
+			player.send(new Link("store/"));
 		}
 	},
 	EXP_LOCK() {
@@ -84,7 +84,7 @@ public enum PlayerPanel {
 	NPC_TOOL() {
 		@Override
 		public void onClick(Player player) {
-			player.out(new SendMobDrop(0, null));
+			player.send(new MobDrop(0, null));
 		}
 	},
 	TOOL3,
@@ -133,7 +133,7 @@ public enum PlayerPanel {
 			player.getDialogueBuilder().append(new StatementDialogue("You sure you want to change your password?"), new OptionDialogue(t -> {
 				if(t == OptionDialogue.OptionType.FIRST_OPTION) {
 					player.closeWidget();
-					player.out(new SendEnterName("Your new password to set:", s -> () -> {
+					player.send(new EnterName("Your new password to set:", s -> () -> {
 						player.credentials.password = s;
 						player.message("You have successfully changed your password. Log out to save it.");
 						PlayerPanel.PASSWORD.refresh(player, "@or3@ - Password: " + TextUtils.passwordCheck(s));
@@ -213,7 +213,7 @@ public enum PlayerPanel {
 	 * @param player the player logging in.
 	 */
 	public static void refreshAll(Player player) {
-		player.out(new SendClearText(16026, 100));
+		player.send(new ClearText(16026, 100));
 		PlayerPanel.QUICKIES.refresh(player, "@or1@Quickies @or3@[clickable]@or1@:");
 		PlayerPanel.COMMUNITY.refresh(player, "@or3@ - Forums");
 		PlayerPanel.DISCORD.refresh(player, "@or3@ - Discord");

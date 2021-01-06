@@ -7,7 +7,7 @@ import com.rageps.net.packet.out.SendItemModelInterface;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
-import com.rageps.net.packet.out.SendEnterAmount;
+import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
 import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.mob.Mob;
@@ -69,7 +69,7 @@ public final class Tanning extends ProducingSkillAction {
 		}
 		
 		if(data.count == -1) {
-			player.out(new SendEnterAmount("How many would you like to tan?", s -> () -> Tanning.create(player, data, Integer.parseInt(s), false)));
+			player.send(new EnterAmount("How many would you like to tan?", s -> () -> Tanning.create(player, data, Integer.parseInt(s), false)));
 			return true;
 		}
 		
@@ -127,7 +127,7 @@ public final class Tanning extends ProducingSkillAction {
 				player.interfaceText(t.priceFrame, color + t.cost.getAmount() + " Coins");
 			}
 			if(t.modelFrame != -1) {
-				player.out(new SendItemModelInterface(t.modelFrame, 250, t.required.getId()));
+				player.send(new ItemModelInterface(t.modelFrame, 250, t.required.getId()));
 			}
 		});
 		player.widget(14670);

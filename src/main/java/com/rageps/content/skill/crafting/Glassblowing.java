@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
-import com.rageps.net.packet.out.SendEnterAmount;
+import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
 import com.rageps.task.Task;
 import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
@@ -57,7 +57,7 @@ public final class Glassblowing extends ProducingSkillAction {
 		}
 		
 		if(data.get().amount == -1) {
-			player.out(new SendEnterAmount("How many you would like to blow?", s -> () -> Glassblowing.blow(player, data.get(), Integer.parseInt(s))));
+			player.send(new EnterAmount("How many you would like to blow?", s -> () -> Glassblowing.blow(player, data.get(), Integer.parseInt(s))));
 			return true;
 		}
 		blow(player, data.get(), data.get().amount);

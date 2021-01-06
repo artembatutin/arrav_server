@@ -4,7 +4,7 @@ import com.rageps.content.TabInterface;
 import com.rageps.combat.strategy.player.special.CombatSpecial;
 import com.rageps.world.entity.actor.player.Player;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.entity.actor.combat.attack.FightType;
 import com.rageps.world.entity.item.Item;
 
@@ -148,12 +148,12 @@ public enum WeaponInterface {
 			for(FightType type : player.getWeapon().getFightTypes()) {
 				if(type.getStyle() == player.getCombat().getFightType().getStyle()) {
 					player.getCombat().setFightType(type);
-					player.out(new SendConfig(type.getParent(), type.getChild()));
+					player.send(new ConfigPacket(type.getParent(), type.getChild()));
 					return;
 				}
 			}
 			player.getCombat().setFightType(player.getWeapon().getFightTypes()[0]); // THIS FUCKER WAS FUCKING US XD
-			player.out(new SendConfig(player.getCombat().getFightType().getParent(), player.getCombat().getFightType().getChild()));
+			player.send(new ConfigPacket(player.getCombat().getFightType().getParent(), player.getCombat().getFightType().getChild()));
 			return;
 		}
 		if(weapon == WeaponInterface.UNARMED) {
@@ -174,12 +174,12 @@ public enum WeaponInterface {
 		for(FightType type : weapon.getFightTypes()) {
 			if(type.getStyle() == player.getCombat().getFightType().getStyle()) {
 				player.getCombat().setFightType(type);
-				player.out(new SendConfig(type.getParent(), type.getChild()));
+				player.send(new ConfigPacket(type.getParent(), type.getChild()));
 				return;
 			}
 		}
 		player.getCombat().setFightType(player.getWeapon().getFightTypes()[0]);
-		player.out(new SendConfig(player.getCombat().getFightType().getParent(), player.getCombat().getFightType().getChild()));
+		player.send(new ConfigPacket(player.getCombat().getFightType().getParent(), player.getCombat().getFightType().getChild()));
 	}
 	
 	/**

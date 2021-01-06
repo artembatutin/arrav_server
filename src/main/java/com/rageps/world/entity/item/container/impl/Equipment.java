@@ -11,7 +11,7 @@ import com.rageps.world.entity.actor.combat.weapon.WeaponAnimation;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.update.UpdateFlag;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemDefinition;
 import com.rageps.world.entity.item.container.ItemContainer;
@@ -243,8 +243,8 @@ public final class Equipment extends ItemContainer {
 			WeaponAnimation.execute(player, equipItem);
 			player.getCombat().reset(false, false);
 			player.setAutocastSpell(null);
-			player.out(new SendConfig(108, 0));
-			player.out(new SendConfig(301, 0));
+			player.send(new ConfigPacket(108, 0));
+			player.send(new ConfigPacket(301, 0));
 			player.setSpecialActivated(false);
 		}
 		
@@ -296,8 +296,8 @@ public final class Equipment extends ItemContainer {
 				WeaponAnimation.execute(player, new Item(0));
 				player.getCombat().reset(false, false);
 				player.setAutocastSpell(null);
-				player.out(new SendConfig(108, 0));
-				player.out(new SendConfig(301, 0));
+				player.send(new ConfigPacket(108, 0));
+				player.send(new ConfigPacket(301, 0));
 				player.setSpecialActivated(false);
 			}
 			CombatListenerDispatcher.CombatListenerSet listenerSet = CombatListenerDispatcher.ITEM_LISTENERS.get(unequip.getId());

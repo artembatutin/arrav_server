@@ -60,9 +60,9 @@ public final class CyclopsRoom extends GuildRoom {
 	
 	private void updateInterface(Player player) {
 		Defender defender = Defender.getNext(player);
-		player.out(new SendInterfaceItem(34002, defender.item.getId()));
+		player.send(new InterfaceItem(34002, defender.item.getId()));
 		player.interfaceText(34001, "@or1@" + defender.toString());
-		player.out(new SendWalkable(34000));
+		player.send(new Walkable(34000));
 	}
 	
 	@Override
@@ -78,7 +78,7 @@ public final class CyclopsRoom extends GuildRoom {
 				if(entered.isPresent()) {
 					player.move(new Position(2846, player.getPosition().getY(), 2));//FIXME use the proper walk-through door function.
 					entered = Optional.empty();
-					player.out(new SendWalkable(-1));
+					player.send(new Walkable(-1));
 					return false;
 				}
 				if(!player.getInventory().contains(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), 200))) {

@@ -8,7 +8,7 @@ import com.rageps.content.skill.Skill;
 import com.rageps.content.skill.Skills;
 import com.rageps.world.World;
 import com.rageps.action.impl.ItemAction;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.net.packet.out.SendEnergy;
 import com.rageps.task.Task;
 import com.rageps.world.model.Animation;
@@ -551,7 +551,7 @@ public enum PotionConsumable {
 	public static void onAntiPoisonEffect(Player player, boolean superPotion, int length) {
 		if(player.isPoisoned()) {
 			player.getPoisonDamage().set(0);
-			player.out(new SendConfig(174, 0));
+			player.send(new ConfigPacket(174, 0));
 			player.message("You have been cured of your poison!");
 		}
 		if(superPotion) {
@@ -591,7 +591,7 @@ public enum PotionConsumable {
 	private static void onEnergyEffect(Player player, boolean superPotion) {
 		int amount = superPotion ? 100 : 50;
 		player.setRunEnergy(player.playerData.getRunEnergy() + amount);
-		player.out(new SendEnergy());
+		player.send(new Energy());
 	}
 	
 	/**

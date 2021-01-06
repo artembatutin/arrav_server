@@ -53,7 +53,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 	public void onEnter(Player player) {
 		count++;
 		getPlayers().add(player);
-		player.out(new SendWalkable((21119)));
+		player.send(new Walkable((21119)));
 		player.interfaceText(21120, "@whi@Next Departure: " + seconds() + " seconds");
 		player.interfaceText(21123, "@cya@Pest Points: " + player.getPest());
 		updateCounts();
@@ -66,7 +66,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 			return;
 		count--;
 		getPlayers().remove(player);
-		player.out(new SendWalkable((-1)));
+		player.send(new Walkable((-1)));
 		updateCounts();
 		player.move(new Position(2657, 2639));
 	}

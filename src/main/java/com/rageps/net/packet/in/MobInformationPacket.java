@@ -52,7 +52,7 @@ public final class MobInformationPacket implements IncomingPacket {//todo - reim
 					if(table != null) {
 						DropManager.getTables().put(mob, table);
 					}
-					player.out(new SendMobDrop(mob, table));
+					player.send(new MobDrop(mob, table));
 					player.message("Shared with: " + MobDefinition.DEFINITIONS[max].getName());
 					return;
 				}
@@ -68,7 +68,7 @@ public final class MobInformationPacket implements IncomingPacket {//todo - reim
 									table.getDrops().remove(index);
 									table.sort();
 									player.message("Removed: " + d.toString());
-									player.out(new SendMobDrop(mob, table));
+									player.send(new MobDrop(mob, table));
 									return;
 								}
 							}
@@ -82,7 +82,7 @@ public final class MobInformationPacket implements IncomingPacket {//todo - reim
 									table.getRare().remove(index);
 									table.sort();
 									player.message("Removed: " + d.toString());
-									player.out(new SendMobDrop(mob, table));
+									player.send(new MobDrop(mob, table));
 									return;
 								}
 							}
@@ -98,7 +98,7 @@ public final class MobInformationPacket implements IncomingPacket {//todo - reim
 					table.getDrops().add(suggested.toDrop());
 				table.sort();
 				player.message("Added " + suggested.toString());
-				player.out(new SendMobDrop(mob, table));
+				player.send(new MobDrop(mob, table));
 			} else {
 				DROP_A_SUG.inc(player);
 				SUGGESTED.add(suggested);
@@ -116,7 +116,7 @@ public final class MobInformationPacket implements IncomingPacket {//todo - reim
 				player.message("This monster doesn't have any drop table.");
 				return;
 			}
-			player.out(new SendMobDrop(id, drop));
+			player.send(new MobDrop(id, drop));
 			player.widget(-11);
 		}
 	}

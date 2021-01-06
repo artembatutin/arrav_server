@@ -7,7 +7,7 @@ import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
-import com.rageps.net.packet.out.SendEnterAmount;
+import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
 import com.rageps.task.Task;
 import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
@@ -66,7 +66,7 @@ public final class Smelting extends ProducingSkillAction {
 		}
 		
 		if(data.get().amount == -1) {
-			player.out(new SendEnterAmount("How many you would like to melt?", s -> () -> Smelting.smelt(player, data.get(), Integer.parseInt(s))));
+			player.send(new EnterAmount("How many you would like to melt?", s -> () -> Smelting.smelt(player, data.get(), Integer.parseInt(s))));
 			return true;
 		}
 		smelt(player, data.get(), data.get().amount);
@@ -97,7 +97,7 @@ public final class Smelting extends ProducingSkillAction {
 	 */
 	public static void clearInterfaces(Player player) {
 		for(int j = 0; j < SMELT_FRAME.length; j++) {
-			player.out(new SendItemModelInterface(SMELT_FRAME[j], 150, SMELT_BARS[j]));
+			player.send(new ItemModelInterface(SMELT_FRAME[j], 150, SMELT_BARS[j]));
 		}
 	}
 	

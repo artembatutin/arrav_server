@@ -3,7 +3,7 @@ package com.rageps.content.clanchannel.channel;
 import com.rageps.content.TabInterface;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.dialogue.impl.StatementDialogue;
-import com.rageps.net.packet.out.*;
+import com.rageps.net.refactor.packet.out.model.*;
 import com.rageps.util.StringUtil;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.content.clanchannel.*;
@@ -127,23 +127,23 @@ public class ClanChannelHandler {
 				player.message("You do not have sufficient privileges to manage this clan!");
 				return;
 			}
-			player.out(new SendText("" + channel.getName(), 42102));
-			player.out(new SendText("" + channel.getTag(), 42104));
-			player.out(new SendText("" + channel.getSlogan(), 42106));
-			player.out(new SendText("" + channel.getPassword(), 42108));
-			player.out(new SendText(channel.getDetails().type.getIcon() + "" + channel.getDetails().type.getName(),
+			player.send(new InterfaceStringPacket("" + channel.getName(), 42102));
+			player.send(new InterfaceStringPacket("" + channel.getTag(), 42104));
+			player.send(new InterfaceStringPacket("" + channel.getSlogan(), 42106));
+			player.send(new InterfaceStringPacket("" + channel.getPassword(), 42108));
+			player.send(new InterfaceStringPacket(channel.getDetails().type.getIcon() + "" + channel.getDetails().type.getName(),
 					42110));
-			player.out(new SendText(
+			player.send(new InterfaceStringPacket(
 					channel.getManagement().getRank(ENTER_RANK_INDEX) + " " + channel.getManagement().getEnter(),
 					42112));
-			player.out(new SendText(
+			player.send(new InterfaceStringPacket(
 					channel.getManagement().getRank(TALK_RANK_INDEX) + " " + channel.getManagement().getTalk(), 42114));
-			player.out(new SendText(
+			player.send(new InterfaceStringPacket(
 					channel.getManagement().getRank(MANAGE_RANK_INDEX) + " " + channel.getManagement().getManage(),
 					42116));
-			player.out(new SendConfig(326, channel.getManagement().locked ? 1 : 0));
+			player.send(new ConfigPacket(326, channel.getManagement().locked ? 1 : 0));
 
-			player.out(new SendItemsOnInterface(42126, channel.getShowcaseItems()));
+			player.send(new ItemsOnInterfacePacket(42126, channel.getShowcaseItems()));
 			player.getInterfaceManager().setSidebar(TabInterface.CLAN_CHAT, 42000);
 		});
 	}
@@ -177,7 +177,7 @@ public class ClanChannelHandler {
 		}
 		AtomicBoolean correct = new AtomicBoolean(false);
 
-		player.out(new SendEnterName("Enter the password:", input -> () -> {
+		player.send(new EnterNamePacket("Enter the password:", input -> () -> {
 			if (!channel.isPassword(input)) {
 				player.message("You have entered an invalid clan password.");
 			} else {
@@ -234,7 +234,7 @@ public class ClanChannelHandler {
 			if (other != null && !other.name.equalsIgnoreCase(player.credentials.username)
 					&& other.rank.lessThan(ClanRank.LEADER)) {
 				//player.attributes.set(PlayerAttributes.CLAN_RANK_MEMBER, other);
-				player.out(new SendText(other.name, 43606));
+				player.send(new InterfaceStringPacket(other.name, 43606));
 				player.getInterfaceManager().open(43600);
 			}
 		});
@@ -250,9 +250,9 @@ public class ClanChannelHandler {
 		}
 		
 		int size = Math.max(channel.size(), 10);
-		player.out(new SendText("Talking in: <col=F7DC6F>" + StringUtil.formatName(channel.getName()), 33502));
-		player.out(new SendConfig(393, channel.lootshareEnabled() ? 1 : 0));
-		player.out(new SendScrollbar(33530, size * 22));
+		player.send(new InterfaceStringPacket("Talking in: <col=F7DC6F>" + StringUtil.formatName(channel.getName()), 33502));
+		player.send(new ConfigPacket(393, channel.lootshareEnabled() ? 1 : 0));
+		player.send(new ScrollBarPacket(33530, size * 22));
 
 		List<ClanMember> members = new LinkedList<>();
 		members.addAll(channel.getMembers());
@@ -268,18 +268,18 @@ public class ClanChannelHandler {
 				nextMember = iterator.next();
 			}
 			if (nextMember == null || (!nextMember.player.isPresent() && index / 3 >= members.size())) {
-				player.out(new SendText("", string++));
-				player.out(new SendText("", string));
-				player.out(new SendTooltip("", string++));
-				player.out(new SendText("", string++));
+				player.send(new InterfaceStringPacket("", string++));
+				player.send(new InterfaceStringPacket("", string));
+				player.send(new TooltipPacket("", string++));
+				player.send(new InterfaceStringPacket("", string++));
 				string++;
 			} else if (nextMember.player.isPresent()) {
-				player.out(new SendText(nextMember.rank.getString(), string++));
-				player.out(new SendText(nextMember.name, string));
-				player.out(new SendTooltip(
+				player.send(new InterfaceStringPacket(nextMember.rank.getString(), string++));
+				player.send(new InterfaceStringPacket(nextMember.name, string));
+				player.send(new TooltipPacket(
 						tooltip ? (nextMember.name.equals(player.credentials.username) ? "" : "Manage " + nextMember.name) : "",
 						string++));
-				player.out(new SendText("#" + channel.getDetails().getClanRank(nextMember), string++));
+				player.send(new InterfaceStringPacket("#" + channel.getDetails().getClanRank(nextMember), string++));
 				string++;
 			}
 		}
@@ -287,13 +287,13 @@ public class ClanChannelHandler {
 
 	/** Handles cleaning the clan tab itemcontainer. */
 	public static void clean(Player player) {
-		player.out(new SendText("Talking in: <col=F7DC6F>None", 33502));
+		player.send(new InterfaceStringPacket("Talking in: <col=F7DC6F>None", 33502));
 		for (int i = 0; i < 99; i += 4) {
-			player.out(new SendText("", 33531 + (i + 1)));
-			player.out(new SendText("", 33531 + (i + 2)));
-			player.out(new SendText("", 33531 + (i + 3)));
+			player.send(new InterfaceStringPacket("", 33531 + (i + 1)));
+			player.send(new InterfaceStringPacket("", 33531 + (i + 2)));
+			player.send(new InterfaceStringPacket("", 33531 + (i + 3)));
 		}
-		player.out(new SendScrollbar(33530, 11 * 22));
+		player.send(new ScrollBarPacket(33530, 11 * 22));
 	}
 
 }

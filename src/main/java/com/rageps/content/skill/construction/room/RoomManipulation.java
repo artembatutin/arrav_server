@@ -179,7 +179,7 @@ public class RoomManipulation {
 		RoomData rd = r.data();
 		int toRot = (wise == 0 ? RoomData.getNextEligibleRotationClockWise(rd, direction, r.getRotation()) : RoomData.getNextEligibleRotationCounterClockWise(rd, direction, r.getRotation()));
 		PaletteTile tile = new PaletteTile(rd.getX(), rd.getY(), 0, toRot);
-		p.out(new SendRemoveObjects());
+		p.send(new RemoveObjects());
 		if(house.get().isDungeon()) {
 			house.getSecondaryPalette().setTile(chunkX, chunkY, 0, tile);
 		} else {
@@ -245,7 +245,7 @@ public class RoomManipulation {
 				return;
 			}
 		}
-		p.out(new SendRemoveObjects());
+		p.send(new RemoveObjects());
 		if(p.getPosition().getZ() == 0) {
 			if(house.get().isDungeon()) {
 				house.getSecondaryPalette().setTile(chunkX, chunkY, 0, tile);

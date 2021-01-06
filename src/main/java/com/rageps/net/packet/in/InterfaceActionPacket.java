@@ -55,7 +55,7 @@ public final class InterfaceActionPacket implements IncomingPacket {
 			if(action == 1) {
 				ClanManager.get().delete(player);
 			} else {
-				player.getClan().filter(c -> c.getRank() == ClanChatRank.OWNER).ifPresent(clan -> player.out(new SendEnterName("The new clan chat name to set:", s -> () -> {
+				player.getClan().filter(c -> c.getRank() == ClanChatRank.OWNER).ifPresent(clan -> player.send(new EnterName("The new clan chat name to set:", s -> () -> {
 					if(!player.getClan().isPresent() || player.getClan().get().getRank() != ClanChatRank.OWNER) {
 						player.message("You are unable to do that.");
 					} else {

@@ -3,6 +3,7 @@ package com.rageps.content.object.cannon;
 import com.rageps.net.packet.out.SendObjectAnimation;
 import com.rageps.combat.strategy.basic.RangedStrategy;
 import com.rageps.content.skill.Skills;
+import com.rageps.net.refactor.packet.out.model.ObjectAnimationPacket;
 import com.rageps.task.Task;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.model.Direction;
@@ -104,28 +105,28 @@ public class MulticannonTask extends Task {
 		Player p = cannon.player;
 		switch(cannon.facing) {
 			case NORTH: // north
-				p.out(new SendObjectAnimation(cannon.getPosition(), 516, cannon.getObjectType(), -1));
+				p.send(new ObjectAnimationPacket(cannon.getPosition(), 516, cannon.getObjectType(), -1));
 				break;
 			case NORTH_EAST: // north-east
-				p.out(new SendObjectAnimation(cannon.getPosition(), 517, cannon.getObjectType(), -1));
+				p.send(new ObjectAnimationPacket(cannon.getPosition(), 517, cannon.getObjectType(), -1));
 				break;
 			case EAST: // east
-				p.out(new SendObjectAnimation(cannon.getPosition(), 518, cannon.getObjectType(), -1));
+				p.send(new ObjectAnimationPacket(cannon.getPosition(), 518, cannon.getObjectType(), -1));
 				break;
 			case SOUTH_EAST: // south-east
-				p.out(new SendObjectAnimation(cannon.getPosition(), 519, cannon.getObjectType(), -1));
+				p.send(new ObjectAnimationPacket(cannon.getPosition(), 519, cannon.getObjectType(), -1));
 				break;
 			case SOUTH: // south
-				p.out(new SendObjectAnimation(cannon.getPosition(), 520, cannon.getObjectType(), -1));
+				p.send(new ObjectAnimationPacket(cannon.getPosition(), 520, cannon.getObjectType(), -1));
 				break;
 			case SOUTH_WEST: // south-west
-				p.out(new SendObjectAnimation(cannon.getPosition(), 521, cannon.getObjectType(), -1));
+				p.send(new ObjectAnimationPacket(cannon.getPosition(), 521, cannon.getObjectType(), -1));
 				break;
 			case WEST: // west
-				p.out(new SendObjectAnimation(cannon.getPosition(), 514, cannon.getObjectType(), -1));
+				p.send(new ObjectAnimationPacket(cannon.getPosition(), 514, cannon.getObjectType(), -1));
 				break;
 			case NORTH_WEST: // north-west
-				p.out(new SendObjectAnimation(cannon.getPosition(), 515, cannon.getObjectType(), -1));
+				p.send(new ObjectAnimationPacket(cannon.getPosition(), 515, cannon.getObjectType(), -1));
 				cannon.facing = null;
 				break;
 		}

@@ -1,7 +1,7 @@
 package com.rageps.world.entity.actor.combat.magic.lunars.spell.impl;
 
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.model.Animation;
 import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.Actor;
@@ -39,7 +39,7 @@ public final class CureGroup extends LunarButtonSpell {
 			}
 			target.graphic(new Graphic(744, 90));
 			target.getPoisonDamage().set(0);
-			target.out(new SendConfig(174, 0));
+			target.send(new ConfigPacket(174, 0));
 			target.message("Your poison has been cured by " + caster.toPlayer().getFormatUsername());
 		}
 	}

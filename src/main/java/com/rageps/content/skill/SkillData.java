@@ -2,7 +2,7 @@ package com.rageps.content.skill;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.rageps.net.packet.out.SendEnterAmount;
+import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
 import com.rageps.net.packet.out.SendSkillGoal;
 import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.player.Player;
@@ -106,14 +106,14 @@ public enum SkillData {
 		}
 		
 		player.getAttributeMap().set(PlayerAttributes.GOAL_SETTING_SKILL, data.getId());
-		player.out(new SendEnterAmount("What level you would like to accomplish?", t -> () -> {
+		player.send(new EnterAmount("What level you would like to accomplish?", t -> () -> {
 			int skill = data.id;
 			int amount = Integer.parseInt(t);
 			if(amount <= player.getSkills()[skill].getRealLevel() || amount > 99) {
 				player.message("You cannot set this goal.");
 				return;
 			}
-			player.out(new SendSkillGoal(skill, amount));
+			player.send(new SkillGoal(skill, amount));
 			player.getSkills()[skill].setGoal(amount);
 		}));
 		return true;

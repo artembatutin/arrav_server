@@ -94,7 +94,7 @@ public final class ScoreboardManager {
 		
 		for(int i = 0; i < statistics.size(); i++) {
 			PlayerScoreboardStatistic stat = statistics.get(i);
-			player.out(new SendScore(i, stat.getUsername(), stat.getKills().get(), stat.getDeaths().get(), stat.getCurrentKillstreak().get()));
+			player.send(new Score(i, stat.getUsername(), stat.getKills().get(), stat.getDeaths().get(), stat.getCurrentKillstreak().get()));
 		}
 		player.widget(-12);
 	}

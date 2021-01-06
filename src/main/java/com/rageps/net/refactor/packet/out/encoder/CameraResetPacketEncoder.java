@@ -9,9 +9,10 @@ import com.rageps.net.refactor.packet.out.model.CameraResetPacket;
  * @author Tamatea <tamateea@gmail.com>
  */
 public class CameraResetPacketEncoder implements PacketEncoder<CameraResetPacket> {
+
     @Override
     public GamePacket encode(CameraResetPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(107);
+        GamePacketBuilder builder = new GamePacketBuilder(0);
         return builder.toGamePacket();
     }
 }

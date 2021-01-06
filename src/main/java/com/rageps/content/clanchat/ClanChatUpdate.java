@@ -26,7 +26,7 @@ import com.rageps.world.entity.actor.player.assets.Rights;
 			if(member.getRank().getValue() >= clan.getSettings().getBan().getValue()) {
 				player.text(50136, "Manage");
 			}
-			player.out(new SendClearText(50144, 100));
+			player.send(new ClearText(50144, 100));
 			for(int pos = 0; pos < clan.getMembers().length; pos++) {
 				if(clan.getMembers()[pos] == null) {
 					continue;
@@ -46,7 +46,7 @@ import com.rageps.world.entity.actor.player.assets.Rights;
 				if(m.getRank().getValue() >= m.getClan().getLowest().getValue())
 					m.getPlayer().text(50306, clan.getName());
 				m.getPlayer().text(50139, "Talking in: @lye@" + clan.getName());
-				m.getPlayer().out(new SendClanDetails("The clan name has been changed.", clan.getName(), clan.getName(), Rights.PLAYER));
+				m.getPlayer().send(new ClanDetails("The clan name has been changed.", clan.getName(), clan.getName(), Rights.PLAYER));
 			}
 		}
 	}, MEMBER_LIST_MODIFICATION() {
@@ -73,14 +73,14 @@ import com.rageps.world.entity.actor.player.assets.Rights;
 					continue;
 				ClanMember m = clan.getMembers()[pos];
 				if(m.getRank().getValue() >= clan.getLowest().getValue()) {
-					m.getPlayer().out(new SendClanBanned(clan.getBanned()));
+					m.getPlayer().send(new ClanBanned(clan.getBanned()));
 				}
 			}
 		}
 		
 		@Override
 		public void update(ClanMember member) {
-			member.getPlayer().out(new SendClanBanned(member.getClan().getBanned()));
+			member.getPlayer().send(new ClanBanned(member.getClan().getBanned()));
 		}
 	}, SETTING_MODIFICATION() {
 		@Override

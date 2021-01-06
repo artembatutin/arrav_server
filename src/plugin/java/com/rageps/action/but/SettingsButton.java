@@ -2,7 +2,7 @@ package com.rageps.action.but;
 
 import com.rageps.action.impl.ButtonAction;
 import com.rageps.action.ActionInitializer;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 
@@ -38,7 +38,7 @@ public class SettingsButton extends ActionInitializer {
 					player.message("Accept aid has been turned off.");
 					player.getAttributeMap().set(PlayerAttributes.ACCEPT_AID, false);
 				}
-				player.out(new SendConfig(427, !acceptAid ? 0 : 1));
+				player.send(new ConfigPacket(427, !acceptAid ? 0 : 1));
 				return true;
 			}
 		};

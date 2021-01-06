@@ -65,7 +65,7 @@ public final class RequestItemDialogue extends Dialogue {
 			reward.ifPresent(dialogue.getPlayer().getInventory()::addOrDrop);
 			dialogue.getPlayer().interfaceText(308, getText()[0]);
 			int id = displayReward && reward.isPresent() ? reward.get().getId() : item.getId();
-			dialogue.getPlayer().out(new SendItemModelInterface(307, 200, id));
+			dialogue.getPlayer().send(new ItemModelInterface(307, 200, id));
 			dialogue.getPlayer().chatWidget(306);
 		} else {
 			dialogue.getPlayer().interfaceText(357, "You don't have the requested item...");

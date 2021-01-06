@@ -3,7 +3,7 @@ package com.rageps.world.entity.actor;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.task.Task;
 
 import java.util.Optional;
@@ -66,7 +66,7 @@ public abstract class ActorDeath<T extends Actor> extends Task {
 				getActor().unStun();
 				killer.filter(Actor::isPlayer).ifPresent(k -> k.getCombat().resetTimers());
 				if(getActor().isPlayer()) {
-					getActor().toPlayer().out(new SendConfig(174, 0));
+					getActor().toPlayer().send(new ConfigPacket(174, 0));
 				}
 				break;
 			case 1:

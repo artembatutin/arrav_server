@@ -4,7 +4,7 @@ import com.rageps.action.impl.ButtonAction;
 import com.rageps.content.TabInterface;
 import com.rageps.content.skill.magic.Spellbook;
 import com.rageps.action.ActionInitializer;
-import com.rageps.net.packet.out.SendConfig;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.entity.actor.combat.magic.CombatSpell;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
@@ -75,7 +75,7 @@ public class CombatAutocastButton extends ActionInitializer {
 			@Override
 			public boolean click(Player player, int button) {
 				player.setAutocastSpell(null);
-				player.out(new SendConfig(108, 0));
+				player.send(new ConfigPacket(108, 0));
 				return true;
 			}
 		};
@@ -93,7 +93,7 @@ public class CombatAutocastButton extends ActionInitializer {
 			public boolean click(Player player, int button) {
 				if(player.autocasting) {
 					player.setAutocastSpell(null);
-					player.out(new SendConfig(108, 0));
+					player.send(new ConfigPacket(108, 0));
 				} else {
 					Item staff = player.getEquipment().get(Equipment.WEAPON_SLOT);
 					if(staff != null && staff.getId() == 4675) {
@@ -126,7 +126,7 @@ public class CombatAutocastButton extends ActionInitializer {
 			public boolean click(Player player, int button) {
 				player.setAutocastSpell(spell);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.out(new SendConfig(108, 3));
+				player.send(new ConfigPacket(108, 3));
 				return true;
 			}
 		};

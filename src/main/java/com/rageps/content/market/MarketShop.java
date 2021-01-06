@@ -129,10 +129,10 @@ public class MarketShop {
 		int x = player.getPosition().getX();
 		boolean counter = x == 3079 || x == 3080;
 		player.getInterfaceManager().openInventory(SHOP_INTERFACE_ID, INVENTORY_INTERFACE_ID);
-		player.out(new SendShop(SHOP_CONTAINER_ID, getItems()));
+		player.send(new Shop(SHOP_CONTAINER_ID, getItems()));
 		player.interfaceText(SHOP_NAME_ID, getTitle());
-		player.out(new SendForceTab(TabInterface.INVENTORY));
-		player.out(new SendContainer(INVENTORY_CONTAINER_ID, player.getInventory()));
+		player.send(new ForceTab(TabInterface.INVENTORY));
+		player.send(new ItemsOnInterfacePacket(INVENTORY_CONTAINER_ID, player.getInventory()));
 		if(player.getMarketShop().getItems() != null) {
 			for(int id : player.getMarketShop().getItems()) {
 				MarketItem item = MarketItem.get(id);
@@ -174,9 +174,9 @@ public class MarketShop {
 		/*if(player.getRights() == Rights.ADMINISTRATOR) {
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-					player.out(new SendEnterAmount(shopItem.getName() + ": set price to:", s -> () -> shopItem.setPrice(Integer.parseInt(s))));
+					player.send(new EnterAmount(shopItem.getName() + ": set price to:", s -> () -> shopItem.setPrice(Integer.parseInt(s))));
 				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-					player.out(new SendEnterAmount(shopItem.getName() + ": set stock to?", s -> () -> shopItem.setStock(Integer.parseInt(s))));
+					player.send(new EnterAmount(shopItem.getName() + ": set stock to?", s -> () -> shopItem.setStock(Integer.parseInt(s))));
 				} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 					shopItem.toggleUnlimited();
 					openShop(player);
@@ -248,7 +248,7 @@ public class MarketShop {
 		}
 		getCurrency().getCurrency().takeCurrency(player, item.getAmount() * value);
 		player.getInventory().add(item);
-		player.out(new SendContainer(INVENTORY_CONTAINER_ID, player.getInventory()));
+		player.send(new ItemsOnInterfacePacket(INVENTORY_CONTAINER_ID, player.getInventory()));
 		if(!marketItem.isUnlimitedStock()) {
 			marketItem.setStock(marketItem.getStock() - item.getAmount());
 		}
@@ -308,7 +308,7 @@ public class MarketShop {
 				marketItem.updateStock();
 			}
 		}
-		player.out(new SendContainer(INVENTORY_CONTAINER_ID, player.getInventory()));
+		player.send(new ItemsOnInterfacePacket(INVENTORY_CONTAINER_ID, player.getInventory()));
 		return true;
 	}
 	

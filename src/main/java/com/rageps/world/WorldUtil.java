@@ -35,7 +35,7 @@ public class WorldUtil {
      */
     public void sendBroadcast(int time, String message, boolean countdown) {
         world.getPlayers().stream().forEach($it -> {
-            $it.out(new SendBroadcast(countdown ? 0 : 1, time, (message)));
+            $it.send(new Broadcast(countdown ? 0 : 1, time, (message)));
             $it.message("<img=29>["+ ColorConstants.MAGENTA +"RagePS</col>]" + (message));
         });
     }
@@ -71,7 +71,7 @@ public class WorldUtil {
         Player p;
         Iterator<Player> it = world.getPlayers().iterator();
         while((p = it.next()) != null) {
-            p.out(new SendYell(author, message, rights));
+            p.send(new Yell(author, message, rights));
         }
     }
 
@@ -79,7 +79,7 @@ public class WorldUtil {
         world.getPlayers().stream().filter(Objects::nonNull).filter(filter).forEach(p -> p.message(message));
     }
     public void broadcastIf(Predicate<? super Player> filter, int time, String message, boolean countdown) {
-        world.getPlayers().stream().filter(Objects::nonNull).filter(filter).forEach(p -> p.out(new SendBroadcast(countdown ? 0 : 1, time, (message))));
+        world.getPlayers().stream().filter(Objects::nonNull).filter(filter).forEach(p -> p.send(new Broadcast(countdown ? 0 : 1, time, (message))));
     }
 
     /**

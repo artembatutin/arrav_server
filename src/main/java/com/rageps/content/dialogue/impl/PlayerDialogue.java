@@ -38,40 +38,40 @@ public final class PlayerDialogue extends Dialogue {
 	
 	@Override
 	public void accept(DialogueBuilder dialogue) {
-		dialogue.getPlayer().out(new SendInterfaceAnimation(250, expression.getExpression()));
+		dialogue.getPlayer().send(new InterfaceAnimation(250, expression.getExpression()));
 		switch(getText().length) {
 			case 1:
-				dialogue.getPlayer().out(new SendInterfaceAnimation(969, expression.getExpression()));
+				dialogue.getPlayer().send(new InterfaceAnimation(969, expression.getExpression()));
 				dialogue.getPlayer().interfaceText(970, dialogue.getPlayer().getFormatUsername());
 				dialogue.getPlayer().interfaceText(971, getText()[0]);
-				dialogue.getPlayer().out(new SendInterfacePlayerModel(969));
+				dialogue.getPlayer().send(new InterfacePlayerModel(969));
 				dialogue.getPlayer().chatWidget(968);
 				break;
 			case 2:
-				dialogue.getPlayer().out(new SendInterfaceAnimation(974, expression.getExpression()));
+				dialogue.getPlayer().send(new InterfaceAnimation(974, expression.getExpression()));
 				dialogue.getPlayer().interfaceText(975, dialogue.getPlayer().getFormatUsername());
 				dialogue.getPlayer().interfaceText(976, getText()[0]);
 				dialogue.getPlayer().interfaceText(977, getText()[1]);
-				dialogue.getPlayer().out(new SendInterfacePlayerModel(974));
+				dialogue.getPlayer().send(new InterfacePlayerModel(974));
 				dialogue.getPlayer().chatWidget(973);
 				break;
 			case 3:
-				dialogue.getPlayer().out(new SendInterfaceAnimation(980, expression.getExpression()));
+				dialogue.getPlayer().send(new InterfaceAnimation(980, expression.getExpression()));
 				dialogue.getPlayer().interfaceText(981, dialogue.getPlayer().getFormatUsername());
 				dialogue.getPlayer().interfaceText(982, getText()[0]);
 				dialogue.getPlayer().interfaceText(983, getText()[1]);
 				dialogue.getPlayer().interfaceText(984, getText()[2]);
-				dialogue.getPlayer().out(new SendInterfacePlayerModel(980));
+				dialogue.getPlayer().send(new InterfacePlayerModel(980));
 				dialogue.getPlayer().chatWidget(979);
 				break;
 			case 4:
-				dialogue.getPlayer().out(new SendInterfaceAnimation(987, expression.getExpression()));
+				dialogue.getPlayer().send(new InterfaceAnimation(987, expression.getExpression()));
 				dialogue.getPlayer().interfaceText(988, dialogue.getPlayer().getFormatUsername());
 				dialogue.getPlayer().interfaceText(989, getText()[0]);
 				dialogue.getPlayer().interfaceText(990, getText()[1]);
 				dialogue.getPlayer().interfaceText(991, getText()[2]);
 				dialogue.getPlayer().interfaceText(992, getText()[3]);
-				dialogue.getPlayer().out(new SendInterfacePlayerModel(987));
+				dialogue.getPlayer().send(new InterfacePlayerModel(987));
 				dialogue.getPlayer().chatWidget(986);
 				break;
 			default:

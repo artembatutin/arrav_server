@@ -1,6 +1,7 @@
 package com.rageps.world.entity.region;
 
 import com.rageps.net.packet.out.SendObjectRemoval;
+import com.rageps.net.refactor.packet.out.model.ObjectPacket;
 import com.rageps.net.refactor.packet.out.model.RemoveObjectPacket;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -94,7 +95,7 @@ public final class RegionManager {
 				}
 				region.dynamicAction(o -> {
 					if(o.getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance()) {
-						player.out(new SendObject(o));
+						player.send(new ObjectPacket(o));
 					}
 				});
 			}

@@ -37,8 +37,8 @@
 //		player.text(50140, "Owner: ");
 //		player.text(50135, "Join Clan");
 //		player.text(50136, "Clan Setup");
-//		player.out(new SendClearText(50144, 100));
-//		player.out(new SendClanBanned(new ObjectArrayList<>()));
+//		player.send(new ClearText(50144, 100));
+//		player.send(new ClanBanned(new ObjectArrayList<>()));
 //	}
 //
 //	/**
@@ -135,7 +135,7 @@
 //				player.message("Only the owner is allowed to do that.");
 //				return;
 //			}
-//			player.out(new SendEnterName("The new clan chat name to set:", s -> () -> {
+//			player.send(new EnterName("The new clan chat name to set:", s -> () -> {
 //				String newName = TextUtils.capitalize(s);
 //				player.getClan().get().getClan().setName(newName);
 //				ClanManager.get().update(ClanChatUpdate.NAME_MODIFICATION, player.getClan().get().getClan());

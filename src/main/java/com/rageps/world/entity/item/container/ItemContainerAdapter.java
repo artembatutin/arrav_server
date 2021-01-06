@@ -46,14 +46,14 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	 * Updates many items on a widget.
 	 */
 	protected void updateItems(ItemContainer container) {
-		player.out(new SendContainer(widget(), container));
+		player.send(new ItemsOnInterfacePacket(widget(), container));
 	}
 	
 	/**
 	 * Updates a single item on a widget.
 	 */
 	protected void updateItem(ItemContainer container, Item item, int slot) {
-		player.out(new SendItemOnInterfaceSlot(widget(), item, slot));
+		player.send(new ItemOnInterfaceSlotPacket(widget(), item, slot));
 	}
 	
 	/**

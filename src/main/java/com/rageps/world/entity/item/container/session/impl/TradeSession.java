@@ -1,5 +1,6 @@
 package com.rageps.world.entity.item.container.session.impl;
 
+import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.net.packet.out.SendContainer;
@@ -158,19 +159,19 @@ public final class TradeSession extends ExchangeSession {
 			this.getPlayers().forEach(player -> {
 				Player recipient = getOther(player);
 				int remaining = recipient.getInventory().remaining();
-				player.out(new SendContainer(3415, this.getExchangeSession().get(player)));
-				player.out(new SendContainer(3416, this.getExchangeSession().get(player)));
+				player.send(new ItemsOnInterfacePacket(3415, this.getExchangeSession().get(player)));
+				player.send(new ItemsOnInterfacePacket(3416, this.getExchangeSession().get(player)));
 				player.interfaceText(3431, "");
 				player.interfaceText(3417, "Trading with: " + name(recipient) + " " + "who has @gre@" + remaining + " free slots");
 				player.interfaceText(3535, "Are you sure you want to make this trade?");
 				player.getInterfaceManager().openInventory(3323, 3321);
-				player.out(new SendContainer(3322, player.getInventory()));
+				player.send(new ItemsOnInterfacePacket(3322, player.getInventory()));
 			});
 		} else if(getStage() == CONFIRM_DECISION) {
 			this.getPlayers().forEach(player -> {
 				Player recipient = getOther(player);
 				
-				player.out(new SendContainer(3214, player.getInventory()));
+				player.send(new ItemsOnInterfacePacket(3214, player.getInventory()));
 				player.interfaceText(3557, getItemNames(player, this.getExchangeSession().get(player).getItems()));
 				player.interfaceText(3558, getItemNames(recipient, this.getExchangeSession().get(recipient).getItems()));
 				player.getInterfaceManager().openInventory(3443, 3213);
@@ -183,9 +184,9 @@ public final class TradeSession extends ExchangeSession {
 		for(Player player : this.getExchangeSession().keySet()) {
 			Player recipient = getOther(player);
 			int remaining = recipient.getInventory().remaining();
-			player.out(new SendContainer(3322, player.getInventory()));
-			player.out(new SendContainer(3415, this.getExchangeSession().get(player)));
-			recipient.out(new SendContainer(3416, this.getExchangeSession().get(player)));
+			player.send(new ItemsOnInterfacePacket(3322, player.getInventory()));
+			player.send(new ItemsOnInterfacePacket(3415, this.getExchangeSession().get(player)));
+			recipient.send(new ItemsOnInterfacePacket(3416, this.getExchangeSession().get(player)));
 			player.interfaceText(3431, "");
 			player.interfaceText(3417, "Trading with: " + name(recipient) + " " + "who has @gre@" + remaining + " free slots");
 		}

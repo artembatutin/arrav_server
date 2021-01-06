@@ -73,7 +73,7 @@ public class BankPin {
 					player.resetingPin = false;
 					player.getBank().open(false);
 				} else
-					player.out(new SendCloseInterface());
+					player.send(new CloseInterface());
 			} else if(player.enterPin.length() >= 4) {
 				player.message("@blu@Pin entered incorrectly, Please try again.");
 				player.getBank().open(false);
@@ -113,7 +113,7 @@ public class BankPin {
 				if(player.pinOrder[j] == 0) {
 					player.pinOrder[j] = actionButtons[pinOrder];
 					player.interfaceText(sendFrames[pinOrder], "" + j);
-					player.out(new SendMoveComponent(random(+45), random(-45), sendFrames[pinOrder]));
+					player.send(new MoveComponent(random(+45), random(-45), sendFrames[pinOrder]));
 					break;
 				}
 			}

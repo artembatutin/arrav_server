@@ -148,8 +148,8 @@ final class BankTab extends ItemContainer {
 				inv.remove(new Item(i.getId(), i.getAmount()), i.getIndex(), false);
 			}
 		}
-		player.out(new SendContainer(Bank.SIDEBAR_INVENTORY_ID, inv));
-		player.out(new SendContainer(3214, inv));//?
+		player.send(new ItemsOnInterfacePacket(Bank.SIDEBAR_INVENTORY_ID, inv));
+		player.send(new ItemsOnInterfacePacket(3214, inv));//?
 		forceRefresh(player);
 	}
 	
