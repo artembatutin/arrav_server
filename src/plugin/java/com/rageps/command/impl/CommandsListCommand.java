@@ -16,11 +16,11 @@ public class CommandsListCommand implements Command {
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		player.widget(8134);
-		player.text(8144, "Commands");
-		player.text(8146, "Home - ::home");
-		player.text(8146, "Train - ::train");
-		player.text(8147, "Vote - ::vote");
-		player.text(8148, "Redeem vote auth - ::redeem auth_code");
-		player.text(8149, "Claims donation - ::claim");
+		player.interfaceText(8144, "Commands");
+		player.interfaceText(8146, "Home - ::home");
+		player.interfaceText(8146, "Train - ::train");
+		player.interfaceText(8147, "Vote - ::vote");
+		player.interfaceText(8148, "Redeem vote auth - ::redeem auth_code");
+		player.interfaceText(8149, "Claims donation - ::claim");
 	}
 }

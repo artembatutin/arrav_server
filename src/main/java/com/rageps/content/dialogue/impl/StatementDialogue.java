@@ -22,25 +22,25 @@ public final class StatementDialogue extends Dialogue {
 	public void accept(DialogueBuilder dialogue) {
 		switch(getText().length) {
 			case 1:
-				dialogue.getPlayer().text(357, getText()[0]);
+				dialogue.getPlayer().interfaceText(357, getText()[0]);
 				dialogue.getPlayer().chatWidget(356);
 				break;
 			case 2:
-				dialogue.getPlayer().text(360, getText()[0]);
-				dialogue.getPlayer().text(361, getText()[1]);
+				dialogue.getPlayer().interfaceText(360, getText()[0]);
+				dialogue.getPlayer().interfaceText(361, getText()[1]);
 				dialogue.getPlayer().chatWidget(359);
 				break;
 			case 3:
-				dialogue.getPlayer().text(364, getText()[0]);
-				dialogue.getPlayer().text(365, getText()[1]);
-				dialogue.getPlayer().text(366, getText()[2]);
+				dialogue.getPlayer().interfaceText(364, getText()[0]);
+				dialogue.getPlayer().interfaceText(365, getText()[1]);
+				dialogue.getPlayer().interfaceText(366, getText()[2]);
 				dialogue.getPlayer().chatWidget(363);
 				break;
 			case 4:
-				dialogue.getPlayer().text(369, getText()[0]);
-				dialogue.getPlayer().text(370, getText()[1]);
-				dialogue.getPlayer().text(371, getText()[2]);
-				dialogue.getPlayer().text(372, getText()[3]);
+				dialogue.getPlayer().interfaceText(369, getText()[0]);
+				dialogue.getPlayer().interfaceText(370, getText()[1]);
+				dialogue.getPlayer().interfaceText(371, getText()[2]);
+				dialogue.getPlayer().interfaceText(372, getText()[3]);
 				dialogue.getPlayer().chatWidget(368);
 				break;
 		}

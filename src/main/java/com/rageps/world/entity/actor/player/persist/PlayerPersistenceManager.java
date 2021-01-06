@@ -64,6 +64,10 @@ public final class PlayerPersistenceManager {
 		PERSISTABLE.save(player);
 	}
 
+	public PlayerLoaderResponse load(Player player) {
+		return load(player.credentials);
+	}
+
 	/**
 	 * Attempts to load a players save.
 	 * @param player The player being loaded.

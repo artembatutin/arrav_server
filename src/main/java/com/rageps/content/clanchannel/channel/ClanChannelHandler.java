@@ -179,7 +179,7 @@ public class ClanChannelHandler {
 
 		player.out(new SendEnterName("Enter the password:", input -> () -> {
 			if (!channel.isPassword(input)) {
-				player.out(new SendMessage("You have entered an invalid clan password."));
+				player.message("You have entered an invalid clan password.");
 			} else {
 				player.message("Password was accepted!");
 				channel.establish(player, member);

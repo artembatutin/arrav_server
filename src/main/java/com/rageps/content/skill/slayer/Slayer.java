@@ -104,8 +104,8 @@ public final class Slayer {
 	 */
 	public static void openPanel(Player player) {
 		player.widget(-10);
-		player.text(252, player.getSlayerPoints() + "");
-		player.text(253, player.getSlayer().isPresent() ? (TextUtils.capitalize(player.getSlayer().get().getKey().toLowerCase() + " x " + player.getSlayer().get().getAmount())) : "none");
+		player.interfaceText(252, player.getSlayerPoints() + "");
+		player.interfaceText(253, player.getSlayer().isPresent() ? (TextUtils.capitalize(player.getSlayer().get().getKey().toLowerCase() + " x " + player.getSlayer().get().getAmount())) : "none");
 		updateBlocked(player);
 	}
 	
@@ -315,9 +315,9 @@ public final class Slayer {
 		for(int i = 0; i < 5; i++) {
 			String blocked = player.getBlockedTasks()[i];
 			if(blocked == null)
-				player.text(254 + i, "empty");
+				player.interfaceText(254 + i, "empty");
 			else
-				player.text(254 + i, TextUtils.capitalize(blocked.toLowerCase()));
+				player.interfaceText(254 + i, TextUtils.capitalize(blocked.toLowerCase()));
 		}
 	}
 	

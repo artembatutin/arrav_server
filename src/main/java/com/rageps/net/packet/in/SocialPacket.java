@@ -99,7 +99,8 @@ public final class SocialPacket implements IncomingPacket {
 	private void sendMessage(Player player, int size, GamePacket buf) {
 		long to = buf.getLong();
 
-		final Optional<Player> result = World.get().search(StringUtil.formatText(StringUtil.longToString(to)).replace("_", " "));
+
+		final Optional<Player> result = World.get().getWorldUtil().getPlayer(to);
 
 		if (!result.isPresent()) {
 			return;

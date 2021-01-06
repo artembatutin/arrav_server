@@ -157,7 +157,7 @@ public enum MagicImpact {
 		}
 		
 		if(defender.isPlayer()) {
-			defender.toPlayer().out(new SendMessage("You've been frozen!"));
+			defender.toPlayer().message(("You've been frozen!"));
 		}
 		
 		defender.freeze(timer);

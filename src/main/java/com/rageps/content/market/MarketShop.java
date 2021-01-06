@@ -7,14 +7,12 @@ import com.rageps.content.market.currency.impl.ItemCurrency;
 import com.rageps.content.minigame.rfd.RFDData;
 import com.rageps.net.packet.out.SendContainer;
 import com.rageps.net.packet.out.SendForceTab;
-import com.rageps.net.packet.out.SendInventoryInterface;
 import com.rageps.net.packet.out.SendShop;
 import com.rageps.world.World;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import com.rageps.GameConstants;
 import com.rageps.content.TabInterface;
 import com.rageps.content.item.Skillcape;
-import com.rageps.net.packet.out.*;
 import com.rageps.util.TextUtils;
 import com.rageps.util.log.Log;
 import com.rageps.util.log.impl.ShopLog;
@@ -127,12 +125,12 @@ public class MarketShop {
 		}
 		clearFromShop(player);
 		player.setMarketShop(this);
-		player.text(259, getCurrency().ordinal() + "");
+		player.interfaceText(259, getCurrency().ordinal() + "");
 		int x = player.getPosition().getX();
 		boolean counter = x == 3079 || x == 3080;
 		player.getInterfaceManager().openInventory(SHOP_INTERFACE_ID, INVENTORY_INTERFACE_ID);
 		player.out(new SendShop(SHOP_CONTAINER_ID, getItems()));
-		player.text(SHOP_NAME_ID, getTitle());
+		player.interfaceText(SHOP_NAME_ID, getTitle());
 		player.out(new SendForceTab(TabInterface.INVENTORY));
 		player.out(new SendContainer(INVENTORY_CONTAINER_ID, player.getInventory()));
 		if(player.getMarketShop().getItems() != null) {

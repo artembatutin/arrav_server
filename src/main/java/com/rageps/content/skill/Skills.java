@@ -198,8 +198,8 @@ public final class Skills {
 				}
 				SkillData data = SkillData.values()[skill];
 				String append = TextUtils.appendIndefiniteArticle(data.toString());
-				player.text(4268, "@dre@Congratulations, you've just advanced " + append + " level!");
-				player.text(4269, "You have now reached level " + newLevel + "!");
+				player.interfaceText(4268, "@dre@Congratulations, you've just advanced " + append + " level!");
+				player.interfaceText(4269, "You have now reached level " + newLevel + "!");
 				player.message("Congratulations, you've just advanced " + append + " level!");
 				player.chatWidget(data.getChatbox());
 				if(newLevel == 99 || newLevel == 120) {

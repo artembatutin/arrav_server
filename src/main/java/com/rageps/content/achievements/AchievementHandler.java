@@ -40,7 +40,7 @@ public class AchievementHandler {
 		}
 		if(!updated) {
 			int tier = getTier(player, achievement);
-			player.text(26100 + achievement.ordinal(), String.format(achievement.getTask(), achievement.getAmount()[tier]) + " - " + prev + " / " + achievement.getAmount()[tier]);
+			player.interfaceText(26100 + achievement.ordinal(), String.format(achievement.getTask(), achievement.getAmount()[tier]) + " - " + prev + " / " + achievement.getAmount()[tier]);
 		}
 	}
 	
@@ -52,8 +52,8 @@ public class AchievementHandler {
 	public static void update(Player player, Achievement achievement) {
 		int tier = getTier(player, achievement);
 		final int prev = player.achievements.computeIfAbsent(achievement, a -> 0);
-		player.text(26000 + achievement.ordinal(), tier + (completed(player, achievement) ? "@str@" : "") + achievement.getName());
-		player.text(26100 + achievement.ordinal(), String.format(achievement.getTask(), achievement.getAmount()[tier]) + " - " + prev + " / " + achievement.getAmount()[tier]);
+		player.interfaceText(26000 + achievement.ordinal(), tier + (completed(player, achievement) ? "@str@" : "") + achievement.getName());
+		player.interfaceText(26100 + achievement.ordinal(), String.format(achievement.getTask(), achievement.getAmount()[tier]) + " - " + prev + " / " + achievement.getAmount()[tier]);
 	}
 	
 	/**

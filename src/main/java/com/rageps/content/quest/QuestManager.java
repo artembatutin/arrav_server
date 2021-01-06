@@ -175,17 +175,17 @@ public final class QuestManager {
 		 * @param player the player to open the quest interface for.
 		 */
 		public void open(Player player) {
-			player.text(8144, quest.getName());
+			player.interfaceText(8144, quest.getName());
 			
 			if(!player.getQuestManager().started(this)) {
-				player.text(8145, "@red@" + quest.getGuidance());
+				player.interfaceText(8145, "@red@" + quest.getGuidance());
 				player.widget(8134);
 				return;
 			}
 			
 			Quest quest = player.getQuestManager().getStartedQuests().get(this);
 			
-			player.text(8145, "@gre@" + quest.getGuidance());
+			player.interfaceText(8145, "@gre@" + quest.getGuidance());
 			
 			for(int i = 0; i < quest.getTasks().length; i++) {
 				QuestTask current = quest.getTasks()[i];
@@ -195,7 +195,7 @@ public final class QuestManager {
 				}
 				
 				String color = current.isCompleted() ? "@gre@" : "@red@";
-				player.text(8146 + i, color + current.description(player));
+				player.interfaceText(8146 + i, color + current.description(player));
 			}
 			
 			player.widget(8134);

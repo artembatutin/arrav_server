@@ -143,13 +143,13 @@ public abstract class Familiar extends Follower {
 	 */
 	public void setInterface(Player player) {
 		/* We send the summoning points left out of the total summoning points this player has */
-		player.text(18045, Integer.toString(player.getSkills()[Skills.SUMMONING].getCurrentLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()));
+		player.interfaceText(18045, Integer.toString(player.getSkills()[Skills.SUMMONING].getCurrentLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()));
 		/* We send the special attack points left out of the total amount */
-		player.text(18024, "60/60");
+		player.interfaceText(18024, "60/60");
 		/* We send the familiars name */
-		player.text(18028, this.getDefinition().getName());
+		player.interfaceText(18028, this.getDefinition().getName());
 		/* Time of our familiar. */
-		player.text(18043, getDuration() + " minutes");
+		player.interfaceText(18043, getDuration() + " minutes");
 		/* We set the familiars face */
 		player.out(new SendInterfaceNpcModel(18021, this.getId()));
 		player.out(new SendInterfaceAnimation(18021, Expression.CALM.getExpression()));
@@ -331,14 +331,14 @@ public abstract class Familiar extends Follower {
 			}
 			//TODO: PROPER DECREASING. Why orb lvl isn't same as skill tab's?
 			player.getSkills()[Skills.SUMMONING].decreaseLevel(1);
-			player.text(18045, Integer.toString(player.getSkills()[Skills.SUMMONING].getCurrentLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()));
+			player.interfaceText(18045, Integer.toString(player.getSkills()[Skills.SUMMONING].getCurrentLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()));
 			Skills.refresh(player, Skills.SUMMONING);
 			
 			interval = !interval;
 			if(interval)
 				return;
 			familiar.setDuration(familiar.getDuration() - 1);
-			player.text(18043, familiar.getDuration() + " minutes");
+			player.interfaceText(18043, familiar.getDuration() + " minutes");
 			
 			if(familiar.getDuration() < 1 || player.getSkills()[Skills.SUMMONING].getCurrentLevel() == 0) {
 				familiar.dismiss(player, false);

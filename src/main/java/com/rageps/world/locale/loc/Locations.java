@@ -10,8 +10,6 @@ import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
-import java.util.Arrays;
-
 /**
  * @author Tamatea <tamateea@gmail.com>
  */
@@ -109,7 +107,7 @@ public class Locations {
                 player.getInterfaceManager().openWalkable(197);
                 player.out(new SendContextMenu(2, true, "Attack"));
                 WildernessActivity.enter(player);
-                player.text(199, "@yel@Fun PvP");
+                player.interfaceText(199, "@yel@Fun PvP");
             }
 
             @Override
@@ -131,7 +129,7 @@ public class Locations {
                 int level = (((calculateY - 3520) / 8) + 1);
                 if(level != player.wildernessLevel) {
                     player.wildernessLevel = level;
-                    player.text(199, "@yel@Level: " + player.wildernessLevel);
+                    player.interfaceText(199, "@yel@Level: " + player.wildernessLevel);
                 }
 
             }
@@ -144,7 +142,7 @@ public class Locations {
                  player.getInterfaceManager().openWalkable(197);
                  player.out(new SendContextMenu(2, true, "Attack"));
                  WildernessActivity.enter(player);
-                 player.text(199, "@yel@Level: " + player.wildernessLevel);
+                 player.interfaceText(199, "@yel@Level: " + player.wildernessLevel);
             }
 
             @Override

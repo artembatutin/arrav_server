@@ -118,31 +118,31 @@ public final class BowCarving extends ProducingSkillAction {
 			player.getAttributeMap().set(PlayerAttributes.FLETCHING_BOWCARVING, fletching);
 			player.getAttributeMap().set(PlayerAttributes.FLETCHING_BOWS, true);
 			if(log.get().producibles.length == 2) {
-				player.text(8879, "What would you like to make?");
+				player.interfaceText(8879, "What would you like to make?");
 				player.out(new SendItemModelInterface(8870, 200, fletching.definition.producibles[0].producible.getId()));
 				player.out(new SendItemModelInterface(8869, 200, fletching.definition.producibles[1].producible.getId()));
-				player.text(8874, "\\n\\n\\n\\n\\nShortbow");
-				player.text(8878, "\\n\\n\\n\\n\\nLongbow");
+				player.interfaceText(8874, "\\n\\n\\n\\n\\nShortbow");
+				player.interfaceText(8878, "\\n\\n\\n\\n\\nLongbow");
 				player.chatWidget(8866);
 			} else if(log.get().producibles.length == 3) {
-				player.text(8898, "What would you like to make?");
+				player.interfaceText(8898, "What would you like to make?");
 				player.out(new SendItemModelInterface(8884, 200, fletching.definition.producibles[0].producible.getId()));
 				player.out(new SendItemModelInterface(8883, 200, fletching.definition.producibles[1].producible.getId()));
 				player.out(new SendItemModelInterface(8885, 200, fletching.definition.producibles[2].producible.getId()));
-				player.text(8889, "\\n\\n\\n\\n\\nShortbow");
-				player.text(8893, "\\n\\n\\n\\n\\nLongbow");
-				player.text(8897, "\\n\\n\\n\\n\\nCrossbow Stock");
+				player.interfaceText(8889, "\\n\\n\\n\\n\\nShortbow");
+				player.interfaceText(8893, "\\n\\n\\n\\n\\nLongbow");
+				player.interfaceText(8897, "\\n\\n\\n\\n\\nCrossbow Stock");
 				player.chatWidget(8880);
 			} else if(log.get().producibles.length == 4) {
-				player.text(8922, "What would you like to make?");
+				player.interfaceText(8922, "What would you like to make?");
 				player.out(new SendItemModelInterface(8902, 200, fletching.definition.producibles[0].producible.getId()));
 				player.out(new SendItemModelInterface(8903, 200, fletching.definition.producibles[1].producible.getId()));
 				player.out(new SendItemModelInterface(8904, 200, fletching.definition.producibles[2].producible.getId()));
 				player.out(new SendItemModelInterface(8905, 200, fletching.definition.producibles[3].producible.getId()));
-				player.text(8906, "\\n\\n\\n\\n\\nShortbow");
-				player.text(8910, "\\n\\n\\n\\n\\nLongbow");
-				player.text(8914, "\\n\\n\\n\\n\\nCrossbow Stock");
-				player.text(8918, "\\n\\n\\n\\n\\nArrow Shafts");
+				player.interfaceText(8906, "\\n\\n\\n\\n\\nShortbow");
+				player.interfaceText(8910, "\\n\\n\\n\\n\\nLongbow");
+				player.interfaceText(8914, "\\n\\n\\n\\n\\nCrossbow Stock");
+				player.interfaceText(8918, "\\n\\n\\n\\n\\nArrow Shafts");
 				player.chatWidget(8899);
 			}
 			return true;

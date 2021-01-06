@@ -99,7 +99,7 @@ public final class Pet extends Follower {
 		pet.getProgress().setHunger(pet.getProgress().getHunger() - 15D);
 		pet.forceChat("yum!");
 		player.message("Your pet happily eats the " + food.getDefinition().getName() + ".");
-		player.text(19032, ((int) pet.getProgress().getHunger()) + "%");
+		player.interfaceText(19032, ((int) pet.getProgress().getHunger()) + "%");
 		return true;
 	}
 	
@@ -218,12 +218,12 @@ public final class Pet extends Follower {
 	 * @param pet the pet that was spawned.
 	 */
 	private static void setInterface(Player player, Pet pet) {
-		player.text(19021, pet.getDefinition().getName());
-		player.text(19030, (int) pet.progress.getGrowth() + "%");
+		player.interfaceText(19021, pet.getDefinition().getName());
+		player.interfaceText(19030, (int) pet.progress.getGrowth() + "%");
 		if(pet.getProgress().getData().getPolicy().isLast())
-			player.text(19032, "-");
+			player.interfaceText(19032, "-");
 		else
-			player.text(19032, (int) pet.progress.getHunger() + "%");
+			player.interfaceText(19032, (int) pet.progress.getHunger() + "%");
 		player.out(new SendInterfaceNpcModel(19019, pet.getId()));
 		player.out(new SendInterfaceAnimation(19019, Expression.CALM.getExpression()));
 		TabInterface.SUMMONING.sendInterface(player, 19017);

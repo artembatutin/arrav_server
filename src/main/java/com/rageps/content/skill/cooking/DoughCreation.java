@@ -93,12 +93,12 @@ public final class DoughCreation extends ProducingSkillAction {
 
 		player.getAttributeMap().set(PlayerAttributes.CREATING_DOUGH, true);
 
-		player.text(8922, "What sort of dough do you wish to make?");
+		player.interfaceText(8922, "What sort of dough do you wish to make?");
 		
 		DoughData.VALUES.forEach(dough -> {
 			if(dough.amount == 1) {
 				player.out(new SendItemModelInterface(dough.modelFrame, 150, dough.produced.getId()));
-				player.text(dough.nameFrame, "\\n\\n\\n\\n\\n" + dough.toString());
+				player.interfaceText(dough.nameFrame, "\\n\\n\\n\\n\\n" + dough.toString());
 			}
 		});
 		player.chatWidget(8899);

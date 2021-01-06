@@ -142,7 +142,7 @@ public abstract class AgilityCourse extends SkillAction {
 		player.getActivityManager().enable();
 		
 		onSuccess();
-		crossedMessage().ifPresent(m -> getPlayer().out(new SendMessage(m)));
+		crossedMessage().ifPresent(m -> getPlayer().message(m));
 	}
 	
 	public static void executeForcedMovementAction(Player player, Position beggining_position, Position ending_position, int first_speed, int second_speed, Object animation_id) {

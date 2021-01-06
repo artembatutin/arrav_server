@@ -7,6 +7,8 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.GetRequest;
 import com.mashape.unirest.request.HttpRequestWithBody;
 import com.rageps.net.rest.payments.Invoice;
+import com.rageps.net.sql.forum.account.ForumAccount;
+import com.rageps.net.sql.forum.account.ForumCredentials;
 import com.rageps.util.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,7 +32,7 @@ public final class RestfulNexus {
 		this.apiKey = apiKey;
 	}
 
-	/*
+
 	public boolean addAccount(String username, String passwordHash, String passwordSalt, String ipAddress) throws UnirestException {
 		GetRequest request = Unirest.get(url + "forums/insert/{username}/{email}/{time}/{hash}/{salt}/{ip_address}/{seo_name}");
 		request.header("key", apiKey);
@@ -64,7 +66,7 @@ public final class RestfulNexus {
 		}
 
 		return ForumAccount.fromCredentials(username, credentials[0]);
-	}*/
+	}
 
 	public double getUnspentPointBalance(String username) throws UnirestException {
 		GetRequest request = Unirest.get(url + "store/points/{username}");

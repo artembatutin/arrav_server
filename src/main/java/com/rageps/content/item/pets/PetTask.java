@@ -21,7 +21,7 @@ public final class PetTask extends Task {
 	protected void execute() {
 		//hunger update.
 		pet.getProgress().updateHunger();
-		player.text(19032, ((int) pet.getProgress().getHunger()) + "%");
+		player.interfaceText(19032, ((int) pet.getProgress().getHunger()) + "%");
 		if(pet.getProgress().getHunger() >= 100.0) {
 			this.cancel();
 			World.get().getMobRepository().remove(pet);
@@ -37,7 +37,7 @@ public final class PetTask extends Task {
 		//growth update if next pet is possible
 		if(pet.getProgress().getData().getPolicy().getNext().isPresent()) {
 			pet.getProgress().updateGrowth();
-			player.text(19030, ((int) pet.getProgress().getGrowth()) + "%");
+			player.interfaceText(19030, ((int) pet.getProgress().getGrowth()) + "%");
 			if(pet.getProgress().getGrowth() >= 100) {
 				this.cancel();
 				player.getPetManager().progressed();

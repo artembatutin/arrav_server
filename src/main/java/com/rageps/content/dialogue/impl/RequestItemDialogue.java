@@ -63,13 +63,13 @@ public final class RequestItemDialogue extends Dialogue {
 			dialogue.getPlayer().getInventory().remove(item);
 			action.ifPresent(ActionListener::execute);
 			reward.ifPresent(dialogue.getPlayer().getInventory()::addOrDrop);
-			dialogue.getPlayer().text(308, getText()[0]);
+			dialogue.getPlayer().interfaceText(308, getText()[0]);
 			int id = displayReward && reward.isPresent() ? reward.get().getId() : item.getId();
 			dialogue.getPlayer().out(new SendItemModelInterface(307, 200, id));
 			dialogue.getPlayer().chatWidget(306);
 		} else {
-			dialogue.getPlayer().text(357, "You don't have the requested item...");
-			dialogue.getPlayer().text(358, "Click here to continue");
+			dialogue.getPlayer().interfaceText(357, "You don't have the requested item...");
+			dialogue.getPlayer().interfaceText(358, "Click here to continue");
 			dialogue.getPlayer().chatWidget(356);
 		}
 	}

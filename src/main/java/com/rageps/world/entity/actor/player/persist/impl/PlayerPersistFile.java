@@ -2,6 +2,8 @@ package com.rageps.world.entity.actor.player.persist.impl;
 
 import com.google.gson.*;
 import com.rageps.net.codec.login.LoginCode;
+import com.rageps.net.refactor.codec.login.LoginConstants;
+import com.rageps.net.refactor.codec.login.LoginResponse;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerCredentials;
 import com.rageps.world.entity.actor.player.persist.PlayerLoaderResponse;
@@ -76,26 +78,31 @@ public final class PlayerPersistFile implements PlayerPersistable {
 	}
 
 	@Override
-	public PlayerLoaderResponse load(PlayerCredentials player) {
+	public PlayerLoaderResponse load(PlayerCredentials credentials) {
 		final File dir = FILE_DIR.toFile();
 
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
 
+
 		try {
-			Path path = FILE_DIR.resolve(player.getName() + ".json");
+			Path path = FILE_DIR.resolve(credentials.getUsername() + ".json");
 
 			if (!Files.exists(path)) {
-				player.firstLogin = true;
-				return LoginCode.NORMAL;
+				//player.firstLogin = true; todo fix
+				return new PlayerLoaderResponse(LoginConstants.STATUS_OK);
 			}
+
+			PlayerLoaderResponse response = new PlayerLoaderResponse(LoginConstants.STATUS_OK);
 
 			try (Reader reader = new FileReader(path.toFile())) {
 				JsonElement parsed = new JsonParser().parse(reader);
 				if(parsed instanceof JsonNull)
 					logger.error("Fatal! JsonNull loading player file");
 				JsonObject jsonReader = (JsonObject) parsed;
+
+				Player player = response.getPlayer().get();
 
 				for (PlayerPersistanceProperty property : PlayerPersistenceManager.PROPERTIES) {
 					if (jsonReader.has(property.name)) {
@@ -106,11 +113,11 @@ public final class PlayerPersistFile implements PlayerPersistable {
 				}
 			}
 
-			return LoginCode.NORMAL;
+			return response;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 
-		return LoginCode.COULD_NOT_COMPLETE_LOGIN;
+		return new PlayerLoaderResponse(LoginConstants.STATUS_COULD_NOT_COMPLETE);
 	}
 }

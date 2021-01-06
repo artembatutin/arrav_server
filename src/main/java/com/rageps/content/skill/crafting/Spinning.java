@@ -86,7 +86,7 @@ public final class Spinning extends ProducingSkillAction {
 					if(object.getId() != 2644) {
 						return false;
 					}
-					player.text(2799, "\\n\\n\\n\\n\\n" + data.produced.getDefinition().getName());
+					player.interfaceText(2799, "\\n\\n\\n\\n\\n" + data.produced.getDefinition().getName());
 					player.out(new SendItemModelInterface(1746, 200, data.produced.getId()));
 					player.getAttributeMap().set(PlayerAttributes.CRAFTING_SPIN, true);
 					player.getAttributeMap().set(PlayerAttributes.CRAFTING_SPINNING, data);

@@ -5,6 +5,7 @@ apply plugin:'application'
 apply plugin: 'idea'
 apply plugin: 'java'
 
+
 mainClassName = "net.arrav.Arrav"
 
 repositories {

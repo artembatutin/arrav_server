@@ -45,29 +45,29 @@ public final class OptionDialogue extends Dialogue {
 	public void send(Player player) {
 		switch(getText().length) {
 			case 2:
-				player.text(14445, getText()[0]);
-				player.text(14446, getText()[1]);
+				player.interfaceText(14445, getText()[0]);
+				player.interfaceText(14446, getText()[1]);
 				player.chatWidget(14443);
 				break;
 			case 3:
-				player.text(2471, getText()[0]);
-				player.text(2472, getText()[1]);
-				player.text(2473, getText()[2]);
+				player.interfaceText(2471, getText()[0]);
+				player.interfaceText(2472, getText()[1]);
+				player.interfaceText(2473, getText()[2]);
 				player.chatWidget(2469);
 				break;
 			case 4:
-				player.text(8209, getText()[0]);
-				player.text(8210, getText()[1]);
-				player.text(8211, getText()[2]);
-				player.text(8212, getText()[3]);
+				player.interfaceText(8209, getText()[0]);
+				player.interfaceText(8210, getText()[1]);
+				player.interfaceText(8211, getText()[2]);
+				player.interfaceText(8212, getText()[3]);
 				player.chatWidget(8207);
 				break;
 			case 5:
-				player.text(8221, getText()[0]);
-				player.text(8222, getText()[1]);
-				player.text(8223, getText()[2]);
-				player.text(8224, getText()[3]);
-				player.text(8225, getText()[4]);
+				player.interfaceText(8221, getText()[0]);
+				player.interfaceText(8222, getText()[1]);
+				player.interfaceText(8223, getText()[2]);
+				player.interfaceText(8224, getText()[3]);
+				player.interfaceText(8225, getText()[4]);
 				player.chatWidget(8219);
 				break;
 			default:

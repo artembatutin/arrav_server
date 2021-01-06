@@ -8,6 +8,7 @@ import com.rageps.net.sql.DatabaseTransaction;
 import com.rageps.net.sql.TableRepresentation;
 import com.rageps.net.sql.statement.NamedPreparedStatement;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerCredentials;
 import com.rageps.world.entity.actor.player.persist.property.PlayerPersistanceProperty;
 
 import java.sql.Connection;
@@ -22,14 +23,14 @@ import static com.rageps.world.entity.actor.player.persist.PlayerPersistenceMana
  */
 public class PlayerAccountLoadTransaction extends DatabaseTransaction {
 
-    private final Player player;
+    private final PlayerCredentials player;
 
     private final JsonParser parser = new JsonParser();
 
     private final String query = "SELECT * FROM player WHERE member_id = ?";
 
 
-    public PlayerAccountLoadTransaction(Player player) {
+    public PlayerAccountLoadTransaction(PlayerCredentials player) {
         super(TableRepresentation.PLAYER);
         this.player = player;
     }
@@ -39,7 +40,7 @@ public class PlayerAccountLoadTransaction extends DatabaseTransaction {
         public void execute(Connection connection) throws SQLException {
 
             try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection, query, Statement.RETURN_GENERATED_KEYS)) {
-                statement.setLong("member_id", player.credentials.databaseId);
+                statement.setLong("member_id", player.databaseId);
 
                 ResultSet rs = statement.executeQuery();
 

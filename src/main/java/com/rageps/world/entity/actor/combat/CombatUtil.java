@@ -365,9 +365,9 @@ public final class CombatUtil {
 			
 			damage = max == 0 ? 0 : RandomUtils.inclusive(max);
 			if(damage >= 150) {
-				player.out(new SendMessage("You are horribly burned by the dragonfire!"));
+				player.message("You are horribly burned by the dragonfire!");
 			} else if(!shield && !potion && !prayer && damage < 90 && damage > 0) {
-				player.out(new SendMessage("You manage to resist some of the dragonfire."));
+				player.message("You manage to resist some of the dragonfire.");
 			}
 		} else {
 			damage = max == 0 ? 0 : RandomUtils.inclusive(max);

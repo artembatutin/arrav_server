@@ -21,6 +21,7 @@ import java.util.Optional;
 /**
  * The enumerated type whose elements represent the combat special attacks.
  * @author lare96 <http://github.com/lare96>
+ *     todo - make these classes load from reflections
  */
 public enum CombatSpecial {
 	//int[] ids, int amount, double strength, double accuracy, CombatType combat, WeaponInterface weapon
@@ -245,7 +246,7 @@ public enum CombatSpecial {
 		@Override
 		public void enable(Player player) {
 			if(player.playerData.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
-				player.out(new SendMessage("You do not have enough special energy left!"));
+				player.message("You do not have enough special energy left!");
 				return;
 			}
 			
@@ -371,7 +372,7 @@ public enum CombatSpecial {
 	public void enable(Player player) {
 		if(!player.isSpecialActivated()) {
 			if(player.playerData.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
-				player.out(new SendMessage("You do not have enough special energy left!"));
+				player.message("You do not have enough special energy left!");
 				return;
 			}
 			

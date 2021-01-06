@@ -43,9 +43,9 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 			if(attacker.rangedDefinition.isValid(attacker.rangedAmmo)) {
 				return true;
 			}
-			attacker.out(new SendMessage(getInvalidAmmunitionMessage(attacker.rangedDefinition.getType())));
+			attacker.message(getInvalidAmmunitionMessage(attacker.rangedDefinition.getType()));
 		} else {
-			attacker.out(new SendMessage(getNoAmmunitionMessage(attacker.rangedDefinition.getType())));
+			attacker.message(getNoAmmunitionMessage(attacker.rangedDefinition.getType()));
 		}
 		attacker.getCombat().reset(false, true);
 		return false;
@@ -155,7 +155,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 		}
 		
 		if(next.getAmount() == 0) {
-			attacker.out(new SendMessage("That was the last of your attacker.ammunition!"));
+			attacker.message("That was the last of your attacker.ammunition!");
 			attacker.getEquipment().unequip(type.getSlot(), null, true, -1);
 		}
 	}

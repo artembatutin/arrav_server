@@ -91,7 +91,7 @@ public class PestPortal extends DefaultMob {
 		}
 		if(game != null) {
 			for(Player p : game.getPlayers()) {
-				p.text(widget, "" + getCurrentHealth() / 10);
+				p.interfaceText(widget, "" + getCurrentHealth() / 10);
 			}
 		}
 		return hit;
@@ -113,7 +113,7 @@ public class PestPortal extends DefaultMob {
 	public void setGame(PestControlMinigame game) {
 		this.game = game;
 		for(Player p : game.getPlayers()) {
-			p.text(widget, "" + getCurrentHealth() / 10);
+			p.interfaceText(widget, "" + getCurrentHealth() / 10);
 		}
 	}
 

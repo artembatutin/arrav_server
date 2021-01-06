@@ -44,7 +44,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		timer = current;
 		if(timer % 10 == 0) {
 			for(Player p : getPlayers()) {
-				p.text(21120, "@whi@Next Departure: " + seconds() + " seconds.");
+				p.interfaceText(21120, "@whi@Next Departure: " + seconds() + " seconds.");
 			}
 		}
 	}
@@ -54,8 +54,8 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		count++;
 		getPlayers().add(player);
 		player.out(new SendWalkable((21119)));
-		player.text(21120, "@whi@Next Departure: " + seconds() + " seconds");
-		player.text(21123, "@cya@Pest Points: " + player.getPest());
+		player.interfaceText(21120, "@whi@Next Departure: " + seconds() + " seconds");
+		player.interfaceText(21123, "@cya@Pest Points: " + player.getPest());
 		updateCounts();
 		player.move(new Position(2661, 2639));
 	}
@@ -121,7 +121,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 	
 	public void updateCounts() {
 		for(Player p : getPlayers()) {
-			p.text(21121, "@gre@Players Ready: " + count);
+			p.interfaceText(21121, "@gre@Players Ready: " + count);
 		}
 	}
 	
@@ -149,7 +149,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {
 				player.widget(37000);
-				player.text(37007, player.getPest() + " points");
+				player.interfaceText(37007, player.getPest() + " points");
 				return true;
 			}
 		};

@@ -59,7 +59,7 @@ public class PestGate {
 		if(!player.playerData.lockedXP)
 			player.getSkills()[Skills.CONSTRUCTION].increaseExperience(20);
 		player.getAttributeMap().plus(PlayerAttributes.PARTICIPATION, 25);
-		player.text(21116, "" + player.getAttributeMap().getInt(PlayerAttributes.PARTICIPATION));
+		player.interfaceText(21116, "" + player.getAttributeMap().getInt(PlayerAttributes.PARTICIPATION));
 	}
 
 	public void damage() {

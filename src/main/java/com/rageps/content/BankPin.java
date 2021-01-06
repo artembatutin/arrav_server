@@ -2,7 +2,6 @@ package com.rageps.content;
 
 import com.rageps.content.dialogue.impl.StatementDialogue;
 import com.rageps.net.packet.out.SendCloseInterface;
-import com.rageps.net.packet.out.SendInterface;
 import com.rageps.net.packet.out.SendMoveComponent;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
@@ -20,18 +19,18 @@ public class BankPin {
 	public static void loadUpPinInterface(Player player) {
 		if(player.bankPin.length() < 4) {
 			player.bankPin = "";
-			player.text(14923, "Bank of "+World.get().getEnvironment().getName());
-			player.text(14920, "@or1@Set up a bank PIN using the buttons below.");
-			player.text(15313, "First click the FIRST digit.");
+			player.interfaceText(14923, "Bank of "+World.get().getEnvironment().getName());
+			player.interfaceText(14920, "@or1@Set up a bank PIN using the buttons below.");
+			player.interfaceText(15313, "First click the FIRST digit.");
 			randomizeButtons(player);
 			player.getInterfaceManager().open(7424, true);
 		} else {
 			player.enterPin = "";
 			setStars(player);
 			randomizeButtons(player);
-			player.text(14923, "Bank of "+ World.get().getEnvironment().getName());
-			player.text(14920, "@or1@Please enter your PIN using the buttons below.");
-			player.text(15313, "First click the FIRST digit.");
+			player.interfaceText(14923, "Bank of "+ World.get().getEnvironment().getName());
+			player.interfaceText(14920, "@or1@Please enter your PIN using the buttons below.");
+			player.interfaceText(15313, "First click the FIRST digit.");
 			player.getInterfaceManager().open(7424, true);
 		}
 	}
@@ -61,9 +60,9 @@ public class BankPin {
 				player.enterPin = player.bankPin;
 			} else {
 				randomizeButtons(player);
-				player.text(14923, "Bank of "+World.get().getEnvironment().getName());
-				player.text(14920, "@or1@Set up a bank PIN using the buttons below.");
-				player.text(15313, "" + (pinNames[player.bankPin.length()]));
+				player.interfaceText(14923, "Bank of "+World.get().getEnvironment().getName());
+				player.interfaceText(14920, "@or1@Set up a bank PIN using the buttons below.");
+				player.interfaceText(15313, "" + (pinNames[player.bankPin.length()]));
 			}
 		} else {
 			player.enterPin += "" + index;
@@ -81,9 +80,9 @@ public class BankPin {
 				player.enterPin = "";
 			} else {
 				randomizeButtons(player);
-				player.text(14923, "Bank of "+ World.get().getEnvironment().getName());
-				player.text(14920, "@or1@Please enter your PIN using the buttons below.");
-				player.text(15313, "" + (pinNames[player.enterPin.length()]));
+				player.interfaceText(14923, "Bank of "+ World.get().getEnvironment().getName());
+				player.interfaceText(14920, "@or1@Please enter your PIN using the buttons below.");
+				player.interfaceText(15313, "" + (pinNames[player.enterPin.length()]));
 			}
 		}
 	}
@@ -91,9 +90,9 @@ public class BankPin {
 	private static void setStars(Player player) {
 		for(int i = 0; i < 4; i++) {
 			if(player.enterPin.length() > i)
-				player.text(starFrames[i], "@or1@*");
+				player.interfaceText(starFrames[i], "@or1@*");
 			else
-				player.text(starFrames[i], "@or1@?");
+				player.interfaceText(starFrames[i], "@or1@?");
 		}
 	}
 	
@@ -113,7 +112,7 @@ public class BankPin {
 				int j = random(9);
 				if(player.pinOrder[j] == 0) {
 					player.pinOrder[j] = actionButtons[pinOrder];
-					player.text(sendFrames[pinOrder], "" + j);
+					player.interfaceText(sendFrames[pinOrder], "" + j);
 					player.out(new SendMoveComponent(random(+45), random(-45), sendFrames[pinOrder]));
 					break;
 				}

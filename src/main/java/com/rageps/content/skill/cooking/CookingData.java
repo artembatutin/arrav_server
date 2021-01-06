@@ -96,7 +96,7 @@ public enum CookingData {
 	public void openInterface(Player player) {
 		player.chatWidget(1743);
 		player.out(new SendItemModelInterface(13716, 190, rawId));
-		player.text(13717, "\\n\\n\\n\\n\\n" + ItemDefinition.DEFINITIONS[rawId].getName());
+		player.interfaceText(13717, "\\n\\n\\n\\n\\n" + ItemDefinition.DEFINITIONS[rawId].getName());
 	}
 
 	public static CookingData forItem(Item item) {

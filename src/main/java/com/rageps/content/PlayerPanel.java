@@ -306,7 +306,7 @@ public enum PlayerPanel {
 	 * @param skipCheck The condition if we should skip the check.
 	 */
 	public void refresh(Player player, String text, boolean skipCheck) {
-		player.text(16026 + ordinal(), text, skipCheck);
+		player.interfaceText(16026 + ordinal(), text, skipCheck);
 	}
 	
 	/**
@@ -315,6 +315,6 @@ public enum PlayerPanel {
 	 * @param text the new string to set.
 	 */
 	public void refresh(Player player, String text) {
-		player.text(16026 + ordinal(), text, false);
+		player.interfaceText(16026 + ordinal(), text, false);
 	}
 }

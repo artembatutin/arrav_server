@@ -54,9 +54,7 @@ import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.OutgoingPacket;
 import com.rageps.net.packet.out.*;
 import com.rageps.net.refactor.packet.Packet;
-import com.rageps.net.refactor.packet.out.model.CameraResetPacket;
-import com.rageps.net.refactor.packet.out.model.MapRegionPacket;
-import com.rageps.net.refactor.packet.out.model.SlotPacket;
+import com.rageps.net.refactor.packet.out.model.*;
 import com.rageps.net.refactor.session.impl.GameSession;
 import com.rageps.net.sql.forum.account.MultifactorAuthentication;
 import com.rageps.util.*;
@@ -640,7 +638,7 @@ public final class Player extends Actor {
 		out(new SendConfig(427, getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID) ? 0 : 1));
 		out(new SendConfig(108, 0));
 		out(new SendConfig(301, 0));
-		text(149, (int) this.playerData.runEnergy + "%");
+		interfaceText(149, (int) this.playerData.runEnergy + "%");
 		out(new SendEnergy());
 		Prayer.VALUES.forEach(c -> out(new SendConfig(c.getConfig(), 0)));
 		if(getPetManager().getPet().isPresent()) {
@@ -803,7 +801,7 @@ public final class Player extends Actor {
 	@Override
 	public void preUpdate() {
 		if(session != null) {
-			session.pollIncomingMessages();
+//			session.pollIncomingMessages();
 		}
 
 		getAttributeMap().plus(PlayerAttributes.SESSION_DURATION, 600L);
@@ -835,7 +833,8 @@ public final class Player extends Actor {
 				send(new MapRegionPacket(this.getLastRegion().copy()));
 				getInitialUpdate().set(true);
 			}
-			session.writeUpdate(new SendPlayerUpdate(), new SendMobUpdate());
+			//todo append player updating
+			//session.writeUpdate(new SendPlayerUpdate(), new SendMobUpdate());
 		}
 	}
 	
@@ -1153,10 +1152,11 @@ public final class Player extends Actor {
 	 * @param packet packet to be queued.
 	 */
 	public void out(OutgoingPacket packet) {
-		if(packet.coordinatePacket() != null)
-			getSession().queue(packet.coordinatePacket());
-		if(packet.onSent(this))
-			getSession().queue(packet);
+		throw new UnsupportedOperationException("Old networking is no longer supported.");
+		//if(packet.coordinatePacket() != null)
+		//	getSession().queue(packet.coordinatePacket());
+		//if(packet.onSent(this))
+		//	getSession().queue(packet);
 	}
 
 	/**
@@ -1205,20 +1205,22 @@ public final class Player extends Actor {
 	
 	/**
 	 * A shorter way of sending a player string on interface.
+	 * Checks to see if this text has already been sent to the client
+	 * and won't send it if the check isn't ignored.
 	 * @param message the text to send.
 	 */
-	public void text(int id, String message, boolean skipCheck) {
+	public void interfaceText(int id, String message, boolean skipCheck) {
 		if(!skipCheck && interfaceTexts.containsKey(id)) {
 			if(interfaceTexts.get(id).equals(message)) {
 				return;
 			}
 		}
 		interfaceTexts.put(id, message);
-		out(new SendText(id, message));
+		send(new InterfaceStringPacket(id, message));
 	}
 	
-	public void text(int id, String message) {
-		text(id, message, false);
+	public void interfaceText(int id, String message) {
+		interfaceText(id, message, false);
 	}
 	
 	/**
@@ -1226,7 +1228,7 @@ public final class Player extends Actor {
 	 * @param message the text to send.
 	 */
 	public void message(String message) {
-		out(new SendMessage(message));
+		send(new TextMessagePacket(message));
 	}
 	
 	/**
@@ -1408,7 +1410,7 @@ public final class Player extends Actor {
 	 */
 	public void setRunEnergy(double energy) {
 		this.playerData.runEnergy = energy > 100 ? 100 : energy;
-		text(149, (int) this.playerData.runEnergy + "%");
+		interfaceText(149, (int) this.playerData.runEnergy + "%");
 	}
 	
 	/**

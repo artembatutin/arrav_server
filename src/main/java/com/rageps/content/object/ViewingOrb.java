@@ -77,11 +77,11 @@ public final class ViewingOrb {
 		//player.getMessages().sendSidebarInterface(10, 3209, 0);
 		//player.getMessages().sendSidebarInterface(5, 3209, 1);
 		player.out(new SendForceTab(TabInterface.INVENTORY));
-		player.text(15239, "@yel@Centre");
-		player.text(15240, "@yel@North-West");
-		player.text(15241, "@yel@North-East");
-		player.text(15242, "@yel@South-East");
-		player.text(15243, "@yel@South-West");
+		player.interfaceText(15239, "@yel@Centre");
+		player.interfaceText(15240, "@yel@North-West");
+		player.interfaceText(15241, "@yel@North-East");
+		player.interfaceText(15242, "@yel@South-East");
+		player.interfaceText(15243, "@yel@South-West");
 		player.getMovementQueue().setLockMovement(true);
 		player.setVisible(false);
 		player.getActivityManager().disable();
@@ -116,12 +116,12 @@ public final class ViewingOrb {
 	public void move(String positionName, int positionLineId, Position position) {
 		if(position.same(player.getPosition()))
 			return;
-		player.text(15239, "@yel@Centre");
-		player.text(15240, "@yel@North-West");
-		player.text(15241, "@yel@North-East");
-		player.text(15242, "@yel@South-East");
-		player.text(15243, "@yel@South-West");
-		player.text(positionLineId, "@whi@" + positionName);
+		player.interfaceText(15239, "@yel@Centre");
+		player.interfaceText(15240, "@yel@North-West");
+		player.interfaceText(15241, "@yel@North-East");
+		player.interfaceText(15242, "@yel@South-East");
+		player.interfaceText(15243, "@yel@South-West");
+		player.interfaceText(positionLineId, "@whi@" + positionName);
 		player.move(position);
 	}
 	

@@ -35,7 +35,7 @@ public class VoidKnight extends DefaultMob {
 		}
 		if(game != null) {
 			for(Player p : game.getPlayers()) {
-				p.text(21115, "" + getCurrentHealth() / 10);
+				p.interfaceText(21115, "" + getCurrentHealth() / 10);
 			}
 		}
 		return hit;
@@ -53,7 +53,7 @@ public class VoidKnight extends DefaultMob {
 	public void setGame(PestControlMinigame game) {
 		this.game = game;
 		for(Player p : game.getPlayers()) {
-			p.text(21115, "" + getCurrentHealth() / 10);
+			p.interfaceText(21115, "" + getCurrentHealth() / 10);
 		}
 	}
 	

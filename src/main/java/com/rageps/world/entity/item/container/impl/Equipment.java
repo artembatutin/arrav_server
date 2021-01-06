@@ -368,7 +368,7 @@ public final class Equipment extends ItemContainer {
 	private void writeBonuses() {
 		for(int i = 0; i < bonuses.length; i++) {
 			boolean percentage = (i >= 11 && i <= 13) || i == 17;
-			player.text(CombatConstants.BONUS_IDS[i], CombatConstants.BONUS_NAMES[i] + ": " + (bonuses[i] >= 0 ? "+" : "") + bonuses[CombatConstants.BONUS[i]] + (percentage ? "%" : i == 14 ? ".0" : ""));
+			player.interfaceText(CombatConstants.BONUS_IDS[i], CombatConstants.BONUS_NAMES[i] + ": " + (bonuses[i] >= 0 ? "+" : "") + bonuses[CombatConstants.BONUS[i]] + (percentage ? "%" : i == 14 ? ".0" : ""));
 		}
 	}
 	

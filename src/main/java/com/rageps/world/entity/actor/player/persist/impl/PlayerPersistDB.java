@@ -60,7 +60,6 @@ public final class PlayerPersistDB implements PlayerPersistable {
 			//	return LoginResponse.NORMAL;
 			//}
 		try {
-
             PlayerAccountLoadTransaction loadTransaction = new PlayerAccountLoadTransaction(player);
             loadTransaction.execute(loadTransaction.getRepresentation().getWrapper().open());
 

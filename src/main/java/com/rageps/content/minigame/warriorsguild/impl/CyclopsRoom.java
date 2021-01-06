@@ -61,7 +61,7 @@ public final class CyclopsRoom extends GuildRoom {
 	private void updateInterface(Player player) {
 		Defender defender = Defender.getNext(player);
 		player.out(new SendInterfaceItem(34002, defender.item.getId()));
-		player.text(34001, "@or1@" + defender.toString());
+		player.interfaceText(34001, "@or1@" + defender.toString());
 		player.out(new SendWalkable(34000));
 	}
 	

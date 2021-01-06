@@ -113,8 +113,8 @@ public final class DuelMinigame extends Minigame {
 		World.getLoggingManager().write(Log.create(new DuelLog(loser, winner, false, session.getExchangeSession().get(loser), session.getExchangeSession().get(winner))));
 		World.getLoggingManager().write(Log.create(new DuelLog(winner, loser, true, session.getExchangeSession().get(loser), session.getExchangeSession().get(winner))));
 		
-		winner.text(6840, loser.getFormatUsername());
-		winner.text(6839, Integer.toString(loser.determineCombatLevel()));
+		winner.interfaceText(6840, loser.getFormatUsername());
+		winner.interfaceText(6839, Integer.toString(loser.determineCombatLevel()));
 		
 		winner.out(new SendContainer(6822, session.getExchangeSession().get(loser)));
 		winner.widget(6733);

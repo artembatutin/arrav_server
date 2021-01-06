@@ -55,13 +55,13 @@ public final class DropItemPacket implements IncomingPacket {
 		}
 		if(!item.getDefinition().isTradable() || item.getDefinition().destroyable()) {
 			player.out(new SendItemOnInterfaceSlot(14171, item, 0));
-			player.text(14174, "Are you sure you want to destroy this item?");
-			player.text(14175, "Yes");
-			player.text(14176, "No");
-			player.text(14177, "");
-			player.text(14182, "This item is valuable, you will not get it back");
-			player.text(14183, "once clicked Yes.");
-			player.text(14184, item.getDefinition().getName());
+			player.interfaceText(14174, "Are you sure you want to destroy this item?");
+			player.interfaceText(14175, "Yes");
+			player.interfaceText(14176, "No");
+			player.interfaceText(14177, "");
+			player.interfaceText(14182, "This item is valuable, you will not get it back");
+			player.interfaceText(14183, "once clicked Yes.");
+			player.interfaceText(14184, item.getDefinition().getName());
 			player.getAttributeMap().set(PlayerAttributes.DESTROY_ITEM_SLOT, slot);
 			player.chatWidget(14170);
 			return;

@@ -189,8 +189,8 @@ public final class Smithing extends ProducingSkillAction {
 		
 		for(int i = 0; i < FRAME_DATA.length; i++) {
 			if(i >= values.length) {
-				player.text(FRAME_DATA[i][0], "");
-				player.text(FRAME_DATA[i][1], "");
+				player.interfaceText(FRAME_DATA[i][0], "");
+				player.interfaceText(FRAME_DATA[i][1], "");
 				player.out(new SendItemOnInterfaceSlot(FRAME_DATA[i][3], new Item(-1, 0), FRAME_DATA[i][2]));
 				continue;
 			}
@@ -205,8 +205,8 @@ public final class Smithing extends ProducingSkillAction {
 			final String bar_color = !has_bar ? "@red@" : "@gre@";
 			final String name_color = player.getSkills()[Skills.SMITHING].getRealLevel() >= table.getLevelRequirement() && has_bar ? "@whi@" : "@bla@";
 			
-			player.text(FRAME_DATA[i][0], bar_color + table.getBarsRequired() + " Bar" + (table.getBarsRequired() != 1 ? "s" : ""));
-			player.text(FRAME_DATA[i][1], name_color + TextUtils.capitalize(table.getName().toLowerCase()));
+			player.interfaceText(FRAME_DATA[i][0], bar_color + table.getBarsRequired() + " Bar" + (table.getBarsRequired() != 1 ? "s" : ""));
+			player.interfaceText(FRAME_DATA[i][1], name_color + TextUtils.capitalize(table.getName().toLowerCase()));
 			player.out(new SendItemOnInterfaceSlot(FRAME_DATA[i][3], table.getProduced(), FRAME_DATA[i][2]));
 		}
 		if(table == null || table.getBar() == null) {

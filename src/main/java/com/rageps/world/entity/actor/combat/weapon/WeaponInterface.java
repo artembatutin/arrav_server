@@ -142,7 +142,7 @@ public enum WeaponInterface {
 		WeaponInterface weapon = item == null ? null : INTERFACES.get(item.getId());
 		if(item == null || weapon == null) {
 			TabInterface.ATTACK.sendInterface(player, WeaponInterface.UNARMED.id);
-			player.text(WeaponInterface.UNARMED.nameLine, "Unarmed");
+			player.interfaceText(WeaponInterface.UNARMED.nameLine, "Unarmed");
 			player.setWeapon(WeaponInterface.UNARMED);
 			CombatSpecial.assign(player);
 			for(FightType type : player.getWeapon().getFightTypes()) {
@@ -158,16 +158,16 @@ public enum WeaponInterface {
 		}
 		if(weapon == WeaponInterface.UNARMED) {
 			TabInterface.ATTACK.sendInterface(player, weapon.id);
-			player.text(weapon.nameLine, "Unarmed");
+			player.interfaceText(weapon.nameLine, "Unarmed");
 			player.setWeapon(WeaponInterface.UNARMED);
 			return;
 		} else if(weapon == WeaponInterface.CROSSBOW) {
-			player.text(weapon.nameLine - 1, "Weapon: ");
+			player.interfaceText(weapon.nameLine - 1, "Weapon: ");
 		} else if(weapon == WeaponInterface.WHIP) {
-			player.text(weapon.nameLine - 1, "Weapon: ");
+			player.interfaceText(weapon.nameLine - 1, "Weapon: ");
 		}
 		TabInterface.ATTACK.sendInterface(player, weapon.id);
-		player.text(weapon.nameLine, item.getDefinition().getName());
+		player.interfaceText(weapon.nameLine, item.getDefinition().getName());
 		player.setWeapon(weapon);
 		CombatSpecial.assign(player);
 		CombatSpecial.updateSpecialAmount(player);

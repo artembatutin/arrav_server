@@ -108,26 +108,26 @@ public final class HideWorking extends ProducingSkillAction {
 		HideData[] group = GROUP.get(data.required.getId());
 		
 		if(group.length == 3) {//dragonhide
-			player.text(8898, "What dragonhide would you like to make?");
+			player.interfaceText(8898, "What dragonhide would you like to make?");
 			player.out(new SendItemModelInterface(8884, 200, group[2].product.getId()));
 			player.out(new SendItemModelInterface(8883, 200, group[0].product.getId()));
 			player.out(new SendItemModelInterface(8885, 200, group[1].product.getId()));
-			player.text(8889, "\\n\\n\\n\\n\\n" + group[0].product.getDefinition().getName());
-			player.text(8893, "\\n\\n\\n\\n\\n" + group[2].product.getDefinition().getName());
-			player.text(8897, "\\n\\n\\n\\n\\n" + group[1].product.getDefinition().getName());
+			player.interfaceText(8889, "\\n\\n\\n\\n\\n" + group[0].product.getDefinition().getName());
+			player.interfaceText(8893, "\\n\\n\\n\\n\\n" + group[2].product.getDefinition().getName());
+			player.interfaceText(8897, "\\n\\n\\n\\n\\n" + group[1].product.getDefinition().getName());
 			player.chatWidget(8880);
 		} else if(group.length == 5) {//snakeskin
-			player.text(8966, "What snakeskin item would you like to make?");
+			player.interfaceText(8966, "What snakeskin item would you like to make?");
 			player.out(new SendItemModelInterface(8941, 180, 6322));
 			player.out(new SendItemModelInterface(8942, 180, 6324));
 			player.out(new SendItemModelInterface(8943, 180, 6330));
 			player.out(new SendItemModelInterface(8944, 180, 6326));
 			player.out(new SendItemModelInterface(8945, 180, 6328));
-			player.text(8949, "\\n\\n\\n\\n\\nBody");
-			player.text(8953, "\\n\\n\\n\\n\\nChaps");
-			player.text(8957, "\\n\\n\\n\\n\\nVambraces");
-			player.text(8961, "\\n\\n\\n\\n\\nBandana");
-			player.text(8965, "\\n\\n\\n\\n\\nBoots");
+			player.interfaceText(8949, "\\n\\n\\n\\n\\nBody");
+			player.interfaceText(8953, "\\n\\n\\n\\n\\nChaps");
+			player.interfaceText(8957, "\\n\\n\\n\\n\\nVambraces");
+			player.interfaceText(8961, "\\n\\n\\n\\n\\nBandana");
+			player.interfaceText(8965, "\\n\\n\\n\\n\\nBoots");
 			player.chatWidget(8938);
 		}
 		return true;

@@ -105,9 +105,9 @@ public final class LeatherWorking extends ProducingSkillAction {
 	 */
 	public static boolean openInterface(Player player, Item itemUsed, Item usedOn) {
 		if(itemUsed.getId() == NEEDLE.getId() && usedOn.getId() == HARD_LEATHER.getId() || itemUsed.getId() == HARD_LEATHER.getId() && usedOn.getId() == NEEDLE.getId()) {
-			player.text(2799, "\\n\\n\\n\\n\\n" + HARD_LEATHER.getDefinition().getName());
+			player.interfaceText(2799, "\\n\\n\\n\\n\\n" + HARD_LEATHER.getDefinition().getName());
 			player.out(new SendItemModelInterface(1746, 150, 1131));
-			player.text(2800, "How many would you like to make?");
+			player.interfaceText(2800, "How many would you like to make?");
 			player.chatWidget(4429);
 			return true;
 		}

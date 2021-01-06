@@ -102,7 +102,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 							player.out(new SendItemOnInterfaceSlot(4233, new Item(-1, 1), i));
 						}
 						
-						player.text(4230, player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft rings.");
+						player.interfaceText(4230, player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft rings.");
 						player.out(new SendItemModelInterface(4229, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
 					}
 					;
@@ -111,7 +111,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 					for(int i = 0; i < rings.length; i++) {
 						player.out(new SendItemOnInterfaceSlot(4233, new Item(-1), i));
 					}
-					player.text(4230, "You need a ring mould to craft rings.");
+					player.interfaceText(4230, "You need a ring mould to craft rings.");
 				}
 				
 				JewelleryData[] necklaces = GROUP.get(NECKLACE_MOULD.getId());
@@ -125,7 +125,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 							player.out(new SendItemOnInterfaceSlot(4239, new Item(-1, 1), i));
 						}
 						
-						player.text(4236, player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.");
+						player.interfaceText(4236, player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.");
 						player.out(new SendItemModelInterface(4235, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
 					}
 				} else {
@@ -134,7 +134,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 						player.out(new SendItemOnInterfaceSlot(4239, new Item(-1), i));
 					}
 					
-					player.text(4236, "You need a necklace mould to craft necklaces.");
+					player.interfaceText(4236, "You need a necklace mould to craft necklaces.");
 				}
 				
 				JewelleryData[] amulets = GROUP.get(AMULET_MOULD.getId());
@@ -147,7 +147,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 							player.out(new SendItemOnInterfaceSlot(4245, new Item(-1, 1), i));
 						}
 						
-						player.text(4242, player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.");
+						player.interfaceText(4242, player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.");
 						player.out(new SendItemModelInterface(4241, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
 					}
 				} else {
@@ -156,7 +156,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 						player.out(new SendItemOnInterfaceSlot(4245, new Item(-1), i));
 					}
 					
-					player.text(4242, "You need an amulet mould to craft amulets.");
+					player.interfaceText(4242, "You need an amulet mould to craft amulets.");
 				}
 				
 				player.widget(4161);

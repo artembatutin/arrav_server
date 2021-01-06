@@ -255,7 +255,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 		}
 		if(add != 0) {
 			player.getAttributeMap().plus(PlayerAttributes.PARTICIPATION, (add / 10));
-			player.text(21116, "" + player.getAttributeMap().getInt(PlayerAttributes.PARTICIPATION));
+			player.interfaceText(21116, "" + player.getAttributeMap().getInt(PlayerAttributes.PARTICIPATION));
 		}
 	}
 	
@@ -311,7 +311,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	
 	private void spawn(Player p) {
 		p.move(new Position(2656 + RandomUtils.inclusive(3), 2609 + RandomUtils.inclusive(4)));
-		p.text(21116, "" + p.getAttributeMap().getInt(PlayerAttributes.PARTICIPATION));
+		p.interfaceText(21116, "" + p.getAttributeMap().getInt(PlayerAttributes.PARTICIPATION));
 		p.out(new SendWalkable((21100)));
 		p.getMovementQueue().reset();
 	}
@@ -319,7 +319,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	private void time(int time) {
 		this.time = time;
 		for(Player p : getPlayers()) {
-			p.text(21117, (time * 6) + " seconds");
+			p.interfaceText(21117, (time * 6) + " seconds");
 		}
 		if(time == 0) {
 			//kept void alive, lost.

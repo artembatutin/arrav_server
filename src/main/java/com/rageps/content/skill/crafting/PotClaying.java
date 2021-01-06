@@ -98,17 +98,17 @@ public final class PotClaying extends ProducingSkillAction {
 		ObjectAction click = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				player.text(8879, "What would you like to make?");
+				player.interfaceText(8879, "What would you like to make?");
 				player.out(new SendItemModelInterface(8941, 105, 1931));
 				player.out(new SendItemModelInterface(8942, 120, 2313));
 				player.out(new SendItemModelInterface(8943, 100, 1923));
 				player.out(new SendItemModelInterface(8944, 100, 5350));
 				player.out(new SendItemModelInterface(8945, 150, 4440));
-				player.text(8949, "\\n\\n\\n\\nPot");
-				player.text(8953, "\\n\\n\\n\\nPie Dish");
-				player.text(8957, "\\n\\n\\n\\nBowl");
-				player.text(8961, "\\n\\n\\n\\nPlant pot");
-				player.text(8965, "\\n\\n\\n\\nPot lid");
+				player.interfaceText(8949, "\\n\\n\\n\\nPot");
+				player.interfaceText(8953, "\\n\\n\\n\\nPie Dish");
+				player.interfaceText(8957, "\\n\\n\\n\\nBowl");
+				player.interfaceText(8961, "\\n\\n\\n\\nPlant pot");
+				player.interfaceText(8965, "\\n\\n\\n\\nPot lid");
 				player.getAttributeMap().set(PlayerAttributes.CRAFTING_POTS, true);
 				player.getAttributeMap().set(PlayerAttributes.CRAFTING_POTFIRED, true);
 				player.chatWidget(8938);
@@ -119,17 +119,17 @@ public final class PotClaying extends ProducingSkillAction {
 		ItemOnObjectAction a = new ItemOnObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, Item item, int container, int slot) {
-				player.text(8879, "What would you like to make?");
+				player.interfaceText(8879, "What would you like to make?");
 				player.out(new SendItemModelInterface(8941, 105, 1787));
 				player.out(new SendItemModelInterface(8942, 120, 1789));
 				player.out(new SendItemModelInterface(8943, 100, 1791));
 				player.out(new SendItemModelInterface(8944, 100, 5352));
 				player.out(new SendItemModelInterface(8945, 150, 4438));
-				player.text(8949, "\\n\\n\\n\\nPot");
-				player.text(8953, "\\n\\n\\n\\nPie Dish");
-				player.text(8957, "\\n\\n\\n\\nBowl");
-				player.text(8961, "\\n\\n\\n\\nPlant pot");
-				player.text(8965, "\\n\\n\\n\\nPot lid");
+				player.interfaceText(8949, "\\n\\n\\n\\nPot");
+				player.interfaceText(8953, "\\n\\n\\n\\nPie Dish");
+				player.interfaceText(8957, "\\n\\n\\n\\nBowl");
+				player.interfaceText(8961, "\\n\\n\\n\\nPlant pot");
+				player.interfaceText(8965, "\\n\\n\\n\\nPot lid");
 				player.getAttributeMap().reset(PlayerAttributes.CRAFTING_POTFIRED);
 				player.getAttributeMap().set(PlayerAttributes.CRAFTING_POTS, true);
 				player.chatWidget(8938);

@@ -41,12 +41,12 @@ public final class GiveItemDialogue extends Dialogue {
 		if(t.getPlayer().getInventory().canAdd(item)) {
 			t.getPlayer().getInventory().add(item);
 			action.ifPresent(ActionListener::execute);
-			t.getPlayer().text(308, getText()[0]);
+			t.getPlayer().interfaceText(308, getText()[0]);
 			t.getPlayer().out(new SendItemModelInterface(307, 200, item.getId()));
 			t.getPlayer().chatWidget(306);
 		} else {
-			t.getPlayer().text(357, "You do not have enough space in your inventory!");
-			t.getPlayer().text(358, "Click here to continue");
+			t.getPlayer().interfaceText(357, "You do not have enough space in your inventory!");
+			t.getPlayer().interfaceText(358, "Click here to continue");
 			t.getPlayer().chatWidget(356);
 		}
 	}
