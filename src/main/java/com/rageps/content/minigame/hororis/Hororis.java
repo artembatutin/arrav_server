@@ -2,6 +2,8 @@ package com.rageps.content.minigame.hororis;
 
 import com.rageps.content.achievements.Achievement;
 import com.rageps.net.packet.out.SendFade;
+import com.rageps.net.refactor.packet.out.model.FadePacket;
+import com.rageps.net.refactor.packet.out.model.GraphicPacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.MobAttributes;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -62,7 +64,7 @@ public class Hororis extends Minigame {
 	public void onLogout(Player player) {
 		players.remove(player);
 		player.getAttributeMap().set(MobAttributes.IGNORED_AGGRESSION_LEVEL, false);
-		player.send(new Fade(20, 100, 160));
+		player.send(new FadePacket(20, 100, 160));
 		player.task(2, pl -> pl.move(new Position(3367, 3513)));
 		player.setMinigame(Optional.empty());
 	}
@@ -71,7 +73,7 @@ public class Hororis extends Minigame {
 	public void onEnter(Player player) {
 		players.add(player);
 		player.getAttributeMap().set(MobAttributes.IGNORED_AGGRESSION_LEVEL, true);
-		player.send(new Fade(20, 100, 160));
+		player.send(new FadePacket(20, 100, 160));
 		player.task(2, pl -> pl.move(new Position(3380, 3513)));
 		player.setMinigame(this);
 	}
@@ -120,7 +122,7 @@ public class Hororis extends Minigame {
 		//		});
 		bones.clear();
 		for(Player p : players) {
-			p.send(new Fade(20, 100, 160));
+			p.send(new FadePacket(20, 100, 160));
 			p.task(2, pl -> pl.move(new Position(3367, 3513)));
 			if(!p.playerData.lockedXP) {
 				p.getSkills()[Skills.PRAYER].increaseExperience(400);
@@ -148,7 +150,7 @@ public class Hororis extends Minigame {
 			Position pos = getRandom();
 			GroundItemStatic item = new GroundItemStatic(new Item(526), pos, GroundItemPolicy.TIMEOUT);
 			for(Player p : players) {
-				p.send(new Graphic(520, pos, 0));
+				p.send(new GraphicPacket(p, 520, pos, 0));
 				if(p.getPosition().same(pos)) {
 					p.damage(new Hit(RandomUtils.inclusive(20, 100), Hitsplat.DISEASE, HitIcon.MAGIC));
 				}

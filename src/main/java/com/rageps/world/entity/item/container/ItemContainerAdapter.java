@@ -1,5 +1,7 @@
 package com.rageps.world.entity.item.container;
 
+import com.rageps.net.refactor.packet.out.model.ItemOnInterfaceSlotPacket;
+import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.net.packet.out.SendContainer;
 import com.rageps.net.packet.out.SendItemOnInterfaceSlot;
@@ -46,7 +48,7 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	 * Updates many items on a widget.
 	 */
 	protected void updateItems(ItemContainer container) {
-		player.send(new ItemsOnInterfacePacket(widget(), container));
+		player.send(new ItemsOnInterfacePacket(player, widget(), container));
 	}
 	
 	/**

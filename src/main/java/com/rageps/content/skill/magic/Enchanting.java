@@ -7,6 +7,7 @@ import com.rageps.content.achievements.Achievement;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
 import com.rageps.content.skill.smithing.Smelting;
 import com.rageps.net.packet.out.SendForceTab;
+import com.rageps.net.refactor.packet.out.model.ForceTabPacket;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import com.rageps.content.TabInterface;
 import com.rageps.content.item.MagicStaff;

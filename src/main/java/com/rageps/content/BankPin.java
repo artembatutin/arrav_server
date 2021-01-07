@@ -3,6 +3,8 @@ package com.rageps.content;
 import com.rageps.content.dialogue.impl.StatementDialogue;
 import com.rageps.net.packet.out.SendCloseInterface;
 import com.rageps.net.packet.out.SendMoveComponent;
+import com.rageps.net.refactor.packet.out.model.CloseInterfacePacket;
+import com.rageps.net.refactor.packet.out.model.MoveComponentPacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 
@@ -73,7 +75,7 @@ public class BankPin {
 					player.resetingPin = false;
 					player.getBank().open(false);
 				} else
-					player.send(new CloseInterface());
+					player.send(new CloseInterfacePacket(player.getDialogueBuilder()));
 			} else if(player.enterPin.length() >= 4) {
 				player.message("@blu@Pin entered incorrectly, Please try again.");
 				player.getBank().open(false);
@@ -113,7 +115,7 @@ public class BankPin {
 				if(player.pinOrder[j] == 0) {
 					player.pinOrder[j] = actionButtons[pinOrder];
 					player.interfaceText(sendFrames[pinOrder], "" + j);
-					player.send(new MoveComponent(random(+45), random(-45), sendFrames[pinOrder]));
+					player.send(new MoveComponentPacket(random(+45), random(-45), sendFrames[pinOrder]));
 					break;
 				}
 			}

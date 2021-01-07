@@ -1,6 +1,7 @@
 package com.rageps.world;
 
 import com.rageps.net.discord.Discord;
+import com.rageps.net.refactor.packet.out.model.LogoutPacket;
 import com.rageps.net.refactor.release.Release;
 import com.rageps.net.refactor.release.Release317;
 import com.rageps.net.sql.DatabaseTransactionWorker;
@@ -162,7 +163,7 @@ public final class World {
 		if(player.getCombat().inCombat())
 			player.getLogoutTimer().reset();
 		player.setState(AWAITING_REMOVAL);
-		player.send(new Logout());
+		player.send(new LogoutPacket(player));
 		logouts.add(player);
 	}
 	

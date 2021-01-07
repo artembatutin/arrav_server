@@ -184,12 +184,12 @@ public final class Region extends Entity {
 				continue;
 			if(item.getInstance() != player.getInstance())
 				continue;
-			player.send(new ItemNodeRemovalPacket(item));
+			player.send(new ItemNodeRemovalPacket(player, item));
 			if(item.getPosition().withinDistance(player.getPosition(), 60)) {
 				if(item.getItemState() == GroundItemState.SEEN_BY_EVERYONE) {
-					player.send(new ItemNodePacket(item));
+					player.send(new ItemNodePacket(player, item));
 				} else if(item.getPlayer().same(player) && item.getItemState() == GroundItemState.SEEN_BY_OWNER) {
-					player.send(new ItemNodePacket(item));
+					player.send(new ItemNodePacket(player, item));
 				}
 			}
 		}

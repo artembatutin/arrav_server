@@ -1,6 +1,6 @@
 package com.rageps.content.teleport;
 
-import com.rageps.net.packet.out.SendWalkable;
+import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.util.ActionListener;
 import com.rageps.world.entity.actor.player.Player;
@@ -41,7 +41,7 @@ public abstract class TeleportSpell {
 	public final void resetPlayerFlags(Player player) {
 		//FightCavesHandler.remove(player);
 		player.widget(-1);
-		player.send(new Walkable(-1));
+		player.send(new WalkableInterfacePacket(-1));
 		player.setTeleportStage(1);
 		player.getCombat().reset(true, true);
 		player.faceEntity(null);

@@ -12,7 +12,7 @@ public class ItemNodePacket extends Packet {
     private final GroundItem item;
     private final Player player;
 
-    public ItemNodePacket(GroundItem item, Player player) {
+    public ItemNodePacket(Player player, GroundItem item) {
         this.item = item;
         this.player = player;
     }

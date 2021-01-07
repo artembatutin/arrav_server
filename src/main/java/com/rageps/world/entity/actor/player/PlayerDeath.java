@@ -12,7 +12,7 @@ import com.rageps.content.skill.Skill;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.prayer.Prayer;
 import com.rageps.net.host.HostManager;
-import com.rageps.net.packet.out.SendWalkable;
+import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.region.Region;
@@ -215,7 +215,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		if(deathMessage) {
 			getActor().message(getActor().getRights().less(Rights.ADMINISTRATOR) ? "Oh dear, you're dead!" : "You are unaffected by death because of your rank.");
 		}
-		getActor().send(new Walkable(-1));
+		getActor().send(new WalkableInterfacePacket(-1));
 		Prayer.deactivateAll(getActor());
 		
 		Optional<Minigame> minigame = MinigameHandler.getMinigame(getActor());

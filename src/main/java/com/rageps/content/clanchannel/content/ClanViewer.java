@@ -64,7 +64,7 @@ public class ClanViewer {
 		player.send(new InterfaceStringPacket(viewing != null ? viewing.getSlogan() : "", 43010));
 		player.send(new InterfaceStringPacket(searchKey.isEmpty() ? "Search for clan" : searchKey, 43012));
 		player.send(new InterfaceStringPacket(name, 43019));
-		player.send(new ItemsOnInterfacePacket(43011, showcase));
+		player.send(new ItemsOnInterfacePacket(player, 43011, showcase));
 		player.getInterfaceManager().open(interfaceId);
 	}
 

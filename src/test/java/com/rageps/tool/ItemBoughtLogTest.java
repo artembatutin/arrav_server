@@ -1,9 +1,7 @@
 package com.rageps.tool;
 
 import com.rageps.content.market.MarketCounter;
-import com.rageps.content.market.MarketShop;
 import com.rageps.content.market.currency.Currency;
-import com.rageps.net.Session;
 import com.rageps.net.sql.logging.ItemBoughtLog;
 import com.rageps.util.json.impl.ItemDefinitionLoader;
 import com.rageps.util.json.impl.ShopLoader;

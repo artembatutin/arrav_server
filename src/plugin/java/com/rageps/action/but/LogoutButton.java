@@ -27,7 +27,7 @@ public class LogoutButton extends ActionInitializer {
 					player.message("You can't log out right now.");
 					return true;
 				}
-				player.send(new LogoutPacket());
+				player.send(new LogoutPacket(player));
 				return true;
 			}
 		};

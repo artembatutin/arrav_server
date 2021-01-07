@@ -6,6 +6,7 @@ import com.rageps.GameConstants;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.content.skill.Skill;
 import com.rageps.content.skill.Skills;
+import com.rageps.net.refactor.packet.out.model.EnergyPacket;
 import com.rageps.world.World;
 import com.rageps.action.impl.ItemAction;
 import com.rageps.net.refactor.packet.out.model.ConfigPacket;
@@ -591,7 +592,7 @@ public enum PotionConsumable {
 	private static void onEnergyEffect(Player player, boolean superPotion) {
 		int amount = superPotion ? 100 : 50;
 		player.setRunEnergy(player.playerData.getRunEnergy() + amount);
-		player.send(new Energy());
+		player.send(new EnergyPacket((int) player.playerData.getRunEnergy()));
 	}
 	
 	/**

@@ -7,6 +7,7 @@ import com.rageps.content.teleport.TeleportType;
 import com.rageps.content.wilderness.WildernessActivity;
 import com.rageps.action.ActionInitializer;
 import com.rageps.net.packet.out.SendWildernessActivity;
+import com.rageps.net.refactor.packet.out.model.WildernessActivityPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.locale.Position;
 
@@ -82,7 +83,7 @@ public class SpellbookButton extends ActionInitializer {
 				player.widget(-15);
 				//if(player.getWildernessActivity().elapsed(5, TimeUnit.MINUTES)) {
 				player.message("Wilderness map has been updated! Next update in 5 minutes.");
-				player.send(new WildernessActivity(WildernessActivity.getPlayers()));
+				player.send(new WildernessActivityPacket(WildernessActivity.getPlayers(), WildernessActivity.getFooledCount(player)));
 				player.getWildernessActivity().reset();
 				//}
 				return true;

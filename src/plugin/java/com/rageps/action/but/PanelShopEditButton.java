@@ -15,7 +15,7 @@ public class PanelShopEditButton extends ActionInitializer {
 		ButtonAction e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.send(new EnterAmountPacket("Item id:", t -> () -> {
+				player.send(new EnterAmountPacket(player, "Item id:", t -> () -> {
 					int id = Integer.parseInt(t);
 					if(player.getMarketShop() != null && player.getMarketShop().getId() != -1) {
 						int shopId = player.getMarketShop().getId();

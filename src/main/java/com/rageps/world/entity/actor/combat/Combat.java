@@ -1,6 +1,7 @@
 package com.rageps.world.entity.actor.combat;
 
 import com.rageps.net.packet.out.SendCombatTarget;
+import com.rageps.net.refactor.packet.out.model.CombatTargetPacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.combat.attack.FightType;
 import com.rageps.combat.listener.CombatListener;
@@ -97,7 +98,7 @@ public class Combat<T extends Actor> {
 		}
 		if(attacker.isPlayer() && attacker.getCombat().getDefender() != null)
 		if (defender != null && defender.getCombat().getDefender() != null && attacker.isPlayer()) {
-		attacker.toPlayer().send(new CombatTarget(defender));
+		attacker.toPlayer().send(new CombatTargetPacket(defender));
 		}
 	}
 	
@@ -361,7 +362,7 @@ public class Combat<T extends Actor> {
 
 	public void reset(boolean fullCombat, boolean resetWalk) {
 		if(attacker.isPlayer())
-			attacker.toPlayer().send(new CombatTarget(null));
+			attacker.toPlayer().send(new CombatTargetPacket(null));
 
 		if(defender != null) {
 			if(fullCombat) {

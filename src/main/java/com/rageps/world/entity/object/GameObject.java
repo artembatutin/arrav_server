@@ -1,13 +1,12 @@
 package com.rageps.world.entity.object;
 
 import com.rageps.net.refactor.packet.out.model.ObjectPacket;
-import com.rageps.net.refactor.packet.out.model.RemoveObjectPacket;
+import com.rageps.net.refactor.packet.out.model.ObjectRemovalPacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.net.packet.out.SendObject;
 import com.rageps.task.Task;
 import com.rageps.world.entity.actor.player.Player;
 
@@ -71,9 +70,9 @@ public abstract class GameObject {
 							continue;
 						if(getZ() == p.getPosition().getZ() && getInstance() == p.getInstance()) {
 							if(on)
-								p.send(new ObjectPacket(this));
+								p.send(new ObjectPacket(p, this));
 							else
-								p.send(new RemoveObjectPacket(this));
+								p.send(new ObjectRemovalPacket(p, this));
 						}
 					}
 				}

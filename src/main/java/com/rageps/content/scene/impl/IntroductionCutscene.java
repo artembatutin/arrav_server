@@ -10,7 +10,7 @@ import com.rageps.net.packet.out.*;
 import com.rageps.content.TabInterface;
 import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
-import com.rageps.net.refactor.packet.out.model.CameraResetPacket;
+import com.rageps.net.refactor.packet.out.model.*;
 import com.rageps.task.Task;
 import com.rageps.world.model.Animation;
 import com.rageps.world.model.Graphic;
@@ -57,54 +57,34 @@ public final class IntroductionCutscene extends Cutscene {
 			if(player.getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) == 1) {
 				player.getDialogueBuilder().append(new StatementDialogue("Welcome to the World of "+ World.get().getEnvironment().getName()+"!").attach(() -> {
 					player.getActivityManager().set(ActivityType.CLICK_BUTTON);
-					player.send(new CameraMovement(new Position(3083, 3510), 420, 2, 10));
-					player.send(new CameraAngle(new Position(3091, 3510), 270, 2, 10));
+					player.send(new CameraMovementPacket(new Position(3083, 3510), 420, 2, 10, player.getPosition()));
+					player.send(new CameraAnglePacket(new Position(3091, 3510), 270, 2, 10, player.getPosition()));
 				}), new StatementDialogue("Here is the @red@home@bla@ area.", "We've opened a bank account for you.", "So you can use the bank booths to store your goods."), new StatementDialogue("By the way, this is you.", "But lets proceed...").attach(() -> {
 					player.facePosition(new Position(3086, 3510));
 					player.animation(new Animation(863));
 				}), new StatementDialogue("This is the famous @red@Market place.", "You can search any type of item you want here.").attach(() -> {
-					player.send(new CameraAngle(new Position(3079, 3509), 240, 4, 10));
+					player.send(new CameraAnglePacket(new Position(3079, 3509), 240, 4, 10, player.getPosition()));
 				}), new GiveItemDialogue(new Item(995, 200000), "There some coins to get you started...", Optional.empty()).attach(() -> {
 				}), new StatementDialogue("This is the @red@Scoreboard.", "It tracks the top 20 players with the highest killstreak.", "Dying will reset your killstreak.").attach(() -> {
-					player.send(new CameraMovement(new Position(3087, 3518), 400, 4, 10));
-					player.send(new CameraAngle(new Position(3092, 3516), 340, 6, 10));
 				}), new StatementDialogue("Those @red@3@bla@ with the highest streak at the @red@end of the week@bla@", "will gain a reward.", " Those @red@3@bla@ with the most recent @red@on-going@bla@ streaks", "will also gain rewards!").attach(() -> {
 					TabInterface.QUEST.sendInterface(player, 638);
 					player.send(new ForceTabPacket(TabInterface.QUEST));
 				}), new GiveItemDialogue(new Item(19000, 200), "Each player kill will give you blood money.", Optional.empty()).attach(() -> {
 				}), new StatementDialogue("You can view your player killing statistics by", "clicking the quest tab which is just next to your skill tab.").attach(() -> {
 				}), new StatementDialogue("This shiny portal allows you to", "get anywhere: @red@skills, minigames, bosses.").attach(() -> {
-					player.send(new CameraMovement(new Position(3085, 3511), 340, 6, 12));
-					player.send(new CameraAngle(new Position(3081, 3514), 320, 6, 12));
 				}), new StatementDialogue("Spria is the slayer master, ask her for any tasks."), new StatementDialogue("This is @red@Party Pete", "He changes tokens into precious goods.").attach(() -> {
-					player.send(new CameraMovement(new Position(3091, 3511), 340, 6, 12));
-					player.send(new CameraAngle(new Position(3094, 3515), 250, 4, 10));
 				}), new GiveItemDialogue(new Item(7478, 20), "You can get tokens by donating on our website.", Optional.empty()).attach(() -> {
 				}), new StatementDialogue("As you may noticed, this is the @red@Garden.", "You can plant trees here!").attach(() -> {
-					player.send(new CameraMovement(new Position(3087, 3504), 1800, 2, 10));
-					player.send(new CameraAngle(new Position(3087, 3498), 2000, 2, 10));
 				}), new StatementDialogue("There is the @red@Fire pit.", "Firing it up will enable double xp."), new StatementDialogue("You will discover these two buildings on your own.", "Let's move on...").attach(() -> {
-					player.send(new CameraMovement(new Position(3087, 3492), 1800, 2, 10));
-					player.send(new CameraAngle(new Position(3092, 3477), 2000, 2, 10));
 				}), new StatementDialogue("This is the @red@Construction Site.", "You can train few skills here.").attach(() -> {
-					player.send(new CameraMovement(new Position(3088, 3484), 1800, 2, 10));
-					player.send(new CameraAngle(new Position(3093, 3475), 2000, 2, 10));
 				}), new StatementDialogue("A good start would be thieving on the second floor", "However be aware of guards!").attach(() -> {
-					player.send(new CameraMovement(new Position(3088, 3482), 1200, 2, 10));
-					player.send(new CameraAngle(new Position(3094, 3476), 1400, 2, 10));
 				}), new StatementDialogue("This is the @red@Iron man house.", "It's exclusive to iron man members.").attach(() -> {
-					player.send(new CameraMovement(new Position(3099, 3496), 1200, 2, 10));
-					player.send(new CameraAngle(new Position(3102, 3499), 1400, 2, 10));
 				}), new StatementDialogue("@red@Iron man mode:", "Levels decrease on death, can't search global market,", "can't trade nor drop and tougher monsters.").attach(() -> {
 				}), new StatementDialogue("@red@Benefits when maxed out:", "Restrictions removed, 10% bonus monsters drops,", "unlimited run outside of wilderness", "and exclusive iron man items.").attach(() -> {
 				}), new StatementDialogue("Another place on the list is the @red@Camp.", "Most of holidays activities will be held here.").attach(() -> {
-					player.send(new CameraMovement(new Position(3106, 3504), 1900, 2, 10));
-					player.send(new CameraAngle(new Position(3107, 3512), 2100, 2, 10));
 				}), new StatementDialogue("We hope you'll enjoy your stay at @red@"+World.get().getEnvironment().getName()+".", "Don't forget to register on our forums.", "Report bugs also!").attach(() -> {
 					player.setVisible(true);
 					player.setInstance(0);
-					player.send(new CameraMovement(new Position(3096, 3519), 1900, 2, 10));
-					player.send(new CameraAngle(new Position(3087, 3510), 2100, 2, 10));
 				}), complete());
 				this.destruct();
 			}
@@ -120,7 +100,7 @@ public final class IntroductionCutscene extends Cutscene {
 	private Dialogue complete() {
 		return new StatementDialogue("You're on your own now. Goodluck!").attach(() -> {
 			player.setInstance(0);
-			player.send(new Fade(10, 100, 120));
+			player.send(new FadePacket(10, 100, 120));
 			player.facePosition(new Position(3221, 3432));
 			player.send(new CameraResetPacket());
 

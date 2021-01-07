@@ -3,6 +3,7 @@ package com.rageps.content.minigame.barrows;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.content.teleport.TeleportType;
 import com.rageps.content.teleport.impl.DefaultTeleportSpell;
+import com.rageps.net.refactor.packet.out.model.MinimapStatePacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.item.cached.CachedItem;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -105,7 +106,7 @@ public final class BarrowsMinigame extends Minigame {
 	
 	@Override
 	public boolean canTeleport(Player player, Position position) {
-		player.send(new MinimapState(0));
+		player.send(new MinimapStatePacket(0));
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
 		if(current.isPresent() && current.get().getState() != EntityState.ACTIVE)
 			return true;
@@ -144,7 +145,7 @@ public final class BarrowsMinigame extends Minigame {
 				if(c.getState() == EntityState.ACTIVE)
 					World.get().getMobRepository().remove(c);
 			});
-			player.send(new MinimapState(0));
+			player.send(new MinimapStatePacket(0));
 			player.move(new Position(stair.getLocation().getX(), stair.getLocation().getY(), stair.getLocation().getZ()));
 			return true;
 		}
@@ -199,7 +200,7 @@ public final class BarrowsMinigame extends Minigame {
 				}
 				Position position = new Position(BarrowsData.AHRIM.getLocation().getX(), BarrowsData.AHRIM.getLocation().getY(), BarrowsData.AHRIM.getLocation().getZ());
 				DefaultTeleportSpell teleport = new DefaultTeleportSpell(position, TeleportType.NORMAL);
-				player.send(new MinimapState(0));
+				player.send(new MinimapStatePacket(0));
 				if(loot.isEmpty())
 					player.message("You open the chest and it's... empty?");
 				else {
@@ -219,7 +220,7 @@ public final class BarrowsMinigame extends Minigame {
 	
 	@Override
 	public void onDeath(Player player) {
-		player.send(new MinimapState(0));
+		player.send(new MinimapStatePacket(0));
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
 		if(current.isPresent() && current.get().getState() != EntityState.ACTIVE)
 			return;
@@ -240,7 +241,7 @@ public final class BarrowsMinigame extends Minigame {
 	
 	@Override
 	public void onLogin(Player player) {
-		player.send(new MinimapState(0));
+		player.send(new MinimapStatePacket(0));
 		Optional<BarrowsData> data = BarrowsData.getDefinitionForCave(player.getPosition());
 		
 		if(!data.isPresent()) {
@@ -274,7 +275,7 @@ public final class BarrowsMinigame extends Minigame {
 	
 	@Override
 	public void onEnter(Player player) {
-		player.send(new MinimapState(2));
+		player.send(new MinimapStatePacket(2));
 	}
 	
 }

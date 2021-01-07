@@ -229,11 +229,11 @@ public final class DuelSession extends ExchangeSession {
 				Player recipient = getOther(player);
 				int remaining = recipient.getInventory().remaining();
 				
-				recipient.send(new ItemsOnInterfacePacket(6669, getExchangeSession().get(player)));
-				recipient.send(new ItemsOnInterfacePacket(6670, getExchangeSession().get(player)));
-				player.send(new ItemsOnInterfacePacket(6669, getExchangeSession().get(player)));
-				player.send(new ItemsOnInterfacePacket(6670, getExchangeSession().get(player)));
-				player.send(new ItemsOnInterfacePacket(3322, player.getInventory()));
+				recipient.send(new ItemsOnInterfacePacket(recipient, 6669, getExchangeSession().get(player)));
+				recipient.send(new ItemsOnInterfacePacket(recipient, 6670, getExchangeSession().get(player)));
+				player.send(new ItemsOnInterfacePacket(player, 6669, getExchangeSession().get(player)));
+				player.send(new ItemsOnInterfacePacket(player, 6670, getExchangeSession().get(player)));
+				player.send(new ItemsOnInterfacePacket(player, 3322, player.getInventory()));
 				player.getInterfaceManager().openInventory(37888, 3321);
 				player.interfaceText(37927, "");
 				player.interfaceText(37928, "Dueling with: " + name(recipient) + " (level-" + recipient.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots");
@@ -284,7 +284,7 @@ public final class DuelSession extends ExchangeSession {
 				}
 				player.interfaceText(6517, getItemNames(recipient, this.getExchangeSession().get(recipient).getItems()));
 				player.interfaceText(6516, getItemNames(player, this.getExchangeSession().get(player).getItems()));
-				player.send(new ItemsOnInterfacePacket(3322, player.getInventory()));
+				player.send(new ItemsOnInterfacePacket(player, 3322, player.getInventory()));
 				player.getInterfaceManager().openInventory(6412, 3321);
 			}
 		}
@@ -318,10 +318,10 @@ public final class DuelSession extends ExchangeSession {
 		for(Player player : getExchangeSession().keySet()) {
 			Player recipient = getOther(player);
 			int remaining = recipient.getInventory().remaining();
-			player.send(new ItemsOnInterfacePacket(3322, player.getInventory()));
+			player.send(new ItemsOnInterfacePacket(player, 3322, player.getInventory()));
 			player.getInterfaceManager().openInventory(37888, 3321);
-			player.send(new ItemsOnInterfacePacket(6669, getExchangeSession().get(player)));
-			player.send(new ItemsOnInterfacePacket(6670, getExchangeSession().get(recipient)));
+			player.send(new ItemsOnInterfacePacket(player, 6669, getExchangeSession().get(player)));
+			player.send(new ItemsOnInterfacePacket(player, 6670, getExchangeSession().get(recipient)));
 			player.interfaceText(37927, "");
 			player.interfaceText(6671, "Dueling with: " + name(recipient) + " (level-" + recipient.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots");
 		}

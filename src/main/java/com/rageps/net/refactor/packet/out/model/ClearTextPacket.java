@@ -10,21 +10,20 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 public class ClearTextPacket extends Packet {
 
     private final int start, count;
+    private final Player player;
 
-    Int2ObjectArrayMap<String> interfaceTexts;
-
-    public ClearTextPacket(int start, int count, Int2ObjectArrayMap<String> interfaceTexts) {
+    public ClearTextPacket(Player player, int start, int count) {
         this.start = start;
         this.count = count;
-        this.interfaceTexts = interfaceTexts;
+        this.player = player;
     }
 
     public int getCount() {
         return count;
     }
 
-    public Int2ObjectArrayMap<String> getInterfaceTexts() {
-        return interfaceTexts;
+    public Player getPlayer() {
+        return player;
     }
 
     public int getStart() {

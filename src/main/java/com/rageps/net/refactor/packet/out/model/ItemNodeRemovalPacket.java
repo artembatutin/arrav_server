@@ -13,7 +13,7 @@ public class ItemNodeRemovalPacket extends Packet {
     private final GroundItem item;
     private final Player player;
 
-    public ItemNodeRemovalPacket(GroundItem item, Player player) {
+    public ItemNodeRemovalPacket(Player player, GroundItem item) {
         this.item = item;
         this.player = player;
     }

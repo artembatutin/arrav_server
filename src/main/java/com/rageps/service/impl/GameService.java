@@ -259,7 +259,7 @@ public final class GameService extends Service {
 		if(player.getCombat().inCombat())
 			player.getLogoutTimer().reset();
 		//player.setState(AWAITING_REMOVAL);
-		player.send(new LogoutPacket());
+		player.send(new LogoutPacket(player));
 		oldPlayers.add(player);
 	}
 

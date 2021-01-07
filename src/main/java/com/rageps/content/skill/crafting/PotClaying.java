@@ -3,7 +3,7 @@ package com.rageps.content.skill.crafting;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.rageps.content.achievements.Achievement;
-import com.rageps.net.packet.out.SendItemModelInterface;
+import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
 import com.rageps.action.impl.ItemOnObjectAction;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.SkillData;
@@ -74,7 +74,7 @@ public final class PotClaying extends ProducingSkillAction {
 		}
 		
 		if(data.amount == -1) {
-			player.send(new EnterAmount("How many you would like to register?", s -> () -> PotClaying.create(player, data, Integer.parseInt(s), player.getAttributeMap().getBoolean(PlayerAttributes.CRAFTING_POTFIRED))));
+			player.send(new EnterAmountPacket(player, "How many you would like to register?", s -> () -> PotClaying.create(player, data, Integer.parseInt(s), player.getAttributeMap().getBoolean(PlayerAttributes.CRAFTING_POTFIRED))));
 			return true;
 		}
 		create(player, data, data.amount, player.getAttributeMap().getBoolean(PlayerAttributes.CRAFTING_POTFIRED));
@@ -99,11 +99,11 @@ public final class PotClaying extends ProducingSkillAction {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
 				player.interfaceText(8879, "What would you like to make?");
-				player.send(new ItemModelInterface(8941, 105, 1931));
-				player.send(new ItemModelInterface(8942, 120, 2313));
-				player.send(new ItemModelInterface(8943, 100, 1923));
-				player.send(new ItemModelInterface(8944, 100, 5350));
-				player.send(new ItemModelInterface(8945, 150, 4440));
+				player.send(new ItemModelInterfacePacket(8941, 105, 1931));
+				player.send(new ItemModelInterfacePacket(8942, 120, 2313));
+				player.send(new ItemModelInterfacePacket(8943, 100, 1923));
+				player.send(new ItemModelInterfacePacket(8944, 100, 5350));
+				player.send(new ItemModelInterfacePacket(8945, 150, 4440));
 				player.interfaceText(8949, "\\n\\n\\n\\nPot");
 				player.interfaceText(8953, "\\n\\n\\n\\nPie Dish");
 				player.interfaceText(8957, "\\n\\n\\n\\nBowl");
@@ -120,11 +120,11 @@ public final class PotClaying extends ProducingSkillAction {
 			@Override
 			public boolean click(Player player, GameObject object, Item item, int container, int slot) {
 				player.interfaceText(8879, "What would you like to make?");
-				player.send(new ItemModelInterface(8941, 105, 1787));
-				player.send(new ItemModelInterface(8942, 120, 1789));
-				player.send(new ItemModelInterface(8943, 100, 1791));
-				player.send(new ItemModelInterface(8944, 100, 5352));
-				player.send(new ItemModelInterface(8945, 150, 4438));
+				player.send(new ItemModelInterfacePacket(8941, 105, 1787));
+				player.send(new ItemModelInterfacePacket(8942, 120, 1789));
+				player.send(new ItemModelInterfacePacket(8943, 100, 1791));
+				player.send(new ItemModelInterfacePacket(8944, 100, 5352));
+				player.send(new ItemModelInterfacePacket(8945, 150, 4438));
 				player.interfaceText(8949, "\\n\\n\\n\\nPot");
 				player.interfaceText(8953, "\\n\\n\\n\\nPie Dish");
 				player.interfaceText(8957, "\\n\\n\\n\\nBowl");

@@ -8,6 +8,7 @@ import com.rageps.content.dialogue.impl.PlayerDialogue;
 import com.rageps.content.market.MarketCounter;
 import com.rageps.action.ActionInitializer;
 import com.rageps.net.packet.out.SendLink;
+import com.rageps.net.refactor.packet.out.model.LinkPacket;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 
@@ -21,7 +22,7 @@ public class PartyPete extends ActionInitializer {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						player.getDialogueBuilder().advance();
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.send(new Link("store/"));
+						player.send(new LinkPacket("store/"));
 						player.getDialogueBuilder().last();
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 						player.closeWidget();

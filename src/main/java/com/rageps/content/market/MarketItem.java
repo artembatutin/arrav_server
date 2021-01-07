@@ -2,6 +2,8 @@ package com.rageps.content.market;
 
 import com.rageps.net.packet.out.SendShopPrice;
 import com.rageps.net.packet.out.SendShopStock;
+import com.rageps.net.refactor.packet.out.model.ShopPricePacket;
+import com.rageps.net.refactor.packet.out.model.ShopStockPacket;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -136,7 +138,7 @@ public class MarketItem {
 		for(Player p : viewers) {
 			if(p == null)
 				continue;
-			p.send(new ShopStock(this));
+			p.send(new ShopStockPacket(this));
 		}
 	}
 	
@@ -144,7 +146,7 @@ public class MarketItem {
 		for(Player p : viewers) {
 			if(p == null)
 				continue;
-			p.send(new ShopPrice(this));
+			p.send(new ShopPricePacket(this));
 		}
 	}
 	

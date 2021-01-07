@@ -3,6 +3,8 @@ package com.rageps.combat.strategy.player.special;
 import com.rageps.content.skill.Skills;
 import com.rageps.net.packet.out.SendInterfaceLayer;
 import com.rageps.combat.strategy.player.special.impl.*;
+import com.rageps.net.refactor.packet.out.model.InterfaceLayerPacket;
+import com.rageps.net.refactor.packet.out.model.UpdateSpecialPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.net.packet.out.SendMessage;
@@ -323,7 +325,7 @@ public enum CombatSpecial {
 		int specialAmount = player.playerData.getSpecialPercentage().get() / 10;
 		
 		for(int i = 0; i < 10; i++) {
-			player.send(new UpdateSpecial(--specialBar, specialAmount >= specialCheck ? 500 : 0));
+			player.send(new UpdateSpecialPacket(--specialBar, specialAmount >= specialCheck ? 500 : 0));
 			specialCheck--;
 		}
 	}
@@ -356,12 +358,12 @@ public enum CombatSpecial {
 				player.getCombatSpecial().disable(player);
 			}
 			
-			player.send(new InterfaceLayer(player.getWeapon().getSpecialBar(), false));
+			player.send(new InterfaceLayerPacket(player.getWeapon().getSpecialBar(), false));
 			player.setCombatSpecial(special.get());
 			return;
 		}
 		
-		player.send(new InterfaceLayer(player.getWeapon().getSpecialBar(), true));
+		player.send(new InterfaceLayerPacket(player.getWeapon().getSpecialBar(), true));
 		player.setCombatSpecial(null);
 		
 		if(player.getCombatSpecial() != null) {

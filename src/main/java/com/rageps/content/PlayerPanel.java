@@ -10,6 +10,10 @@ import com.rageps.content.market.MarketCounter;
 import com.rageps.content.scoreboard.PlayerScoreboardStatistic;
 import com.rageps.content.scoreboard.ScoreboardManager;
 import com.rageps.content.wilderness.WildernessActivity;
+import com.rageps.net.refactor.packet.out.model.ClearTextPacket;
+import com.rageps.net.refactor.packet.out.model.EnterNamePacket;
+import com.rageps.net.refactor.packet.out.model.LinkPacket;
+import com.rageps.net.refactor.packet.out.model.MobDropPacket;
 import com.rageps.util.Utility;
 import com.rageps.world.World;
 import com.rageps.action.impl.ButtonAction;
@@ -34,13 +38,13 @@ public enum PlayerPanel {
 	COMMUNITY() {
 		@Override
 		public void onClick(Player player) {
-			player.send(new Link("community/"));
+			player.send(new LinkPacket("community/"));
 		}
 	},
 	DISCORD() {
 		@Override
 		public void onClick(Player player) {
-			player.send(new Link("discord"));
+			player.send(new LinkPacket("discord"));
 		}
 	},
 	VOTE() {
@@ -48,10 +52,10 @@ public enum PlayerPanel {
 		public void onClick(Player player) {
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-					player.send(new Link("vote"));
+					player.send(new LinkPacket("vote"));
 					player.closeWidget();
 				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-					player.send(new EnterName("Auth code:", s -> () -> {
+					player.send(new EnterNamePacket(player, "Auth code:", s -> () -> {
 						try {
 							new RedeemCommand().execute(player, new String[]{"", s}, "");
 							player.closeWidget();
@@ -70,7 +74,7 @@ public enum PlayerPanel {
 	STORE() {
 		@Override
 		public void onClick(Player player) {
-			player.send(new Link("store/"));
+			player.send(new LinkPacket("store/"));
 		}
 	},
 	EXP_LOCK() {
@@ -84,7 +88,7 @@ public enum PlayerPanel {
 	NPC_TOOL() {
 		@Override
 		public void onClick(Player player) {
-			player.send(new MobDrop(0, null));
+			//player.send(new MobDropPacket(0, null));
 		}
 	},
 	TOOL3,
@@ -133,7 +137,7 @@ public enum PlayerPanel {
 			player.getDialogueBuilder().append(new StatementDialogue("You sure you want to change your password?"), new OptionDialogue(t -> {
 				if(t == OptionDialogue.OptionType.FIRST_OPTION) {
 					player.closeWidget();
-					player.send(new EnterName("Your new password to set:", s -> () -> {
+					player.send(new EnterNamePacket(player, "Your new password to set:", s -> () -> {
 						player.credentials.password = s;
 						player.message("You have successfully changed your password. Log out to save it.");
 						PlayerPanel.PASSWORD.refresh(player, "@or3@ - Password: " + TextUtils.passwordCheck(s));
@@ -213,7 +217,7 @@ public enum PlayerPanel {
 	 * @param player the player logging in.
 	 */
 	public static void refreshAll(Player player) {
-		player.send(new ClearText(16026, 100));
+		player.send(new ClearTextPacket(player, 16026, 100));
 		PlayerPanel.QUICKIES.refresh(player, "@or1@Quickies @or3@[clickable]@or1@:");
 		PlayerPanel.COMMUNITY.refresh(player, "@or3@ - Forums");
 		PlayerPanel.DISCORD.refresh(player, "@or3@ - Discord");

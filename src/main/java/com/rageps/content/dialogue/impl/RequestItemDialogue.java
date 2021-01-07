@@ -1,6 +1,6 @@
 package com.rageps.content.dialogue.impl;
 
-import com.rageps.net.packet.out.SendItemModelInterface;
+import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
 import com.rageps.content.dialogue.Dialogue;
 import com.rageps.content.dialogue.DialogueBuilder;
 import com.rageps.content.dialogue.DialogueType;
@@ -65,7 +65,7 @@ public final class RequestItemDialogue extends Dialogue {
 			reward.ifPresent(dialogue.getPlayer().getInventory()::addOrDrop);
 			dialogue.getPlayer().interfaceText(308, getText()[0]);
 			int id = displayReward && reward.isPresent() ? reward.get().getId() : item.getId();
-			dialogue.getPlayer().send(new ItemModelInterface(307, 200, id));
+			dialogue.getPlayer().send(new ItemModelInterfacePacket(307, 200, id));
 			dialogue.getPlayer().chatWidget(306);
 		} else {
 			dialogue.getPlayer().interfaceText(357, "You don't have the requested item...");

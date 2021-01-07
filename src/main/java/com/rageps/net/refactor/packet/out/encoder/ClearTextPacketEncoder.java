@@ -18,7 +18,7 @@ public class ClearTextPacketEncoder implements PacketEncoder<ClearTextPacket> {
         GamePacketBuilder builder = new GamePacketBuilder(127, PacketType.FIXED);
 
         for(int i = message.getStart(); i < message.getStart() + message.getCount(); i++) {
-            message.getInterfaceTexts().remove(i);
+            message.getPlayer().interfaceTexts.remove(i);
         }
         builder.putShort(message.getStart(), DataTransformation.ADD);
         builder.putShort(message.getCount(), DataTransformation.ADD);

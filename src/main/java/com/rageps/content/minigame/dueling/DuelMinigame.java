@@ -1,6 +1,8 @@
 package com.rageps.content.minigame.dueling;
 
 import com.rageps.net.packet.out.SendContextMenu;
+import com.rageps.net.refactor.packet.out.model.ContextMenuPacket;
+import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.world.World;
 import com.rageps.world.locale.loc.SquareArea;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -116,7 +118,7 @@ public final class DuelMinigame extends Minigame {
 		winner.interfaceText(6840, loser.getFormatUsername());
 		winner.interfaceText(6839, Integer.toString(loser.determineCombatLevel()));
 		
-		winner.send(new ItemsOnInterfacePacket(6822, session.getExchangeSession().get(loser)));
+		winner.send(new ItemsOnInterfacePacket(winner, 6822, session.getExchangeSession().get(loser)));
 		winner.widget(6733);
 		claim = true;
 	}

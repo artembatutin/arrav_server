@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.content.dialogue.impl.PlayerDialogue;
 import com.rageps.content.dialogue.impl.StatementDialogue;
+import com.rageps.net.refactor.packet.out.model.ItemOnInterfaceSlotPacket;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.content.skill.SkillData;

@@ -143,7 +143,7 @@ public class ClanChannelHandler {
 					42116));
 			player.send(new ConfigPacket(326, channel.getManagement().locked ? 1 : 0));
 
-			player.send(new ItemsOnInterfacePacket(42126, channel.getShowcaseItems()));
+			player.send(new ItemsOnInterfacePacket(player, 42126, channel.getShowcaseItems()));
 			player.getInterfaceManager().setSidebar(TabInterface.CLAN_CHAT, 42000);
 		});
 	}
@@ -177,7 +177,7 @@ public class ClanChannelHandler {
 		}
 		AtomicBoolean correct = new AtomicBoolean(false);
 
-		player.send(new EnterNamePacket("Enter the password:", input -> () -> {
+		player.send(new EnterNamePacket(player, "Enter the password:", input -> () -> {
 			if (!channel.isPassword(input)) {
 				player.message("You have entered an invalid clan password.");
 			} else {

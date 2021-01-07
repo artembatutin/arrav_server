@@ -1,6 +1,6 @@
 package com.rageps.content.minigame.pestcontrol;
 
-import com.rageps.net.packet.out.SendWalkable;
+import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
 import com.rageps.world.entity.item.cached.CachedItem;
 import com.rageps.action.impl.ButtonAction;
 import com.rageps.action.impl.MobAction;
@@ -53,7 +53,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 	public void onEnter(Player player) {
 		count++;
 		getPlayers().add(player);
-		player.send(new Walkable((21119)));
+		player.send(new WalkableInterfacePacket((21119)));
 		player.interfaceText(21120, "@whi@Next Departure: " + seconds() + " seconds");
 		player.interfaceText(21123, "@cya@Pest Points: " + player.getPest());
 		updateCounts();
@@ -66,7 +66,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 			return;
 		count--;
 		getPlayers().remove(player);
-		player.send(new Walkable((-1)));
+		player.send(new WalkableInterfacePacket((-1)));
 		updateCounts();
 		player.move(new Position(2657, 2639));
 	}

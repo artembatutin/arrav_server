@@ -2,7 +2,7 @@ package com.rageps.content.skill.smithing;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.rageps.net.packet.out.SendItemModelInterface;
+import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.Skills;
@@ -66,7 +66,7 @@ public final class Smelting extends ProducingSkillAction {
 		}
 		
 		if(data.get().amount == -1) {
-			player.send(new EnterAmount("How many you would like to melt?", s -> () -> Smelting.smelt(player, data.get(), Integer.parseInt(s))));
+			player.send(new EnterAmountPacket(player, "How many you would like to melt?", s -> () -> Smelting.smelt(player, data.get(), Integer.parseInt(s))));
 			return true;
 		}
 		smelt(player, data.get(), data.get().amount);
@@ -97,7 +97,7 @@ public final class Smelting extends ProducingSkillAction {
 	 */
 	public static void clearInterfaces(Player player) {
 		for(int j = 0; j < SMELT_FRAME.length; j++) {
-			player.send(new ItemModelInterface(SMELT_FRAME[j], 150, SMELT_BARS[j]));
+			player.send(new ItemModelInterfacePacket(SMELT_FRAME[j], 150, SMELT_BARS[j]));
 		}
 	}
 	

@@ -3,6 +3,7 @@ package com.rageps.net.refactor.packet.out.model;
 import com.rageps.net.refactor.packet.Packet;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
+import com.rageps.world.entity.item.container.ItemContainer;
 
 /**
  * @author Tamatea <tamateea@gmail.com>
@@ -22,6 +23,9 @@ public class ItemsOnInterfacePacket extends Packet {
     }
     public ItemsOnInterfacePacket(Player player, int id, Item... items) {
         this(player, id, items.length, items);
+    }
+    public ItemsOnInterfacePacket(Player player, int id, ItemContainer container) {
+        this(player, id, container.getItems().length, container.getItems());
     }
 
     public Player getPlayer() {

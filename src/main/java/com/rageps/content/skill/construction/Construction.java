@@ -12,6 +12,9 @@ import com.rageps.GameConstants;
 import com.rageps.net.packet.out.SendMinimapState;
 import com.rageps.net.packet.out.SendObject;
 import com.rageps.net.packet.out.SendPaletteMap;
+import com.rageps.net.refactor.packet.out.model.FadePacket;
+import com.rageps.net.refactor.packet.out.model.MinimapStatePacket;
+import com.rageps.net.refactor.packet.out.model.PaletteMapPacket;
 import com.rageps.task.Task;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
@@ -78,8 +81,8 @@ public class Construction {
 			house.createPalette();
 		me.getHouse().get().setBuilding(building);
 		me.closeWidget();
-		me.send(new MinimapState(2));
-		me.send(new Fade(20, 300, 200));
+		me.send(new MinimapStatePacket(2));
+		me.send(new FadePacket(20, 300, 200));
 		Task delay = new Task(1) {
 			int x = -1, y = -1, tick = 0;
 			
@@ -91,7 +94,7 @@ public class Construction {
 						me.move(new Position(Constants.MIDDLE_X, Constants.MIDDLE_Y, 0));
 						break;
 					case 3:
-						me.send(new PaletteMap(house.getPalette()));
+						me.send(new PaletteMapPacket(me, house.getPalette()));
 						break;
 					case 4:
 						placeAllFurniture(me, 0);
@@ -111,7 +114,7 @@ public class Construction {
 							}
 						}
 						house.addPlayer(me);
-						me.send(new MinimapState(0));
+						me.send(new MinimapStatePacket(0));
 						cancel();
 						break;
 				}

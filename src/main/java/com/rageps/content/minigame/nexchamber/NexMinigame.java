@@ -1,6 +1,7 @@
 package com.rageps.content.minigame.nexchamber;
 
 import com.rageps.net.packet.out.SendFade;
+import com.rageps.net.refactor.packet.out.model.FadePacket;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.action.impl.ObjectAction;
@@ -49,7 +50,7 @@ public class NexMinigame extends Minigame {
 	@Override
 	public void onLogout(Player player) {
 		getPlayers().remove(player);
-		player.send(new Fade(20, 100, 160));
+		player.send(new FadePacket(20, 100, 160));
 		player.task(2, pl -> pl.move(new Position(2907, 5204)));
 		player.setMinigame(Optional.empty());
 	}
@@ -57,7 +58,7 @@ public class NexMinigame extends Minigame {
 	@Override
 	public void onEnter(Player player) {
 		getPlayers().add(player);
-		player.send(new Fade(20, 100, 160));
+		player.send(new FadePacket(20, 100, 160));
 		player.task(2, pl -> pl.move(new Position(2911, 5204)));
 		player.setMinigame(this);
 	}

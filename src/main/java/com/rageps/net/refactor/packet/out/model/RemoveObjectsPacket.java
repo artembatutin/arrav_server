@@ -5,10 +5,10 @@ import com.rageps.net.refactor.packet.Packet;
 /**
  * @author Tamatea <tamateea@gmail.com>
  */
-public class RemoveObjectPacket extends Packet {
+public class RemoveObjectsPacket extends Packet {
 
 
-public RemoveObjectPacket() {}
+public RemoveObjectsPacket() {}
 
 
 

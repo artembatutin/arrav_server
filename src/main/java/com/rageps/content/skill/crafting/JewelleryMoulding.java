@@ -2,7 +2,8 @@ package com.rageps.content.skill.crafting;
 
 import com.google.common.collect.ImmutableMap;
 import com.rageps.content.achievements.Achievement;
-import com.rageps.net.packet.out.SendItemModelInterface;
+import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
+import com.rageps.net.refactor.packet.out.model.ItemOnInterfaceSlotPacket;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.action.impl.ItemOnObjectAction;
 import com.rageps.content.skill.SkillData;
@@ -103,11 +104,11 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 						}
 						
 						player.interfaceText(4230, player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft rings.");
-						player.send(new ItemModelInterface(4229, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
+						player.send(new ItemModelInterfacePacket(4229, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
 					}
 					;
 				} else {
-					player.send(new ItemModelInterface(4229, 120, RING_MOULD.getId()));
+					player.send(new ItemModelInterfacePacket(4229, 120, RING_MOULD.getId()));
 					for(int i = 0; i < rings.length; i++) {
 						player.send(new ItemOnInterfaceSlotPacket(4233, new Item(-1), i));
 					}
@@ -126,10 +127,10 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 						}
 						
 						player.interfaceText(4236, player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.");
-						player.send(new ItemModelInterface(4235, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
+						player.send(new ItemModelInterfacePacket(4235, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
 					}
 				} else {
-					player.send(new ItemModelInterface(4235, 120, NECKLACE_MOULD.getId()));
+					player.send(new ItemModelInterfacePacket(4235, 120, NECKLACE_MOULD.getId()));
 					for(int i = 0; i < rings.length; i++) {
 						player.send(new ItemOnInterfaceSlotPacket(4239, new Item(-1), i));
 					}
@@ -148,10 +149,10 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 						}
 						
 						player.interfaceText(4242, player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.");
-						player.send(new ItemModelInterface(4241, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
+						player.send(new ItemModelInterfacePacket(4241, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
 					}
 				} else {
-					player.send(new ItemModelInterface(4241, 120, AMULET_MOULD.getId()));
+					player.send(new ItemModelInterfacePacket(4241, 120, AMULET_MOULD.getId()));
 					for(int i = 0; i < rings.length; i++) {
 						player.send(new ItemOnInterfaceSlotPacket(4245, new Item(-1), i));
 					}

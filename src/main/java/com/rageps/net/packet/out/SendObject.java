@@ -3,6 +3,7 @@ package com.rageps.net.packet.out;
 import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.OutgoingPacket;
+import com.rageps.net.refactor.packet.out.model.ObjectPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.object.DynamicObject;
@@ -35,7 +36,7 @@ public final class SendObject implements OutgoingPacket {
 				player.message("Couldn't find type, " + objectType);
 			return;
 		}
-		player.send(new Object(new DynamicObject(objectId, new Position(objectX, objectY, height), dir.get(), type.get(), false, 0, player.getInstance())));
+		player.send(new ObjectPacket(player, new DynamicObject(objectId, new Position(objectX, objectY, height), dir.get(), type.get(), false, 0, player.getInstance())));
 	}
 	
 	@Override

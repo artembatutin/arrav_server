@@ -1,6 +1,7 @@
 package com.rageps.content.achievements;
 
 import com.rageps.net.packet.out.SendTask;
+import com.rageps.net.refactor.packet.out.model.TaskPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 
@@ -30,7 +31,7 @@ public class AchievementHandler {
 				continue;
 			}
 			if(curr >= i) {
-				player.send(new Task(String.format(achievement.getTask(), achievement.getAmount()[dif])));
+				player.send(new TaskPacket(String.format(achievement.getTask(), achievement.getAmount()[dif])));
 				player.getBank().deposit(new Item(995, AchievementDifficulty.DIF[dif].getReward()));
 				player.message(AchievementDifficulty.DIF[dif].getOut() + " coins have been added into your bank.");
 				update(player, achievement);

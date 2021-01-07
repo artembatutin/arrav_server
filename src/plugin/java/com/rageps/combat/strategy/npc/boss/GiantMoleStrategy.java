@@ -1,6 +1,8 @@
 package com.rageps.combat.strategy.npc.boss;
 
 import com.rageps.combat.strategy.MobCombatStrategyMeta;
+import com.rageps.net.refactor.packet.out.model.ArrowPositionPacket;
+import com.rageps.net.refactor.packet.out.model.GraphicPacket;
 import com.rageps.world.World;
 import com.rageps.combat.strategy.npc.NpcMeleeStrategy;
 import com.rageps.world.locale.Position;
@@ -12,6 +14,7 @@ import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.mob.Mob;
+import com.rageps.world.model.Graphic;
 
 /**
  * Created by Dave/Ophion
@@ -37,8 +40,7 @@ public class GiantMoleStrategy extends NpcMeleeStrategy {
 			int coords = RandomUtils.random(COORDINATES.length - 1);
 			defender.animation(new Animation(3314, Animation.AnimationPriority.HIGH));
 			for(int i = 0; i < 3; i++) {
-				attacker.toPlayer().send(new Graphic(1271, new Position((defender.getPosition().getX() + 1 - i), (defender.getPosition().getY() + 1 - i)), 0));
-				
+				GraphicPacket.local(attacker.toPlayer(), 1271,  new Position((defender.getPosition().getX() + 1 - i), (defender.getPosition().getY() + 1 - i)), 0);
 			}
 			//attacker.toPlayer().send(new ArrowEntity(defender));
 			World.get().submit(new Task(3, false) {
@@ -49,8 +51,8 @@ public class GiantMoleStrategy extends NpcMeleeStrategy {
 					defender.animation(new Animation(3315, Animation.AnimationPriority.HIGH));
 				}
 			});
-			//attacker.toPlayer().send(new ArrowPosition(npc.getPosition(), 6));
+			attacker.toPlayer().send(new ArrowPositionPacket(defender.getPosition(), 6));
 		}
-		// defender.getCombat().attack(attacker);
+		 defender.getCombat().attack(attacker);
 	}
 }

@@ -12,6 +12,7 @@ import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.agility.AgilityCourse;
 import com.rageps.content.skill.agility.AgilityCourseType;
+import com.rageps.net.refactor.packet.out.model.ObjectAnimationPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.entity.object.ObjectDirection;
@@ -98,12 +99,12 @@ public final class WildernessAgility extends AgilityCourse {
 			@Override
 			public void prerequisites(Player player1) {
 				player1.facePosition(new Position(3005, 3958, 0));
-				player1.send(new ObjectAnimationPacket(new Position(3005, 3952, 0), 497, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
+				player1.send(new ObjectAnimationPacket(player1, new Position(3005, 3952, 0), 497, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
 			}
 		}),
 		STEPPING_STONES(new int[]{37704}, ObstacleType.STEPPING_STONE, player1 -> new Steppable(new Position(3002, 3960, 0), new Position[]{new Position(3001, 3960, 0), new Position(3000, 3960, 0), new Position(2999, 3960, 0), new Position(2998, 3960, 0), new Position(2997, 3960, 0)}, new Position(2996, 3960, 0), ObstacleType.STEPPING_STONE.getAnimation(), 52, 20)),
 		LOG_BALANCE(new int[]{2297}, ObstacleType.LOG_BALANCE, player1 -> new Walkable(new Position(3002, 3945, 0), new Position(2994, 3945, 0), ObstacleType.LOG_BALANCE.getAnimation(), 52, 20)),
-		CLIMB_ROCKS(new int[]{2328}, ObstacleType.ROCKS, player1 -> new ClimbRocks(player1));
+		CLIMB_ROCKS(new int[]{2328}, ObstacleType.ROCKS, ClimbRocks::new);
 		
 		/**
 		 * The object identifications for this Obstacle.

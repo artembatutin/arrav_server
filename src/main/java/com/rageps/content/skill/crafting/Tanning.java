@@ -3,7 +3,7 @@ package com.rageps.content.skill.crafting;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.rageps.net.packet.out.SendItemModelInterface;
+import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
@@ -69,7 +69,7 @@ public final class Tanning extends ProducingSkillAction {
 		}
 		
 		if(data.count == -1) {
-			player.send(new EnterAmount("How many would you like to tan?", s -> () -> Tanning.create(player, data, Integer.parseInt(s), false)));
+			player.send(new EnterAmountPacket(player, "How many would you like to tan?", s -> () -> Tanning.create(player, data, Integer.parseInt(s), false)));
 			return true;
 		}
 		
@@ -127,7 +127,7 @@ public final class Tanning extends ProducingSkillAction {
 				player.interfaceText(t.priceFrame, color + t.cost.getAmount() + " Coins");
 			}
 			if(t.modelFrame != -1) {
-				player.send(new ItemModelInterface(t.modelFrame, 250, t.required.getId()));
+				player.send(new ItemModelInterfacePacket(t.modelFrame, 250, t.required.getId()));
 			}
 		});
 		player.widget(14670);

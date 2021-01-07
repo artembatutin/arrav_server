@@ -15,7 +15,7 @@ public class EnterNamePacket extends Packet {
     private final Function<String, ActionListener> action;
     private final Player player;
 
-    public EnterNamePacket(String title, Player player, Function<String, ActionListener> action) {
+    public EnterNamePacket(Player player, String title, Function<String, ActionListener> action) {
         this.title = title;
         this.action = action;
         this.player = player;

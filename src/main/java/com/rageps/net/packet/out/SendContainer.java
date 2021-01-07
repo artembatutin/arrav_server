@@ -35,10 +35,10 @@ public final class SendContainer implements OutgoingPacket {
 	public boolean onSent(Player player) {
 		if(id == -1)
 			return false;
-		if(container.size() == 0) {
-			player.send(new ClearContainer(id));
-			return false;
-		}
+		//if(container.size() == 0) {
+		//	player.send(new ClearContainer(id));
+		//	return false;
+		//}
 		return true;
 	}
 	

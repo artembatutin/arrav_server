@@ -57,7 +57,7 @@ public final class GroundItemStatic extends GroundItem {
 				for(Player p : r.getPlayers()) {
 					if(p == null)
 						continue;
-					p.send(new ItemNodePacket(this));
+					p.send(new ItemNodePacket(p, this));
 				}
 			}
 		}

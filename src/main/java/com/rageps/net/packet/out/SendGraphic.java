@@ -13,14 +13,14 @@ public final class SendGraphic implements OutgoingPacket {
 	private final Position position;
 	
 	public static void local(Player player, int id, Position position, int level) {
-		if(player.getState() == EntityState.INACTIVE)
-			return;
-		player.send(new Graphic(id, position, level));
-		for(Player p : player.getLocalPlayers()) {
-			if(p == null)
-				continue;
-			p.send(new Graphic(id, position, level));
-		}
+		//if(player.getState() == EntityState.INACTIVE)
+		//	return;
+		//player.send(new GraphicPacket(id, position, level));
+		//for(Player p : player.getLocalPlayers()) {
+		//	if(p == null)
+		//		continue;
+		//	p.send(new GraphicPacket(id, position, level));
+		//}
 	}
 	
 	public SendGraphic(int id, Position position, int level) {

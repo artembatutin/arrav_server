@@ -1,6 +1,6 @@
 package com.rageps.content.dialogue.impl;
 
-import com.rageps.net.packet.out.SendItemModelInterface;
+import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
 import com.rageps.content.dialogue.Dialogue;
 import com.rageps.content.dialogue.DialogueBuilder;
 import com.rageps.content.dialogue.DialogueType;
@@ -42,7 +42,7 @@ public final class GiveItemDialogue extends Dialogue {
 			t.getPlayer().getInventory().add(item);
 			action.ifPresent(ActionListener::execute);
 			t.getPlayer().interfaceText(308, getText()[0]);
-			t.getPlayer().send(new ItemModelInterface(307, 200, item.getId()));
+			t.getPlayer().send(new ItemModelInterfacePacket(307, 200, item.getId()));
 			t.getPlayer().chatWidget(306);
 		} else {
 			t.getPlayer().interfaceText(357, "You do not have enough space in your inventory!");

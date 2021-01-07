@@ -1,6 +1,8 @@
 package com.rageps.world.entity.item.container;
 
 import com.google.common.base.Preconditions;
+import com.rageps.net.refactor.packet.out.model.ItemOnInterfaceSlotPacket;
+import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -779,7 +781,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param widget The widget to send the {@code Item}s on.
 	 */
 	public final void refreshBulk(Player player, int widget) {
-		player.send(new ItemsOnInterfacePacket(widget, this));
+		player.send(new ItemsOnInterfacePacket(player,widget, this.getItems()));
 	}
 	
 	/**

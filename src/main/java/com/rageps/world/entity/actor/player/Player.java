@@ -616,8 +616,8 @@ public final class Player extends Actor {
 		relations.onLogin();
 //		privateMessage.updateThisList();
 //		privateMessage.updateOtherList(true);
-		send( new ContextMenu(3, false, "Follow"));
-		send( new ContextMenu(4, false, "Trade with"));
+		send( new ContextMenuPacket(3, false, "Follow"));
+		send( new ContextMenuPacket(4, false, "Trade with"));
 		CombatEffect.values().forEach($it -> {
 			if($it.onLogin(this))
 				World.get().submit(new CombatEffectTask(this, $it));
@@ -631,16 +631,16 @@ public final class Player extends Actor {
 		WeaponInterface.execute(this, equipment.get(Equipment.WEAPON_SLOT));
 		WeaponAnimation.execute(this, equipment.get(Equipment.WEAPON_SLOT));
 		ShieldAnimation.execute(this, equipment.get(Equipment.SHIELD_SLOT));
-		send( new Config(173, super.getMovementQueue().isRunning() ? 0 : 1));
-		send( new Config(174, super.isPoisoned() ? 1 : 0));
-		send( new Config(172, super.isAutoRetaliate() ? 1 : 0));
-		send( new Config(combat.getFightType().getParent(), combat.getFightType().getChild()));
-		send( new Config(427, getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID) ? 0 : 1));
-		send( new Config(108, 0));
-		send( new Config(301, 0));
+		send( new ConfigPacket(173, super.getMovementQueue().isRunning() ? 0 : 1));
+		send( new ConfigPacket(174, super.isPoisoned() ? 1 : 0));
+		send( new ConfigPacket(172, super.isAutoRetaliate() ? 1 : 0));
+		send( new ConfigPacket(combat.getFightType().getParent(), combat.getFightType().getChild()));
+		send( new ConfigPacket(427, getAttributeMap().getBoolean(PlayerAttributes.ACCEPT_AID) ? 0 : 1));
+		send( new ConfigPacket(108, 0));
+		send( new ConfigPacket(301, 0));
 		interfaceText(149, (int) this.playerData.runEnergy + "%");
-		send( new Energy());
-		Prayer.VALUES.forEach(c -> send( new Config(c.getConfig(), 0)));
+		send( new EnergyPacket((int) playerData.getRunEnergy()));
+		Prayer.VALUES.forEach(c -> send( new ConfigPacket(c.getConfig(), 0)));
 		if(getPetManager().getPet().isPresent()) {
 			Pet.onLogin(this);
 		}
@@ -661,7 +661,7 @@ public final class Player extends Actor {
 		}
 		TriviaTask.getBot().onLogin(this);
 		if(RagePS.UPDATING > 0) {
-			send( new Broadcast(0, (int) (RagePS.UPDATING * 60), true));
+			send( new BroadcastPacket(0, (int) (RagePS.UPDATING * 60), ">?<"));//todo check this
 		}
 		Summoning.login(this);
 		FarmingManager.login(this);
@@ -914,7 +914,7 @@ public final class Player extends Actor {
 	@Override
 	public void setAutoRetaliate(boolean autoRetaliate) {
 		super.setAutoRetaliate(autoRetaliate);
-		send( new Config(172, super.isAutoRetaliate() ? 1 : 0));
+		send( new ConfigPacket(172, super.isAutoRetaliate() ? 1 : 0));
 	}
 	
 	/**
@@ -1033,7 +1033,7 @@ public final class Player extends Actor {
 			double agilityFactor = 0.01 * skills[Skills.AGILITY].getCurrentLevel();
 			setRunEnergy(this.playerData.runEnergy + (restoreRate + agilityFactor));
 			lastEnergy.reset();
-			send( new Energy());
+			send( new EnergyPacket((int) playerData.getRunEnergy()));
 		}
 	}
 	

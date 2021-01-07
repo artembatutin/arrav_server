@@ -1,7 +1,7 @@
 package com.rageps.content.skill.cooking;
 
 import com.google.common.collect.ImmutableSet;
-import com.rageps.net.packet.out.SendItemModelInterface;
+import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemDefinition;
@@ -95,7 +95,7 @@ public enum CookingData {
 
 	public void openInterface(Player player) {
 		player.chatWidget(1743);
-		player.send(new ItemModelInterface(13716, 190, rawId));
+		player.send(new ItemModelInterfacePacket(13716, 190, rawId));
 		player.interfaceText(13717, "\\n\\n\\n\\n\\n" + ItemDefinition.DEFINITIONS[rawId].getName());
 	}
 

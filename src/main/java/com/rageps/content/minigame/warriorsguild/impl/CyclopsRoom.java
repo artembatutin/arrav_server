@@ -2,7 +2,8 @@ package com.rageps.content.minigame.warriorsguild.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.rageps.net.packet.out.SendWalkable;
+import com.rageps.net.refactor.packet.out.model.InterfaceItemPacket;
+import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
 import com.rageps.world.World;
 import com.rageps.content.dialogue.Conversation;
 import com.rageps.content.dialogue.Expression;
@@ -60,9 +61,9 @@ public final class CyclopsRoom extends GuildRoom {
 	
 	private void updateInterface(Player player) {
 		Defender defender = Defender.getNext(player);
-		player.send(new InterfaceItem(34002, defender.item.getId()));
+		player.send(new InterfaceItemPacket(34002, defender.item.getId()));
 		player.interfaceText(34001, "@or1@" + defender.toString());
-		player.send(new Walkable(34000));
+		player.send(new WalkableInterfacePacket(34000));
 	}
 	
 	@Override
@@ -78,7 +79,7 @@ public final class CyclopsRoom extends GuildRoom {
 				if(entered.isPresent()) {
 					player.move(new Position(2846, player.getPosition().getY(), 2));//FIXME use the proper walk-through door function.
 					entered = Optional.empty();
-					player.send(new Walkable(-1));
+					player.send(new WalkableInterfacePacket(-1));
 					return false;
 				}
 				if(!player.getInventory().contains(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), 200))) {

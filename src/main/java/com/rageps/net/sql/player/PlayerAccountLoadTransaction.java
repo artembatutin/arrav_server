@@ -23,14 +23,14 @@ import static com.rageps.world.entity.actor.player.persist.PlayerPersistenceMana
  */
 public class PlayerAccountLoadTransaction extends DatabaseTransaction {
 
-    private final PlayerCredentials player;
+    private final Player player;
 
     private final JsonParser parser = new JsonParser();
 
     private final String query = "SELECT * FROM player WHERE member_id = ?";
 
 
-    public PlayerAccountLoadTransaction(PlayerCredentials player) {
+    public PlayerAccountLoadTransaction(Player player) {
         super(TableRepresentation.PLAYER);
         this.player = player;
     }
@@ -40,7 +40,7 @@ public class PlayerAccountLoadTransaction extends DatabaseTransaction {
         public void execute(Connection connection) throws SQLException {
 
             try (NamedPreparedStatement statement = NamedPreparedStatement.create(connection, query, Statement.RETURN_GENERATED_KEYS)) {
-                statement.setLong("member_id", player.databaseId);
+                statement.setLong("member_id", player.credentials.databaseId);
 
                 ResultSet rs = statement.executeQuery();
 

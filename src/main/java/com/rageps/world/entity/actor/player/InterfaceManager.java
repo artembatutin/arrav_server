@@ -3,9 +3,8 @@ package com.rageps.world.entity.actor.player;
 
 import com.rageps.content.TabInterface;
 import com.rageps.content.market.MarketShop;
-import com.rageps.net.packet.out.*;
+import com.rageps.net.refactor.packet.out.model.*;
 import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
-import com.rageps.world.locale.loc.Locations;
 
 /**
  * Contains information about the state of interfaces enter in the client.
@@ -71,7 +70,7 @@ public class InterfaceManager {
 		}
 		main = identification;
 		player.getMovementQueue().reset();
-		player.send(new Interface(identification));
+		player.send(new InterfacePacket(identification));
 		//player.send(new SendInterface(identification));
 		//player.send(new SendString("[CLOSE_MENU]", 0));
 	}
@@ -83,7 +82,7 @@ public class InterfaceManager {
 			return;
 		}
 		setWalkable(identification);
-		player.send(new Walkable(identification));
+		player.send(new WalkableInterfacePacket(identification));
 	}
 	/** close a walkable-itemcontainer for the player. */
 	public void closeWalkable() {
@@ -99,7 +98,7 @@ public class InterfaceManager {
 		main = identification;
 		this.overlay = overlay;
 		player.getMovementQueue().reset();
-		player.send(new InventoryInterface(identification, overlay));
+		player.send(new InventoryInterfacePacket(identification, overlay));
 	}
 
 	/** Clears the player's screen. */
@@ -124,9 +123,9 @@ public class InterfaceManager {
 		clean(walkable);
 		player.getDialogueBuilder().getChain().clear();
 		//player.dialogueFactory.clear();
-		player.send(new CloseInterface());
+		player.send(new CloseInterfacePacket(player.getDialogueBuilder()));
 		if(walkable)
-			player.send(new Walkable(-1));
+			player.send(new WalkableInterfacePacket(-1));
 	}
 
 	public void setSidebar(TabInterface tab, int id) {
@@ -134,7 +133,7 @@ public class InterfaceManager {
 			return;
 		}
 		sidebars[tab.ordinal()] = id;
-		player.send(new Tab(id, tab));
+		player.send(new TabPacket(id, tab));
 
 	}
 
@@ -148,7 +147,7 @@ public class InterfaceManager {
 	}
 
 	public void handleMultiWidget() {
-			player.send(new MultiIcon(!player.getLocation().isMulti()));
+			player.send(new MultiIconPacket(!player.getLocation().isMulti()));
 	}
 
 	public void handleDuelWidget() {

@@ -1,6 +1,7 @@
 package com.rageps.world.entity.item.container.impl;
 
 import com.rageps.content.skill.summoning.familiar.FamiliarContainer;
+import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.net.packet.out.SendContainer;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
@@ -148,8 +149,8 @@ final class BankTab extends ItemContainer {
 				inv.remove(new Item(i.getId(), i.getAmount()), i.getIndex(), false);
 			}
 		}
-		player.send(new ItemsOnInterfacePacket(Bank.SIDEBAR_INVENTORY_ID, inv));
-		player.send(new ItemsOnInterfacePacket(3214, inv));//?
+		player.send(new ItemsOnInterfacePacket(player, Bank.SIDEBAR_INVENTORY_ID, inv));
+		player.send(new ItemsOnInterfacePacket(player, 3214, inv));//?
 		forceRefresh(player);
 	}
 	

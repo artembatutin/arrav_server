@@ -4,6 +4,7 @@ import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.Skills;
 import com.rageps.net.packet.out.SendFade;
 import com.rageps.action.ActionInitializer;
+import com.rageps.net.refactor.packet.out.model.FadePacket;
 import com.rageps.task.LinkedTaskSequence;
 import com.rageps.world.model.Animation;
 import com.rageps.world.model.Graphic;
@@ -26,7 +27,7 @@ public class GodWars extends ActionInitializer {
 				boolean north = player.getPosition().getY() < 5334;
 				LinkedTaskSequence seq = new LinkedTaskSequence();
 				seq.connect(2, () -> player.getMovementQueue().walk(new Position(2885, north ? 5333 : 5344, 2)));
-				seq.connect(2, () -> player.send(new Fade(130, 80, 120)));
+				seq.connect(2, () -> player.send(new FadePacket(130, 80, 120)));
 				seq.connect(1, () -> {
 					ForcedMovement movement = new ForcedMovement(player);
 					movement.setSecond(new Position(2885, north ? 5334 : 5343, 2));

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.rageps.content.achievements.Achievement;
-import com.rageps.net.packet.out.SendItemModelInterface;
+import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.content.skill.SkillData;
@@ -71,7 +71,7 @@ public final class HideWorking extends ProducingSkillAction {
 		}
 		
 		if(data.amount == -1) {
-			player.send(new EnterAmount("Howmany hides would you like to register?", s -> () -> HideWorking.create(player, data, Integer.parseInt(s))));
+			player.send(new EnterAmountPacket(player, "How many hides would you like to register?", s -> () -> HideWorking.create(player, data, Integer.parseInt(s))));
 			return true;
 		}
 		create(player, data, data.amount);
@@ -109,20 +109,20 @@ public final class HideWorking extends ProducingSkillAction {
 		
 		if(group.length == 3) {//dragonhide
 			player.interfaceText(8898, "What dragonhide would you like to make?");
-			player.send(new ItemModelInterface(8884, 200, group[2].product.getId()));
-			player.send(new ItemModelInterface(8883, 200, group[0].product.getId()));
-			player.send(new ItemModelInterface(8885, 200, group[1].product.getId()));
+			player.send(new ItemModelInterfacePacket(8884, 200, group[2].product.getId()));
+			player.send(new ItemModelInterfacePacket(8883, 200, group[0].product.getId()));
+			player.send(new ItemModelInterfacePacket(8885, 200, group[1].product.getId()));
 			player.interfaceText(8889, "\\n\\n\\n\\n\\n" + group[0].product.getDefinition().getName());
 			player.interfaceText(8893, "\\n\\n\\n\\n\\n" + group[2].product.getDefinition().getName());
 			player.interfaceText(8897, "\\n\\n\\n\\n\\n" + group[1].product.getDefinition().getName());
 			player.chatWidget(8880);
 		} else if(group.length == 5) {//snakeskin
 			player.interfaceText(8966, "What snakeskin item would you like to make?");
-			player.send(new ItemModelInterface(8941, 180, 6322));
-			player.send(new ItemModelInterface(8942, 180, 6324));
-			player.send(new ItemModelInterface(8943, 180, 6330));
-			player.send(new ItemModelInterface(8944, 180, 6326));
-			player.send(new ItemModelInterface(8945, 180, 6328));
+			player.send(new ItemModelInterfacePacket(8941, 180, 6322));
+			player.send(new ItemModelInterfacePacket(8942, 180, 6324));
+			player.send(new ItemModelInterfacePacket(8943, 180, 6330));
+			player.send(new ItemModelInterfacePacket(8944, 180, 6326));
+			player.send(new ItemModelInterfacePacket(8945, 180, 6328));
 			player.interfaceText(8949, "\\n\\n\\n\\n\\nBody");
 			player.interfaceText(8953, "\\n\\n\\n\\n\\nChaps");
 			player.interfaceText(8957, "\\n\\n\\n\\n\\nVambraces");

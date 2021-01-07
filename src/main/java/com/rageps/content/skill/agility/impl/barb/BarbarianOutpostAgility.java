@@ -14,6 +14,7 @@ import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.agility.AgilityCourse;
 import com.rageps.content.skill.agility.AgilityCourseType;
+import com.rageps.net.refactor.packet.out.model.ObjectAnimationPacket;
 import com.rageps.task.LinkedTaskSequence;
 import com.rageps.task.Task;
 import com.rageps.world.model.Animation;
@@ -111,7 +112,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			
 			@Override
 			public void prerequisites(Player player1) {
-				player1.send(new ObjectAnimationPacket(new Position(player1.getPosition().getX(), 3550), 497, ObjectType.GENERAL_PROP, ObjectDirection.WEST));
+				player1.send(new ObjectAnimationPacket(player1, new Position(player1.getPosition().getX(), 3550), 497, ObjectType.GENERAL_PROP, ObjectDirection.WEST));
 			}
 		}),
 		LOG_BALANCE(new int[]{43595}, ObstacleType.LOG_BALANCE, player1 -> new Walkable(new Position(2551, 3546, 0), new Position(2541, 3546, 0), ObstacleType.LOG_BALANCE.getAnimation(), 35, 13.7)),
@@ -186,7 +187,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			@Override
 			public void prerequisites(Player player1) {
 				player1.facePosition(new Position(player1.getPosition().getX(), player1.getPosition().getY() + 1));
-				player1.send(new ObjectAnimationPacket(new Position(2532, 3544, 3), 11819, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
+				player1.send(new ObjectAnimationPacket(player1, new Position(2532, 3544, 3), 11819, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
 			}
 		}),
 		BALANCE_BEAM(new int[]{43527}, ObstacleType.BALANCE_BEAM, player1 -> new BalanceBeam()),

@@ -221,7 +221,7 @@ public final class PlayerRelation {
 			setPrivateChatMode(PrivacyChatMode.FRIENDS_ONLY, true);
 		}
 		int rights = player.getRights() == Rights.PLAYER && player.isIronMan() ? Rights.IRON_MAN.getProtocolValue() : player.getRights().getProtocolValue();
-		friend.send(new PrivateMessagePacket(player.credentials.usernameHash, rights, message.getCompressed(), message.getCompressed().length));
+		friend.send(new PrivateMessagePacket(player.credentials.usernameHash, rights, message.getCompressed(), message.getCompressed().length, privateMessageId));
 		//World.getDataBus().publish(new PrivateMessageChatLogEvent(player, friend, message.getDecompressed()));
 	}
 

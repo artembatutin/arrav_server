@@ -1,5 +1,6 @@
 package com.rageps.world.entity.actor.move;
 
+import com.rageps.net.refactor.packet.out.model.EnergyPacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.move.path.Path;
 import com.rageps.world.entity.actor.player.Player;
@@ -134,7 +135,7 @@ public final class MovementQueue {
 						weightFactor = Math.round(weightFactor * 100.0D) / 100.0D;
 						player.setRunEnergy(player.playerData.getRunEnergy() - (drainRate + weightFactor));
 						//player.sendInterfaces(); todo should we be sending interface?
-						player.send(new Energy());
+						player.send(new EnergyPacket((int) player.playerData.getRunEnergy()));
 					} else {
 						running = false;
 						player.send(new ConfigPacket(173, 0));

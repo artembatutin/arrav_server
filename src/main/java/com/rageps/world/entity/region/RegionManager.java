@@ -1,13 +1,10 @@
 package com.rageps.world.entity.region;
 
-import com.rageps.net.packet.out.SendObjectRemoval;
-import com.rageps.net.refactor.packet.out.model.ObjectPacket;
-import com.rageps.net.refactor.packet.out.model.RemoveObjectPacket;
+import com.rageps.net.refactor.packet.out.model.ObjectRemovalPacket;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
-import com.rageps.net.packet.out.SendObject;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.object.GameObject;
@@ -89,13 +86,13 @@ public final class RegionManager {
 			for(Region region : allRegions) {
 				if(!region.getRemovedObjects().isEmpty()) {
 					for(GameObject obj : region.getRemovedObjects()) {
-						player.send(new RemoveObjectPacket(obj));
+						player.send(new ObjectRemovalPacket(player, obj));
 
 					}
 				}
 				region.dynamicAction(o -> {
 					if(o.getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance()) {
-						player.send(new ObjectPacket(o));
+						player.send(new ObjectRemovalPacket(player, o));
 					}
 				});
 			}

@@ -3,6 +3,8 @@ package com.rageps.content.skill;
 import com.rageps.net.packet.out.SendSkill;
 import com.rageps.content.item.Skillcape;
 import com.rageps.net.packet.out.SendSkillGoal;
+import com.rageps.net.refactor.packet.out.model.SkillGoalPacket;
+import com.rageps.net.refactor.packet.out.model.SkillPacket;
 import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.player.assets.group.ExperienceRate;
 import com.rageps.world.model.Graphic;
@@ -213,7 +215,7 @@ public final class Skills {
 				player.getFlags().flag(UpdateFlag.APPEARANCE);
 				if(newLevel >= player.getSkills()[skill].getGoal()) {
 					player.getSkills()[skill].setGoal(0);
-					player.send(new SkillGoal(skill, 0));
+					player.send(new SkillGoalPacket(skill, 0));
 				}
 			}
 		}
@@ -290,7 +292,7 @@ public final class Skills {
 			}
 			player.getSkills()[skill] = s;
 		}
-		player.send(new Skill(skill, s.getCurrentLevel(), (int) s.getExperience(), false));
+		player.send(new SkillPacket(skill, s.getCurrentLevel(), (int) s.getExperience(), false));
 	}
 
 	public static long getTotalExp(Player player) {
@@ -326,7 +328,7 @@ public final class Skills {
 	public static void refreshAll(Player player) {
 		for(int i = 0; i < player.getSkills().length; i++) {
 			refresh(player, i);
-			player.send(new SkillGoal(i, player.getSkills()[i].getGoal()));
+			player.send(new SkillGoalPacket(i, player.getSkills()[i].getGoal()));
 		}
 	}
 
@@ -341,8 +343,8 @@ public final class Skills {
 				}
 				player.getSkills()[skill] = s;
 			}
-			player.send(new Skill(skill, s.getCurrentLevel(), (int) s.getExperience(), true));
-			player.send(new SkillGoal(skill, player.getSkills()[skill].getGoal()));
+			player.send(new SkillPacket(skill, s.getCurrentLevel(), (int) s.getExperience(), true));
+			player.send(new SkillGoalPacket(skill, player.getSkills()[skill].getGoal()));
 		}
 	}
 	

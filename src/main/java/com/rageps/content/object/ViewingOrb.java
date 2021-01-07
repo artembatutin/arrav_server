@@ -3,6 +3,8 @@ package com.rageps.content.object;
 import com.rageps.net.packet.out.SendForceTab;
 import com.rageps.content.TabInterface;
 import com.rageps.net.packet.out.SendMinimapState;
+import com.rageps.net.refactor.packet.out.model.ForceTabPacket;
+import com.rageps.net.refactor.packet.out.model.MinimapStatePacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.locale.Position;
@@ -85,7 +87,7 @@ public final class ViewingOrb {
 		player.getMovementQueue().setLockMovement(true);
 		player.setVisible(false);
 		player.getActivityManager().disable();
-		player.send(new MinimapState(2));
+		player.send(new MinimapStatePacket(2));
 		player.setPlayerNpc(2982);
 		player.getFlags().flag(UpdateFlag.APPEARANCE);
 		move("Centre", 15239, centre);
@@ -102,7 +104,7 @@ public final class ViewingOrb {
 		player.getActivityManager().enable();
 		player.setPlayerNpc(-1);
 		player.getFlags().flag(UpdateFlag.APPEARANCE);
-		player.send(new MinimapState(0));
+		player.send(new MinimapStatePacket(0));
 		player.move(start);
 	}
 	

@@ -3,7 +3,7 @@ package com.rageps.content.minigame.pestcontrol;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.content.minigame.pestcontrol.defence.PestGate;
 import com.rageps.content.minigame.pestcontrol.pest.Pest;
-import com.rageps.net.packet.out.SendWalkable;
+import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -107,7 +107,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 		getPlayers().remove(player);
 		player.setMinigame(Optional.empty());
 		player.setInstance(0);
-		player.send(new Walkable((-1)));
+		player.send(new WalkableInterfacePacket((-1)));
 		if(player.isPoisoned()) {
 			player.getPoisonDamage().set(0);
 			player.send(new ConfigPacket(174, 0));
@@ -244,7 +244,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	@Override
 	public void postDeath(Player player) {
 		player.getMovementQueue().reset();
-		player.send(new Walkable((21100)));
+		player.send(new WalkableInterfacePacket((21100)));
 	}
 	
 	@Override
@@ -312,7 +312,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	private void spawn(Player p) {
 		p.move(new Position(2656 + RandomUtils.inclusive(3), 2609 + RandomUtils.inclusive(4)));
 		p.interfaceText(21116, "" + p.getAttributeMap().getInt(PlayerAttributes.PARTICIPATION));
-		p.send(new Walkable((21100)));
+		p.send(new WalkableInterfacePacket((21100)));
 		p.getMovementQueue().reset();
 	}
 	

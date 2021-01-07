@@ -6,6 +6,8 @@ import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.dialogue.impl.StatementDialogue;
 import com.rageps.net.packet.out.SendItemsOnInterface;
 import com.rageps.net.packet.out.SendText;
+import com.rageps.net.refactor.packet.out.model.InterfaceStringPacket;
+import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemDefinition;
@@ -30,10 +32,10 @@ public class ClanShowcase {
 		//for (int index = 0; index < showcaseItems.size(); index++) {
 		//	showcase[index] = new Item(showcaseItems.get(index));
 		//}
-		player.send(new TextPacket(channel.getName() + "'s Showcase", 57702));
-		player.send(new TextPacket(showcaseItems.size() + "/28", 57718));
-		player.send(new ItemsOnInterfacePacket(57716, 28, showcase));
-		player.send(new ItemsOnInterfacePacket(57717));
+		player.send(new InterfaceStringPacket(channel.getName() + "'s Showcase", 57702));
+		player.send(new InterfaceStringPacket(showcaseItems.size() + "/28", 57718));
+		player.send(new ItemsOnInterfacePacket(player, 57716, 28, showcase));
+		player.send(new ItemsOnInterfacePacket(player, 57717));
 		player.getInterfaceManager().open(57700);
 	}
 
@@ -45,7 +47,7 @@ public class ClanShowcase {
 		if (item == selected.getId()) {
 			//currentSlot = slot;
 			//currentItem = selected;
-			player.send(new ItemsOnInterfacePacket(57717, selected));
+			player.send(new ItemsOnInterfacePacket(player, 57717, selected));
 		}
 	}
 
@@ -64,8 +66,8 @@ public class ClanShowcase {
 		for (int index = 0; index < showcaseItems.size(); index++) {
 		//	showcase[index] = new Item(showcaseItems.get(index));
 		}
-		player.send(new ItemsOnInterfacePacket(57716));
-		player.send(new ItemsOnInterfacePacket(57716, showcase));
+		player.send(new ItemsOnInterfacePacket(player, 57716));
+		player.send(new ItemsOnInterfacePacket(player, 57716, showcase));
 		player.message("You have successfully changed your showcase.");
 	}
 

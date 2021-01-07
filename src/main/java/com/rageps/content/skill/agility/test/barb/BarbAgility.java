@@ -8,6 +8,7 @@ import com.rageps.content.skill.agility.test.obstacle.impl.WalkableObstacle;
 import com.rageps.net.packet.out.SendObjectAnimation;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.agility.test.Agility;
+import com.rageps.net.refactor.packet.out.model.ObjectAnimationPacket;
 import com.rageps.task.LinkedTaskSequence;
 import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.move.ForcedMovement;
@@ -106,7 +107,7 @@ public final class BarbAgility extends Agility {
 			@Override
 			public void initialize(Player player) {
 				super.initialize(player);
-				player.send(new ObjectAnimationPacket(new Position(player.getPosition().getX(), 3550), 497, ObjectType.GENERAL_PROP, ObjectDirection.WEST));
+				player.send(new ObjectAnimationPacket(player, new Position(player.getPosition().getX(), 3550), 497, ObjectType.GENERAL_PROP, ObjectDirection.WEST));
 			}
 		}),
 		LOG_BALANCE(43595, p -> new WalkableObstacle(new Position(2551, 3546, 0), new Position(2541, 3546, 0), 762, 35, 13.7) {
@@ -169,7 +170,7 @@ public final class BarbAgility extends Agility {
 			@Override
 			public void initialize(Player player) {
 				player.facePosition(new Position(player.getPosition().getX(), player.getPosition().getY() + 1));
-				player.send(new ObjectAnimationPacket(new Position(2532, 3544, 3), 11819, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
+				player.send(new ObjectAnimationPacket(player, new Position(2532, 3544, 3), 11819, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
 				
 				super.initialize(player);
 			}

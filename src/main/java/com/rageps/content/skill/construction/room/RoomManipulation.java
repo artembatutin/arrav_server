@@ -6,7 +6,7 @@ import com.rageps.content.skill.construction.Construction;
 import com.rageps.content.skill.construction.House;
 import com.rageps.content.skill.construction.Palette.PaletteTile;
 import com.rageps.content.skill.construction.data.Constants;
-import com.rageps.net.packet.out.SendRemoveObjects;
+import com.rageps.net.refactor.packet.out.model.RemoveObjectsPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 
@@ -179,7 +179,7 @@ public class RoomManipulation {
 		RoomData rd = r.data();
 		int toRot = (wise == 0 ? RoomData.getNextEligibleRotationClockWise(rd, direction, r.getRotation()) : RoomData.getNextEligibleRotationCounterClockWise(rd, direction, r.getRotation()));
 		PaletteTile tile = new PaletteTile(rd.getX(), rd.getY(), 0, toRot);
-		p.send(new RemoveObjects());
+		p.send(new RemoveObjectsPacket());
 		if(house.get().isDungeon()) {
 			house.getSecondaryPalette().setTile(chunkX, chunkY, 0, tile);
 		} else {
@@ -245,7 +245,7 @@ public class RoomManipulation {
 				return;
 			}
 		}
-		p.send(new RemoveObjects());
+		p.send(new RemoveObjectsPacket());
 		if(p.getPosition().getZ() == 0) {
 			if(house.get().isDungeon()) {
 				house.getSecondaryPalette().setTile(chunkX, chunkY, 0, tile);

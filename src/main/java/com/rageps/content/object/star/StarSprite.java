@@ -103,7 +103,7 @@ public final class StarSprite extends Mob {
 	}
 	
 	private static void sendEnterAmount(Player player) {
-		player.send(new EnterAmount("How much would you like to convert?", s -> () -> {
+		player.send(new EnterAmountPacket(player, "How much would you like to convert?", s -> () -> {
 			int selectedAmount = Integer.parseInt(s);
 			
 			if(selectedAmount < EXCHANGE_FOR_BLOOD_COINS) {

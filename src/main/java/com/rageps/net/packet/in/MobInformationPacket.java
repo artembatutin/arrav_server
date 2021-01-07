@@ -116,7 +116,7 @@ public final class MobInformationPacket implements IncomingPacket {//todo - reim
 				player.message("This monster doesn't have any drop table.");
 				return;
 			}
-			player.send(new MobDrop(id, drop));
+			//player.send(new MobDrop(id, drop));
 			player.widget(-11);
 		}
 	}

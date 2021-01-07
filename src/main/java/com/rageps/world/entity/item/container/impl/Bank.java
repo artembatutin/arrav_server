@@ -2,6 +2,7 @@ package com.rageps.world.entity.item.container.impl;
 
 import com.rageps.content.BankPin;
 import com.rageps.content.minigame.MinigameHandler;
+import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.net.packet.out.SendContainer;
@@ -102,7 +103,7 @@ public final class Bank {
 		player.send(new ConfigPacket(115, player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE) ? 1 : 0));
 		player.send(new ConfigPacket(116, player.getAttributeMap().getBoolean(PlayerAttributes.INSERT_ITEM) ? 1 : 0));
 		player.getInterfaceManager().openInventory(BANK_WINDOW_ID, SIDEBAR_ID);
-		player.send(new ItemsOnInterfacePacket(SIDEBAR_INVENTORY_ID, this.player.getInventory()));
+		player.send(new ItemsOnInterfacePacket(player, SIDEBAR_INVENTORY_ID, this.player.getInventory()));
 		if(!bulkStartSent) {
 			refreshAll();
 			bulkStartSent = true;
@@ -121,7 +122,7 @@ public final class Bank {
 		player.send(new ConfigPacket(115, player.getAttributeMap().getBoolean(PlayerAttributes.WITHDRAW_AS_NOTE) ? 1 : 0));
 		player.send(new ConfigPacket(116, player.getAttributeMap().getBoolean(PlayerAttributes.INSERT_ITEM) ? 1 : 0));
 		player.getInterfaceManager().openInventory(BANK_WINDOW_ID, SIDEBAR_ID);
-		player.send(new ItemsOnInterfacePacket(SIDEBAR_INVENTORY_ID, this.player.getInventory()));
+		player.send(new ItemsOnInterfacePacket(player, SIDEBAR_INVENTORY_ID, this.player.getInventory()));
 		//player.send(new ItemsOnInterfacePacket(BANK_INVENTORY_ID, bank.tabs[0]));
 		viewing = Optional.of(p);
 
@@ -140,7 +141,7 @@ public final class Bank {
 				continue;
 			}
 
-			viewing.send(new ItemsOnInterfacePacket(270 + i, bank.tabs[i]));
+			viewing.send(new ItemsOnInterfacePacket(player, 270 + i, bank.tabs[i]));
 			//viewing.send(new ItemsOnInterfacePacket(BANK_INVENTORY_ID, bank.tabs[i]));
 		}
 	}

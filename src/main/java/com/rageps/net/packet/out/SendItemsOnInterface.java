@@ -5,6 +5,7 @@ import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.codec.game.GamePacketType;
 import com.rageps.net.packet.OutgoingPacket;
+import com.rageps.net.refactor.packet.out.model.ClearContainerPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.ItemContainer;
@@ -30,7 +31,7 @@ public final class SendItemsOnInterface implements OutgoingPacket {
 		if(id == -1)
 			return false;
 		if(items.length == 0) {
-			player.send(new ClearContainer(id));
+			player.send(new ClearContainerPacket(id));
 			return false;
 		}
 		return true;

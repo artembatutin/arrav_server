@@ -3,6 +3,7 @@ package com.rageps.world.entity.item;
 import com.rageps.content.market.MarketItem;
 import com.rageps.net.packet.out.SendItemNode;
 import com.rageps.net.packet.out.SendItemNodeRemoval;
+import com.rageps.net.refactor.packet.out.model.ItemNodePacket;
 import com.rageps.net.refactor.packet.out.model.ItemNodeRemovalPacket;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
@@ -58,7 +59,7 @@ public class GroundItem extends Entity {
 	
 	@Override
 	public void register() {
-		player.send(new ItemNodePacket(this));
+		player.send(new ItemNodePacket(player,this));
 	}
 	
 	@Override
@@ -72,7 +73,7 @@ public class GroundItem extends Entity {
 					if(p == null)
 						continue;
 					if(p.getPosition().getZ() == super.getPosition().getZ() && p.getInstance() == super.getInstance())
-						p.send(new ItemNodeRemovalPacket(this));
+						p.send(new ItemNodeRemovalPacket(player, this));
 				}
 			}
 		}
@@ -94,7 +95,7 @@ public class GroundItem extends Entity {
 							if(p == null)
 								continue;
 							if(!p.same(player) && p.getPosition().getZ() == super.getPosition().getZ() && p.getInstance() == super.getInstance())
-								p.send(new ItemNodePacket(this));
+								p.send(new ItemNodePacket(player, this));
 						}
 					}
 				}

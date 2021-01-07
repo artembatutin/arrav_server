@@ -6,6 +6,7 @@ import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.construction.Construction;
 import com.rageps.content.skill.construction.data.Constants;
 import com.rageps.content.skill.construction.room.RoomManipulation;
+import com.rageps.net.refactor.packet.out.model.ObjectsConstructionPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.object.GameObject;
 
@@ -533,7 +534,7 @@ public enum HotSpots {
 				public boolean click(Player player, GameObject object, int click) {
 					if(!player.getHouse().get().isBuilding())
 						return true;
-					player.send(new ObjectsConstruction(spot));
+					player.send(new ObjectsConstructionPacket(player, spot));
 					return true;
 				}
 			};

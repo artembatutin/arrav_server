@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.rageps.net.codec.login.LoginCode;
+import com.rageps.net.refactor.codec.login.LoginConstants;
 import com.rageps.net.sql.DatabaseTransaction;
 import com.rageps.net.sql.TableRepresentation;
 import com.rageps.net.sql.player.PlayerAccountLoadTransaction;
@@ -53,21 +54,23 @@ public final class PlayerPersistDB implements PlayerPersistable {
 	}
 
 	@Override
-	public PlayerLoaderResponse load(PlayerCredentials player) {
+	public PlayerLoaderResponse load(PlayerCredentials credentials) {
 			//if (!MysqlUserDao.INSTANCE.playerSaveExist(player.getUser())) {
 			//	player.firstSession = true;
 			//	player.doingTutorial = true;
 			//	return LoginResponse.NORMAL;
 			//}
+        Player player = new Player(credentials);
+        PlayerLoaderResponse response = new PlayerLoaderResponse(LoginConstants.STATUS_OK, player);
 		try {
             PlayerAccountLoadTransaction loadTransaction = new PlayerAccountLoadTransaction(player);
             loadTransaction.execute(loadTransaction.getRepresentation().getWrapper().open());
 
 		} catch (Exception ex) {
-			logger.error("Error loading player {} member {}", player.getName(), player.credentials.databaseId, ex);
-			return LoginCode.COULD_NOT_COMPLETE_LOGIN;
+			logger.error("Error loading player {} member {}", credentials.username, credentials.databaseId, ex);
+			return new PlayerLoaderResponse(LoginConstants.STATUS_COULD_NOT_COMPLETE);
 		}
-		return LoginCode.NORMAL;
+		return response;
 	}
 
 }

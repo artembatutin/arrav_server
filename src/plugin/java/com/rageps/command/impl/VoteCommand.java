@@ -3,6 +3,7 @@ package com.rageps.command.impl;
 import com.rageps.command.Command;
 import com.rageps.command.CommandSignature;
 import com.rageps.net.packet.out.SendLink;
+import com.rageps.net.refactor.packet.out.model.LinkPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 
@@ -11,7 +12,7 @@ public final class VoteCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		player.send(new Link("vote"));
+		player.send(new LinkPacket("vote"));
 		player.message("@red@Do '::redeem auth' once you're done. Thank you for voting!");
 	}
 	

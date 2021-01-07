@@ -93,8 +93,8 @@ public final class PlayerPersistFile implements PlayerPersistable {
 				//player.firstLogin = true; todo fix
 				return new PlayerLoaderResponse(LoginConstants.STATUS_OK);
 			}
-
-			PlayerLoaderResponse response = new PlayerLoaderResponse(LoginConstants.STATUS_OK);
+			Player player = new Player(credentials);
+			PlayerLoaderResponse response = new PlayerLoaderResponse(LoginConstants.STATUS_OK, player);
 
 			try (Reader reader = new FileReader(path.toFile())) {
 				JsonElement parsed = new JsonParser().parse(reader);
@@ -102,7 +102,6 @@ public final class PlayerPersistFile implements PlayerPersistable {
 					logger.error("Fatal! JsonNull loading player file");
 				JsonObject jsonReader = (JsonObject) parsed;
 
-				Player player = response.getPlayer().get();
 
 				for (PlayerPersistanceProperty property : PlayerPersistenceManager.PROPERTIES) {
 					if (jsonReader.has(property.name)) {

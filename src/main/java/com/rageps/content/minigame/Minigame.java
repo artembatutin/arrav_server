@@ -1,11 +1,12 @@
 package com.rageps.content.minigame;
 
-import com.rageps.net.packet.out.SendWalkable;
+import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
 import com.rageps.content.item.FoodConsumable;
 import com.rageps.content.item.PotionConsumable;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.prayer.Prayer;
 import com.rageps.net.refactor.packet.out.model.ConfigPacket;
+import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.Actor;
@@ -457,7 +458,7 @@ public abstract class Minigame {
 		player.playerData.getSkullTimer().set(0);
 		player.playerData.getTeleblockTimer().set(0);
 		player.animation(new Animation(65535));
-		player.send(new Walkable(-1));
+		player.send(new WalkableInterfacePacket(-1));//todo maybe replace with interfacemanager reset interfaces
 		Prayer.deactivateAll(player);
 		Skills.restoreAll(player);
 		WeaponInterface.execute(player, player.getEquipment().get(Equipment.WEAPON_SLOT));

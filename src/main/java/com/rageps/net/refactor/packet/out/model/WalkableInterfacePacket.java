@@ -5,11 +5,11 @@ import com.rageps.net.refactor.packet.Packet;
 /**
  * @author Tamatea <tamateea@gmail.com>
  */
-public class WalkablePacket extends Packet {
+public class WalkableInterfacePacket extends Packet {
 
     private final int id;
 
-    public WalkablePacket(int id) {
+    public WalkableInterfacePacket(int id) {
         this.id = id;
     }
 
