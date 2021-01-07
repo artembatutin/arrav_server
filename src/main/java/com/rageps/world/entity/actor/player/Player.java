@@ -1208,7 +1208,12 @@ public final class Player extends Actor {
 	public void interfaceText(int id, String message) {
 		interfaceText(id, message, false);
 	}
-	
+
+
+	public void interfaceText(String message, int id) {
+		interfaceText(id, message, false);
+	}
+
 	/**
 	 * A shorter way of sending a player a message.
 	 * @param message the text to send.

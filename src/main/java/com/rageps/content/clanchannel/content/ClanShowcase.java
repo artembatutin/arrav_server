@@ -24,8 +24,8 @@ public class ClanShowcase {
 		//for (int index = 0; index < showcaseItems.size(); index++) {
 		//	showcase[index] = new Item(showcaseItems.get(index));
 		//}
-		player.send(new InterfaceStringPacket(channel.getName() + "'s Showcase", 57702));
-		player.send(new InterfaceStringPacket(showcaseItems.size() + "/28", 57718));
+		player.interfaceText(channel.getName() + "'s Showcase", 57702);
+		player.interfaceText(showcaseItems.size() + "/28", 57718);
 		player.send(new ItemsOnInterfacePacket(player, 57716, 28, showcase));
 		player.send(new ItemsOnInterfacePacket(player, 57717));
 		player.getInterfaceManager().open(57700);

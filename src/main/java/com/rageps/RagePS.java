@@ -179,6 +179,7 @@ public final class RagePS {
 
 
 
+		serviceBootstrap.group(loopGroup);
 		ChannelInitializer<SocketChannel> service = new ServiceChannelInitializer(handler);
 		serviceBootstrap.channel(NioServerSocketChannel.class);
 		serviceBootstrap.childHandler(service);

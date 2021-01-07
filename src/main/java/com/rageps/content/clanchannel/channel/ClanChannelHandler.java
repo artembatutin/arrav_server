@@ -127,20 +127,20 @@ public class ClanChannelHandler {
 				player.message("You do not have sufficient privileges to manage this clan!");
 				return;
 			}
-			player.send(new InterfaceStringPacket("" + channel.getName(), 42102));
-			player.send(new InterfaceStringPacket("" + channel.getTag(), 42104));
-			player.send(new InterfaceStringPacket("" + channel.getSlogan(), 42106));
-			player.send(new InterfaceStringPacket("" + channel.getPassword(), 42108));
-			player.send(new InterfaceStringPacket(channel.getDetails().type.getIcon() + "" + channel.getDetails().type.getName(),
-					42110));
-			player.send(new InterfaceStringPacket(
+			player.interfaceText("" + channel.getName(), 42102);
+			player.interfaceText("" + channel.getTag(), 42104);
+			player.interfaceText("" + channel.getSlogan(), 42106);
+			player.interfaceText("" + channel.getPassword(), 42108);
+			player.interfaceText(channel.getDetails().type.getIcon() + "" + channel.getDetails().type.getName(),
+					42110);
+			player.interfaceText(
 					channel.getManagement().getRank(ENTER_RANK_INDEX) + " " + channel.getManagement().getEnter(),
-					42112));
-			player.send(new InterfaceStringPacket(
-					channel.getManagement().getRank(TALK_RANK_INDEX) + " " + channel.getManagement().getTalk(), 42114));
-			player.send(new InterfaceStringPacket(
+					42112);
+			player.interfaceText(
+					channel.getManagement().getRank(TALK_RANK_INDEX) + " " + channel.getManagement().getTalk(), 42114);
+			player.interfaceText(
 					channel.getManagement().getRank(MANAGE_RANK_INDEX) + " " + channel.getManagement().getManage(),
-					42116));
+					42116);
 			player.send(new ConfigPacket(326, channel.getManagement().locked ? 1 : 0));
 
 			player.send(new ItemsOnInterfacePacket(player, 42126, channel.getShowcaseItems()));
@@ -234,7 +234,7 @@ public class ClanChannelHandler {
 			if (other != null && !other.name.equalsIgnoreCase(player.credentials.username)
 					&& other.rank.lessThan(ClanRank.LEADER)) {
 				//player.attributes.set(PlayerAttributes.CLAN_RANK_MEMBER, other);
-				player.send(new InterfaceStringPacket(other.name, 43606));
+				player.interfaceText(other.name, 43606);
 				player.getInterfaceManager().open(43600);
 			}
 		});
@@ -250,7 +250,7 @@ public class ClanChannelHandler {
 		}
 		
 		int size = Math.max(channel.size(), 10);
-		player.send(new InterfaceStringPacket("Talking in: <col=F7DC6F>" + StringUtil.formatName(channel.getName()), 33502));
+		player.interfaceText("Talking in: <col=F7DC6F>" + StringUtil.formatName(channel.getName()), 33502);
 		player.send(new ConfigPacket(393, channel.lootshareEnabled() ? 1 : 0));
 		player.send(new ScrollBarPacket(33530, size * 22));
 
@@ -268,18 +268,18 @@ public class ClanChannelHandler {
 				nextMember = iterator.next();
 			}
 			if (nextMember == null || (!nextMember.player.isPresent() && index / 3 >= members.size())) {
-				player.send(new InterfaceStringPacket("", string++));
-				player.send(new InterfaceStringPacket("", string));
+				player.interfaceText("", string++);
+				player.interfaceText("", string);
 				player.send(new TooltipPacket("", string++));
-				player.send(new InterfaceStringPacket("", string++));
+				player.interfaceText("", string++);
 				string++;
 			} else if (nextMember.player.isPresent()) {
-				player.send(new InterfaceStringPacket(nextMember.rank.getString(), string++));
-				player.send(new InterfaceStringPacket(nextMember.name, string));
+				player.interfaceText(nextMember.rank.getString(), string++);
+				player.interfaceText(nextMember.name, string);
 				player.send(new TooltipPacket(
 						tooltip ? (nextMember.name.equals(player.credentials.username) ? "" : "Manage " + nextMember.name) : "",
 						string++));
-				player.send(new InterfaceStringPacket("#" + channel.getDetails().getClanRank(nextMember), string++));
+				player.interfaceText("#" + channel.getDetails().getClanRank(nextMember), string++);
 				string++;
 			}
 		}
@@ -287,11 +287,11 @@ public class ClanChannelHandler {
 
 	/** Handles cleaning the clan tab itemcontainer. */
 	public static void clean(Player player) {
-		player.send(new InterfaceStringPacket("Talking in: <col=F7DC6F>None", 33502));
+		player.interfaceText("Talking in: <col=F7DC6F>None", 33502);
 		for (int i = 0; i < 99; i += 4) {
-			player.send(new InterfaceStringPacket("", 33531 + (i + 1)));
-			player.send(new InterfaceStringPacket("", 33531 + (i + 2)));
-			player.send(new InterfaceStringPacket("", 33531 + (i + 3)));
+			player.interfaceText("", 33531 + (i + 1));
+			player.interfaceText("", 33531 + (i + 2));
+			player.interfaceText("", 33531 + (i + 3));
 		}
 		player.send(new ScrollBarPacket(33530, 11 * 22));
 	}

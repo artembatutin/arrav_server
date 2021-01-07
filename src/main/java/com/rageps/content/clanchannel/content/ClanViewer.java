@@ -52,18 +52,18 @@ public class ClanViewer {
 			drawClanList(searchKey);
 			drawClanDetails();
 			interfaceId = 43000;
-			player.send(new InterfaceStringPacket(name + ":", 43006));
+			player.interfaceText(name + ":", 43006);
 		} else if (tab == ClanTab.MEMBERS) {
 			drawClanMembers();
 			interfaceId = 43500;
-			player.send(new InterfaceStringPacket("Member List:", 43006));
+			player.interfaceText("Member List:", 43006);
 		}
 
 		player.send(new ConfigPacket(531, tab.ordinal()));
-		player.send(new InterfaceStringPacket(viewing != null ? viewing.getName() : "", 43009));
-		player.send(new InterfaceStringPacket(viewing != null ? viewing.getSlogan() : "", 43010));
-		player.send(new InterfaceStringPacket(searchKey.isEmpty() ? "Search for clan" : searchKey, 43012));
-		player.send(new InterfaceStringPacket(name, 43019));
+		player.interfaceText(viewing != null ? viewing.getName() : "", 43009);
+		player.interfaceText(viewing != null ? viewing.getSlogan() : "", 43010);
+		player.interfaceText(searchKey.isEmpty() ? "Search for clan" : searchKey, 43012);
+		player.interfaceText(name, 43019);
 		player.send(new ItemsOnInterfacePacket(player, 43011, showcase));
 		player.getInterfaceManager().open(interfaceId);
 	}
@@ -81,11 +81,11 @@ public class ClanViewer {
 			if (iterator.hasNext()) {
 				ClanChannel channel = iterator.next();
 				String prefix = (index + 1) + ")";
-				player.send(new InterfaceStringPacket(
-						(clanIndex == index ? "<col=ffffff>" : "") + prefix + " " + channel.getName(), string));
+				player.interfaceText(
+						(clanIndex == index ? "<col=ffffff>" : "") + prefix + " " + channel.getName(), string);
 				player.send(new TooltipPacket("View " + channel.getName() + "'s clan profile", string));
 			} else {
-				player.send(new InterfaceStringPacket("", string));
+				player.interfaceText("", string);
 				player.send(new TooltipPacket("", string));
 			}
 		}
@@ -97,7 +97,7 @@ public class ClanViewer {
 		String[] strings = getDetails();
 		assert strings.length != 0;
 		for (int index = 0, string = 43102; index < strings.length; index++, string += 2) {
-			player.send(new InterfaceStringPacket(strings[index] == null ? "" : strings[index], string));
+			player.interfaceText(strings[index] == null ? "" : strings[index], string);
 		}
 	}
 
@@ -147,7 +147,7 @@ public class ClanViewer {
 			boolean valid = i < membersList.size();
 			ClanMember member = valid ? membersList.get(i) : null;
 			String name = valid ? member.rank.getString() + " " + member.name : "";
-			player.send(new InterfaceStringPacket((i == memberIndex ? "<col=ffffff>" : "") + name, string));
+			player.interfaceText((i == memberIndex ? "<col=ffffff>" : "") + name, string);
 			player.send(new TooltipPacket(valid ? "View " + member.name + "'s clan profile" : "", string));
 		}
 		player.send(new ScrollBarPacket(45050, size * 18));
@@ -164,7 +164,7 @@ public class ClanViewer {
 		String[] strings = getProfile(member);
 
 		for (int index = 0, string = 45012; index < strings.length; index++, string += 2) {
-			player.send(new InterfaceStringPacket(strings[index] == null ? "" : strings[index], string));
+			player.interfaceText(strings[index] == null ? "" : strings[index], string);
 		}
 	}
 
@@ -190,9 +190,9 @@ public class ClanViewer {
 
 				if (old != difficulty) {
 					string++;
-					player.send(new InterfaceStringPacket("<col=255>[" + StringUtil.formatEnumString(difficulty.name()) + "]", string));
+					player.interfaceText("<col=255>[" + StringUtil.formatEnumString(difficulty.name()) + "]", string);
 					string++;
-					player.send(new InterfaceStringPacket("", string));
+					player.interfaceText("", string);
 					string++;
 				}
 
@@ -202,19 +202,19 @@ public class ClanViewer {
 
 				String name = (completed ? "<col=347043>" + "" : "") + achievement.get().details + " ("
 						+ NumberUtil.getPercentageAmount(progress, goal) + "%)";
-				player.send(new InterfaceStringPacket(name, string));
+				player.interfaceText(name, string);
 			} else {
-				player.send(new InterfaceStringPacket("", string));
+				player.interfaceText("", string);
 			}
 		}
 
-		player.send(new InterfaceStringPacket("<col=000000>These are all the clan achievements available", 37111));
-		player.send(new InterfaceStringPacket("<col=000000>Completed achievements will be highlighted in <col=347043>green</col>",
-				37112));
-		player.send(new InterfaceStringPacket("Completed: 0/" + size, 37113));
-		player.send(new InterfaceStringPacket("", 37114));
-		player.send(new InterfaceStringPacket("", 37107));
-		player.send(new InterfaceStringPacket(channel.getName() + "'s Achievements", 37103));
+		player.interfaceText("<col=000000>These are all the clan achievements available", 37111);
+		player.interfaceText("<col=000000>Completed achievements will be highlighted in <col=347043>green</col>",
+				37112);
+		player.interfaceText("Completed: 0/" + size, 37113);
+		player.interfaceText("", 37114);
+		player.interfaceText("", 37107);
+		player.interfaceText(channel.getName() + "'s Achievements", 37103);
 		player.send(new ScrollBarPacket(37110, 500));
 		player.getInterfaceManager().open(37100);
 	}

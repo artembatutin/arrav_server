@@ -206,7 +206,7 @@ public class ClanChannel implements Comparable<ClanChannel> {
 			for (int idx = 0; idx < size; idx++) {
 				boolean valid = idx < bannedMembers.size();
 				Optional<String> banned = valid ? Optional.of(bannedMembers.get(idx)) : Optional.empty();
-				player.send(new InterfaceStringPacket(banned.orElse(""), string));
+				player.interfaceText(banned.orElse(""), string);
 				player.send(new TooltipPacket(valid ? "Unban " + bannedMembers.get(idx) : "", string));
 				string++;
 			}
