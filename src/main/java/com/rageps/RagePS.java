@@ -184,7 +184,7 @@ public final class RagePS {
 
 
 
-
+		serviceBootstrap.group(loopGroup);
 		ChannelInitializer<SocketChannel> service = new ServiceChannelInitializer(handler);
 		serviceBootstrap.channel(NioServerSocketChannel.class);
 		serviceBootstrap.childHandler(service);
@@ -194,6 +194,7 @@ public final class RagePS {
 		SocketAddress address = new InetSocketAddress(World.get().getEnvironment().getPort());
 
 		serviceBootstrap.bind(address);
+
 
 		ResourceLeakDetector.setLevel(World.get().getEnvironment().isDebug() ? PARANOID : DISABLED);
 	}
