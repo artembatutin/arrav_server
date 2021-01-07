@@ -7,10 +7,18 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class UpdateSpecialPacket extends Packet {
 
+    private final int id, amount;
 
-public UpdateSpecialPacket() {}
+    public UpdateSpecialPacket(int id, int amount) {
+        this.id = id;
+        this.amount = amount;
+    }
 
+    public int getId() {
+        return id;
+    }
 
-
-
+    public int getAmount() {
+        return amount;
+    }
 }

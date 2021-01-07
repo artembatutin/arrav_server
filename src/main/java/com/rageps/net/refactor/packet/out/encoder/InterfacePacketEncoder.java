@@ -12,7 +12,8 @@ public class InterfacePacketEncoder implements PacketEncoder<InterfacePacket> {
 
     @Override
     public GamePacket encode(InterfacePacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(97);
+        builder.putShort(message.getId());
         return builder.toGamePacket();
     }
 }

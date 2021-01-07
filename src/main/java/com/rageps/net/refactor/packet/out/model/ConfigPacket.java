@@ -7,10 +7,18 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class ConfigPacket extends Packet {
 
+    private final int id, state;
 
-public ConfigPacket() {}
+    public ConfigPacket(int id, int state) {
+        this.id = id;
+        this.state = state;
+    }
 
+    public int getId() {
+        return id;
+    }
 
-
-
+    public int getState() {
+        return state;
+    }
 }

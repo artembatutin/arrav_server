@@ -12,7 +12,8 @@ public class EnergyPacketEncoder implements PacketEncoder<EnergyPacket> {
 
     @Override
     public GamePacket encode(EnergyPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(110);
+        builder.put(message.getEnergy());
         return builder.toGamePacket();
     }
 }

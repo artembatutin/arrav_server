@@ -2,6 +2,7 @@ package com.rageps.net.refactor.packet.out;
 
 import com.rageps.net.refactor.codec.game.GamePacket;
 import com.rageps.net.refactor.packet.Packet;
+import com.rageps.net.refactor.packet.out.model.CoordinatesPacket;
 
 /**
  * A {@link PacketEncoder} encodes {@link Packet} objects into {@link GamePacket}s which can be sent over the network.
@@ -15,7 +16,7 @@ public abstract interface PacketEncoder<M extends Packet> {
 		return true;
 	}
 
-	default GamePacket coordinatePacket() {
+	default CoordinatesPacket coordinatePacket(M message) {
 		return null;
 	}
 

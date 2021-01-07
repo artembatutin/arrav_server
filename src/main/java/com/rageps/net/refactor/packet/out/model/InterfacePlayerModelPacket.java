@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class InterfacePlayerModelPacket extends Packet {
 
+    private final int id;
 
-public InterfacePlayerModelPacket() {}
+    public InterfacePlayerModelPacket(int id) {
+        this.id = id;
+    }
 
-
-
-
+    public int getId() {
+        return id;
+    }
 }

@@ -12,7 +12,8 @@ public class MultiIconPacketEncoder implements PacketEncoder<MultiIconPacket> {
 
     @Override
     public GamePacket encode(MultiIconPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(61);
+        builder.put(message.isHide() ? 0 : 1);
         return builder.toGamePacket();
     }
 }

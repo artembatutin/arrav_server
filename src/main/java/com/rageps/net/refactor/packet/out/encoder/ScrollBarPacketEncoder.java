@@ -13,7 +13,9 @@ public class ScrollBarPacketEncoder implements PacketEncoder<ScrollBarPacket> {
 
     @Override
     public GamePacket encode(ScrollBarPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(79);
+        builder.putInt(message.getId());
+        builder.putShort(message.getSize());
         return builder.toGamePacket();
     }
 }

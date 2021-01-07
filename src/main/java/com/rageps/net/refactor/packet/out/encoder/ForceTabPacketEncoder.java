@@ -12,7 +12,9 @@ public class ForceTabPacketEncoder implements PacketEncoder<ForceTabPacket> {
 
     @Override
     public GamePacket encode(ForceTabPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(106);
+        builder.put(message.getTab().getOld());
+        builder.put(message.getTab().getNew());
         return builder.toGamePacket();
     }
 }

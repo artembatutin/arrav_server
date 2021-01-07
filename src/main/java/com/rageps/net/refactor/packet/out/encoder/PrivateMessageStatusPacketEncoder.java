@@ -12,7 +12,8 @@ public class PrivateMessageStatusPacketEncoder implements PacketEncoder<PrivateM
 
     @Override
     public GamePacket encode(PrivateMessageStatusPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(221);
+        builder.put(message.getCode());
         return builder.toGamePacket();
     }
 }

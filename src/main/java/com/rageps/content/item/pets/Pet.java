@@ -4,6 +4,9 @@ import com.rageps.content.dialogue.Expression;
 import com.rageps.content.skill.summoning.familiar.Familiar;
 import com.rageps.net.packet.out.SendForceTab;
 import com.rageps.net.packet.out.SendInterfaceAnimation;
+import com.rageps.net.refactor.packet.out.model.ForceTabPacket;
+import com.rageps.net.refactor.packet.out.model.InterfaceAnimationPacket;
+import com.rageps.net.refactor.packet.out.model.InterfaceNpcModelPacket;
 import com.rageps.world.World;
 import com.rageps.content.TabInterface;
 import com.rageps.content.item.FoodConsumable;
@@ -172,7 +175,7 @@ public final class Pet extends Follower {
 		World.get().getMobRepository().remove(pet);
 		pet.task.cancel();
 		TabInterface.SUMMONING.sendInterface(player, -1);
-		player.send(new ForceTab(TabInterface.INVENTORY));
+		player.send(new ForceTabPacket(TabInterface.INVENTORY));
 		pet.postUpdate();
 	}
 	

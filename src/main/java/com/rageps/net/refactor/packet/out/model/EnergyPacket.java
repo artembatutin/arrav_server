@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class EnergyPacket extends Packet {
 
+    private final int energy;
 
-public EnergyPacket() {}
+    public EnergyPacket(int energy) {
+        this.energy = energy;
+    }
 
-
-
-
+    public int getEnergy() {
+        return energy;
+    }
 }

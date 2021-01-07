@@ -7,10 +7,18 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class InterfaceItemPacket extends Packet {
 
+    private final int widget, itemId;
 
-public InterfaceItemPacket() {}
+    public InterfaceItemPacket(int widget, int itemId) {
+        this.widget = widget;
+        this.itemId = itemId;
+    }
 
+    public int getItemId() {
+        return itemId;
+    }
 
-
-
+    public int getWidget() {
+        return widget;
+    }
 }

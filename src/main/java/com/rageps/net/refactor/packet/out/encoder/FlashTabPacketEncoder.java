@@ -1,5 +1,6 @@
 package com.rageps.net.refactor.packet.out.encoder;
 
+import com.rageps.net.refactor.codec.game.DataTransformation;
 import com.rageps.net.refactor.codec.game.GamePacket;
 import com.rageps.net.refactor.codec.game.GamePacketBuilder;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
@@ -12,7 +13,8 @@ public class FlashTabPacketEncoder implements PacketEncoder<FlashTabPacket> {
 
     @Override
     public GamePacket encode(FlashTabPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(24);
+        builder.put(message.getCode(), DataTransformation.ADD);
         return builder.toGamePacket();
     }
 }

@@ -12,7 +12,10 @@ public class FadePacketEncoder implements PacketEncoder<FadePacket> {
 
     @Override
     public GamePacket encode(FadePacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(80);
+        builder.put(message.getStart());
+        builder.put(message.getDuration());
+        builder.put(message.getEnd());
         return builder.toGamePacket();
     }
 }

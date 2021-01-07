@@ -8,9 +8,13 @@ import com.rageps.net.refactor.packet.Packet;
 public class TaskPacket extends Packet {
 
 
-public TaskPacket() {}
+    private final String task;
 
+    public TaskPacket(String task) {
+        this.task = task;
+    }
 
-
-
+    public String getTask() {
+        return task;
+    }
 }

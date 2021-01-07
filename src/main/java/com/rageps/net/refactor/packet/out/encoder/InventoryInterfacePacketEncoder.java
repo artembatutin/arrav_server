@@ -1,5 +1,7 @@
 package com.rageps.net.refactor.packet.out.encoder;
 
+import com.rageps.net.codec.ByteTransform;
+import com.rageps.net.refactor.codec.game.DataTransformation;
 import com.rageps.net.refactor.codec.game.GamePacket;
 import com.rageps.net.refactor.codec.game.GamePacketBuilder;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
@@ -12,7 +14,9 @@ public class InventoryInterfacePacketEncoder implements PacketEncoder<InventoryI
 
     @Override
     public GamePacket encode(InventoryInterfacePacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(248);
+        builder.putShort(message.getOpen(), DataTransformation.ADD);
+        builder.putShort(message.getOverlay());
         return builder.toGamePacket();
     }
 }

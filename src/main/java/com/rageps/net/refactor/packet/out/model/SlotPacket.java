@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class SlotPacket extends Packet {
 
+    private final int slot;
 
-public SlotPacket() {}
+    public SlotPacket(int slot) {
+        this.slot = slot;
+    }
 
-
-
-
+    public int getSlot() {
+        return slot;
+    }
 }

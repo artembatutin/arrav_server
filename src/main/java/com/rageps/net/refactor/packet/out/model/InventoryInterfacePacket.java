@@ -7,10 +7,18 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class InventoryInterfacePacket extends Packet {
 
+    private final int open, overlay;
 
-public InventoryInterfacePacket() {}
+    public InventoryInterfacePacket(int open, int overlay) {
+        this.open = open;
+        this.overlay = overlay;
+    }
 
+    public int getOpen() {
+        return open;
+    }
 
-
-
+    public int getOverlay() {
+        return overlay;
+    }
 }

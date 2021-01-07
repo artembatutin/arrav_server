@@ -70,7 +70,7 @@ public final class IntroductionCutscene extends Cutscene {
 					player.send(new CameraAngle(new Position(3092, 3516), 340, 6, 10));
 				}), new StatementDialogue("Those @red@3@bla@ with the highest streak at the @red@end of the week@bla@", "will gain a reward.", " Those @red@3@bla@ with the most recent @red@on-going@bla@ streaks", "will also gain rewards!").attach(() -> {
 					TabInterface.QUEST.sendInterface(player, 638);
-					player.send(new ForceTab(TabInterface.QUEST));
+					player.send(new ForceTabPacket(TabInterface.QUEST));
 				}), new GiveItemDialogue(new Item(19000, 200), "Each player kill will give you blood money.", Optional.empty()).attach(() -> {
 				}), new StatementDialogue("You can view your player killing statistics by", "clicking the quest tab which is just next to your skill tab.").attach(() -> {
 				}), new StatementDialogue("This shiny portal allows you to", "get anywhere: @red@skills, minigames, bosses.").attach(() -> {

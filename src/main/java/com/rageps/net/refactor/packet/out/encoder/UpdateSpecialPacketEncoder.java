@@ -1,5 +1,7 @@
 package com.rageps.net.refactor.packet.out.encoder;
 
+import com.rageps.net.codec.ByteOrder;
+import com.rageps.net.refactor.codec.game.DataOrder;
 import com.rageps.net.refactor.codec.game.GamePacket;
 import com.rageps.net.refactor.codec.game.GamePacketBuilder;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
@@ -12,7 +14,10 @@ public class UpdateSpecialPacketEncoder implements PacketEncoder<UpdateSpecialPa
 
     @Override
     public GamePacket encode(UpdateSpecialPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(70);
+        builder.putShort(message.getAmount());
+        builder.putShort(0, DataOrder.LITTLE);
+        builder.putShort(message.getId(), DataOrder.LITTLE);
         return builder.toGamePacket();
     }
 }

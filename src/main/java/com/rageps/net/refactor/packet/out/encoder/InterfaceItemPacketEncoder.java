@@ -13,6 +13,8 @@ public class InterfaceItemPacketEncoder implements PacketEncoder<InterfaceItemPa
     @Override
     public GamePacket encode(InterfaceItemPacket message) {
         GamePacketBuilder builder = new GamePacketBuilder(0);
+        builder.putInt(message.getWidget());
+        builder.putInt(message.getItemId());
         return builder.toGamePacket();
     }
 }

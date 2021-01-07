@@ -1,6 +1,8 @@
 package com.rageps.command.impl;
 
 import com.rageps.RagePS;
+import com.rageps.net.refactor.packet.out.model.BroadcastPacket;
+import com.rageps.net.refactor.packet.out.model.LogoutPacket;
 import com.rageps.world.World;
 import com.rageps.command.Command;
 import com.rageps.command.CommandSignature;
@@ -28,7 +30,7 @@ public final class UpdateCommand implements Command {
 		Player other;
 		Iterator<Player> it = World.get().getPlayers().iterator();
 		while((other = it.next()) != null) {
-			other.send(new Broadcast(0, timer, "System update"));
+			other.send(new BroadcastPacket(0, timer, "System update"));
 		}
 		RagePS.UPDATING = timer * 0.6;
 		World.get().getTask().submit(new Task(1, true) {
@@ -44,7 +46,7 @@ public final class UpdateCommand implements Command {
 						if(p == null)
 							continue;
 						World.get().getPersistenceManager().save(p);
-						p.send(new Logout());
+						p.send(new LogoutPacket(p));
 					}
 					System.out.println("Waiting for shutdown.");
 					World.get().getTask().submit(new Task(10, false) {

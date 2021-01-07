@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class MinimapStatePacket extends Packet {
 
+    private final int code;
 
-public MinimapStatePacket() {}
+    public MinimapStatePacket(int code) {
+        this.code = code;
+    }
 
-
-
-
+    public int getCode() {
+        return code;
+    }
 }

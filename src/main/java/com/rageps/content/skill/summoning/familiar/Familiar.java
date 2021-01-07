@@ -4,6 +4,8 @@ import com.rageps.content.dialogue.Expression;
 import com.rageps.content.skill.summoning.familiar.passive.PassiveAbility;
 import com.rageps.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
 import com.rageps.net.packet.out.SendInterfaceAnimation;
+import com.rageps.net.refactor.packet.out.model.InterfaceAnimationPacket;
+import com.rageps.net.refactor.packet.out.model.InterfaceNpcModelPacket;
 import com.rageps.world.World;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.content.TabInterface;

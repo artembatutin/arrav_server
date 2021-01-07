@@ -76,7 +76,7 @@ public final class ViewingOrb {
 		//player.getMessages().sendSidebarInterface(v, -1, 2));
 		//player.getMessages().sendSidebarInterface(10, 3209, 0);
 		//player.getMessages().sendSidebarInterface(5, 3209, 1);
-		player.send(new ForceTab(TabInterface.INVENTORY));
+		player.send(new ForceTabPacket(TabInterface.INVENTORY));
 		player.interfaceText(15239, "@yel@Centre");
 		player.interfaceText(15240, "@yel@North-West");
 		player.interfaceText(15241, "@yel@North-East");

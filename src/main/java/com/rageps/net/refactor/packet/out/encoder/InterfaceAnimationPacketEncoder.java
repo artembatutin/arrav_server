@@ -12,7 +12,9 @@ public class InterfaceAnimationPacketEncoder implements PacketEncoder<InterfaceA
 
     @Override
     public GamePacket encode(InterfaceAnimationPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(200);
+        builder.putShort(message.getId());
+        builder.putShort(message.getAnimation());
         return builder.toGamePacket();
     }
 }

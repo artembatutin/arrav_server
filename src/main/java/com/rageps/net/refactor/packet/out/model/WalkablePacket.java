@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class WalkablePacket extends Packet {
 
+    private final int id;
 
-public WalkablePacket() {}
+    public WalkablePacket(int id) {
+        this.id = id;
+    }
 
-
-
-
+    public int getId() {
+        return id;
+    }
 }

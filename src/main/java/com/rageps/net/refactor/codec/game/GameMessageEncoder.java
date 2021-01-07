@@ -34,8 +34,8 @@ public final class GameMessageEncoder extends MessageToMessageEncoder<Packet> {
 	protected void encode(ChannelHandlerContext ctx, Packet packet, List<Object> out) {
 		PacketEncoder<Packet> encoder = (PacketEncoder<Packet>) release.getMessageEncoder(packet.getClass());
 		if (encoder != null) {
-			if(encoder.coordinatePacket() != null)
-				out.add(encoder.coordinatePacket());
+			if(encoder.coordinatePacket(packet) != null)
+				out.add(encoder.coordinatePacket(packet));
 			if(encoder.onSent(packet))
 				out.add(encoder.encode(packet));
 		}

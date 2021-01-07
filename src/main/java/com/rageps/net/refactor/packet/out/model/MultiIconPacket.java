@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class MultiIconPacket extends Packet {
 
+    private final boolean hide;
 
-public MultiIconPacket() {}
+    public MultiIconPacket(boolean hide) {
+        this.hide = hide;
+    }
 
-
-
-
+    public boolean isHide() {
+        return hide;
+    }
 }

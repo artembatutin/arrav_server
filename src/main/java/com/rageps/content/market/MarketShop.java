@@ -131,7 +131,7 @@ public class MarketShop {
 		player.getInterfaceManager().openInventory(SHOP_INTERFACE_ID, INVENTORY_INTERFACE_ID);
 		player.send(new Shop(SHOP_CONTAINER_ID, getItems()));
 		player.interfaceText(SHOP_NAME_ID, getTitle());
-		player.send(new ForceTab(TabInterface.INVENTORY));
+		player.send(new ForceTabPacket(TabInterface.INVENTORY));
 		player.send(new ItemsOnInterfacePacket(INVENTORY_CONTAINER_ID, player.getInventory()));
 		if(player.getMarketShop().getItems() != null) {
 			for(int id : player.getMarketShop().getItems()) {

@@ -7,10 +7,19 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class InterfaceLayerPacket extends Packet {
 
+    private final int id;
+    private final boolean hide;
 
-public InterfaceLayerPacket() {}
+    public InterfaceLayerPacket(int id, boolean hide) {
+        this.id = id;
+        this.hide = hide;
+    }
 
+    public int getId() {
+        return id;
+    }
 
-
-
+    public boolean isHide() {
+        return hide;
+    }
 }

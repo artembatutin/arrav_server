@@ -1,5 +1,6 @@
 package com.rageps.net.refactor.packet.out.model;
 
+import com.rageps.content.market.MarketItem;
 import com.rageps.net.refactor.packet.Packet;
 
 /**
@@ -7,10 +8,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class ShopStockPacket extends Packet {
 
+    private final MarketItem item;
 
-public ShopStockPacket() {}
+    public ShopStockPacket(MarketItem item) {
+        this.item = item;
+    }
 
-
-
-
+    public MarketItem getItem() {
+        return item;
+    }
 }

@@ -7,10 +7,18 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class InterfaceAnimationPacket extends Packet {
 
+    private final int id, animation;
 
-public InterfaceAnimationPacket() {}
+    public InterfaceAnimationPacket(int id, int animation) {
+        this.id = id;
+        this.animation = animation;
+    }
 
+    public int getId() {
+        return id;
+    }
 
-
-
+    public int getAnimation() {
+        return animation;
+    }
 }

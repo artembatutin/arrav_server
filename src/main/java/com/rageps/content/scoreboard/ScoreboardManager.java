@@ -2,6 +2,7 @@ package com.rageps.content.scoreboard;
 
 import com.google.common.collect.ComparisonChain;
 import com.rageps.content.achievements.Achievement;
+import com.rageps.net.refactor.packet.out.model.ScorePacket;
 import com.rageps.world.World;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -94,7 +95,7 @@ public final class ScoreboardManager {
 		
 		for(int i = 0; i < statistics.size(); i++) {
 			PlayerScoreboardStatistic stat = statistics.get(i);
-			player.send(new Score(i, stat.getUsername(), stat.getKills().get(), stat.getDeaths().get(), stat.getCurrentKillstreak().get()));
+			player.send(new ScorePacket(i, stat.getUsername(), stat.getKills().get(), stat.getDeaths().get(), stat.getCurrentKillstreak().get()));
 		}
 		player.widget(-12);
 	}

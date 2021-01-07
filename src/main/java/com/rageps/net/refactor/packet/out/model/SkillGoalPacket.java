@@ -7,10 +7,18 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class SkillGoalPacket extends Packet {
 
+    private final int id, goal;
 
-public SkillGoalPacket() {}
+    public SkillGoalPacket(int id, int goal) {
+        this.id = id;
+        this.goal = goal;
+    }
 
+    public int getId() {
+        return id;
+    }
 
-
-
+    public int getGoal() {
+        return goal;
+    }
 }

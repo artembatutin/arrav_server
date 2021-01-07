@@ -12,7 +12,8 @@ public class WalkablePacketEncoder implements PacketEncoder<WalkablePacket> {
 
     @Override
     public GamePacket encode(WalkablePacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(208);
+        builder.putInt(message.getId());
         return builder.toGamePacket();
     }
 }

@@ -1,5 +1,6 @@
 package com.rageps.net.refactor.packet.out.model;
 
+import com.rageps.content.TabInterface;
 import com.rageps.net.refactor.packet.Packet;
 
 /**
@@ -7,10 +8,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class ForceTabPacket extends Packet {
 
+    private final TabInterface tab;
 
-public ForceTabPacket() {}
+    public ForceTabPacket(TabInterface tab) {
+        this.tab = tab;
+    }
 
-
-
-
+    public TabInterface getTab() {
+        return tab;
+    }
 }

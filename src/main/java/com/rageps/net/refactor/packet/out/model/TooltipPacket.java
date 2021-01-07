@@ -7,10 +7,19 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class TooltipPacket extends Packet {
 
+    private final String string;
+    private final int id;
 
-public TooltipPacket() {}
+    public TooltipPacket(String string, int id) {
+        this.string = string;
+        this.id = id;
+    }
 
+    public int getId() {
+        return id;
+    }
 
-
-
+    public String getString() {
+        return string;
+    }
 }

@@ -8,6 +8,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import com.rageps.net.refactor.meta.PacketType;
 
+import javax.xml.crypto.Data;
+
 /**
  * A class which assists in creating a {@link GamePacket}.
  *
@@ -165,6 +167,31 @@ public final class GamePacketBuilder {
 	}
 
 	/**
+	 * Writes a value as a {@code short}.
+	 * @param value The value to write.
+	 * @param type The byte transformation type
+	 * @param order The byte endianness type.
+	 * @return An instance of this byte message.
+	 * @throws UnsupportedOperationException If middle or inverse-middle value types are selected.
+	 */
+	public void putShort(int value, DataTransformation type, DataOrder order) {
+		switch(order) {
+			case BIG:
+				put(value >> 8);
+				put(value, type);
+				break;
+			case MIDDLE:
+				throw new UnsupportedOperationException("Middle-endian short is impossible.");
+			case INVERSED_MIDDLE:
+				throw new UnsupportedOperationException("Inversed-middle-endian short is impossible.");
+			case LITTLE:
+				put(value, type);
+				put(value >> 8);
+				break;
+		}
+	}
+
+	/**
 	 * Puts a standard data type with the specified value and byte order.
 	 *
 	 * @param type The data type.
@@ -293,6 +320,15 @@ public final class GamePacketBuilder {
 				put(DataType.BYTE, transformation, b);
 			}
 		}
+	}
+
+	/**
+	 * Writes the bytes from the argued buffer into this buffer.
+	 * @param from the argued buffer that bytes will be written from.
+	 * @return an instance of this message builder.
+	 */
+	public void putBytes(byte[] from, int size) {
+		buffer.writeBytes(from, 0, size);
 	}
 
 	/**
@@ -441,6 +477,49 @@ public final class GamePacketBuilder {
 	 */
 	public void putShort(int value, DataTransformation type) {
 		put(DataType.SHORT, type, value);
+	}
+
+	/**
+	 * Writes a value as a standard {@code int}.
+	 * @param value The value to write.
+	 * @param order The byte endianness type.
+	 * @return An instance of this byte message.
+	 */
+	public void putInt(int value, DataOrder order) {
+		put(DataType.INT, order, value);
+	}
+
+	/**
+	 * Writes a value as a standard {@code int}.
+	 * @param value The value to write.
+	 * @return An instance of this byte message.
+	 */
+	public void putInt(int value) {
+		put(DataType.INT, value);
+	}
+
+	/**
+	 * Writes a value as a {@code byte}.
+	 * @param value The value to write.
+	 * @param type The byte transformation type
+	 * @return An instance of this byte message.
+	 * todo - test this is working correctly
+	 */
+	public void put(int value, DataTransformation type) {
+		switch(type) {
+			case ADD:
+				value += 128;
+				break;
+			case NEGATE:
+				value = -value;
+				break;
+			case SUBTRACT:
+				value = 128 - value;
+				break;
+			case NONE:
+				break;
+		}
+		put(DataType.BYTE, DataTransformation.NONE, value);
 	}
 
 	/**

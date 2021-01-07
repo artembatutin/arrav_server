@@ -12,7 +12,8 @@ public class MinimapStatePacketEncoder implements PacketEncoder<MinimapStatePack
 
     @Override
     public GamePacket encode(MinimapStatePacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(99);
+        builder.put(message.getCode());
         return builder.toGamePacket();
     }
 }

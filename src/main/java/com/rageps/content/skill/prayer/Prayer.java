@@ -6,6 +6,7 @@ import com.rageps.combat.listener.other.prayer.curses.SoulsplitListener;
 import com.rageps.combat.listener.other.prayer.regular.ProtectionPrayerListener;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.net.packet.out.SendForceTab;
+import com.rageps.net.refactor.packet.out.model.ForceTabPacket;
 import com.rageps.world.World;
 import com.rageps.content.TabInterface;
 import com.rageps.content.skill.Skills;
@@ -560,7 +561,7 @@ public enum Prayer {
 		}
 		if(buttonId == 49) {//selecting
 			TabInterface.PRAYER.sendInterface(player, player.getPrayerBook() == PrayerBook.CURSES ? 18200 : 17200);
-			player.send(new ForceTab(TabInterface.PRAYER));
+			player.send(new ForceTabPacket(TabInterface.PRAYER));
 			for(Prayer pray : VALUES) {
 				if(pray.getType() == player.getPrayerBook()) {
 					if(player.getQuickPrayers().contains(pray)) {

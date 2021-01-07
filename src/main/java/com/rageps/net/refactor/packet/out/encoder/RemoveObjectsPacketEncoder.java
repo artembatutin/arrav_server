@@ -12,7 +12,7 @@ public class RemoveObjectsPacketEncoder implements PacketEncoder<RemoveObjectPac
 
     @Override
     public GamePacket encode(RemoveObjectPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(131);
         return builder.toGamePacket();
     }
 }

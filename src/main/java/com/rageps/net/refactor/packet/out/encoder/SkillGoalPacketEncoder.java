@@ -12,7 +12,9 @@ public class SkillGoalPacketEncoder implements PacketEncoder<SkillGoalPacket> {
 
     @Override
     public GamePacket encode(SkillGoalPacket message) {
-        GamePacketBuilder builder = new GamePacketBuilder(0);
+        GamePacketBuilder builder = new GamePacketBuilder(135);
+        builder.put(message.getId());
+        builder.put(message.getGoal());
         return builder.toGamePacket();
     }
 }

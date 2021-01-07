@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class LinkPacket extends Packet {
 
+    private final String link;
 
-public LinkPacket() {}
+    public LinkPacket(String link) {
+        this.link = link;
+    }
 
-
-
-
+    public String getLink() {
+        return link;
+    }
 }

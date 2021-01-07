@@ -5,15 +5,22 @@ import com.rageps.net.refactor.packet.Packet;
 /**
  * @author Tamatea <tamateea@gmail.com>
  */
-public class MessagePacket extends Packet {
+public class FeedMessagePacket extends Packet {
+
 
     private final String message;
+    private final String color;
 
-    public MessagePacket(String message) {
+    public FeedMessagePacket(String message, String color) {
         this.message = message;
+        this.color = color;
     }
 
     public String getMessage() {
         return message;
+    }
+
+    public String getColor() {
+        return color;
     }
 }

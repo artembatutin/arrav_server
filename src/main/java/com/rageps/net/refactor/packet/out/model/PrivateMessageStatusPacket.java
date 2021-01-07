@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class PrivateMessageStatusPacket extends Packet {
 
+    private final int code;
 
-public PrivateMessageStatusPacket() {}
+    public PrivateMessageStatusPacket(int code) {
+        this.code = code;
+    }
 
-
-
-
+    public int getCode() {
+        return code;
+    }
 }

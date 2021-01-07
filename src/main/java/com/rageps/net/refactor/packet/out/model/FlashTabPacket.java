@@ -8,9 +8,14 @@ import com.rageps.net.refactor.packet.Packet;
 public class FlashTabPacket extends Packet {
 
 
-public FlashTabPacket() {}
 
+    private final int code;
 
+    public FlashTabPacket(int code) {
+        this.code = code;
+    }
 
-
+    public int getCode() {
+        return code;
+    }
 }
