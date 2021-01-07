@@ -1,7 +1,7 @@
 package com.rageps.content.skill.construction.room;
 
-import com.rageps.content.skill.construction.furniture.HotSpots;
 import com.rageps.content.skill.construction.data.Constants;
+import com.rageps.content.skill.construction.furniture.HotSpots;
 
 /**
  * Enumeration of all possible rooms.

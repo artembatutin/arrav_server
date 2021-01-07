@@ -1,26 +1,25 @@
 package com.rageps.world.entity.actor.combat;
 
+import com.rageps.combat.strategy.CombatStrategy;
 import com.rageps.content.minigame.Minigame;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.content.skill.prayer.Prayer;
+import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.effect.CombatEffect;
 import com.rageps.world.entity.actor.combat.effect.CombatEffectType;
 import com.rageps.world.entity.actor.combat.hit.CombatHit;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
-import com.rageps.combat.strategy.CombatStrategy;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
+import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.AntifireDetails;
-import com.rageps.net.packet.out.SendMessage;
-import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Projectile;
-import com.rageps.world.entity.actor.Actor;
-import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.impl.Equipment;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Projectile;
 
 import java.util.LinkedList;
 import java.util.List;

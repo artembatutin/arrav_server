@@ -1,24 +1,23 @@
 package com.rageps.content.skill.summoning;
 
+import com.rageps.content.item.pets.Pet;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.content.skill.summoning.familiar.Familiar;
 import com.rageps.content.skill.summoning.familiar.FamiliarAbility;
 import com.rageps.content.skill.summoning.familiar.FamiliarContainer;
 import com.rageps.content.skill.summoning.familiar.ability.Teleporter;
 import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
-import com.rageps.world.entity.actor.player.PlayerAttributes;
-import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.content.item.pets.Pet;
-import com.rageps.net.packet.out.SendContainer;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.EntityType;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Graphic;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.Optional;
 

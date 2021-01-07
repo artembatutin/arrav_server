@@ -2,7 +2,6 @@ package com.rageps.net.sql.player;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.rageps.net.sql.DatabaseTransaction;
-import com.rageps.net.sql.DatabaseTransactionFuture;
 import com.rageps.net.sql.TableRepresentation;
 import com.rageps.net.sql.statement.NamedPreparedStatement;
 import com.rageps.util.DatabaseUtils;

@@ -1,17 +1,16 @@
 package com.rageps.content.skill.agility.impl.wild;
 
+import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.achievements.Achievement;
+import com.rageps.content.skill.Skills;
+import com.rageps.content.skill.agility.AgilityCourse;
+import com.rageps.content.skill.agility.AgilityCourseType;
 import com.rageps.content.skill.agility.impl.wild.impl.ClimbRocks;
 import com.rageps.content.skill.agility.obstacle.ObstacleAction;
 import com.rageps.content.skill.agility.obstacle.ObstacleType;
 import com.rageps.content.skill.agility.obstacle.impl.Movable;
 import com.rageps.content.skill.agility.obstacle.impl.Steppable;
 import com.rageps.content.skill.agility.obstacle.impl.Walkable;
-import com.rageps.net.packet.out.SendObjectAnimation;
-import com.rageps.action.impl.ObjectAction;
-import com.rageps.content.skill.Skills;
-import com.rageps.content.skill.agility.AgilityCourse;
-import com.rageps.content.skill.agility.AgilityCourseType;
 import com.rageps.net.refactor.packet.out.model.ObjectAnimationPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.object.GameObject;

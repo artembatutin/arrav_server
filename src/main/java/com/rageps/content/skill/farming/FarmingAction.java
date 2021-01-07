@@ -1,5 +1,9 @@
 package com.rageps.content.skill.farming;
 
+import com.rageps.action.impl.ItemOnItemAction;
+import com.rageps.action.impl.ItemOnObjectAction;
+import com.rageps.action.impl.ObjectAction;
+import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.farming.attributes.GrowthState;
 import com.rageps.content.skill.farming.attributes.PatchAttribute;
 import com.rageps.content.skill.farming.patch.Patch;
@@ -10,16 +14,12 @@ import com.rageps.content.skill.farming.seed.impl.TreeSeed;
 import com.rageps.content.skill.woodcutting.Tree;
 import com.rageps.content.skill.woodcutting.Woodcutting;
 import com.rageps.net.packet.in.ObjectActionPacket;
-import com.rageps.action.impl.ItemOnItemAction;
-import com.rageps.action.impl.ItemOnObjectAction;
-import com.rageps.action.impl.ObjectAction;
-import com.rageps.content.skill.Skills;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.impl.Equipment;
 import com.rageps.world.entity.object.GameObject;
+import com.rageps.world.model.Animation;
 
 import java.util.Optional;
 

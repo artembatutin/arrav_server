@@ -1,8 +1,8 @@
 package com.rageps.world.entity.actor.combat.effect.impl;
 
-import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.effect.CombatEffect;
+import com.rageps.world.entity.actor.player.Player;
 
 /**
  * The combat effect applied when a player needs to be teleblocked.

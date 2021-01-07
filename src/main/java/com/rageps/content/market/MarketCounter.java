@@ -2,10 +2,10 @@ package com.rageps.content.market;
 
 import com.google.gson.Gson;
 import com.rageps.content.market.exchange.personal.PlayerCounter;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import com.rageps.util.json.JsonSaver;
 import com.rageps.world.entity.actor.player.Player;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 /**
  * Controls all the Avarrockian market.

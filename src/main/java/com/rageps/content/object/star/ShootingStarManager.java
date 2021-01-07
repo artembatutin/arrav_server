@@ -1,9 +1,9 @@
 package com.rageps.content.object.star;
 
 import com.rageps.RagePS;
-import com.rageps.world.World;
 import com.rageps.util.Stopwatch;
 import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.World;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.region.Region;

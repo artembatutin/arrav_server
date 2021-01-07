@@ -1,13 +1,13 @@
 package com.rageps.world.entity.actor.mob.impl;
 
 import com.rageps.combat.strategy.npc.boss.KalphiteQueenStrategy;
-import com.rageps.world.locale.Position;
 import com.rageps.task.LinkedTaskSequence;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.mob.MobAggression;
+import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>

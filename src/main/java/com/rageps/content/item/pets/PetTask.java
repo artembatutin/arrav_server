@@ -1,8 +1,8 @@
 package com.rageps.content.item.pets;
 
-import com.rageps.world.World;
 import com.rageps.content.TabInterface;
 import com.rageps.task.Task;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 
 public final class PetTask extends Task {

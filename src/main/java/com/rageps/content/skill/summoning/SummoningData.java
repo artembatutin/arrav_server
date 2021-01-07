@@ -1,12 +1,11 @@
 package com.rageps.content.skill.summoning;
 
+import com.rageps.action.impl.ItemAction;
+import com.rageps.content.item.pets.Pet;
 import com.rageps.content.skill.summoning.familiar.Familiar;
 import com.rageps.content.skill.summoning.familiar.FamiliarAbility;
 import com.rageps.content.skill.summoning.familiar.impl.*;
 import com.rageps.content.skill.summoning.familiar.passive.PassiveAbility;
-import com.rageps.action.impl.ItemAction;
-import com.rageps.content.item.pets.Pet;
-import com.rageps.content.skill.summoning.familiar.impl.*;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;

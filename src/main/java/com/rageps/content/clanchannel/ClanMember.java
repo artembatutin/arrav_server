@@ -1,7 +1,6 @@
 package com.rageps.content.clanchannel;
 
 import com.rageps.content.clanchannel.channel.ClanChannel;
-import com.rageps.net.packet.out.SendClanDetails;
 import com.rageps.net.refactor.packet.out.model.ClanDetailsPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.relations.PrivacyChatMode;

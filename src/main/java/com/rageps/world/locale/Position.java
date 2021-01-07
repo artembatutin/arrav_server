@@ -3,9 +3,9 @@ package com.rageps.world.locale;
 import com.jsoniter.annotation.JsonIgnore;
 import com.jsoniter.annotation.JsonProperty;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Direction;
 import com.rageps.world.locale.loc.Area;
 import com.rageps.world.locale.loc.Locations;
+import com.rageps.world.model.Direction;
 
 /**
  * The container class that represents a coordinate anywhere in the world.

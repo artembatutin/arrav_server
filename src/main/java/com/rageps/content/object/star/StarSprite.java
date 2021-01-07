@@ -1,15 +1,15 @@
 package com.rageps.content.object.star;
 
+import com.rageps.action.impl.MobAction;
 import com.rageps.content.dialogue.Expression;
 import com.rageps.content.dialogue.impl.NpcDialogue;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.dialogue.impl.PlayerDialogue;
 import com.rageps.content.dialogue.test.DialogueAppender;
-import com.rageps.world.World;
-import com.rageps.action.impl.MobAction;
 import com.rageps.content.market.MarketCounter;
 import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
 import com.rageps.task.Task;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;

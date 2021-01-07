@@ -1,9 +1,9 @@
 package com.rageps.content.skill.farming.patch;
 
-import com.rageps.content.skill.farming.attributes.PatchAttribute;
 import com.rageps.content.skill.farming.FarmingConstants;
 import com.rageps.content.skill.farming.FarmingManager;
 import com.rageps.content.skill.farming.attributes.GrowthState;
+import com.rageps.content.skill.farming.attributes.PatchAttribute;
 import com.rageps.content.skill.farming.seed.SeedClass;
 import com.rageps.content.skill.farming.seed.SeedType;
 import com.rageps.content.skill.farming.seed.impl.AllotmentSeed;

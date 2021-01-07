@@ -1,9 +1,9 @@
 package com.rageps.world.entity.actor.combat.effect.impl;
 
-import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.effect.CombatEffect;
+import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.update.UpdateFlag;
 
 /**
  * The combat effect applied when a player needs to be skulled.

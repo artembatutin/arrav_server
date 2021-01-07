@@ -1,10 +1,10 @@
 package com.rageps.net.discord.cmd;
 
+import com.rageps.net.discord.Discord;
 import com.rageps.util.TextUtils;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import com.rageps.net.discord.Discord;
 
 import java.util.Arrays;
 import java.util.HashMap;

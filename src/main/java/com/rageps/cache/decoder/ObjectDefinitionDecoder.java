@@ -1,9 +1,9 @@
 package com.rageps.cache.decoder;
 
-import com.rageps.world.entity.object.ObjectDefinition;
 import com.rageps.cache.FileSystem;
 import com.rageps.cache.archive.Archive;
 import com.rageps.util.ByteBufferUtil;
+import com.rageps.world.entity.object.ObjectDefinition;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

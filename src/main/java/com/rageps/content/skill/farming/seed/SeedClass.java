@@ -1,7 +1,6 @@
 package com.rageps.content.skill.farming.seed;
 
 import com.rageps.content.skill.farming.seed.impl.*;
-import com.rageps.content.skill.farming.seed.impl.*;
 
 public enum SeedClass {
 	

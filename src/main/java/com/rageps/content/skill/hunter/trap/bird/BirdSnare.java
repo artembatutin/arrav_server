@@ -1,11 +1,11 @@
 package com.rageps.content.skill.hunter.trap.bird;
 
 import com.rageps.content.achievements.Achievement;
-import com.rageps.world.World;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.hunter.trap.Trap;
 import com.rageps.task.Task;
 import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.mob.MobType;
 import com.rageps.world.entity.actor.player.Player;

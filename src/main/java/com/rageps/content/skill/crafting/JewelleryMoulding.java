@@ -1,21 +1,20 @@
 package com.rageps.content.skill.crafting;
 
 import com.google.common.collect.ImmutableMap;
-import com.rageps.content.achievements.Achievement;
-import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
-import com.rageps.net.refactor.packet.out.model.ItemOnInterfaceSlotPacket;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.action.impl.ItemOnObjectAction;
+import com.rageps.content.achievements.Achievement;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
-import com.rageps.net.packet.out.SendItemOnInterfaceSlot;
+import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
+import com.rageps.net.refactor.packet.out.model.ItemOnInterfaceSlotPacket;
 import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;
+import com.rageps.world.model.Animation;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 
 import java.util.Optional;
 

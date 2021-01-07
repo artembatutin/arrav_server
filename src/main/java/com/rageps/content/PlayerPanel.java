@@ -1,9 +1,10 @@
 package com.rageps.content;
 
 import com.rageps.GameConstants;
+import com.rageps.action.impl.ButtonAction;
+import com.rageps.command.impl.RedeemCommand;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.content.achievements.AchievementHandler;
-import com.rageps.command.impl.RedeemCommand;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.dialogue.impl.StatementDialogue;
 import com.rageps.content.market.MarketCounter;
@@ -13,15 +14,9 @@ import com.rageps.content.wilderness.WildernessActivity;
 import com.rageps.net.refactor.packet.out.model.ClearTextPacket;
 import com.rageps.net.refactor.packet.out.model.EnterNamePacket;
 import com.rageps.net.refactor.packet.out.model.LinkPacket;
-import com.rageps.net.refactor.packet.out.model.MobDropPacket;
+import com.rageps.util.TextUtils;
 import com.rageps.util.Utility;
 import com.rageps.world.World;
-import com.rageps.action.impl.ButtonAction;
-import com.rageps.net.packet.out.SendClearText;
-import com.rageps.net.packet.out.SendEnterName;
-import com.rageps.net.packet.out.SendLink;
-import com.rageps.net.packet.out.SendMobDrop;
-import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 

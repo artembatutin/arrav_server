@@ -3,11 +3,11 @@ package com.rageps.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.rageps.util.json.JsonLoader;
 import com.rageps.world.entity.actor.mob.drop.Drop;
 import com.rageps.world.entity.actor.mob.drop.DropManager;
 import com.rageps.world.entity.actor.mob.drop.DropTable;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import com.rageps.util.json.JsonLoader;
 
 /**
  * The {@link JsonLoader} implementation that loads all npc drops.

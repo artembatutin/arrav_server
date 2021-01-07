@@ -1,9 +1,8 @@
 package com.rageps.content.minigame.pestcontrol.pest;
 
-import com.rageps.world.World;
 import com.rageps.content.minigame.pestcontrol.PestPortal;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.combat.PoisonType;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
@@ -11,6 +10,7 @@ import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
 
 public class Spinner extends Pest {
 	

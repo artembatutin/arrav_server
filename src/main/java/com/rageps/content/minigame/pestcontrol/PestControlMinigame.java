@@ -1,32 +1,32 @@
 package com.rageps.content.minigame.pestcontrol;
 
+import com.rageps.combat.strategy.player.special.CombatSpecial;
 import com.rageps.content.achievements.Achievement;
-import com.rageps.content.minigame.pestcontrol.defence.PestGate;
-import com.rageps.content.minigame.pestcontrol.pest.Pest;
-import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
-import com.rageps.world.World;
-import com.rageps.world.entity.actor.player.PlayerAttributes;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.content.dialogue.impl.NpcDialogue;
 import com.rageps.content.item.FoodConsumable;
 import com.rageps.content.item.PotionConsumable;
 import com.rageps.content.market.currency.Currency;
 import com.rageps.content.minigame.SequencedMinigame;
+import com.rageps.content.minigame.pestcontrol.defence.PestGate;
+import com.rageps.content.minigame.pestcontrol.pest.Pest;
 import com.rageps.content.object.door.DoorHandler;
 import com.rageps.content.skill.Skills;
 import com.rageps.net.refactor.packet.out.model.ConfigPacket;
+import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
 import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.hit.Hit;
-import com.rageps.combat.strategy.player.special.CombatSpecial;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.Optional;
 

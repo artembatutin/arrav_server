@@ -3,11 +3,11 @@ package com.rageps.util.json.impl;
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.rageps.world.model.Direction;
+import com.rageps.util.json.JsonLoader;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.locale.Position;
-import com.rageps.util.json.JsonLoader;
+import com.rageps.world.model.Direction;
 
 import java.util.Objects;
 

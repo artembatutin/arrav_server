@@ -1,12 +1,11 @@
 package com.rageps.world.entity.item.container.session.impl;
 
 import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
-import com.rageps.world.World;
-import com.rageps.world.entity.actor.player.Player;
-import com.rageps.net.packet.out.SendContainer;
 import com.rageps.util.log.Log;
 import com.rageps.util.log.impl.TradeLog;
+import com.rageps.world.World;
 import com.rageps.world.entity.EntityState;
+import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.session.ExchangeSession;
 import com.rageps.world.entity.item.container.session.ExchangeSessionActionType;

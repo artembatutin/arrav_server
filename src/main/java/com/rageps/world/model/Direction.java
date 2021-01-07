@@ -2,8 +2,8 @@ package com.rageps.world.model;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.rageps.world.locale.Position;
 import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.locale.Position;
 
 import java.util.EnumSet;
 import java.util.Optional;

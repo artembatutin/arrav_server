@@ -1,7 +1,7 @@
 package com.rageps.content.minigame.pestcontrol;
 
-import com.rageps.world.World;
 import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.mob.DefaultMob;

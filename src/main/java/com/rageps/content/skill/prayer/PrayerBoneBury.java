@@ -1,14 +1,14 @@
 package com.rageps.content.skill.prayer;
 
-import com.rageps.content.achievements.Achievement;
 import com.rageps.action.impl.ItemAction;
+import com.rageps.content.achievements.Achievement;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.impl.DestructionSkillAction;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.impl.Inventory;
+import com.rageps.world.model.Animation;
 
 import java.util.Optional;
 

@@ -1,16 +1,16 @@
 package com.rageps.content.clanchannel.content;
 
 import com.rageps.content.TabInterface;
+import com.rageps.content.clanchannel.ClanMember;
+import com.rageps.content.clanchannel.ClanRepository;
+import com.rageps.content.clanchannel.channel.ClanChannel;
+import com.rageps.content.clanchannel.channel.ClanChannelHandler;
 import com.rageps.net.refactor.packet.out.model.*;
 import com.rageps.util.Difficulty;
 import com.rageps.util.NumberUtil;
 import com.rageps.util.StringUtil;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
-import com.rageps.content.clanchannel.ClanMember;
-import com.rageps.content.clanchannel.ClanRepository;
-import com.rageps.content.clanchannel.channel.ClanChannel;
-import com.rageps.content.clanchannel.channel.ClanChannelHandler;
 
 import java.util.*;
 

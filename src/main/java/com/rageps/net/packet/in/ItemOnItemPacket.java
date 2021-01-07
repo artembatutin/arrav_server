@@ -8,8 +8,6 @@ import com.rageps.content.skill.cooking.DoughCreation;
 import com.rageps.content.skill.cooking.PieCreation;
 import com.rageps.content.skill.cooking.PizzaTopping;
 import com.rageps.content.skill.crafting.*;
-import com.rageps.content.skill.fletching.*;
-import com.rageps.content.skill.crafting.*;
 import com.rageps.content.skill.firemaking.Firemaking;
 import com.rageps.content.skill.fletching.*;
 import com.rageps.content.skill.fletching.ArrowCreation.HeadlessArrowCreation;

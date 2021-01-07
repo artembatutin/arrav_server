@@ -1,13 +1,10 @@
 package com.rageps.content.object.cannon;
 
-import com.rageps.net.packet.out.SendObjectAnimation;
 import com.rageps.combat.strategy.basic.RangedStrategy;
 import com.rageps.content.skill.Skills;
 import com.rageps.net.refactor.packet.out.model.ObjectAnimationPacket;
 import com.rageps.task.Task;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Direction;
-import com.rageps.world.model.Projectile;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.combat.hit.Hit;
@@ -18,6 +15,8 @@ import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.region.Region;
+import com.rageps.world.model.Direction;
+import com.rageps.world.model.Projectile;
 
 /**
  * A {@link Task} handling the {@link Multicannon} shooting.

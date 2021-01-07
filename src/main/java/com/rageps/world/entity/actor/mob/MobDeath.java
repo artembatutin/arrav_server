@@ -4,13 +4,13 @@ import com.rageps.content.PlayerPanel;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.content.skill.slayer.Slayer;
+import com.rageps.task.Task;
 import com.rageps.world.World;
+import com.rageps.world.entity.actor.ActorDeath;
 import com.rageps.world.entity.actor.mob.drop.DropManager;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
-import com.rageps.task.Task;
 import com.rageps.world.model.Animation;
-import com.rageps.world.entity.actor.ActorDeath;
 
 import java.util.Arrays;
 import java.util.List;

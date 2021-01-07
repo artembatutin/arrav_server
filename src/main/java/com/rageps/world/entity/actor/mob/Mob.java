@@ -1,16 +1,19 @@
 package com.rageps.world.entity.actor.mob;
 
 import com.google.common.collect.ImmutableMap;
-import com.rageps.combat.strategy.MobCombatStrategyManager;
-import com.rageps.content.skill.Skills;
-import com.rageps.world.World;
-import com.rageps.world.entity.actor.combat.Combat;
-import com.rageps.world.entity.actor.combat.CombatConstants;
 import com.rageps.combat.listener.CombatListener;
 import com.rageps.combat.listener.CombatListenerDispatcher;
+import com.rageps.combat.strategy.CombatStrategy;
+import com.rageps.combat.strategy.MobCombatStrategyManager;
+import com.rageps.content.skill.Skills;
+import com.rageps.task.Task;
+import com.rageps.world.World;
+import com.rageps.world.entity.EntityType;
+import com.rageps.world.entity.actor.Actor;
+import com.rageps.world.entity.actor.combat.Combat;
+import com.rageps.world.entity.actor.combat.CombatConstants;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
-import com.rageps.combat.strategy.CombatStrategy;
 import com.rageps.world.entity.actor.mob.impl.KalphiteQueen;
 import com.rageps.world.entity.actor.mob.impl.godwars.GeneralGraardor;
 import com.rageps.world.entity.actor.mob.impl.godwars.KreeArra;
@@ -18,13 +21,12 @@ import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.Locations;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import com.rageps.task.Task;
-import com.rageps.world.entity.EntityType;
-import com.rageps.world.entity.actor.Actor;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.OptionalInt;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 

@@ -1,16 +1,14 @@
 package com.rageps.content.skill.agility.test.barb;
 
+import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.agility.obstacle.ObstacleType;
+import com.rageps.content.skill.agility.test.Agility;
 import com.rageps.content.skill.agility.test.obstacle.Obstacle;
 import com.rageps.content.skill.agility.test.obstacle.impl.ClimbableObstacle;
 import com.rageps.content.skill.agility.test.obstacle.impl.FMObstacle;
 import com.rageps.content.skill.agility.test.obstacle.impl.WalkableObstacle;
-import com.rageps.net.packet.out.SendObjectAnimation;
-import com.rageps.action.impl.ObjectAction;
-import com.rageps.content.skill.agility.test.Agility;
 import com.rageps.net.refactor.packet.out.model.ObjectAnimationPacket;
 import com.rageps.task.LinkedTaskSequence;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.move.ForcedMovement;
 import com.rageps.world.entity.actor.move.ForcedMovementManager;
 import com.rageps.world.entity.actor.player.Player;
@@ -18,6 +16,7 @@ import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.entity.object.ObjectDirection;
 import com.rageps.world.entity.object.ObjectType;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
 
 import java.util.OptionalInt;
 import java.util.function.Function;

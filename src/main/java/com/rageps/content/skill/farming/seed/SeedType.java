@@ -1,8 +1,8 @@
 package com.rageps.content.skill.farming.seed;
 
 import com.rageps.content.skill.farming.patch.Patch;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.item.Item;
+import com.rageps.world.model.Animation;
 
 public interface SeedType {
 	

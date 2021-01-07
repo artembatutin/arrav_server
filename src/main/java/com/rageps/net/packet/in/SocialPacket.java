@@ -3,7 +3,6 @@ package com.rageps.net.packet.in;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
 import com.rageps.util.ChatCodec;
-import com.rageps.util.StringUtil;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;

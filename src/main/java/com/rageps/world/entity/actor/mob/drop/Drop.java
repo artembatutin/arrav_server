@@ -1,8 +1,8 @@
 package com.rageps.world.entity.actor.mob.drop;
 
 import com.rageps.content.market.MarketItem;
-import com.rageps.world.entity.actor.mob.drop.chance.NpcDropChance;
 import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.entity.actor.mob.drop.chance.NpcDropChance;
 import com.rageps.world.entity.item.Item;
 
 

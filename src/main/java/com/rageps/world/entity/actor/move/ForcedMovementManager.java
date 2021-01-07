@@ -1,11 +1,11 @@
 package com.rageps.world.entity.actor.move;
 
+import com.rageps.task.Task;
 import com.rageps.world.World;
+import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.actor.update.UpdateFlag;
-import com.rageps.task.Task;
-import com.rageps.world.entity.actor.Actor;
 
 /**
  * Holds functionality for the 0x400 mask.

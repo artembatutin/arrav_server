@@ -3,16 +3,16 @@ package com.rageps.content.item;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.rageps.GameConstants;
+import com.rageps.action.impl.ItemAction;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.content.skill.Skill;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.Skills;
-import com.rageps.action.impl.ItemAction;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.impl.Inventory;
+import com.rageps.world.model.Animation;
 
 import java.util.EnumSet;
 import java.util.Optional;

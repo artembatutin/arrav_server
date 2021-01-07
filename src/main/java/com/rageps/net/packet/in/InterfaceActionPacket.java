@@ -2,8 +2,6 @@ package com.rageps.net.packet.in;
 
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
-import com.rageps.net.packet.out.SendEnterName;
-import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;

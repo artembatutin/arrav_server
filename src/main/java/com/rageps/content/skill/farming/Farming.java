@@ -1,20 +1,20 @@
 package com.rageps.content.skill.farming;
 
 import com.rageps.content.achievements.Achievement;
-import com.rageps.content.skill.farming.attributes.PatchAttribute;
-import com.rageps.content.skill.farming.patch.Patch;
-import com.rageps.content.skill.farming.seed.SeedClass;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.action.impl.HarvestingSkillAction;
+import com.rageps.content.skill.farming.attributes.PatchAttribute;
+import com.rageps.content.skill.farming.patch.Patch;
+import com.rageps.content.skill.farming.seed.SeedClass;
 import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemDefinition;
 import com.rageps.world.entity.item.container.impl.Equipment;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
 
 import java.util.Optional;
 

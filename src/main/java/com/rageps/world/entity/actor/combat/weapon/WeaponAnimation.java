@@ -1,9 +1,9 @@
 package com.rageps.world.entity.actor.combat.weapon;
 
-import com.rageps.world.entity.actor.player.Player;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.world.entity.actor.combat.attack.FightStyle;
+import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 
 /**
  * The container class that represents one equipment animation that is used with weapons.

@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.rageps.content.skill.slayer.Slayer;
 import com.rageps.content.skill.slayer.SlayerLocationPolicy;
-import com.rageps.world.locale.Position;
 import com.rageps.util.json.JsonLoader;
+import com.rageps.world.locale.Position;
 
 import java.util.Objects;
 

@@ -4,8 +4,8 @@ import com.rageps.net.codec.ByteOrder;
 import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.update.block.PlayerUpdateBlock;
 import com.rageps.world.entity.actor.update.UpdateFlag;
+import com.rageps.world.entity.actor.update.block.PlayerUpdateBlock;
 
 import static com.rageps.world.entity.actor.player.assets.Rights.IRON_MAN;
 import static com.rageps.world.entity.actor.player.assets.Rights.PLAYER;

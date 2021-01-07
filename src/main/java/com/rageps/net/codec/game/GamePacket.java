@@ -1,13 +1,12 @@
 package com.rageps.net.codec.game;
 
 import com.rageps.net.codec.ByteOrder;
-import com.rageps.net.codec.crypto.IsaacRandom;
-import com.rageps.net.packet.OutgoingPacket;
-import io.netty.buffer.ByteBuf;
 import com.rageps.net.codec.ByteTransform;
+import com.rageps.net.codec.crypto.IsaacRandom;
+import io.netty.buffer.ByteBuf;
 
 public class GamePacket {
-	
+
 	/**
 	 * The default buffer size.
 	 */
@@ -20,34 +19,34 @@ public class GamePacket {
 	 * An array of the bit masks used for writing bits.
 	 */
 	private static final int[] BIT_MASK = {0, 0x1, 0x3, 0x7, 0xf, 0x1f, 0x3f, 0x7f, 0xff, 0x1ff, 0x3ff, 0x7ff, 0xfff, 0x1fff, 0x3fff, 0x7fff, 0xffff, 0x1ffff, 0x3ffff, 0x7ffff, 0xfffff, 0x1fffff, 0x3fffff, 0x7fffff, 0xffffff, 0x1ffffff, 0x3ffffff, 0x7ffffff, 0xfffffff, 0x1fffffff, 0x3fffffff, 0x7fffffff, -1};
-	
+
 	/**
 	 * The opcode, {@code -1} if this message does not have an opcode.
 	 */
 	private int opcode;
-	
+
 	/**
 	 * The current bit position when writing bits.
 	 */
 	private int bitIndex = -1;
-	
+
 	/**
 	 * The {@link GamePacketType} of the message currently being built.
 	 */
 	private GamePacketType type;
-	
+
 	/**
 	 * The {@link ByteBuf} buffer of this packet.
 	 */
 	private ByteBuf payload;
-	
+
 	/**
 	 * Creates a new outgoing {@link GamePacket} based on recommended {@link OutgoingPacket} size.
 	 */
-	public GamePacket(OutgoingPacket out, ByteBuf buf) {
-		this.payload = buf;
-	}
-	
+	//public GamePacket(OutgoingPacket out, ByteBuf buf) {
+	//	this.payload = buf;
+	//}
+
 	/**
 	 * Creates a new incoming {@link GamePacket}
 	 */
@@ -56,7 +55,7 @@ public class GamePacket {
 		this.opcode = opcode;
 		this.type = type;
 	}
-	
+
 	/**
 	 * Constructs a new fixed sized message.
 	 * @param id The id of the message.
@@ -64,7 +63,7 @@ public class GamePacket {
 	public void message(int id) {
 		message(id, GamePacketType.FIXED);
 	}
-	
+
 	/**
 	 * Constructs a new message.
 	 * @param id The id of the message.
@@ -78,7 +77,7 @@ public class GamePacket {
 		this.type = type;
 		//this.sizeIndex = buf.writerIndex();
 	}
-	
+
 	public ByteBuf writePacket(ByteBuf out, IsaacRandom encryptor) {
 		out.writeByte(opcode + encryptor.nextInt());
 		int size = payload.readableBytes();
@@ -93,7 +92,7 @@ public class GamePacket {
 		}
 		return out;
 	}
-	
+
 	/**
 	 * Ends the building of a message where the size may vary.
 	 */
@@ -105,14 +104,14 @@ public class GamePacket {
 		//	setShort(sizeIndex, recordedSize - 2);
 		//}
 	}
-	
+
 	/**
 	 * Prepares the buffer for writing bits.
 	 */
 	public void startBitAccess() {
 		bitIndex = payload.writerIndex() << 3;
 	}
-	
+
 	/**
 	 * Prepares the buffer for writing bytes.
 	 */
@@ -120,7 +119,7 @@ public class GamePacket {
 		payload.writerIndex((bitIndex + 7) >> 3);
 		bitIndex = -1;
 	}
-	
+
 	/**
 	 * Writes the bytes from the argued buffer into this buffer.
 	 * @param from the argued buffer that bytes will be written from.
@@ -129,7 +128,7 @@ public class GamePacket {
 	public void putBytes(byte[] from, int size) {
 		payload.writeBytes(from, 0, size);
 	}
-	
+
 	/**
 	 * Puts the bytes from another {@link GamePacket}
 	 * @param packet packet.
@@ -137,7 +136,7 @@ public class GamePacket {
 	public void putBytes(GamePacket packet) {
 		payload.writeBytes(packet.getPayload());
 	}
-	
+
 	/**
 	 * Puts the bytes from the specified buffer into this packet's buffer.
 	 * @param buffer The source {@link ByteBuf}.
@@ -152,7 +151,7 @@ public class GamePacket {
 		}
 		putBytes(bytes);
 	}
-	
+
 	/**
 	 * Writes the bytes from the argued buffer into this buffer.
 	 * @param from The argued buffer that bytes will be written from.
@@ -161,7 +160,7 @@ public class GamePacket {
 	public void putBytes(byte[] from) {
 		payload.writeBytes(from, 0, from.length);
 	}
-	
+
 	/**
 	 * Writes the bytes from the argued byte array into this buffer, in reverse.
 	 * @param data The data to write to this buffer.
@@ -171,7 +170,7 @@ public class GamePacket {
 			put(data[i]);
 		}
 	}
-	
+
 	/**
 	 * Puts {@code numBits} into the buffer with the value {@code value}.
 	 * @param numBits The number of bits to put into the buffer.
@@ -181,11 +180,11 @@ public class GamePacket {
 	public void putBits(int numBits, int value) {
 		int bytes = (int) Math.ceil((double) numBits / 8D) + 1;
 		payload.ensureWritable((bitIndex + 7) / 8 + bytes);
-		
+
 		int bytePos = bitIndex >> 3;
 		int bitOffset = 8 - (bitIndex & 7);
 		bitIndex += numBits;
-		
+
 		while(numBits > bitOffset) {
 			int temp = payload.getByte(bytePos);
 			temp &= ~BIT_MASK[bitOffset];
@@ -205,7 +204,7 @@ public class GamePacket {
 			payload.setByte(bytePos, temp);
 		}
 	}
-	
+
 	/**
 	 * Writes a boolean bit flag.
 	 * @param flag The flag to write.
@@ -214,7 +213,7 @@ public class GamePacket {
 	public void putBit(boolean flag) {
 		putBits(1, flag ? 1 : 0);
 	}
-	
+
 	/**
 	 * Writes a value as a {@code byte}.
 	 * @param value The value to write.
@@ -237,7 +236,7 @@ public class GamePacket {
 		}
 		payload.writeByte((byte) value);
 	}
-	
+
 	/**
 	 * Writes a value as a normal {@code byte}.
 	 * @param value The value to write.
@@ -246,7 +245,7 @@ public class GamePacket {
 	public void put(int value) {
 		put(value, ByteTransform.NORMAL);
 	}
-	
+
 	/**
 	 * Writes a value as a {@code short}.
 	 * @param value The value to write.
@@ -271,7 +270,7 @@ public class GamePacket {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Writes a value as a normal big-endian {@code short}.
 	 * @param value The value to write.
@@ -280,7 +279,7 @@ public class GamePacket {
 	public void putShort(int value) {
 		putShort(value, ByteTransform.NORMAL, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Writes a value as a big-endian {@code short}.
 	 * @param value The value to write.
@@ -290,7 +289,7 @@ public class GamePacket {
 	public void putShort(int value, ByteTransform type) {
 		putShort(value, type, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Writes a value as a standard {@code short}.
 	 * @param value The value to write.
@@ -300,7 +299,7 @@ public class GamePacket {
 	public void putShort(int value, ByteOrder order) {
 		putShort(value, ByteTransform.NORMAL, order);
 	}
-	
+
 	/**
 	 * Writes a value as an {@code int}.
 	 * @param value The value to write.
@@ -336,7 +335,7 @@ public class GamePacket {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Writes a value as a standard big-endian {@code int}.
 	 * @param value The value to write.
@@ -345,7 +344,7 @@ public class GamePacket {
 	public void putInt(int value) {
 		putInt(value, ByteTransform.NORMAL, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Writes a value as a big-endian {@code int}.
 	 * @param value The value to write.
@@ -355,7 +354,7 @@ public class GamePacket {
 	public void putInt(int value, ByteTransform type) {
 		putInt(value, type, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Writes a value as a standard {@code int}.
 	 * @param value The value to write.
@@ -365,7 +364,7 @@ public class GamePacket {
 	public void putInt(int value, ByteOrder order) {
 		putInt(value, ByteTransform.NORMAL, order);
 	}
-	
+
 	/**
 	 * Writes a value as a {@code long}.
 	 * @param value The value to write.
@@ -402,7 +401,7 @@ public class GamePacket {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Writes a value as a standard big-endian {@code long}.
 	 * @param value The value to write.
@@ -411,7 +410,7 @@ public class GamePacket {
 	public void putLong(long value) {
 		putLong(value, ByteTransform.NORMAL, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Writes a value as a big-endian {@code long}.
 	 * @param value The value to write.
@@ -421,7 +420,7 @@ public class GamePacket {
 	public void putLong(long value, ByteTransform type) {
 		putLong(value, type, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Writes a value as a standard {@code long}.
 	 * @param value The value to write.
@@ -431,7 +430,7 @@ public class GamePacket {
 	public void putLong(long value, ByteOrder order) {
 		putLong(value, ByteTransform.NORMAL, order);
 	}
-	
+
 	/**
 	 * Writes a RuneScape {@code String} value.
 	 * @param string The string to write.
@@ -442,7 +441,7 @@ public class GamePacket {
 		}
 		put(TERMINATOR_VALUE);
 	}
-	
+
 	/**
 	 * Reads a series of byte data terminated by a null value, casted to a {@link String}.
 	 */
@@ -454,7 +453,7 @@ public class GamePacket {
 		}
 		return b.toString();
 	}
-	
+
 	/**
 	 * Reads a value as a {@code byte}.
 	 * @param signed if the byte is signed.
@@ -478,7 +477,7 @@ public class GamePacket {
 		}
 		return signed ? value : value & 0xff;
 	}
-	
+
 	/**
 	 * Reads a standard signed {@code byte}.
 	 * @return The value of the byte.
@@ -486,7 +485,7 @@ public class GamePacket {
 	public int get() {
 		return get(true, ByteTransform.NORMAL);
 	}
-	
+
 	/**
 	 * Reads a standard {@code byte}.
 	 * @param signed If the byte is signed.
@@ -495,7 +494,7 @@ public class GamePacket {
 	public int get(boolean signed) {
 		return get(signed, ByteTransform.NORMAL);
 	}
-	
+
 	/**
 	 * Reads a signed {@code byte}.
 	 * @param type The byte transformation type
@@ -504,7 +503,7 @@ public class GamePacket {
 	public int get(ByteTransform type) {
 		return get(true, type);
 	}
-	
+
 	/**
 	 * Reads a {@code medium} / {@code tri-byte} value.
 	 * @return the value of the medium.
@@ -516,7 +515,7 @@ public class GamePacket {
 		value |= get(false);
 		return value & 0xffffff;
 	}
-	
+
 	/**
 	 * Reads a {@code short} value.
 	 * @param signed If the short is signed.
@@ -543,7 +542,7 @@ public class GamePacket {
 		}
 		return signed ? value : value & 0xffff;
 	}
-	
+
 	/**
 	 * Reads a standard signed big-endian {@code short}.
 	 * @return The value of the short.
@@ -551,7 +550,7 @@ public class GamePacket {
 	public int getShort() {
 		return getShort(true, ByteTransform.NORMAL, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Reads a standard big-endian {@code short}.
 	 * @param signed If the short is signed.
@@ -560,7 +559,7 @@ public class GamePacket {
 	public int getShort(boolean signed) {
 		return getShort(signed, ByteTransform.NORMAL, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Reads a signed big-endian {@code short}.
 	 * @param type The byte transformation type
@@ -569,7 +568,7 @@ public class GamePacket {
 	public int getShort(ByteTransform type) {
 		return getShort(true, type, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Reads a big-endian {@code short}.
 	 * @param signed If the short is signed.
@@ -579,7 +578,7 @@ public class GamePacket {
 	public int getShort(boolean signed, ByteTransform type) {
 		return getShort(signed, type, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Reads a signed standard {@code short}.
 	 * @param order The byte endianness type.
@@ -588,7 +587,7 @@ public class GamePacket {
 	public int getShort(ByteOrder order) {
 		return getShort(true, ByteTransform.NORMAL, order);
 	}
-	
+
 	/**
 	 * Reads a standard {@code short}.
 	 * @param signed If the short is signed.
@@ -598,7 +597,7 @@ public class GamePacket {
 	public int getShort(boolean signed, ByteOrder order) {
 		return getShort(signed, ByteTransform.NORMAL, order);
 	}
-	
+
 	/**
 	 * Reads a signed {@code short}.
 	 * @param type The byte transformation type
@@ -608,7 +607,7 @@ public class GamePacket {
 	public int getShort(ByteTransform type, ByteOrder order) {
 		return getShort(true, type, order);
 	}
-	
+
 	/**
 	 * Reads an {@code int}.
 	 * @param signed If the integer is signed.
@@ -646,7 +645,7 @@ public class GamePacket {
 		}
 		return (int) (signed ? value : value & 0xffffffffL);
 	}
-	
+
 	/**
 	 * Reads a signed standard big-endian {@code int}.
 	 * @return The value of the integer.
@@ -654,7 +653,7 @@ public class GamePacket {
 	public int getInt() {
 		return getInt(true, ByteTransform.NORMAL, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Reads a standard big-endian {@code int}.
 	 * @param signed If the integer is signed.
@@ -663,7 +662,7 @@ public class GamePacket {
 	public int getInt(boolean signed) {
 		return getInt(signed, ByteTransform.NORMAL, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Reads a signed big-endian {@code int}.
 	 * @param type The byte transformation type
@@ -672,7 +671,7 @@ public class GamePacket {
 	public int getInt(ByteTransform type) {
 		return getInt(true, type, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Reads a big-endian {@code int}.
 	 * @param signed If the integer is signed.
@@ -682,7 +681,7 @@ public class GamePacket {
 	public int getInt(boolean signed, ByteTransform type) {
 		return getInt(signed, type, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Reads a signed standard {@code int}.
 	 * @param order The byte endianness type.
@@ -691,7 +690,7 @@ public class GamePacket {
 	public int getInt(ByteOrder order) {
 		return getInt(true, ByteTransform.NORMAL, order);
 	}
-	
+
 	/**
 	 * Reads a standard {@code int}.
 	 * @param signed If the integer is signed.
@@ -701,7 +700,7 @@ public class GamePacket {
 	public int getInt(boolean signed, ByteOrder order) {
 		return getInt(signed, ByteTransform.NORMAL, order);
 	}
-	
+
 	/**
 	 * Reads a signed {@code int}.
 	 * @param type The byte transformation type
@@ -711,7 +710,7 @@ public class GamePacket {
 	public int getInt(ByteTransform type, ByteOrder order) {
 		return getInt(true, type, order);
 	}
-	
+
 	/**
 	 * Reads a signed {@code long} value.
 	 * @param type The byte transformation type
@@ -748,7 +747,7 @@ public class GamePacket {
 		}
 		return value;
 	}
-	
+
 	/**
 	 * Reads a signed standard big-endian {@code long}.
 	 * @return The value of the long.
@@ -756,7 +755,7 @@ public class GamePacket {
 	public long getLong() {
 		return getLong(ByteTransform.NORMAL, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Reads a signed big-endian {@code long}.
 	 * @param type The byte transformation type.
@@ -765,7 +764,7 @@ public class GamePacket {
 	public long getLong(ByteTransform type) {
 		return getLong(type, ByteOrder.BIG);
 	}
-	
+
 	/**
 	 * Reads a signed standard {@code long}.
 	 * @param order The byte endianness type.
@@ -774,7 +773,7 @@ public class GamePacket {
 	public long getLong(ByteOrder order) {
 		return getLong(ByteTransform.NORMAL, order);
 	}
-	
+
 	/**
 	 * Reads the amount of bytes into the array, starting at the current position.
 	 * @param amount The amount to read.
@@ -783,7 +782,7 @@ public class GamePacket {
 	public byte[] getBytes(int amount) {
 		return getBytes(amount, ByteTransform.NORMAL);
 	}
-	
+
 	/**
 	 * Reads the amount of bytes into a byte array, starting at the current position.
 	 * @param amount The amount of bytes.
@@ -797,7 +796,7 @@ public class GamePacket {
 		}
 		return data;
 	}
-	
+
 	/**
 	 * Reads the amount of bytes from the buffer in reverse, starting at {@code current_position + amount} and reading in
 	 * reverse until the current position.
@@ -827,20 +826,20 @@ public class GamePacket {
 		}
 		return data;
 	}
-	
+
 	public int getOpcode() {
 		return opcode;
 	}
-	
+
 	public ByteBuf getPayload() {
 		return payload;
 	}
-	
+
 	static {
 		// Initialize bit masks.
 		for(int i = 0; i < BIT_MASK.length; i++) {
 			BIT_MASK[i] = (1 << i) - 1;
 		}
 	}
-	
+
 }

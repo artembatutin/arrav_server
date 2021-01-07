@@ -5,7 +5,6 @@ import com.rageps.net.refactor.codec.game.GamePacketBuilder;
 import com.rageps.net.refactor.meta.PacketType;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
 import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
-import com.rageps.world.entity.actor.player.Player;
 
 import java.util.Optional;
 

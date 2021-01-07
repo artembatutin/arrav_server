@@ -3,7 +3,6 @@ package com.rageps.world.entity.item.container.impl;
 import com.rageps.content.skill.summoning.familiar.FamiliarContainer;
 import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.net.packet.out.SendContainer;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.IndexedItem;
 import com.rageps.world.entity.item.Item;

@@ -2,19 +2,11 @@ package com.rageps.content.clanchannel.content;
 
 import com.rageps.content.clanchannel.channel.ClanChannel;
 import com.rageps.content.clanchannel.channel.ClanChannelHandler;
-import com.rageps.content.dialogue.impl.OptionDialogue;
-import com.rageps.content.dialogue.impl.StatementDialogue;
-import com.rageps.net.packet.out.SendItemsOnInterface;
-import com.rageps.net.packet.out.SendText;
 import com.rageps.net.refactor.packet.out.model.InterfaceStringPacket;
 import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
-import com.rageps.world.entity.item.ItemDefinition;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ClanShowcase {
 	private final ClanChannel channel;

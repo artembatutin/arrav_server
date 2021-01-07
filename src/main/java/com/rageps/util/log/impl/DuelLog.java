@@ -1,9 +1,9 @@
 package com.rageps.util.log.impl;
 
+import com.rageps.util.log.LogDetails;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.ItemContainer;
-import com.rageps.util.log.LogDetails;
 
 import java.util.Optional;
 

@@ -1,19 +1,19 @@
 package com.rageps.content.skill.thieving.impl;
 
-import com.rageps.content.skill.thieving.Thieving;
 import com.rageps.action.impl.MobAction;
 import com.rageps.content.skill.Skills;
+import com.rageps.content.skill.thieving.Thieving;
 import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 
 import java.util.Optional;
 

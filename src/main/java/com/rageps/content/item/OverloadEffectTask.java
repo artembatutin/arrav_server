@@ -3,11 +3,11 @@ package com.rageps.content.item;
 import com.rageps.content.skill.Skills;
 import com.rageps.task.LinkedTaskSequence;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.model.Animation;
 
 import java.util.stream.IntStream;
 

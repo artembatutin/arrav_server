@@ -1,7 +1,10 @@
 package com.rageps.cache.decoder;
 
+import com.rageps.cache.FileSystem;
 import com.rageps.content.object.BarChair;
 import com.rageps.content.object.door.DoorHandler;
+import com.rageps.util.ByteBufferUtil;
+import com.rageps.util.CompressionUtil;
 import com.rageps.world.World;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.entity.object.ObjectDirection;
@@ -14,9 +17,6 @@ import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.cache.FileSystem;
-import com.rageps.util.ByteBufferUtil;
-import com.rageps.util.CompressionUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

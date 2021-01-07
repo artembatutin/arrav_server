@@ -3,9 +3,9 @@ package com.rageps.content.itemBoxes.impl;
 import com.rageps.content.itemBoxes.BoxLoot;
 import com.rageps.content.itemBoxes.ItemBox;
 import com.rageps.content.itemBoxes.ItemBoxLootParser;
+import com.rageps.util.rand.Chance;
 import com.rageps.world.entity.actor.player.Player;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import com.rageps.util.rand.Chance;
 
 import java.util.stream.Collectors;
 

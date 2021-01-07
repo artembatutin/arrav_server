@@ -1,13 +1,11 @@
 package com.rageps.content.skill.agility;
 
-import com.rageps.content.skill.agility.obstacle.ObstacleAction;
-import com.rageps.content.skill.agility.obstacle.ObstacleActivity;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.action.SkillAction;
-import com.rageps.net.packet.out.SendMessage;
+import com.rageps.content.skill.agility.obstacle.ObstacleAction;
+import com.rageps.content.skill.agility.obstacle.ObstacleActivity;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.move.ForcedMovement;
 import com.rageps.world.entity.actor.move.ForcedMovementManager;
@@ -15,6 +13,7 @@ import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
 
 import java.util.Optional;
 

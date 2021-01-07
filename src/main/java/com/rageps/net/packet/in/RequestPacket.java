@@ -1,6 +1,5 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.world.entity.item.container.session.test.impl.TradeSession;
 import com.rageps.GameConstants;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.net.codec.ByteOrder;
@@ -12,6 +11,7 @@ import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.item.container.session.ExchangeSession;
 import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
 import com.rageps.world.entity.item.container.session.impl.DuelSession;
+import com.rageps.world.entity.item.container.session.test.impl.TradeSession;
 
 /**
  * The message sent from the client when a player sends some sort of request to

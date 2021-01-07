@@ -6,8 +6,6 @@ import com.rageps.net.refactor.packet.out.model.LogoutPacket;
 import com.rageps.world.World;
 import com.rageps.command.Command;
 import com.rageps.command.CommandSignature;
-import com.rageps.net.packet.out.SendLogout;
-import com.rageps.net.packet.out.SendBroadcast;
 import com.rageps.task.Task;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;

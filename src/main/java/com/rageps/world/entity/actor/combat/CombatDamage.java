@@ -1,12 +1,12 @@
 package com.rageps.world.entity.actor.combat;
 
-import com.rageps.world.entity.actor.combat.hit.Hit;
-import com.rageps.world.entity.actor.player.Player;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import com.rageps.util.Stopwatch;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.Actor;
+import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.mob.Mob;
+import com.rageps.world.entity.actor.player.Player;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 import java.util.Map.Entry;
 import java.util.Optional;

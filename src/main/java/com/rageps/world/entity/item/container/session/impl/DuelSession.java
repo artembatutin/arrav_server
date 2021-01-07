@@ -2,20 +2,18 @@ package com.rageps.world.entity.item.container.session.impl;
 
 import com.rageps.content.minigame.dueling.DuelMinigame;
 import com.rageps.content.minigame.dueling.DuelingRules;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.net.refactor.packet.out.model.ItemOnInterfaceSlotPacket;
 import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
-import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.item.container.session.ExchangeSessionActionType;
-import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.net.refactor.packet.out.model.ConfigPacket;
-import com.rageps.net.packet.out.SendContainer;
-import com.rageps.net.packet.out.SendItemOnInterfaceSlot;
 import com.rageps.util.Stopwatch;
+import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.session.ExchangeSession;
+import com.rageps.world.entity.item.container.session.ExchangeSessionActionType;
+import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
 import com.rageps.world.entity.item.container.session.ExchangeSessionType;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.Arrays;
 import java.util.EnumSet;

@@ -5,8 +5,8 @@ import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.update.block.MobUpdateBlock;
 import com.rageps.world.entity.actor.update.UpdateFlag;
+import com.rageps.world.entity.actor.update.block.MobUpdateBlock;
 
 /**
  * An {@link MobUpdateBlock} implementation that handles the {@code SECONDARY_HIT} update block.

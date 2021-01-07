@@ -1,12 +1,12 @@
 package com.rageps.content.clanchannel.channel;
 
 import com.rageps.content.TabInterface;
+import com.rageps.content.clanchannel.*;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.dialogue.impl.StatementDialogue;
 import com.rageps.net.refactor.packet.out.model.*;
 import com.rageps.util.StringUtil;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.content.clanchannel.*;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -2,13 +2,13 @@ package com.rageps.world.entity.object;
 
 import com.rageps.net.refactor.packet.out.model.ObjectPacket;
 import com.rageps.net.refactor.packet.out.model.ObjectRemovalPacket;
+import com.rageps.task.Task;
 import com.rageps.world.World;
+import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.task.Task;
-import com.rageps.world.entity.actor.player.Player;
 
 import java.util.Objects;
 import java.util.function.Consumer;

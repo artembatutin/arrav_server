@@ -1,7 +1,5 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.world.locale.loc.Locations;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
 import com.rageps.world.World;
@@ -9,6 +7,8 @@ import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.region.Region;
+import com.rageps.world.locale.loc.Locations;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 /**
  * The message sent from the client when a player sends the load tool.mapviewer region

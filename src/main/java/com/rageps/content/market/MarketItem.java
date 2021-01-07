@@ -1,15 +1,13 @@
 package com.rageps.content.market;
 
-import com.rageps.net.packet.out.SendShopPrice;
-import com.rageps.net.packet.out.SendShopStock;
 import com.rageps.net.refactor.packet.out.model.ShopPricePacket;
 import com.rageps.net.refactor.packet.out.model.ShopStockPacket;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.util.json.JsonSaver;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.ItemDefinition;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 /**
  * The container that represents an item definition.

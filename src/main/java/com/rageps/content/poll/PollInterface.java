@@ -3,10 +3,6 @@ package com.rageps.content.poll;
 
 import com.rageps.world.entity.actor.player.Player;
 
-import java.text.NumberFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Map;
-
 /**
  * Created by Jason MacKeigan on 2017-06-05 at 3:15 PM
  */

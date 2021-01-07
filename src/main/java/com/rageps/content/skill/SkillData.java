@@ -3,7 +3,6 @@ package com.rageps.content.skill;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
-import com.rageps.net.packet.out.SendSkillGoal;
 import com.rageps.net.refactor.packet.out.model.SkillGoalPacket;
 import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.player.Player;

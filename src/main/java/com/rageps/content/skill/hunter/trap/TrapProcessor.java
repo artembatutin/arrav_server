@@ -1,8 +1,8 @@
 package com.rageps.content.skill.hunter.trap;
 
+import com.rageps.task.Task;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.task.Task;
 
 import java.util.Optional;
 

@@ -1,9 +1,9 @@
 package com.rageps.world.entity.actor.combat.effect.impl;
 
-import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.player.assets.AntifireDetails;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.effect.CombatEffect;
+import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.assets.AntifireDetails;
 
 import java.util.Optional;
 

@@ -1,9 +1,9 @@
 package com.rageps.content.event;
 
 
+import com.rageps.world.World;
 import com.rageps.world.text.ColorConstants;
 import com.rageps.world.text.MessageBuilder;
-import com.rageps.world.World;
 
 /**
  * The abstract for game events.

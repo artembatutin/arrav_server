@@ -1,9 +1,8 @@
 package com.rageps.content.minigame.pestcontrol;
 
 import com.rageps.content.minigame.pestcontrol.pest.*;
-import com.rageps.world.World;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.mob.DefaultMob;
@@ -12,6 +11,7 @@ import com.rageps.world.entity.actor.mob.MobDeath;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.Optional;
 

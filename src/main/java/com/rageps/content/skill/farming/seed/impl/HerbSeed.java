@@ -1,13 +1,13 @@
 package com.rageps.content.skill.farming.seed.impl;
 
+import com.rageps.content.skill.farming.FarmingConstants;
 import com.rageps.content.skill.farming.attributes.PatchAttribute;
 import com.rageps.content.skill.farming.patch.Patch;
-import com.rageps.content.skill.farming.FarmingConstants;
 import com.rageps.content.skill.farming.seed.SeedClass;
 import com.rageps.content.skill.farming.seed.SeedType;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.item.Item;
+import com.rageps.world.model.Animation;
 
 public enum HerbSeed implements SeedType {
 	

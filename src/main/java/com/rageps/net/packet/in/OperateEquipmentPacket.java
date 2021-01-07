@@ -1,6 +1,5 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.RagePS;
 import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;

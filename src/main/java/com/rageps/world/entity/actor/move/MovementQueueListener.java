@@ -1,8 +1,8 @@
 package com.rageps.world.entity.actor.move;
 
-import com.rageps.world.World;
 import com.rageps.task.Task;
 import com.rageps.task.TaskListener;
+import com.rageps.world.World;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.Actor;
 

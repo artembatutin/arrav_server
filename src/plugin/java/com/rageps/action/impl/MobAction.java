@@ -6,8 +6,8 @@ import com.rageps.content.scoreboard.ScoreboardManager;
 import com.rageps.content.skill.hunter.butterfly.ButterflyCatching;
 import com.rageps.content.skill.slayer.Slayer;
 import com.rageps.content.skill.thieving.impl.Pickpocketing;
-import com.rageps.net.packet.in.MobActionPacket;
 import com.rageps.action.Action;
+import com.rageps.net.packet.in.MobActionPacket;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 

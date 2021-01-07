@@ -1,7 +1,7 @@
 package com.rageps.content.teleport;
 
-import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
 import com.rageps.content.minigame.MinigameHandler;
+import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
 import com.rageps.util.ActionListener;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;

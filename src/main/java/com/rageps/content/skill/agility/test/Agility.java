@@ -1,9 +1,9 @@
 package com.rageps.content.skill.agility.test;
 
-import com.rageps.content.skill.agility.test.obstacle.Obstacle;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.action.SkillAction;
+import com.rageps.content.skill.agility.test.obstacle.Obstacle;
 import com.rageps.task.Task;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.player.Player;

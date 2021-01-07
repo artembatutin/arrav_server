@@ -4,8 +4,6 @@ import com.rageps.action.impl.ItemAction;
 import com.rageps.action.impl.ItemOnObjectAction;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Direction;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
@@ -16,6 +14,8 @@ import com.rageps.world.entity.object.ObjectDirection;
 import com.rageps.world.entity.object.ObjectType;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.entity.region.TraversalConstants;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Direction;
 
 import java.util.Optional;
 

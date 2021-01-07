@@ -4,7 +4,6 @@ import com.rageps.net.refactor.packet.Packet;
 import com.rageps.util.ActionListener;
 import com.rageps.world.entity.actor.player.Player;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 /**

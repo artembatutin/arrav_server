@@ -1,13 +1,13 @@
 package com.rageps.content.skill.magic;
 
-import com.rageps.world.World;
 import com.rageps.content.TabInterface;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Graphic;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 
 /**
  * The enumerated type whose elements represent a spellbook type.

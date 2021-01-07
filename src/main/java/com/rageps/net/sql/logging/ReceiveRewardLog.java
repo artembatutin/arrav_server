@@ -9,7 +9,6 @@ import com.rageps.util.DateTimeUtil;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.locale.Position;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import java.sql.Connection;
 import java.sql.SQLException;

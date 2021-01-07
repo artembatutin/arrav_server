@@ -1,10 +1,10 @@
 package com.rageps.content.item;
 
 import com.rageps.content.skill.SkillData;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 
 /**
  * The container class that represents one equipment requirement.

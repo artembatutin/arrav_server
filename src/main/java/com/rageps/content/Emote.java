@@ -1,9 +1,9 @@
 package com.rageps.content;
 
 import com.rageps.action.impl.ButtonAction;
+import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.model.Animation;
 import com.rageps.world.model.Graphic;
-import com.rageps.world.entity.actor.player.Player;
 
 /**
  * An enumeration of emotes.

@@ -1,16 +1,16 @@
 package com.rageps.content.skill.crafting;
 
 import com.google.common.collect.ImmutableMap;
-import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
 import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
+import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
 import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
+import com.rageps.world.model.Animation;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 
 import java.util.Optional;
 import java.util.function.Function;

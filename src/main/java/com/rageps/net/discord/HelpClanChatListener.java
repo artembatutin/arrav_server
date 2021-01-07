@@ -5,6 +5,7 @@ import com.google.common.cache.CacheBuilder;
 import com.rageps.content.clanchannel.ClanMember;
 import com.rageps.content.clanchannel.ClanRepository;
 import com.rageps.content.clanchannel.channel.ClanChannel;
+import com.rageps.net.discord.cmd.CommandManager;
 import com.rageps.util.StringUtil;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
@@ -13,7 +14,6 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import com.rageps.net.discord.cmd.CommandManager;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

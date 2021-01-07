@@ -1,7 +1,6 @@
 package com.rageps.content.skill.farming.patch;
 
 import com.google.common.collect.ImmutableSet;
-import com.rageps.content.skill.farming.seed.impl.*;
 import com.rageps.content.skill.farming.seed.SeedType;
 import com.rageps.content.skill.farming.seed.impl.*;
 

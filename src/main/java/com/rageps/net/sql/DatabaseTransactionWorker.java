@@ -1,13 +1,13 @@
 package com.rageps.net.sql;
 
 
+import com.rageps.net.sql.logging.ChatLog;
+import com.rageps.net.sql.logging.ClanChatLog;
+import com.rageps.net.sql.logging.PrivateMessageLog;
 import com.rageps.world.World;
 import com.rageps.world.env.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import com.rageps.net.sql.logging.ChatLog;
-import com.rageps.net.sql.logging.ClanChatLog;
-import com.rageps.net.sql.logging.PrivateMessageLog;
 
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -2,11 +2,11 @@ package com.rageps.util.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.rageps.world.locale.loc.CircleArea;
+import com.rageps.util.json.JsonLoader;
 import com.rageps.world.locale.loc.Area;
+import com.rageps.world.locale.loc.CircleArea;
 import com.rageps.world.locale.loc.Locations;
 import com.rageps.world.locale.loc.SquareArea;
-import com.rageps.util.json.JsonLoader;
 
 /**
  * The {@link JsonLoader} implementation that loads all multi area instances.

@@ -1,7 +1,5 @@
 package com.rageps.world.locale.instance;
 
-import java.util.function.Predicate;
-
 /**
  * Set of disposing policies for instances.
  */

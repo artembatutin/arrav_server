@@ -1,15 +1,13 @@
 package com.rageps.content.skill;
 
-import com.rageps.net.packet.out.SendSkill;
 import com.rageps.content.item.Skillcape;
-import com.rageps.net.packet.out.SendSkillGoal;
 import com.rageps.net.refactor.packet.out.model.SkillGoalPacket;
 import com.rageps.net.refactor.packet.out.model.SkillPacket;
 import com.rageps.util.TextUtils;
-import com.rageps.world.entity.actor.player.assets.group.ExperienceRate;
-import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.assets.group.ExperienceRate;
 import com.rageps.world.entity.actor.update.UpdateFlag;
+import com.rageps.world.model.Graphic;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;

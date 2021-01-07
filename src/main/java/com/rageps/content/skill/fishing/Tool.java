@@ -1,12 +1,12 @@
 package com.rageps.content.skill.fishing;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.content.skill.Skill;
 import com.rageps.content.skill.Skills;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 public enum Tool {
 	NET(303, 1, -1, 0.35, 621, new Catchable[]{Catchable.SHRIMP, Catchable.ANCHOVY, Catchable.MONKFISH}) {

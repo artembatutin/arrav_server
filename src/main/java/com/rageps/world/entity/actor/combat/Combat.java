@@ -1,19 +1,18 @@
 package com.rageps.world.entity.actor.combat;
 
-import com.rageps.net.packet.out.SendCombatTarget;
-import com.rageps.net.refactor.packet.out.model.CombatTargetPacket;
-import com.rageps.world.World;
-import com.rageps.world.entity.actor.combat.attack.FightType;
 import com.rageps.combat.listener.CombatListener;
+import com.rageps.combat.strategy.CombatStrategy;
+import com.rageps.net.refactor.packet.out.model.CombatTargetPacket;
+import com.rageps.task.Task;
+import com.rageps.util.Stopwatch;
+import com.rageps.world.World;
+import com.rageps.world.entity.actor.Actor;
+import com.rageps.world.entity.actor.combat.attack.FightType;
 import com.rageps.world.entity.actor.combat.formula.CombatFormula;
 import com.rageps.world.entity.actor.combat.formula.FormulaModifier;
 import com.rageps.world.entity.actor.combat.hit.CombatData;
 import com.rageps.world.entity.actor.combat.hit.CombatHit;
 import com.rageps.world.entity.actor.combat.hit.Hit;
-import com.rageps.combat.strategy.CombatStrategy;
-import com.rageps.task.Task;
-import com.rageps.util.Stopwatch;
-import com.rageps.world.entity.actor.Actor;
 
 import java.util.Deque;
 import java.util.Iterator;

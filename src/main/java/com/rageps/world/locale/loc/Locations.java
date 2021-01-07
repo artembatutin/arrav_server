@@ -1,8 +1,6 @@
 package com.rageps.world.locale.loc;
 
 import com.rageps.content.wilderness.WildernessActivity;
-import com.rageps.net.packet.out.SendContextMenu;
-import com.rageps.net.packet.out.SendMultiIcon;
 import com.rageps.net.refactor.packet.out.model.ContextMenuPacket;
 import com.rageps.net.refactor.packet.out.model.MultiIconPacket;
 import com.rageps.world.entity.Entity;

@@ -3,8 +3,8 @@ package com.rageps.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.rageps.content.market.MarketItem;
-import com.rageps.world.entity.item.ItemDefinition;
 import com.rageps.util.json.JsonLoader;
+import com.rageps.world.entity.item.ItemDefinition;
 
 /**
  * The {@link JsonLoader} implementation that loads all market values.

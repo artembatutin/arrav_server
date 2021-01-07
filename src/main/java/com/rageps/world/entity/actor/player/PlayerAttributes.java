@@ -9,7 +9,6 @@ import com.rageps.content.title.TitleData;
 import com.rageps.world.attr.Attr;
 import com.rageps.world.attr.AttributeKey;
 import com.rageps.world.attr.Attributes;
-import com.rageps.world.entity.actor.combat.attack.FightType;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.DynamicObject;
 import com.rageps.world.entity.object.ObjectDirection;

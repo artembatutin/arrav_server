@@ -1,16 +1,16 @@
 package com.rageps.content.trivia;
 
+import com.rageps.GameConstants;
 import com.rageps.content.achievements.Achievement;
+import com.rageps.util.TextUtils;
+import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.World;
+import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.item.Item;
 import com.rageps.world.text.ColorConstants;
 import com.rageps.world.text.MessageBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.GameConstants;
-import com.rageps.util.TextUtils;
-import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.item.Item;
 
 import java.util.Arrays;
 import java.util.List;

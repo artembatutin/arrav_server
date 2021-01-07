@@ -1,29 +1,28 @@
 package com.rageps.content.minigame.barrows;
 
 import com.rageps.content.achievements.Achievement;
-import com.rageps.content.teleport.TeleportType;
-import com.rageps.content.teleport.impl.DefaultTeleportSpell;
-import com.rageps.net.refactor.packet.out.model.MinimapStatePacket;
-import com.rageps.world.World;
-import com.rageps.world.entity.item.cached.CachedItem;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.dialogue.impl.StatementDialogue;
 import com.rageps.content.item.FoodConsumable;
 import com.rageps.content.item.PotionConsumable;
 import com.rageps.content.minigame.Minigame;
-import com.rageps.net.packet.out.SendMinimapState;
+import com.rageps.content.teleport.TeleportType;
+import com.rageps.content.teleport.impl.DefaultTeleportSpell;
+import com.rageps.net.refactor.packet.out.model.MinimapStatePacket;
 import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.World;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.item.Item;
+import com.rageps.world.entity.item.cached.CachedItem;
 import com.rageps.world.entity.item.cached.ItemCache;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.Position;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.Optional;
 

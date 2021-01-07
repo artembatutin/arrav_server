@@ -1,9 +1,9 @@
 package com.rageps.world.entity.actor.move;
 
-import com.rageps.world.locale.Position;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.Actor;
+import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
 
 import java.util.Optional;
 import java.util.OptionalInt;

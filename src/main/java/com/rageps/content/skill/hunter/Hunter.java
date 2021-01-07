@@ -1,16 +1,13 @@
 package com.rageps.content.skill.hunter;
 
-import com.rageps.content.skill.hunter.trap.TrapProcessor;
-import com.rageps.content.skill.hunter.trap.TrapTask;
-import com.rageps.content.skill.hunter.trap.bird.BirdData;
-import com.rageps.world.World;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.Skill;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.hunter.trap.Trap;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Direction;
+import com.rageps.content.skill.hunter.trap.TrapProcessor;
+import com.rageps.content.skill.hunter.trap.TrapTask;
+import com.rageps.content.skill.hunter.trap.bird.BirdData;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.GroundItem;
@@ -18,6 +15,9 @@ import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Direction;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 import java.util.Arrays;
 import java.util.Optional;

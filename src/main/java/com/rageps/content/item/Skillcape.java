@@ -2,19 +2,19 @@ package com.rageps.content.item;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import com.rageps.action.impl.ButtonAction;
+import com.rageps.action.impl.MobAction;
 import com.rageps.content.dialogue.Expression;
 import com.rageps.content.dialogue.impl.GiveItemDialogue;
 import com.rageps.content.dialogue.impl.NpcDialogue;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.dialogue.impl.PlayerDialogue;
 import com.rageps.content.skill.Skills;
-import com.rageps.action.impl.ButtonAction;
-import com.rageps.action.impl.MobAction;
-import com.rageps.world.model.Visualize;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.impl.Equipment;
+import com.rageps.world.model.Visualize;
 
 import java.util.EnumSet;
 import java.util.Optional;

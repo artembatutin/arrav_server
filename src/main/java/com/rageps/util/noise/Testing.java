@@ -1,7 +1,5 @@
 package com.rageps.util.noise;
 
-import com.rageps.util.rand.RandomUtils;
-
 /**
  * @author Tamatea <tamateea@gmail.com>
  */

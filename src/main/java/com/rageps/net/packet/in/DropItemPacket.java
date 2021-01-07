@@ -6,7 +6,6 @@ import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
-import com.rageps.net.packet.out.SendItemOnInterfaceSlot;
 import com.rageps.net.refactor.packet.out.model.ItemOnInterfaceSlotPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;

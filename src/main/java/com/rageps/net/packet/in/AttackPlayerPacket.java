@@ -15,7 +15,6 @@ import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.item.container.session.ExchangeSession;
 import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
 import com.rageps.world.entity.item.container.session.impl.DuelSession;
-import com.rageps.world.locale.loc.Area;
 
 import java.util.Optional;
 

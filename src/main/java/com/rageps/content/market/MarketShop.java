@@ -1,27 +1,24 @@
 package com.rageps.content.market;
 
+import com.rageps.GameConstants;
+import com.rageps.content.TabInterface;
 import com.rageps.content.dialogue.Expression;
 import com.rageps.content.dialogue.impl.NpcDialogue;
+import com.rageps.content.item.Skillcape;
 import com.rageps.content.market.currency.Currency;
 import com.rageps.content.market.currency.impl.ItemCurrency;
 import com.rageps.content.minigame.rfd.RFDData;
-import com.rageps.net.packet.out.SendContainer;
-import com.rageps.net.packet.out.SendForceTab;
-import com.rageps.net.packet.out.SendShop;
 import com.rageps.net.refactor.packet.out.model.ForceTabPacket;
 import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.net.refactor.packet.out.model.ShopPacket;
-import com.rageps.world.World;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import com.rageps.GameConstants;
-import com.rageps.content.TabInterface;
-import com.rageps.content.item.Skillcape;
 import com.rageps.util.TextUtils;
 import com.rageps.util.log.Log;
 import com.rageps.util.log.impl.ShopLog;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemDefinition;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 
 import java.util.Arrays;
 

@@ -1,10 +1,10 @@
 package com.rageps.net.refactor.codec.game;
 
+import com.rageps.net.refactor.meta.PacketType;
 import com.rageps.net.refactor.security.IsaacRandom;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import com.rageps.net.refactor.meta.PacketType;
 
 /**
  * A {@link MessageToByteEncoder} which encodes in-game packets.

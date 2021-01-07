@@ -1,7 +1,7 @@
 package com.rageps.world.entity.actor.mob;
 
-import com.rageps.world.model.Direction;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.model.Direction;
 
 /**
  * @author Tamatea <tamateea@gmail.com>

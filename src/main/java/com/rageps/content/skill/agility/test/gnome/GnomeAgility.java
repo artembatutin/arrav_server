@@ -1,11 +1,11 @@
 package com.rageps.content.skill.agility.test.gnome;
 
-import com.rageps.content.skill.agility.test.obstacle.impl.ClimbableObstacle;
-import com.rageps.content.skill.agility.test.obstacle.impl.FMObstacle;
-import com.rageps.content.skill.agility.test.obstacle.impl.WalkableObstacle;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.agility.test.Agility;
 import com.rageps.content.skill.agility.test.obstacle.Obstacle;
+import com.rageps.content.skill.agility.test.obstacle.impl.ClimbableObstacle;
+import com.rageps.content.skill.agility.test.obstacle.impl.FMObstacle;
+import com.rageps.content.skill.agility.test.obstacle.impl.WalkableObstacle;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.Position;

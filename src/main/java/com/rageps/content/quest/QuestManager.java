@@ -1,9 +1,9 @@
 package com.rageps.content.quest;
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import com.rageps.content.PlayerPanel;
 import com.rageps.content.quest.impl.HalloweenQuest;
 import com.rageps.world.entity.actor.player.Player;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 import java.util.Arrays;
 

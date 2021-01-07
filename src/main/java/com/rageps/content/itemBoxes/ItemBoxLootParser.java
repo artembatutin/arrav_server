@@ -2,10 +2,10 @@ package com.rageps.content.itemBoxes;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import com.rageps.util.json.JsonLoader;
 import com.rageps.util.rand.Chance;
 import com.rageps.world.entity.item.Item;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 /**
  * @author Tamatea <tamateea@gmail.com>

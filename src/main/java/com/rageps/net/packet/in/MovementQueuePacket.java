@@ -1,6 +1,5 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.RagePS;
 import com.rageps.content.market.MarketShop;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.net.codec.ByteOrder;

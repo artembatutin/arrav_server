@@ -1,13 +1,13 @@
 package com.rageps.world.entity.actor.combat.magic;
 
-import com.rageps.world.entity.actor.combat.projectile.CombatProjectile;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatImpact;
+import com.rageps.world.entity.actor.combat.projectile.CombatProjectile;
 import com.rageps.world.entity.item.Item;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 
 import java.util.Optional;
 import java.util.OptionalInt;

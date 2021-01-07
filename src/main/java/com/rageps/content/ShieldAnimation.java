@@ -1,8 +1,8 @@
 package com.rageps.content;
 
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 /**
  * The container class that represents one equipment animation that is used with

@@ -1,13 +1,13 @@
 package com.rageps.content.skill.agility.impl;
 
+import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.agility.AgilityCourse;
+import com.rageps.content.skill.agility.AgilityCourseType;
 import com.rageps.content.skill.agility.obstacle.ObstacleAction;
 import com.rageps.content.skill.agility.obstacle.ObstacleType;
 import com.rageps.content.skill.agility.obstacle.impl.Movable;
 import com.rageps.content.skill.agility.obstacle.impl.Steppable;
 import com.rageps.content.skill.agility.obstacle.impl.Walkable;
-import com.rageps.action.impl.ObjectAction;
-import com.rageps.content.skill.agility.AgilityCourseType;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.Position;

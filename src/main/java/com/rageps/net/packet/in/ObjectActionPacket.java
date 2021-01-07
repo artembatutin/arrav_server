@@ -1,6 +1,5 @@
 package com.rageps.net.packet.in;
 
-import com.rageps.RagePS;
 import com.rageps.action.ActionContainer;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.minigame.MinigameHandler;

@@ -1,6 +1,5 @@
 package com.rageps.world.entity.actor.player.assets.relations;
 
-import com.rageps.net.packet.out.*;
 import com.rageps.net.refactor.packet.out.model.*;
 import com.rageps.util.StringUtil;
 import com.rageps.world.World;
@@ -8,8 +7,6 @@ import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 

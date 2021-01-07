@@ -12,18 +12,10 @@ import com.rageps.content.skill.Skill;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.prayer.Prayer;
 import com.rageps.net.host.HostManager;
-import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
-import com.rageps.world.entity.actor.player.assets.Rights;
-import com.rageps.world.entity.actor.update.UpdateFlag;
-import com.rageps.world.entity.region.Region;
-import com.rageps.world.locale.Position;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.net.refactor.packet.out.model.ConfigPacket;
-import com.rageps.net.packet.out.SendGraphic;
+import com.rageps.net.refactor.packet.out.model.GraphicPacket;
+import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.ActorDeath;
 import com.rageps.world.entity.actor.combat.CombatConstants;
@@ -31,10 +23,18 @@ import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
+import com.rageps.world.entity.actor.player.assets.Rights;
+import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.impl.Equipment;
 import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
+import com.rageps.world.entity.region.Region;
+import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.Iterator;
 import java.util.Optional;
@@ -99,7 +99,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 				}
 				if(i % 2 == 1)
 					continue;
-				SendGraphic.local(getActor(), 2260, new Position(x, y, getActor().getPosition().getZ()), 25);
+				GraphicPacket.local(getActor(), 2260, new Position(x, y, getActor().getPosition().getZ()), 25);
 			}
 			int maxHit = (int) ((getActor().getSkills()[Skills.PRAYER].getCurrentLevel() / 100.D) * 25);
 			if(getActor().inMulti()) {

@@ -3,8 +3,6 @@ package com.rageps.content.title;
 
 import com.rageps.world.entity.actor.player.Player;
 
-import java.util.List;
-
 /**
  * The manager for handling interactions with the title interface.
  * @author Tamatea <tamateea@gmail.com>

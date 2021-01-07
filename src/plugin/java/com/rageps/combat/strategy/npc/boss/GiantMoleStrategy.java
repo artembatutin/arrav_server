@@ -6,7 +6,6 @@ import com.rageps.net.refactor.packet.out.model.GraphicPacket;
 import com.rageps.world.World;
 import com.rageps.combat.strategy.npc.NpcMeleeStrategy;
 import com.rageps.world.locale.Position;
-import com.rageps.net.packet.out.SendGraphic;
 import com.rageps.task.Task;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.model.Animation;

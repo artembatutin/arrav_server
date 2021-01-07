@@ -2,7 +2,6 @@ package com.rageps.net.rest.payments;
 
 
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.player.PlayerAttributes;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;

@@ -4,12 +4,12 @@ import com.rageps.content.skill.agility.obstacle.ObstacleActivity;
 import com.rageps.content.skill.agility.obstacle.ObstacleType;
 import com.rageps.content.skill.agility.obstacle.impl.Movable;
 import com.rageps.task.LinkedTaskSequence;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.move.ForcedMovement;
 import com.rageps.world.entity.actor.move.ForcedMovementDirection;
 import com.rageps.world.entity.actor.move.ForcedMovementManager;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
 
 import java.util.stream.IntStream;
 

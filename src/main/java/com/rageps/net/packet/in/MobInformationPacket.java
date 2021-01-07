@@ -2,7 +2,6 @@ package com.rageps.net.packet.in;
 
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.packet.IncomingPacket;
-import com.rageps.net.packet.out.SendMobDrop;
 import com.rageps.util.rand.Chance;
 import com.rageps.world.entity.actor.mob.MobAttributes;
 import com.rageps.world.entity.actor.mob.MobDefinition;

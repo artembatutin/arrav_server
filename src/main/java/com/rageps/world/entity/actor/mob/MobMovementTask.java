@@ -1,14 +1,14 @@
 package com.rageps.world.entity.actor.mob;
 
+import com.rageps.task.Task;
+import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.move.path.Path;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Direction;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.task.Task;
-import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Direction;
 
 /**
  * An implementation of a {@link Task} that handles randomized {@link Mob} movements.

@@ -1,8 +1,8 @@
 package com.rageps.content.itemBoxes;
 
+import com.rageps.util.rand.Chance;
 import com.rageps.world.entity.actor.player.Player;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import com.rageps.util.rand.Chance;
 
 /**
  * @author Tamatea <tamateea@gmail.com>

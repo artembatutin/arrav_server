@@ -1,11 +1,9 @@
 package com.rageps.content.dialogue.impl;
 
-import com.rageps.net.packet.out.SendInterfaceAnimation;
 import com.rageps.content.dialogue.Dialogue;
 import com.rageps.content.dialogue.DialogueBuilder;
 import com.rageps.content.dialogue.DialogueType;
 import com.rageps.content.dialogue.Expression;
-import com.rageps.net.packet.out.SendInterfacePlayerModel;
 import com.rageps.net.refactor.packet.out.model.InterfaceAnimationPacket;
 import com.rageps.net.refactor.packet.out.model.InterfacePlayerModelPacket;
 

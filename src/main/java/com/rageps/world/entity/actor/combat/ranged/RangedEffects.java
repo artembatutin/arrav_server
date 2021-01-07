@@ -3,18 +3,18 @@ package com.rageps.world.entity.actor.combat.ranged;
 import com.google.common.collect.ImmutableSet;
 import com.rageps.content.skill.Skill;
 import com.rageps.content.skill.Skills;
-import com.rageps.world.entity.actor.combat.formula.FormulaFactory;
-import com.rageps.world.entity.actor.player.Player;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Graphic;
-import com.rageps.world.entity.actor.combat.PoisonType;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatImpact;
 import com.rageps.world.entity.actor.combat.CombatType;
+import com.rageps.world.entity.actor.combat.PoisonType;
 import com.rageps.world.entity.actor.combat.attack.FightType;
+import com.rageps.world.entity.actor.combat.formula.FormulaFactory;
 import com.rageps.world.entity.actor.combat.hit.CombatHit;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
+import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.model.Graphic;
 
 import java.util.List;
 

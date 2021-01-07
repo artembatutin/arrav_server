@@ -1,8 +1,8 @@
 package com.rageps.world.entity.item;
 
 import com.google.gson.Gson;
-import com.rageps.world.entity.item.container.impl.EquipmentType;
 import com.rageps.util.json.JsonSaver;
+import com.rageps.world.entity.item.container.impl.EquipmentType;
 
 import java.util.Arrays;
 import java.util.List;

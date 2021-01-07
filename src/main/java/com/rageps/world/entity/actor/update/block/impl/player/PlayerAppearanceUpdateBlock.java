@@ -1,15 +1,10 @@
 package com.rageps.world.entity.actor.update.block.impl.player;
 
 import com.google.common.collect.ImmutableMap;
-import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
-import com.rageps.net.codec.game.GamePacketType;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.player.PlayerAppearance;
-import com.rageps.world.entity.actor.update.block.PlayerUpdateBlock;
 import com.rageps.world.entity.actor.update.UpdateFlag;
-import com.rageps.world.entity.item.container.impl.Equipment;
-import io.netty.util.ReferenceCountUtil;
+import com.rageps.world.entity.actor.update.block.PlayerUpdateBlock;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the updating of the appearance of {@link Player}s.

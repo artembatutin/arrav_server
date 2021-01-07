@@ -3,11 +3,11 @@ package com.rageps.world.entity.actor.mob.impl.godwars;
 import com.google.common.collect.ImmutableSet;
 import com.rageps.combat.strategy.npc.boss.godwars.armadyl.KreeArraStrategy;
 import com.rageps.world.World;
-import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.SquareArea;
 import com.rageps.world.entity.actor.mob.DefaultMob;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.mob.MobAggression;
+import com.rageps.world.locale.Position;
+import com.rageps.world.locale.loc.SquareArea;
 
 /**
  * The class which represents a single kree'arra boss with it's minions.
