@@ -47,7 +47,7 @@ public class MobMovementTask extends Task {
 			if(mob.getMovementQueue().isMovementDone()) {
 				if(!move.getBoundary().inside(mob.getPosition(), mob.size())) {
 					Path pathHome = World.getSmartPathfinder().find(mob.getPosition(), mob.getOriginalPosition(), mob.size());
-					if(pathHome != null && pathHome.isPossible())
+					if(!pathHome.getMoves().isEmpty() && pathHome.isPossible())
 						mob.getMovementQueue().walk(pathHome.getMoves());
 				} else {
 					Direction dir = Direction.random();

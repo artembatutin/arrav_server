@@ -3,16 +3,17 @@ package com.rageps.net.refactor.packet.in.decoder;
 import com.rageps.net.refactor.codec.game.GamePacket;
 import com.rageps.net.refactor.codec.game.GamePacketReader;
 import com.rageps.net.refactor.packet.in.PacketDecoder;
-import com.rageps.net.refactor.packet.in.model.EnterInputPacketPacket;
+import com.rageps.net.refactor.packet.in.model.EnterAmountPacketPacket;
 
 /**
  * @author Tamatea <tamateea@gmail.com>
  */
-public class EnterInputPacketPacketDecoder implements PacketDecoder<EnterInputPacketPacket> {
+public class EnterAmountPacketPacketDecoder implements PacketDecoder<EnterAmountPacketPacket> {
 
     @Override
-    public EnterInputPacketPacket decode(GamePacket packet) {
+    public EnterAmountPacketPacket decode(GamePacket packet) {
         GamePacketReader reader = new GamePacketReader(packet);
-        return new EnterInputPacketPacket();
+        int amount = reader.getInt();
+        return new EnterAmountPacketPacket(amount);
     }
 }

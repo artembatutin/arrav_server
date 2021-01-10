@@ -13,6 +13,7 @@ public class CommandPacketPacketDecoder implements PacketDecoder<CommandPacketPa
     @Override
     public CommandPacketPacket decode(GamePacket packet) {
         GamePacketReader reader = new GamePacketReader(packet);
-        return new CommandPacketPacket();
+        String command = reader.getCString();
+        return new CommandPacketPacket(command);
     }
 }

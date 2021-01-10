@@ -1,5 +1,7 @@
 package com.rageps.net.refactor.packet.in.decoder;
 
+import com.rageps.net.codec.ByteTransform;
+import com.rageps.net.refactor.codec.game.DataTransformation;
 import com.rageps.net.refactor.codec.game.GamePacket;
 import com.rageps.net.refactor.codec.game.GamePacketReader;
 import com.rageps.net.refactor.packet.in.PacketDecoder;
@@ -13,6 +15,12 @@ public class DropItemPacketPacketDecoder implements PacketDecoder<DropItemPacket
     @Override
     public DropItemPacketPacket decode(GamePacket packet) {
         GamePacketReader reader = new GamePacketReader(packet);
-        return new DropItemPacketPacket();
+
+        int id = reader.getShort(false, DataTransformation.ADD);
+        reader.get(false);
+        reader.get(false);
+        int slot = reader.getShort(false, DataTransformation.ADD);
+
+        return new DropItemPacketPacket(id, slot);
     }
 }

@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class ConstructionPacketPacket extends Packet {
 
+    private final int click;
 
-public ConstructionPacketPacket() {}
+    public ConstructionPacketPacket(int click) {
+        this.click = click;
+    }
 
-
-
-
+    public int getClick() {
+        return click;
+    }
 }

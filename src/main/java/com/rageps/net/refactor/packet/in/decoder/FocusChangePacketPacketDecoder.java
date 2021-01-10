@@ -13,6 +13,7 @@ public class FocusChangePacketPacketDecoder implements PacketDecoder<FocusChange
     @Override
     public FocusChangePacketPacket decode(GamePacket packet) {
         GamePacketReader reader = new GamePacketReader(packet);
-        return new FocusChangePacketPacket();
+        boolean focus = reader.get(false) == 1;
+        return new FocusChangePacketPacket(focus);
     }
 }

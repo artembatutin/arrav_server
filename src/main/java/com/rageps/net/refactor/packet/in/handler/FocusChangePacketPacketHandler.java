@@ -11,5 +11,6 @@ public class FocusChangePacketPacketHandler implements PacketHandler<FocusChange
 
     @Override
     public void handle(Player player, FocusChangePacketPacket packet) {
+        player.screenFocus = packet.isFocused();
     }
 }

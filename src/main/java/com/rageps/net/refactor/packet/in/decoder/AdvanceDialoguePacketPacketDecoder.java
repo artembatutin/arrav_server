@@ -6,7 +6,7 @@ import com.rageps.net.refactor.packet.in.PacketDecoder;
 import com.rageps.net.refactor.packet.in.model.AdvanceDialoguePacketPacket;
 
 /**
- * @author Tamatea <tamateea@gmail.com>
+ *@author Tamatea <tamateea@gmail.com>
  */
 public class AdvanceDialoguePacketPacketDecoder implements PacketDecoder<AdvanceDialoguePacketPacket> {
 

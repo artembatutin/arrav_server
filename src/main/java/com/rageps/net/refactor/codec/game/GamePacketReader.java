@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.rageps.util.BufferUtil;
 import io.netty.buffer.ByteBuf;
 
+
 /**
  * A utility class for reading {@link GamePacket}s.
  *
@@ -182,6 +183,30 @@ public final class GamePacketReader {
 	}
 
 	/**
+	 * Reads the amount of bytes into the array, starting at the current position.
+	 * @param amount The amount to read.
+	 * @return A buffer filled with the data.
+	 */
+	public byte[] getBytes(int amount) {
+		return getBytes(amount, DataTransformation.NONE);
+	}
+
+	/**
+	 * Reads the amount of bytes into a byte array, starting at the current position.
+	 * @param amount The amount of bytes.
+	 * @param type The byte transformation type of each byte.
+	 * @return A buffer filled with the data.
+	 */
+	public byte[] getBytes(int amount, DataTransformation type) {
+		byte[] data = new byte[amount];
+		for(int i = 0; i < amount; i++) {
+			data[i] = (byte) get(type);
+		}
+		return data;
+	}
+
+
+	/**
 	 * Gets bytes with the specified transformation.
 	 *
 	 * @param transformation The transformation.
@@ -226,6 +251,36 @@ public final class GamePacketReader {
 				bytes[i] = (byte) getSigned(DataType.BYTE, transformation);
 			}
 		}
+	}
+
+	/**
+	 * Reads the amount of bytes from the buffer in reverse, starting at {@code current_position + amount} and reading in
+	 * reverse until the current position.
+	 * @param amount The amount of bytes to read.
+	 * @param type The byte transformation type of each byte.
+	 * @return A buffer filled with the data.
+	 */
+	public byte[] getBytesReverse(int amount, DataTransformation type) {
+		byte[] data = new byte[amount];
+		int dataPosition = 0;
+		for(int i = buffer.readerIndex() + amount - 1; i >= buffer.readerIndex(); i--) {
+			int value = buffer.getByte(i);
+			switch(type) {
+				case ADD:
+					value -= 128;
+					break;
+				case NEGATE:
+					value = -value;
+					break;
+				case SUBTRACT:
+					value = 128 - value;
+					break;
+				case NONE:
+					break;
+			}
+			data[dataPosition++] = (byte) value;
+		}
+		return data;
 	}
 
 	/**
@@ -323,6 +378,23 @@ public final class GamePacketReader {
 	}
 
 	/**
+	 * The C-String terminator value.
+	 */
+	public static final int TERMINATOR_VALUE = 10;
+
+	/**
+	 * Reads a series of byte data terminated by a null value, casted to a {@link String}.
+	 */
+	public String getCString() {
+		byte temp;
+		StringBuilder b = new StringBuilder();
+		while(buffer.isReadable() && (temp = (byte) buffer.readUnsignedByte()) != TERMINATOR_VALUE) {
+			b.append((char) temp);
+		}
+		return b.toString();
+	}
+
+	/**
 	 * Gets an unsigned data type from the buffer.
 	 *
 	 * @param type The data type.
@@ -389,6 +461,320 @@ public final class GamePacketReader {
 		}
 		return buffer.readShort() - 32768;
 	}
+
+	/**
+	 * Reads a value as a {@code byte}.
+	 * @param signed if the byte is signed.
+	 * @param type The byte transformation type
+	 * @return The value of the byte.
+	 */
+	public int get(boolean signed, DataTransformation type) {
+		int value = buffer.readByte();
+		switch(type) {
+			case ADD:
+				value = value - 128;
+				break;
+			case NEGATE:
+				value = -value;
+				break;
+			case SUBTRACT:
+				value = 128 - value;
+				break;
+			case NONE:
+				break;
+		}
+		return signed ? value : value & 0xff;
+	}
+
+	/**
+	 * Reads a standard signed {@code byte}.
+	 * @return The value of the byte.
+	 */
+	public int get() {
+		return get(true, DataTransformation.NONE);
+	}
+
+	/**
+	 * Reads a standard {@code byte}.
+	 * @param signed If the byte is signed.
+	 * @return The value of the byte.
+	 */
+	public int get(boolean signed) {
+		return get(signed, DataTransformation.NONE);
+	}
+
+	/**
+	 * Reads a signed {@code byte}.
+	 * @param type The byte transformation type
+	 * @return The value of the byte.
+	 */
+	public int get(DataTransformation type) {
+		return get(true, type);
+	}
+
+
+	/**
+	 * Reads a {@code short} value.
+	 * @param signed If the short is signed.
+	 * @param type The byte transformation type
+	 * @param order The byte endianness type.
+	 * @return The value of the short.
+	 * @throws UnsupportedOperationException if middle or inverse-middle value types are selected.
+	 */
+	public int getShort(boolean signed, DataTransformation type, DataOrder order) {
+		int value = 0;
+		switch(order) {
+			case BIG:
+				value |= get(false) << 8;
+				value |= get(false, type);
+				break;
+			case MIDDLE:
+				throw new UnsupportedOperationException("Middle-endian short is impossible!");
+			case INVERSED_MIDDLE:
+				throw new UnsupportedOperationException("Inverse-middle-endian short is impossible!");
+			case LITTLE:
+				value |= get(false, type);
+				value |= get(false) << 8;
+				break;
+		}
+		return signed ? value : value & 0xffff;
+	}
+
+	/**
+	 * Reads a standard {@code short}.
+	 * @param signed If the short is signed.
+	 * @param order The byte endianness type.
+	 * @return The value of the short.
+	 */
+	public int getShort(boolean signed, DataOrder order) {
+		if(signed) {
+			return (int) getSigned(DataType.SHORT, order, DataTransformation.NONE);
+		}
+		return (int) getUnsigned(DataType.SHORT, order, DataTransformation.NONE);
+	}
+
+	/**
+	 * Reads a standard signed big-endian {@code short}.
+	 * @return The value of the short.
+	 */
+	public int getShort() {
+		return getShort(true, DataTransformation.NONE, DataOrder.BIG);
+	}
+
+	/**
+	 * Reads a standard big-endian {@code short}.
+	 * @param signed If the short is signed.
+	 * @return The value of the short.
+	 */
+	public int getShort(boolean signed) {
+		return getShort(signed, DataTransformation.NONE, DataOrder.BIG);
+	}
+
+	/**
+	 * Reads a signed big-endian {@code short}.
+	 * @param type The byte transformation type
+	 * @return The value of the short.
+	 */
+	public int getShort(DataTransformation type) {
+		return getShort(true, type, DataOrder.BIG);
+	}
+
+	/**
+	 * Reads a big-endian {@code short}.
+	 * @param signed If the short is signed.
+	 * @param type The byte transformation type
+	 * @return The value of the short.
+	 */
+	public int getShort(boolean signed, DataTransformation type) {
+		return getShort(signed, type, DataOrder.BIG);
+	}
+
+	/**
+	 * Reads a signed standard {@code short}.
+	 * @param order The byte endianness type.
+	 * @return The value of the short.
+	 */
+	public int getShort(DataOrder order) {
+		return getShort(true, DataTransformation.NONE, order);
+	}
+
+	/**
+	 * Reads a signed {@code short}.
+	 * @param type The byte transformation type
+	 * @param order The byte endianness type.
+	 * @return The value of the short.
+	 */
+	public int getShort(DataTransformation type, DataOrder order) {
+		return getShort(true, type, order);
+	}
+
+
+	/**
+	 * Reads an {@code int}.
+	 * @param signed If the integer is signed.
+	 * @param type The byte transformation type
+	 * @param order The byte endianness type.
+	 * @return The value of the integer.
+	 */
+	public int getInt(boolean signed, DataTransformation type, DataOrder order) {
+		long value = 0;
+		switch(order) {
+			case BIG:
+				value |= get(false) << 24;
+				value |= get(false) << 16;
+				value |= get(false) << 8;
+				value |= get(false, type);
+				break;
+			case MIDDLE:
+				value |= get(false) << 8;
+				value |= get(false, type);
+				value |= get(false) << 24;
+				value |= get(false) << 16;
+				break;
+			case INVERSED_MIDDLE:
+				value |= get(false) << 16;
+				value |= get(false) << 24;
+				value |= get(false, type);
+				value |= get(false) << 8;
+				break;
+			case LITTLE:
+				value |= get(false, type);
+				value |= get(false) << 8;
+				value |= get(false) << 16;
+				value |= get(false) << 24;
+				break;
+		}
+		return (int) (signed ? value : value & 0xffffffffL);
+	}
+
+	/**
+	 * Reads a signed standard big-endian {@code int}.
+	 * @return The value of the integer.
+	 */
+	public int getInt() {
+		return getInt(true, DataTransformation.NONE, DataOrder.BIG);
+	}
+
+	/**
+	 * Reads a standard big-endian {@code int}.
+	 * @param signed If the integer is signed.
+	 * @return The value of the integer.
+	 */
+	public int getInt(boolean signed) {
+		return getInt(signed, DataTransformation.NONE, DataOrder.BIG);
+	}
+
+	/**
+	 * Reads a signed big-endian {@code int}.
+	 * @param type The byte transformation type
+	 * @return The value of the integer.
+	 */
+	public int getInt(DataTransformation type) {
+		return getInt(true, type, DataOrder.BIG);
+	}
+
+	/**
+	 * Reads a big-endian {@code int}.
+	 * @param signed If the integer is signed.
+	 * @param type The byte transformation type
+	 * @return The value of the integer.
+	 */
+	public int getInt(boolean signed, DataTransformation type) {
+		return getInt(signed, type, DataOrder.BIG);
+	}
+
+	/**
+	 * Reads a signed standard {@code int}.
+	 * @param order The byte endianness type.
+	 * @return The value of the integer.
+	 */
+	public int getInt(DataOrder order) {
+		return getInt(true, DataTransformation.NONE, order);
+	}
+
+	/**
+	 * Reads a standard {@code int}.
+	 * @param signed If the integer is signed.
+	 * @param order The byte endianness type.
+	 * @return The value of the integer.
+	 */
+	public int getInt(boolean signed, DataOrder order) {
+		return getInt(signed, DataTransformation.NONE, order);
+	}
+
+	/**
+	 * Reads a signed {@code int}.
+	 * @param type The byte transformation type
+	 * @param order The byte endianness type.
+	 * @return The value of the integer.
+	 */
+	public int getInt(DataTransformation type, DataOrder order) {
+		return getInt(true, type, order);
+	}
+
+	/**
+	 * Reads a signed {@code long} value.
+	 * @param type The byte transformation type
+	 * @param order The byte endianness type.
+	 * @return The value of the long.
+	 * @throws UnsupportedOperationException if middle or inverse-middle value types are selected.
+	 */
+	public long getLong(DataTransformation type, DataOrder order) {
+		long value = 0;
+		switch(order) {
+			case BIG:
+				value |= (long) get(false) << 56L;
+				value |= (long) get(false) << 48L;
+				value |= (long) get(false) << 40L;
+				value |= (long) get(false) << 32L;
+				value |= (long) get(false) << 24L;
+				value |= (long) get(false) << 16L;
+				value |= (long) get(false) << 8L;
+				value |= get(false, type);
+				break;
+			case INVERSED_MIDDLE:
+			case MIDDLE:
+				throw new UnsupportedOperationException("Middle and inverse-middle value types not supported!");
+			case LITTLE:
+				value |= get(false, type);
+				value |= (long) get(false) << 8L;
+				value |= (long) get(false) << 16L;
+				value |= (long) get(false) << 24L;
+				value |= (long) get(false) << 32L;
+				value |= (long) get(false) << 40L;
+				value |= (long) get(false) << 48L;
+				value |= (long) get(false) << 56L;
+				break;
+		}
+		return value;
+	}
+
+	/**
+	 * Reads a signed standard big-endian {@code long}.
+	 * @return The value of the long.
+	 */
+	public long getLong() {
+		return getLong(DataTransformation.NONE, DataOrder.BIG);
+	}
+
+	/**
+	 * Reads a signed big-endian {@code long}.
+	 * @param type The byte transformation type.
+	 * @return The value of the long.
+	 */
+	public long getLong(DataTransformation type) {
+		return getLong(type, DataOrder.BIG);
+	}
+
+	/**
+	 * Reads a signed standard {@code long}.
+	 * @param order The byte endianness type.
+	 * @return The value of the long.
+	 */
+	public long getLong(DataOrder order) {
+		return getLong(DataTransformation.NONE, order);
+	}
+
 
 	/**
 	 * Switches this builder's mode to the bit access mode.

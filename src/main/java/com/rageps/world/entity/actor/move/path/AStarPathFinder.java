@@ -13,7 +13,7 @@ import java.util.*;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class AStarPathFinder extends PathFinder {
-	
+
 	/**
 	 * The cost of moving in a straight line.
 	 */
@@ -100,7 +100,7 @@ public final class AStarPathFinder extends PathFinder {
 		
 		Deque<Position> shortest = new ArrayDeque<>();
 		Node active = found ? end : closest;
-		if(active != null && active.getParent() != null) {
+		if(active.getPosition() != null && active.getParent() != null) {
 			Position position = active.getPosition();
 			while(!active.equals(start)) {
 				shortest.addFirst(position);
