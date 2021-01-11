@@ -13,6 +13,7 @@ public class ShopAccessPacketPacketDecoder implements PacketDecoder<ShopAccessPa
     @Override
     public ShopAccessPacketPacket decode(GamePacket packet) {
         GamePacketReader reader = new GamePacketReader(packet);
-        return new ShopAccessPacketPacket();
+        int shop = reader.getShort();
+        return new ShopAccessPacketPacket(shop);
     }
 }

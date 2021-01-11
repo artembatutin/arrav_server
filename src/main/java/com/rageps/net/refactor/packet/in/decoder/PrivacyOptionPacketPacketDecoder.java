@@ -13,6 +13,13 @@ public class PrivacyOptionPacketPacketDecoder implements PacketDecoder<PrivacyOp
     @Override
     public PrivacyOptionPacketPacket decode(GamePacket packet) {
         GamePacketReader reader = new GamePacketReader(packet);
-        return new PrivacyOptionPacketPacket();
+
+        final int publicMode = reader.get();
+        final int privateMode = reader.get();
+        final int tradeMode = reader.get();
+        final int clanMode = reader.get();
+
+
+        return new PrivacyOptionPacketPacket(publicMode, privateMode, tradeMode, clanMode);
     }
 }

@@ -4,6 +4,7 @@ import com.rageps.combat.strategy.CombatStrategy;
 import com.rageps.content.minigame.Minigame;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.content.skill.prayer.Prayer;
+import com.rageps.content.skill.slayer.Slayer;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.effect.CombatEffect;
@@ -14,6 +15,7 @@ import com.rageps.world.entity.actor.combat.hit.HitIcon;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
 import com.rageps.world.entity.actor.mob.Mob;
+import com.rageps.world.entity.actor.mob.MobDefinition;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.AntifireDetails;
 import com.rageps.world.entity.item.Item;
@@ -43,6 +45,26 @@ public final class CombatUtil {
 	private CombatUtil() {
 		throw new UnsupportedOperationException("This class cannot be instantiated!");
 	}
+
+
+	/**
+	 * Determines if {@code player} can make an attack on {@code mob}.
+	 * @param player the player attempting to make an attack.
+	 * @param mob the mob being attacked.
+	 * @return {@code true} if the player can make an attack, {@code false}
+	 * otherwise.
+	 */
+	public static boolean checkAttack(Player player, Mob mob) {
+		if(!MobDefinition.DEFINITIONS[mob.getId()].isAttackable())
+			return false;
+		if(!player.inMulti() && player.getCombat().isUnderAttack() && !player.getCombat().isUnderAttackBy(mob)) {
+			player.message("You are already under attack!");
+			player.getMovementQueue().reset();
+			return false;
+		}
+		return Slayer.canAttack(player, mob);
+	}
+
 
 	/**
 	 * Determines if an attack can be made by the {@code attacker} on

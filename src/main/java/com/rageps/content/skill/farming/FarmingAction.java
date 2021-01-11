@@ -13,7 +13,6 @@ import com.rageps.content.skill.farming.seed.impl.FlowerSeed;
 import com.rageps.content.skill.farming.seed.impl.TreeSeed;
 import com.rageps.content.skill.woodcutting.Tree;
 import com.rageps.content.skill.woodcutting.Woodcutting;
-import com.rageps.net.packet.in.ObjectActionPacket;
 import com.rageps.task.Task;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
@@ -23,6 +22,7 @@ import com.rageps.world.model.Animation;
 
 import java.util.Optional;
 
+import static com.rageps.action.ActionContainers.OBJECT_FIRST;
 import static com.rageps.content.skill.farming.seed.SeedClass.*;
 
 public class FarmingAction {
@@ -298,7 +298,7 @@ public class FarmingAction {
 						if(weedRemoved) {
 							player.message("This patch has already been raked.");
 						} else {
-							ObjectActionPacket.FIRST.get(object.getId()).click(player, object, 1);
+							OBJECT_FIRST.get(object.getId()).click(player, object, 1);
 						}
 						return true;
 					} else if(item.getId() == FarmingConstants.SPADE_ITEM_ID && patch != null && patch.getSeedType() != null) {
@@ -377,7 +377,7 @@ public class FarmingAction {
 							return true;
 						} else if(patch.getSeedType() != null) {
 							if(item.getId() == patch.getSeedType().getToolId()) {
-								ObjectActionPacket.FIRST.get(object.getId()).click(player, object, 1);
+								OBJECT_FIRST.get(object.getId()).click(player, object, 1);
 							} else {
 								player.message("This patch is already growing crops!");
 							}

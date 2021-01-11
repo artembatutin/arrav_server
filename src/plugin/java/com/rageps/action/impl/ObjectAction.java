@@ -21,10 +21,11 @@ import com.rageps.content.skill.smithing.Smelting;
 import com.rageps.content.skill.thieving.impl.Stalls;
 import com.rageps.content.skill.woodcutting.Woodcutting;
 import com.rageps.content.wilderness.Obelisk;
-import com.rageps.net.packet.in.ObjectActionPacket;
 import com.rageps.action.Action;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.object.GameObject;
+
+import static com.rageps.action.ActionContainers.*;
 
 /**
  * Action handling object action clicks.
@@ -35,27 +36,27 @@ public abstract class ObjectAction extends Action {
 	public abstract boolean click(Player player, GameObject object, int click);
 	
 	public void registerFirst(int object) {
-		ObjectActionPacket.FIRST.register(object, this);
+		OBJECT_FIRST.register(object, this);
 	}
 	
 	public void registerSecond(int object) {
-		ObjectActionPacket.SECOND.register(object, this);
+		OBJECT_SECOND.register(object, this);
 	}
 	
 	public void registerThird(int object) {
-		ObjectActionPacket.THIRD.register(object, this);
+		OBJECT_THIRD.register(object, this);
 	}
 	
 	public void registerFourth(int object) {
-		ObjectActionPacket.FOURTH.register(object, this);
+		OBJECT_FOURTH.register(object, this);
 	}
 	
 	public void registerFifth(int object) {
-		ObjectActionPacket.FIFTH.register(object, this);
+		OBJECT_FIFTH.register(object, this);
 	}
 	
 	public void registerCons(int object) {
-		ObjectActionPacket.CONSTRUCTION.register(object, this);
+		CONSTRUCTION.register(object, this);
 	}
 	
 	public static void init() {

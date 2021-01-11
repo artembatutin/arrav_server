@@ -608,6 +608,17 @@ public final class GamePacketReader {
 		return getShort(true, type, order);
 	}
 
+	/**
+	 * Reads a {@code medium} / {@code tri-byte} value.
+	 * @return the value of the medium.
+	 */
+	public int getMedium() {
+		int value = 0;
+		value |= get(false) << 16;
+		value |= get(false) << 8;
+		value |= get(false);
+		return value & 0xffffff;
+	}
 
 	/**
 	 * Reads an {@code int}.

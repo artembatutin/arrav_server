@@ -9,10 +9,12 @@ import com.rageps.content.skill.farming.FarmingAction;
 import com.rageps.content.skill.firemaking.Bonfire;
 import com.rageps.content.skill.prayer.PrayerBoneAltar;
 import com.rageps.action.Action;
-import com.rageps.net.packet.in.ItemOnObjectPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;
+
+import static com.rageps.action.ActionContainers.ITEMS;
+import static com.rageps.action.ActionContainers.OBJECTS;
 
 /**
  * Action handling item on object actions.
@@ -23,11 +25,11 @@ public abstract class ItemOnObjectAction extends Action {
 	public abstract boolean click(Player player, GameObject object, Item item, int container, int slot);
 	
 	public void registerObj(int object) {
-		ItemOnObjectPacket.OBJECTS.register(object, this);
+		OBJECTS.register(object, this);
 	}
 	
 	public void registerItem(int item) {
-		ItemOnObjectPacket.ITEMS.register(item, this);
+		ITEMS.register(item, this);
 	}
 	
 	public static void init() {

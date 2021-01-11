@@ -13,6 +13,9 @@ public class SummoningCreationPacketPacketDecoder implements PacketDecoder<Summo
     @Override
     public SummoningCreationPacketPacket decode(GamePacket packet) {
         GamePacketReader reader = new GamePacketReader(packet);
-        return new SummoningCreationPacketPacket();
+
+        int click = reader.get();
+
+        return new SummoningCreationPacketPacket(click);
     }
 }

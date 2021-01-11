@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class SummoningCreationPacketPacket extends Packet {
 
+    private final int click;
 
-public SummoningCreationPacketPacket() {}
+    public SummoningCreationPacketPacket(int click) {
+        this.click = click;
+    }
 
-
-
-
+    public int getClick() {
+        return click;
+    }
 }

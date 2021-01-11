@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class ShopAccessPacketPacket extends Packet {
 
+    private final int shopId;
 
-public ShopAccessPacketPacket() {}
+    public ShopAccessPacketPacket(int shopId) {
+        this.shopId = shopId;
+    }
 
-
-
-
+    public int getShopId() {
+        return shopId;
+    }
 }

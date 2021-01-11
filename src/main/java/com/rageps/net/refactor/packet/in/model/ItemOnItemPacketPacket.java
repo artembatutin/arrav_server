@@ -7,10 +7,18 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class ItemOnItemPacketPacket extends Packet {
 
+    private final int firstSlot, secondSlot;
 
-public ItemOnItemPacketPacket() {}
+    public ItemOnItemPacketPacket(int firstSlot, int secondSlot) {
+        this.firstSlot = firstSlot;
+        this.secondSlot = secondSlot;
+    }
 
+    public int getFirstSlot() {
+        return firstSlot;
+    }
 
-
-
+    public int getSecondSlot() {
+        return secondSlot;
+    }
 }

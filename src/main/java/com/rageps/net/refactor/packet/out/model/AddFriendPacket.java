@@ -9,8 +9,8 @@ public class AddFriendPacket extends Packet {
 
 
     private final long username;
-    private int world;
-    private boolean display;
+    private final int world;
+    private final boolean display;
 
     public AddFriendPacket(long username, int world, boolean display) {
         this.username = username;

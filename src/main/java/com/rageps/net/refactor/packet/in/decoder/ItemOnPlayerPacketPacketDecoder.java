@@ -1,5 +1,9 @@
 package com.rageps.net.refactor.packet.in.decoder;
 
+import com.rageps.net.codec.ByteOrder;
+import com.rageps.net.codec.ByteTransform;
+import com.rageps.net.refactor.codec.game.DataOrder;
+import com.rageps.net.refactor.codec.game.DataTransformation;
 import com.rageps.net.refactor.codec.game.GamePacket;
 import com.rageps.net.refactor.codec.game.GamePacketReader;
 import com.rageps.net.refactor.packet.in.PacketDecoder;
@@ -13,6 +17,12 @@ public class ItemOnPlayerPacketPacketDecoder implements PacketDecoder<ItemOnPlay
     @Override
     public ItemOnPlayerPacketPacket decode(GamePacket packet) {
         GamePacketReader reader = new GamePacketReader(packet);
-        return new ItemOnPlayerPacketPacket();
+
+        int container = reader.getShort(DataTransformation.ADD, DataOrder.BIG);
+        int index = reader.getShort();
+        int itemUsed = reader.getShort();
+        int itemSlot = reader.getShort(false, DataTransformation.ADD, DataOrder.LITTLE);
+
+        return new ItemOnPlayerPacketPacket(container, index, itemUsed, itemSlot);
     }
 }

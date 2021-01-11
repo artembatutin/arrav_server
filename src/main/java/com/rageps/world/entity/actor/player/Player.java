@@ -337,6 +337,8 @@ public final class Player extends Actor {
 	 */
 	public final Stopwatch leechDelay = new Stopwatch().reset();
 
+	public final Stopwatch magicOnItemDelay = new Stopwatch().reset();
+
 
 	
 	/**

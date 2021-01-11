@@ -11,5 +11,6 @@ public class PrivacyOptionPacketPacketHandler implements PacketHandler<PrivacyOp
 
     @Override
     public void handle(Player player, PrivacyOptionPacketPacket packet) {
+        player.relations.setPrivacyChatModes(packet.getPublicMode(), packet.getPrivateMode(), packet.getClanMode(), packet.getTradeMode());
     }
 }

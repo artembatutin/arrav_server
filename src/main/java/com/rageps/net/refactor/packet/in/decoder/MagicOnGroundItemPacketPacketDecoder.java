@@ -1,5 +1,7 @@
 package com.rageps.net.refactor.packet.in.decoder;
 
+import com.rageps.net.refactor.codec.game.DataOrder;
+import com.rageps.net.refactor.codec.game.DataTransformation;
 import com.rageps.net.refactor.codec.game.GamePacket;
 import com.rageps.net.refactor.codec.game.GamePacketReader;
 import com.rageps.net.refactor.packet.in.PacketDecoder;
@@ -13,6 +15,12 @@ public class MagicOnGroundItemPacketPacketDecoder implements PacketDecoder<Magic
     @Override
     public MagicOnGroundItemPacketPacket decode(GamePacket packet) {
         GamePacketReader reader = new GamePacketReader(packet);
-        return new MagicOnGroundItemPacketPacket();
+
+        int x = reader.getShort(false, DataOrder.LITTLE);
+        int y = reader.getShort(false, DataOrder.LITTLE);
+        int itemId = reader.getShort(true);
+        int spellId = reader.getShort(false, DataTransformation.ADD);
+
+        return new MagicOnGroundItemPacketPacket(x, y, itemId, spellId);
     }
 }

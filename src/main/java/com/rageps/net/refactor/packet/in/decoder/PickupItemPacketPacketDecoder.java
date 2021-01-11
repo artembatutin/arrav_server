@@ -1,5 +1,7 @@
 package com.rageps.net.refactor.packet.in.decoder;
 
+import com.rageps.net.codec.ByteOrder;
+import com.rageps.net.refactor.codec.game.DataOrder;
 import com.rageps.net.refactor.codec.game.GamePacket;
 import com.rageps.net.refactor.codec.game.GamePacketReader;
 import com.rageps.net.refactor.packet.in.PacketDecoder;
@@ -13,6 +15,9 @@ public class PickupItemPacketPacketDecoder implements PacketDecoder<PickupItemPa
     @Override
     public PickupItemPacketPacket decode(GamePacket packet) {
         GamePacketReader reader = new GamePacketReader(packet);
-        return new PickupItemPacketPacket();
+        int itemY = reader.getShort(DataOrder.LITTLE);
+        int itemId = reader.getShort(false);
+        int itemX = reader.getShort(DataOrder.LITTLE);
+        return new PickupItemPacketPacket(itemY, itemId, itemX);
     }
 }

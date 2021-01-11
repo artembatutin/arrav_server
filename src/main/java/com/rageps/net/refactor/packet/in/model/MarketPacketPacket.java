@@ -7,10 +7,13 @@ import com.rageps.net.refactor.packet.Packet;
  */
 public class MarketPacketPacket extends Packet {
 
+    private final String text;
 
-public MarketPacketPacket() {}
+    public MarketPacketPacket(String text) {
+        this.text = text;
+    }
 
-
-
-
+    public String getText() {
+        return text;
+    }
 }
