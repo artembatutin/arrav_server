@@ -1,8 +1,8 @@
 package com.rageps.content.minigame.warriorsguild;
 
+import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.minigame.warriorsguild.impl.AnimationRoom;
 import com.rageps.content.minigame.warriorsguild.impl.CyclopsRoom;
-import com.rageps.action.impl.ObjectAction;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;

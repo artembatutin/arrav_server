@@ -2,10 +2,10 @@ package com.rageps.world.entity.actor.combat.effect;
 
 import com.google.common.collect.ImmutableSet;
 import com.rageps.world.entity.actor.combat.effect.impl.CombatAntifireEffect;
-import com.rageps.world.entity.actor.combat.effect.impl.CombatTeleblockEffect;
-import com.rageps.world.entity.actor.player.assets.AntifireDetails;
 import com.rageps.world.entity.actor.combat.effect.impl.CombatPoisonEffect;
 import com.rageps.world.entity.actor.combat.effect.impl.CombatSkullEffect;
+import com.rageps.world.entity.actor.combat.effect.impl.CombatTeleblockEffect;
+import com.rageps.world.entity.actor.player.assets.AntifireDetails;
 
 /**
  * The enumerated type whose values represent the collection of different combat

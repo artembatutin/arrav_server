@@ -1,10 +1,9 @@
 package com.rageps.content.trivia;
 
-import com.rageps.world.World;
-import com.rageps.world.text.ColorConstants;
-import com.rageps.world.text.MessageBuilder;
 import com.rageps.task.Task;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.text.ColorConstants;
+import com.rageps.world.text.MessageBuilder;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>

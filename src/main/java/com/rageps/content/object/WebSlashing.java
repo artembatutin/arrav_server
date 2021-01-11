@@ -1,12 +1,12 @@
 package com.rageps.content.object;
 
-import com.rageps.world.World;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.task.Task;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Animation;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.object.GameObject;
+import com.rageps.world.model.Animation;
 
 /**
  * Holds support for slashing webs found allover runescape.

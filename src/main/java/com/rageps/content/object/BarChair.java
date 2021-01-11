@@ -1,6 +1,5 @@
 package com.rageps.content.object;
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.update.UpdateFlag;
@@ -9,6 +8,7 @@ import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.entity.object.StaticObject;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 
 public class BarChair extends DynamicObject {
 	

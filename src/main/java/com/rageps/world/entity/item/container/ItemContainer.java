@@ -4,13 +4,11 @@ import com.google.common.base.Preconditions;
 import com.rageps.net.refactor.packet.out.model.ItemOnInterfaceSlotPacket;
 import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.net.packet.out.SendContainer;
-import com.rageps.net.packet.out.SendItemOnInterfaceSlot;
 import com.rageps.world.entity.item.IndexedItem;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemDefinition;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.*;
 import java.util.function.Consumer;

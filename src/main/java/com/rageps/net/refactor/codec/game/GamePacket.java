@@ -1,8 +1,8 @@
 package com.rageps.net.refactor.codec.game;
 
+import com.rageps.net.refactor.meta.PacketType;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.DefaultByteBufHolder;
-import com.rageps.net.refactor.meta.PacketType;
 
 /**
  * Represents a single packet used in the in-game protocol.

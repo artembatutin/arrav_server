@@ -3,10 +3,10 @@ package com.rageps.content.dialogue;
 import com.google.common.collect.Iterables;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.dialogue.test.DialogueAppender;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.util.ActionListener;
 import com.rageps.world.entity.actor.player.Player;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.Arrays;
 import java.util.List;

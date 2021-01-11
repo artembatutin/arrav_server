@@ -1,9 +1,5 @@
 package com.rageps.net.refactor.packet.out.encoder;
 
-import com.rageps.net.codec.ByteOrder;
-import com.rageps.net.codec.ByteTransform;
-import com.rageps.net.packet.OutgoingPacket;
-import com.rageps.net.packet.out.SendCoordinates;
 import com.rageps.net.refactor.codec.game.DataOrder;
 import com.rageps.net.refactor.codec.game.DataTransformation;
 import com.rageps.net.refactor.codec.game.GamePacket;

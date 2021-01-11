@@ -1,8 +1,8 @@
 package com.rageps.content.minigame.pestcontrol.pest;
 
+import com.rageps.content.minigame.pestcontrol.PestControlMinigame;
 import com.rageps.content.minigame.pestcontrol.defence.PestGate;
 import com.rageps.world.World;
-import com.rageps.content.minigame.pestcontrol.PestControlMinigame;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;

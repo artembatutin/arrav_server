@@ -4,7 +4,6 @@ import com.rageps.net.refactor.codec.game.GamePacket;
 import com.rageps.net.refactor.codec.game.GamePacketBuilder;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
 import com.rageps.net.refactor.packet.out.model.AddFriendPacket;
-import com.rageps.net.refactor.packet.out.model.ArrowPositionPacket;
 
 /**
  * @author Tamatea <tamateea@gmail.com>

@@ -9,10 +9,10 @@ import com.rageps.content.skill.construction.data.Constants;
 import com.rageps.content.skill.construction.room.Room;
 import com.rageps.content.skill.construction.room.RoomFurniture;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.item.Item;
+import com.rageps.world.model.Animation;
 
 import java.util.Optional;
 

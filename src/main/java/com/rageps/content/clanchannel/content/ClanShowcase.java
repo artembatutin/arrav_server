@@ -2,19 +2,11 @@ package com.rageps.content.clanchannel.content;
 
 import com.rageps.content.clanchannel.channel.ClanChannel;
 import com.rageps.content.clanchannel.channel.ClanChannelHandler;
-import com.rageps.content.dialogue.impl.OptionDialogue;
-import com.rageps.content.dialogue.impl.StatementDialogue;
-import com.rageps.net.packet.out.SendItemsOnInterface;
-import com.rageps.net.packet.out.SendText;
 import com.rageps.net.refactor.packet.out.model.InterfaceStringPacket;
 import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
-import com.rageps.world.entity.item.ItemDefinition;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ClanShowcase {
 	private final ClanChannel channel;
@@ -32,8 +24,8 @@ public class ClanShowcase {
 		//for (int index = 0; index < showcaseItems.size(); index++) {
 		//	showcase[index] = new Item(showcaseItems.get(index));
 		//}
-		player.send(new InterfaceStringPacket(channel.getName() + "'s Showcase", 57702));
-		player.send(new InterfaceStringPacket(showcaseItems.size() + "/28", 57718));
+		player.interfaceText(channel.getName() + "'s Showcase", 57702);
+		player.interfaceText(showcaseItems.size() + "/28", 57718);
 		player.send(new ItemsOnInterfacePacket(player, 57716, 28, showcase));
 		player.send(new ItemsOnInterfacePacket(player, 57717));
 		player.getInterfaceManager().open(57700);

@@ -1,8 +1,8 @@
 package com.rageps.world.entity.actor.combat.magic.lunars.spell;
 
-import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.combat.magic.RequiredRune;
 import com.rageps.world.entity.actor.combat.magic.lunars.LunarSpell;
+import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 
 /**

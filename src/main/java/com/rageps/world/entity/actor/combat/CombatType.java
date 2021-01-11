@@ -1,10 +1,10 @@
 package com.rageps.world.entity.actor.combat;
 
+import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.formula.FormulaModifier;
 import com.rageps.world.entity.actor.combat.formula.MagicFormula;
 import com.rageps.world.entity.actor.combat.formula.MeleeFormula;
 import com.rageps.world.entity.actor.combat.formula.RangedFormula;
-import com.rageps.world.entity.actor.Actor;
 
 public enum CombatType {
 	MELEE(new MeleeFormula()), RANGED(new RangedFormula()), MAGIC(new MagicFormula()), NONE(null);

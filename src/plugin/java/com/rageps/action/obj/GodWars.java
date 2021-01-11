@@ -2,7 +2,6 @@ package com.rageps.action.obj;
 
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.skill.Skills;
-import com.rageps.net.packet.out.SendFade;
 import com.rageps.action.ActionInitializer;
 import com.rageps.net.refactor.packet.out.model.FadePacket;
 import com.rageps.task.LinkedTaskSequence;

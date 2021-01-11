@@ -1,14 +1,14 @@
 package com.rageps.content.object.pit;
 
-import com.rageps.world.World;
 import com.rageps.GameConstants;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.SkillAction;
 import com.rageps.task.Task;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Animation;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
+import com.rageps.world.model.Animation;
 
 import java.util.Optional;
 import java.util.OptionalInt;

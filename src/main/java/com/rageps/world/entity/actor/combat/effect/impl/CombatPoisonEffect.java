@@ -1,16 +1,16 @@
 package com.rageps.world.entity.actor.combat.effect.impl;
 
-import com.rageps.world.entity.actor.player.Player;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.net.refactor.packet.out.model.ConfigPacket;
-import com.rageps.world.entity.actor.combat.PoisonType;
 import com.rageps.world.entity.actor.Actor;
+import com.rageps.world.entity.actor.combat.PoisonType;
 import com.rageps.world.entity.actor.combat.effect.CombatEffect;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.mob.MobDefinition;
+import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 
 import java.util.Optional;
 

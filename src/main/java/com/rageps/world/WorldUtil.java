@@ -1,7 +1,5 @@
 package com.rageps.world;
 
-import com.rageps.net.packet.out.SendBroadcast;
-import com.rageps.net.packet.out.SendYell;
 import com.rageps.net.refactor.packet.out.model.BroadcastPacket;
 import com.rageps.net.refactor.packet.out.model.YellPacket;
 import com.rageps.util.TextUtils;

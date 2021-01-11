@@ -3,12 +3,12 @@ package com.rageps.content.minigame.pestcontrol.defence;
 import com.rageps.content.object.door.Door;
 import com.rageps.content.skill.Skills;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
 
 public class PestGate {
 

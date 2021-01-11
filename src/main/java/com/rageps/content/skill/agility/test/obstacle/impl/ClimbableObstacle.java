@@ -2,9 +2,9 @@ package com.rageps.content.skill.agility.test.obstacle.impl;
 
 import com.rageps.content.skill.agility.test.obstacle.Obstacle;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>

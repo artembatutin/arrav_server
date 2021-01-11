@@ -1,13 +1,13 @@
 package com.rageps.world.entity.region;
 
 import com.rageps.net.refactor.packet.out.model.ObjectRemovalPacket;
+import com.rageps.world.entity.actor.Actor;
+import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
-import com.rageps.world.entity.actor.Actor;
-import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.object.GameObject;
 
 /**
  * Manages all of the cached {@link Region}s and the {@link Actor}s contained within them.

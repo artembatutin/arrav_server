@@ -1,8 +1,8 @@
 package com.rageps.content.skill.construction.data;
 
+import com.rageps.content.skill.construction.Construction;
 import com.rageps.content.skill.construction.furniture.HotSpots;
 import com.rageps.content.skill.construction.room.RoomData;
-import com.rageps.content.skill.construction.Construction;
 import com.rageps.world.entity.object.ObjectDefinition;
 import com.rageps.world.locale.Position;
 

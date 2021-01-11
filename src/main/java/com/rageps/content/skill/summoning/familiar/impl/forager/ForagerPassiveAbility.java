@@ -1,9 +1,9 @@
 package com.rageps.content.skill.summoning.familiar.impl.forager;
 
 import com.rageps.content.skill.summoning.familiar.ability.Forager;
-import com.rageps.world.World;
 import com.rageps.task.Task;
 import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 

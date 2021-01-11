@@ -1,7 +1,6 @@
 package com.rageps.net.sql;
 
 import com.rageps.GameConstants;
-import com.rageps.world.World;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.logging.log4j.LogManager;

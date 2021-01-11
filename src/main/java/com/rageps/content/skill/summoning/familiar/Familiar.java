@@ -1,21 +1,17 @@
 package com.rageps.content.skill.summoning.familiar;
 
-import com.rageps.content.dialogue.Expression;
-import com.rageps.content.skill.summoning.familiar.passive.PassiveAbility;
-import com.rageps.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
-import com.rageps.net.packet.out.SendInterfaceAnimation;
-import com.rageps.net.refactor.packet.out.model.InterfaceAnimationPacket;
-import com.rageps.net.refactor.packet.out.model.InterfaceNpcModelPacket;
-import com.rageps.world.World;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.content.TabInterface;
+import com.rageps.content.dialogue.Expression;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.summoning.SummoningData;
-import com.rageps.net.packet.out.SendInterfaceNpcModel;
+import com.rageps.content.skill.summoning.familiar.passive.PassiveAbility;
+import com.rageps.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
+import com.rageps.net.refactor.packet.out.model.InterfaceAnimationPacket;
+import com.rageps.net.refactor.packet.out.model.InterfaceNpcModelPacket;
 import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Graphic;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.Follower;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.mob.MobDeath;
@@ -23,6 +19,8 @@ import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Graphic;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.Optional;
 

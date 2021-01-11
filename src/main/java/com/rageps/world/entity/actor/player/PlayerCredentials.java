@@ -3,8 +3,6 @@ package com.rageps.world.entity.actor.player;
 import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.player.assets.PlayerEmail;
 
-import java.time.LocalDateTime;
-
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  * @since 8-7-2017.

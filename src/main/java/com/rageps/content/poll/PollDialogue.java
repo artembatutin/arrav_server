@@ -2,9 +2,6 @@ package com.rageps.content.poll;
 
 
 import com.rageps.content.dialogue.Dialogue;
-import com.rageps.content.dialogue.impl.OptionDialogue;
-import com.rageps.content.dialogue.impl.StatementDialogue;
-import com.rageps.world.entity.actor.player.Player;
 
 /**
  * Created by Jason MacKeigan on 2017-06-06 at 7:45 PM

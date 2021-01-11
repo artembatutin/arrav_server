@@ -3,7 +3,6 @@ package com.rageps.service.impl;
 import com.rageps.GameConstants;
 import com.rageps.GamePulseHandler;
 import com.rageps.GameShutdownHook;
-import com.rageps.net.packet.out.SendLogout;
 import com.rageps.net.refactor.codec.login.LoginConstants;
 import com.rageps.net.refactor.packet.PacketHandlerChainSet;
 import com.rageps.net.refactor.packet.out.model.LogoutPacket;

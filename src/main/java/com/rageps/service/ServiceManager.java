@@ -39,7 +39,8 @@ public final class ServiceManager {
 	 */
 	public ServiceManager(World world) {
 			game = new GameService(world);
-			login = new LoginService(world);
+		System.out.println(world == null);
+		login = new LoginService(world);
 	}
 
 	/**

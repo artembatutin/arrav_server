@@ -1,7 +1,7 @@
 package com.rageps.world.entity.actor.combat;
 
-import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.Actor;
+import com.rageps.world.entity.actor.combat.hit.Hit;
 
 import java.util.List;
 

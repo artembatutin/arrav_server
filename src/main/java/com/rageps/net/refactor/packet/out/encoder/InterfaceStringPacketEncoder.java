@@ -1,7 +1,5 @@
 package com.rageps.net.refactor.packet.out.encoder;
 
-import com.rageps.net.codec.ByteTransform;
-import com.rageps.net.codec.game.GamePacketType;
 import com.rageps.net.refactor.codec.game.DataTransformation;
 import com.rageps.net.refactor.codec.game.GamePacket;
 import com.rageps.net.refactor.codec.game.GamePacketBuilder;

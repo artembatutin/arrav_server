@@ -1,27 +1,27 @@
 package com.rageps.content.skill.slayer;
 
 import com.jsoniter.annotation.JsonProperty;
+import com.rageps.action.impl.ItemAction;
+import com.rageps.action.impl.MobAction;
+import com.rageps.content.PlayerPanel;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.content.dialogue.Dialogue;
 import com.rageps.content.dialogue.impl.*;
 import com.rageps.content.dialogue.test.DialogueAppender;
 import com.rageps.content.market.currency.Currency;
-import com.rageps.world.entity.actor.player.PlayerAttributes;
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.action.impl.ItemAction;
-import com.rageps.action.impl.MobAction;
-import com.rageps.content.PlayerPanel;
 import com.rageps.content.skill.Skill;
 import com.rageps.content.skill.Skills;
 import com.rageps.util.TextUtils;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.impl.Inventory;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.Optional;
 

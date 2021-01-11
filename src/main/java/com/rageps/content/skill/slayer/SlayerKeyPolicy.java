@@ -1,7 +1,5 @@
 package com.rageps.content.skill.slayer;
 
-import com.rageps.world.entity.item.Item;
-
 import java.util.stream.IntStream;
 
 /**

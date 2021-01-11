@@ -1,8 +1,6 @@
 package com.rageps.content;
 
 import com.rageps.content.dialogue.impl.StatementDialogue;
-import com.rageps.net.packet.out.SendCloseInterface;
-import com.rageps.net.packet.out.SendMoveComponent;
 import com.rageps.net.refactor.packet.out.model.CloseInterfacePacket;
 import com.rageps.net.refactor.packet.out.model.MoveComponentPacket;
 import com.rageps.world.World;

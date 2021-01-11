@@ -1,16 +1,18 @@
 package com.rageps.world.entity.actor.player;
 
 import com.google.common.collect.ImmutableMap;
-import com.rageps.RagePS;
 import com.rageps.GameConstants;
+import com.rageps.RagePS;
+import com.rageps.combat.strategy.CombatStrategy;
 import com.rageps.combat.strategy.PlayerWeaponStrategyManager;
+import com.rageps.combat.strategy.player.special.CombatSpecial;
+import com.rageps.command.impl.UpdateCommand;
 import com.rageps.content.PlayerPanel;
 import com.rageps.content.ShieldAnimation;
 import com.rageps.content.TabInterface;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.content.clanchannel.channel.ClanChannel;
 import com.rageps.content.clanchannel.content.ClanViewer;
-import com.rageps.command.impl.UpdateCommand;
 import com.rageps.content.dialogue.Dialogue;
 import com.rageps.content.dialogue.DialogueBuilder;
 import com.rageps.content.dialogue.impl.OptionDialogue;
@@ -51,34 +53,14 @@ import com.rageps.content.teleport.impl.DefaultTeleportSpell;
 import com.rageps.content.trivia.TriviaTask;
 import com.rageps.content.wilderness.WildernessActivity;
 import com.rageps.net.codec.game.GamePacket;
-import com.rageps.net.packet.OutgoingPacket;
-import com.rageps.net.packet.out.*;
 import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.packet.out.model.*;
 import com.rageps.net.refactor.session.impl.GameSession;
 import com.rageps.net.sql.forum.account.MultifactorAuthentication;
-import com.rageps.util.*;
-import com.rageps.world.entity.actor.player.assets.PlayerData;
-import com.rageps.world.entity.actor.player.assets.group.ExperienceRate;
-import com.rageps.world.entity.actor.player.assets.group.GameMode;
-import com.rageps.world.World;
-import com.rageps.world.entity.actor.mob.MobSpawner;
-import com.rageps.world.entity.actor.mob.drop.chance.NpcDropChanceHandler;
-import com.rageps.world.entity.actor.player.assets.relations.PlayerRelation;
-import com.rageps.world.entity.actor.player.assets.Rights;
-import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
-import com.rageps.world.entity.actor.update.UpdateFlag;
-import com.rageps.world.entity.region.Region;
-import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.Locations;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.task.Task;
+import com.rageps.util.*;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Graphic;
+import com.rageps.world.World;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.EntityType;
 import com.rageps.world.entity.actor.Actor;
@@ -91,17 +73,33 @@ import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.combat.magic.CombatSpell;
 import com.rageps.world.entity.actor.combat.ranged.RangedAmmunition;
 import com.rageps.world.entity.actor.combat.ranged.RangedWeaponDefinition;
-import com.rageps.combat.strategy.CombatStrategy;
-import com.rageps.combat.strategy.player.special.CombatSpecial;
 import com.rageps.world.entity.actor.combat.weapon.WeaponAnimation;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.mob.MobAggression;
+import com.rageps.world.entity.actor.mob.MobSpawner;
+import com.rageps.world.entity.actor.mob.drop.chance.NpcDropChanceHandler;
+import com.rageps.world.entity.actor.player.assets.PlayerData;
+import com.rageps.world.entity.actor.player.assets.Rights;
+import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
+import com.rageps.world.entity.actor.player.assets.group.ExperienceRate;
+import com.rageps.world.entity.actor.player.assets.group.GameMode;
+import com.rageps.world.entity.actor.player.assets.relations.PlayerRelation;
+import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.item.container.impl.Bank;
 import com.rageps.world.entity.item.container.impl.Equipment;
 import com.rageps.world.entity.item.container.impl.Inventory;
 import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
 import com.rageps.world.entity.item.container.session.test._ExchangeSessionManager;
+import com.rageps.world.entity.region.Region;
+import com.rageps.world.locale.Position;
+import com.rageps.world.locale.loc.Locations;
+import com.rageps.world.model.Graphic;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -338,6 +336,8 @@ public final class Player extends Actor {
 	 * todo - implement
 	 */
 	public final Stopwatch leechDelay = new Stopwatch().reset();
+
+	public final Stopwatch magicOnItemDelay = new Stopwatch().reset();
 
 
 	
@@ -1148,18 +1148,6 @@ public final class Player extends Actor {
 	}
 	
 	/**
-	 * Queues a {@link OutgoingPacket}.
-	 * @param packet packet to be queued.
-	 */
-	public void out(OutgoingPacket packet) {
-		throw new UnsupportedOperationException("Old networking is no longer supported.");
-		//if(packet.coordinatePacket() != null)
-		//	getSession().queue(packet.coordinatePacket());
-		//if(packet.onSent(this))
-		//	getSession().queue(packet);
-	}
-
-	/**
 	 * A temporary queue of messages sent during the login process.
 	 */
 	private final Deque<Packet> queuedPackets = new ArrayDeque<>();
@@ -1222,7 +1210,12 @@ public final class Player extends Actor {
 	public void interfaceText(int id, String message) {
 		interfaceText(id, message, false);
 	}
-	
+
+
+	public void interfaceText(String message, int id) {
+		interfaceText(id, message, false);
+	}
+
 	/**
 	 * A shorter way of sending a player a message.
 	 * @param message the text to send.

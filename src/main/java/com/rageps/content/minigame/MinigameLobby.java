@@ -1,10 +1,10 @@
 package com.rageps.content.minigame;
 
+import com.rageps.task.Task;
 import com.rageps.world.World;
+import com.rageps.world.entity.actor.player.Player;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.task.Task;
-import com.rageps.world.entity.actor.player.Player;
 
 import java.util.Optional;
 

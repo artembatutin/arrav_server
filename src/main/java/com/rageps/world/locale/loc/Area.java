@@ -1,6 +1,5 @@
 package com.rageps.world.locale.loc;
 
-import com.rageps.world.entity.Entity;
 import com.rageps.world.locale.Position;
 
 import java.util.Arrays;

@@ -1,14 +1,10 @@
 package com.rageps.net.refactor.codec.game;
 
 import com.google.common.base.Preconditions;
-import com.rageps.net.codec.ByteOrder;
-import com.rageps.net.codec.ByteTransform;
+import com.rageps.net.refactor.meta.PacketType;
 import com.rageps.util.BufferUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import com.rageps.net.refactor.meta.PacketType;
-
-import javax.xml.crypto.Data;
 
 /**
  * A class which assists in creating a {@link GamePacket}.

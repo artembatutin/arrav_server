@@ -1,6 +1,5 @@
 package com.rageps.content.achievements;
 
-import com.rageps.net.packet.out.SendTask;
 import com.rageps.net.refactor.packet.out.model.TaskPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;

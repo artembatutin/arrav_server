@@ -1,17 +1,17 @@
 package com.rageps.world.entity.item.container.impl;
 
 import com.google.common.collect.ImmutableSet;
+import com.rageps.combat.listener.CombatListenerDispatcher;
 import com.rageps.content.ShieldAnimation;
 import com.rageps.content.item.Requirement;
 import com.rageps.content.item.Skillcape;
 import com.rageps.content.minigame.MinigameHandler;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.entity.actor.combat.CombatConstants;
-import com.rageps.combat.listener.CombatListenerDispatcher;
 import com.rageps.world.entity.actor.combat.weapon.WeaponAnimation;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.update.UpdateFlag;
-import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemDefinition;
 import com.rageps.world.entity.item.container.ItemContainer;

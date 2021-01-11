@@ -1,8 +1,7 @@
 package com.rageps.content.skill.construction.furniture;
 
-import com.rageps.content.dialogue.impl.OptionDialogue;
-import com.rageps.net.packet.out.SendObjectsConstruction;
 import com.rageps.action.impl.ObjectAction;
+import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.skill.construction.Construction;
 import com.rageps.content.skill.construction.data.Constants;
 import com.rageps.content.skill.construction.room.RoomManipulation;

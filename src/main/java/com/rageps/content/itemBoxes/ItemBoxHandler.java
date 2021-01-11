@@ -2,12 +2,11 @@ package com.rageps.content.itemBoxes;
 
 
 import com.rageps.content.itemBoxes.impl.*;
-import com.rageps.world.entity.actor.player.Player;
-import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
-import com.rageps.content.itemBoxes.impl.*;
 import com.rageps.util.rand.Chance;
 import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 
 import java.util.List;
 import java.util.Optional;

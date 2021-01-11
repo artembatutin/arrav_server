@@ -1,23 +1,20 @@
 package com.rageps.content.item.pets;
 
+import com.rageps.content.TabInterface;
 import com.rageps.content.dialogue.Expression;
+import com.rageps.content.item.FoodConsumable;
 import com.rageps.content.skill.summoning.familiar.Familiar;
-import com.rageps.net.packet.out.SendForceTab;
-import com.rageps.net.packet.out.SendInterfaceAnimation;
 import com.rageps.net.refactor.packet.out.model.ForceTabPacket;
 import com.rageps.net.refactor.packet.out.model.InterfaceAnimationPacket;
 import com.rageps.net.refactor.packet.out.model.InterfaceNpcModelPacket;
-import com.rageps.world.World;
-import com.rageps.content.TabInterface;
-import com.rageps.content.item.FoodConsumable;
-import com.rageps.net.packet.out.SendInterfaceNpcModel;
 import com.rageps.util.TextUtils;
-import com.rageps.world.model.Animation;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.Follower;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
 
 import java.util.Optional;
 

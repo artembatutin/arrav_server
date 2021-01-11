@@ -2,12 +2,12 @@ package com.rageps.util.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.rageps.util.json.JsonLoader;
 import com.rageps.world.entity.actor.combat.ranged.RangedAmmunition;
 import com.rageps.world.entity.actor.combat.ranged.RangedWeaponDefinition;
 import com.rageps.world.entity.actor.combat.ranged.RangedWeaponType;
 import com.rageps.world.entity.item.ItemDefinition;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import com.rageps.util.json.JsonLoader;
 
 import java.util.Arrays;
 import java.util.Objects;

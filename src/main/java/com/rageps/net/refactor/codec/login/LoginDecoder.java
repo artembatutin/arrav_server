@@ -1,6 +1,7 @@
 package com.rageps.net.refactor.codec.login;
 
 import com.google.common.net.InetAddresses;
+import com.rageps.net.refactor.NetworkConstants;
 import com.rageps.net.refactor.security.IsaacRandom;
 import com.rageps.net.refactor.security.IsaacRandomPair;
 import com.rageps.util.BufferUtil;
@@ -10,7 +11,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
-import com.rageps.net.refactor.NetworkConstants;
 
 import java.math.BigInteger;
 import java.net.InetSocketAddress;

@@ -1,8 +1,8 @@
 package com.rageps.net.packet;
 
-import io.netty.buffer.ByteBuf;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.world.entity.actor.player.Player;
+import io.netty.buffer.ByteBuf;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>

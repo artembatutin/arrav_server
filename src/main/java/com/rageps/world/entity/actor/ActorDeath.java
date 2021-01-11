@@ -1,10 +1,10 @@
 package com.rageps.world.entity.actor;
 
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
+import com.rageps.task.Task;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.net.refactor.packet.out.model.ConfigPacket;
-import com.rageps.task.Task;
 
 import java.util.Optional;
 

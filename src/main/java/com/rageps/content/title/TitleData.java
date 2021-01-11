@@ -1,8 +1,8 @@
 package com.rageps.content.title;
 
 
-import com.rageps.world.entity.actor.player.Player;
 import com.rageps.util.TextUtils;
+import com.rageps.world.entity.actor.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

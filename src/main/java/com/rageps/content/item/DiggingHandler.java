@@ -1,8 +1,8 @@
 package com.rageps.content.item;
 
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.model.Animation;
 
 import java.util.function.Consumer;
 

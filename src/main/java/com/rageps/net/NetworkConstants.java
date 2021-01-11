@@ -1,7 +1,6 @@
 package com.rageps.net;
 
 import com.google.common.collect.ImmutableList;
-import com.rageps.net.packet.IncomingPacket;
 import io.netty.util.AttributeKey;
 
 import java.math.BigInteger;
@@ -39,7 +38,7 @@ public final class NetworkConstants {
 	/**
 	 * An array of the message opcodes mapped to their respective listeners.
 	 */
-	public static final IncomingPacket[] MESSAGES = new IncomingPacket[256];
+	//public static final IncomingPacket[] MESSAGES = new IncomingPacket[256];
 	
 	/**
 	 * An array of message opcodes mapped to their respective sizes.

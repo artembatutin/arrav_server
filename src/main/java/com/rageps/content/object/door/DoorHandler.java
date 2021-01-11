@@ -1,13 +1,13 @@
 package com.rageps.content.object.door;
 
-import com.rageps.content.teleport.TeleportType;
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import com.rageps.action.impl.ObjectAction;
+import com.rageps.content.teleport.TeleportType;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.entity.object.ObjectDefinition;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 
 /**
  * Handles the interaction of the doors in the world.

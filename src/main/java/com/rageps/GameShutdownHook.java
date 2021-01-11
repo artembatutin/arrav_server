@@ -10,7 +10,6 @@ import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

@@ -1,6 +1,6 @@
 package com.rageps.content.minigame;
 
-import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
+import com.rageps.combat.strategy.player.special.CombatSpecial;
 import com.rageps.content.item.FoodConsumable;
 import com.rageps.content.item.PotionConsumable;
 import com.rageps.content.skill.Skills;
@@ -8,11 +8,9 @@ import com.rageps.content.skill.prayer.Prayer;
 import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.net.refactor.packet.out.model.WalkableInterfacePacket;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.combat.hit.Hit;
-import com.rageps.combat.strategy.player.special.CombatSpecial;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
@@ -23,6 +21,7 @@ import com.rageps.world.entity.item.container.impl.Equipment;
 import com.rageps.world.entity.item.container.impl.EquipmentType;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
 
 import java.util.Optional;
 

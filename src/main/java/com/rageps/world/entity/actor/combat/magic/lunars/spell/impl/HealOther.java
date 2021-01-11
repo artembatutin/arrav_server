@@ -1,14 +1,14 @@
 package com.rageps.world.entity.actor.combat.magic.lunars.spell.impl;
 
-import com.rageps.world.entity.actor.combat.magic.lunars.spell.LunarCombatSpell;
-import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.magic.MagicRune;
 import com.rageps.world.entity.actor.combat.magic.RequiredRune;
+import com.rageps.world.entity.actor.combat.magic.lunars.spell.LunarCombatSpell;
+import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 
 import java.util.Optional;
 

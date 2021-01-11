@@ -2,13 +2,12 @@ package com.rageps.world.entity.actor;
 
 import com.rageps.content.PlayerPanel;
 import com.rageps.world.World;
+import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.region.Region;
 import it.unimi.dsi.fastutil.ints.IntArrayFIFOQueue;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.world.entity.EntityState;
 
 import java.lang.reflect.Array;
 import java.util.*;

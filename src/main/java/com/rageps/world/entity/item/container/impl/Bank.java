@@ -2,11 +2,9 @@ package com.rageps.world.entity.item.container.impl;
 
 import com.rageps.content.BankPin;
 import com.rageps.content.minigame.MinigameHandler;
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.net.refactor.packet.out.model.ItemsOnInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.net.refactor.packet.out.model.ConfigPacket;
-import com.rageps.net.packet.out.SendContainer;
-import com.rageps.net.packet.out.SendInventoryInterface;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.ItemContainer;

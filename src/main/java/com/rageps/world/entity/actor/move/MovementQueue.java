@@ -1,18 +1,17 @@
 package com.rageps.world.entity.actor.move;
 
+import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.net.refactor.packet.out.model.EnergyPacket;
+import com.rageps.task.Task;
 import com.rageps.world.World;
+import com.rageps.world.entity.EntityType;
+import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.move.path.Path;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.locale.Position;
-import com.rageps.net.refactor.packet.out.model.ConfigPacket;
-import com.rageps.net.packet.out.SendEnergy;
-import com.rageps.task.Task;
-import com.rageps.world.model.Direction;
-import com.rageps.world.entity.EntityType;
-import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.locale.loc.Locations;
+import com.rageps.world.model.Direction;
 
 import java.util.Deque;
 import java.util.LinkedList;

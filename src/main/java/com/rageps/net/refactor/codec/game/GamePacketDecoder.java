@@ -1,14 +1,14 @@
 package com.rageps.net.refactor.codec.game;
 
 import com.google.common.base.Preconditions;
+import com.rageps.net.refactor.meta.PacketMetaData;
+import com.rageps.net.refactor.meta.PacketType;
+import com.rageps.net.refactor.release.Release;
 import com.rageps.net.refactor.security.IsaacRandom;
 import com.rageps.util.StatefulFrameDecoder;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
-import com.rageps.net.refactor.meta.PacketMetaData;
-import com.rageps.net.refactor.meta.PacketType;
-import com.rageps.net.refactor.release.Release;
 
 import java.util.List;
 

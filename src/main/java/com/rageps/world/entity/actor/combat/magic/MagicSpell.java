@@ -1,8 +1,8 @@
 package com.rageps.world.entity.actor.combat.magic;
 
 import com.rageps.content.skill.Skills;
-import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.Actor;
+import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 
 import java.util.Optional;

@@ -1,24 +1,23 @@
 package com.rageps.content.scoreboard;
 
 import com.google.common.collect.ComparisonChain;
-import com.rageps.content.achievements.Achievement;
-import com.rageps.net.refactor.packet.out.model.ScorePacket;
-import com.rageps.world.World;
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.action.impl.MobAction;
+import com.rageps.content.achievements.Achievement;
 import com.rageps.content.dialogue.impl.NpcDialogue;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.dialogue.impl.PlayerDialogue;
 import com.rageps.content.dialogue.test.DialogueAppender;
-import com.rageps.net.packet.out.SendScore;
+import com.rageps.net.refactor.packet.out.model.ScorePacket;
 import com.rageps.util.MutableNumber;
 import com.rageps.util.json.JsonSaver;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.Comparator;
 import java.util.Map.Entry;

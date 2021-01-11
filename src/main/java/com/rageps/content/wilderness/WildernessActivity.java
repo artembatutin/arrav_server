@@ -1,12 +1,12 @@
 package com.rageps.content.wilderness;
 
-import com.rageps.content.achievements.Achievement;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.content.PlayerPanel;
+import com.rageps.content.achievements.Achievement;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.locale.Position;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 /**
  * Handles some parts of wilderness activity.

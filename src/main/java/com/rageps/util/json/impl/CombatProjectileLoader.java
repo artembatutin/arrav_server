@@ -2,15 +2,15 @@ package com.rageps.util.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Graphic;
+import com.rageps.util.json.JsonLoader;
 import com.rageps.world.entity.actor.combat.CombatImpact;
 import com.rageps.world.entity.actor.combat.magic.MagicImpact;
 import com.rageps.world.entity.actor.combat.projectile.CombatProjectile;
 import com.rageps.world.entity.actor.combat.projectile.ProjectileBuilder;
 import com.rageps.world.entity.actor.combat.ranged.RangedEffects;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import com.rageps.util.json.JsonLoader;
 
 /**
  * The {@link JsonLoader} implementation that loads all combat projectile

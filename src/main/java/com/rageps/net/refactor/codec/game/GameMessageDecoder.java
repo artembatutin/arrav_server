@@ -1,10 +1,10 @@
 package com.rageps.net.refactor.codec.game;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToMessageDecoder;
 import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.packet.in.PacketDecoder;
 import com.rageps.net.refactor.release.Release;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.MessageToMessageDecoder;
 
 import java.util.List;
 

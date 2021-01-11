@@ -12,7 +12,6 @@ import com.rageps.net.sql.statement.NamedPreparedStatement;
 import com.rageps.world.entity.item.Item;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
-import javax.naming.Name;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Arrays;

@@ -1,12 +1,5 @@
 package com.rageps.content.clanchat;
 
-import com.rageps.net.packet.out.SendClanBanned;
-import com.rageps.net.packet.out.SendClanDetails;
-import com.rageps.net.packet.out.SendClearText;
-import com.rageps.util.TextUtils;
-import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.player.assets.Rights;
-
 /**
  * The enumerated type whose elements represent the update states
  * a clan can be in.

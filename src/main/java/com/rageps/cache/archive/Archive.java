@@ -2,10 +2,10 @@ package com.rageps.cache.archive;
 
 import com.google.common.base.Preconditions;
 import com.rageps.cache.Cache;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.util.ByteBufferUtil;
 import com.rageps.util.CompressionUtil;
 import com.rageps.util.TextUtils;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

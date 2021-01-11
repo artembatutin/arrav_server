@@ -1,14 +1,6 @@
 package com.rageps.content.lottery;
 
 
-import com.rageps.content.dialogue.Dialogue;
-import com.rageps.content.dialogue.Expression;
-import com.rageps.content.dialogue.impl.NpcDialogue;
-import com.rageps.content.dialogue.impl.OptionDialogue;
-import com.rageps.world.entity.actor.player.Player;
-
-import java.time.format.DateTimeFormatter;
-
 /**
  * Created by Jason M on 2017-04-27 at 6:53 PM todo - replace with interface
  */

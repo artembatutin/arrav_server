@@ -2,14 +2,14 @@ package com.rageps.world.entity.actor.combat.magic.lunars;
 
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.magic.Spellbook;
-import com.rageps.world.entity.actor.combat.magic.RequiredRune;
-import com.rageps.world.entity.actor.player.Player;
 import com.rageps.util.Stopwatch;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.magic.MagicRune;
 import com.rageps.world.entity.actor.combat.magic.MagicSpell;
+import com.rageps.world.entity.actor.combat.magic.RequiredRune;
+import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;

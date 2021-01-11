@@ -2,9 +2,9 @@ package com.rageps.content.skill.construction;
 
 import com.rageps.content.skill.construction.furniture.ConstructionPlan;
 import com.rageps.content.skill.construction.room.Room;
+import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.world.locale.Position;
 
 /**
  * A house controller class which stores data for one single player.

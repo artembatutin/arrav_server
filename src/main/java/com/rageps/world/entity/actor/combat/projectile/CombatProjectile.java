@@ -1,10 +1,10 @@
 package com.rageps.world.entity.actor.combat.projectile;
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatImpact;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 
 import java.util.Optional;
 import java.util.OptionalInt;

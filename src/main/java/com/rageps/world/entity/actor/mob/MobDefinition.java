@@ -1,17 +1,9 @@
 package com.rageps.world.entity.actor.mob;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.rageps.util.json.JsonSaver;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.combat.projectile.CombatProjectile;
-import com.rageps.util.json.JsonSaver;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.Optional;
 

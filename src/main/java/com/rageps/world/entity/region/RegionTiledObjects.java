@@ -1,9 +1,9 @@
 package com.rageps.world.entity.region;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.entity.object.ObjectType;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.function.Consumer;
 

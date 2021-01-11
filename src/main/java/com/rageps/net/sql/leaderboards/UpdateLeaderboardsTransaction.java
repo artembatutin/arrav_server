@@ -6,10 +6,10 @@ import com.rageps.net.sql.DatabaseTransaction;
 import com.rageps.net.sql.TableRepresentation;
 import com.rageps.net.sql.statement.NamedPreparedStatement;
 import com.rageps.util.DateTimeUtil;
-import com.rageps.world.entity.actor.player.assets.group.GameMode;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
+import com.rageps.world.entity.actor.player.assets.group.GameMode;
 import com.rageps.world.env.Environment;
 
 import java.sql.Connection;

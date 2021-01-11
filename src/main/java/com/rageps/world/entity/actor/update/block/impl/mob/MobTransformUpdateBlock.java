@@ -5,8 +5,8 @@ import com.rageps.net.codec.ByteTransform;
 import com.rageps.net.codec.game.GamePacket;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.update.block.MobUpdateBlock;
 import com.rageps.world.entity.actor.update.UpdateFlag;
+import com.rageps.world.entity.actor.update.block.MobUpdateBlock;
 
 /**
  * An {@link MobUpdateBlock} implementation that handles the {@code TRANSFORM} update block.

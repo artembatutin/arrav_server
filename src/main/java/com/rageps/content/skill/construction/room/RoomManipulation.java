@@ -1,11 +1,11 @@
 package com.rageps.content.skill.construction.room;
 
-import com.rageps.content.skill.construction.furniture.Furniture;
-import com.rageps.content.skill.construction.furniture.HotSpots;
 import com.rageps.content.skill.construction.Construction;
 import com.rageps.content.skill.construction.House;
 import com.rageps.content.skill.construction.Palette.PaletteTile;
 import com.rageps.content.skill.construction.data.Constants;
+import com.rageps.content.skill.construction.furniture.Furniture;
+import com.rageps.content.skill.construction.furniture.HotSpots;
 import com.rageps.net.refactor.packet.out.model.RemoveObjectsPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;

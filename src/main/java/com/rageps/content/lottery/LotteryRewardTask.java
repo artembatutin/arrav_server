@@ -4,9 +4,6 @@ import com.rageps.task.Task;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * The task responsible for appending the rewards to the winner of the session.
  */

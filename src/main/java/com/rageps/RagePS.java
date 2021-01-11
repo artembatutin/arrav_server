@@ -3,39 +3,21 @@ package com.rageps;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.rageps.action.impl.*;
-import com.rageps.combat.strategy.MobCombatStrategyManager;
-import com.rageps.combat.strategy.PlayerWeaponStrategyManager;
-import com.rageps.content.clanchannel.ClanRepository;
-import com.rageps.content.event.GameEventManager;
-import com.rageps.net.refactor.NetworkConstants;
-import com.rageps.net.refactor.ServiceChannelInitializer;
-import com.rageps.net.refactor.session.impl.ApolloHandler;
-import com.rageps.net.sql.clan.ClanLoaderTransaction;
-import com.rageps.service.ServiceManager;
-import com.rageps.util.Utility;
-import com.rageps.util.json.impl.*;
-import com.rageps.world.World;
-import com.rageps.world.attr.Attributes;
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.epoll.Epoll;
-import io.netty.channel.epoll.EpollEventLoopGroup;
-import io.netty.channel.epoll.EpollServerSocketChannel;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.util.ResourceLeakDetector;
 import com.rageps.action.ActionInitializer;
+import com.rageps.action.impl.*;
 import com.rageps.cache.FileSystem;
 import com.rageps.cache.decoder.MapDefinitionDecoder;
 import com.rageps.cache.decoder.ObjectDefinitionDecoder;
 import com.rageps.cache.decoder.RegionDecoder;
+import com.rageps.combat.listener.CombatListenerDispatcher;
+import com.rageps.combat.strategy.MobCombatStrategyManager;
+import com.rageps.combat.strategy.PlayerWeaponStrategyManager;
+import com.rageps.command.CommandDispatcher;
 import com.rageps.content.PlayerPanel;
 import com.rageps.content.RestoreSpecialTask;
 import com.rageps.content.RestoreStatTask;
-import com.rageps.command.CommandDispatcher;
+import com.rageps.content.clanchannel.ClanRepository;
+import com.rageps.content.event.GameEventManager;
 import com.rageps.content.itemBoxes.ItemBoxHandler;
 import com.rageps.content.object.pit.FirepitManager;
 import com.rageps.content.object.star.ShootingStarManager;
@@ -43,9 +25,21 @@ import com.rageps.content.scoreboard.ScoreboardTask;
 import com.rageps.content.trivia.TriviaTask;
 import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
+import com.rageps.net.refactor.ServiceChannelInitializer;
+import com.rageps.net.refactor.session.impl.ApolloHandler;
 import com.rageps.task.Task;
-import com.rageps.combat.listener.CombatListenerDispatcher;
+import com.rageps.util.Utility;
+import com.rageps.util.json.impl.*;
+import com.rageps.world.World;
+import com.rageps.world.attr.Attributes;
 import com.rageps.world.locale.InstanceManager;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.ResourceLeakDetector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
@@ -184,6 +178,7 @@ public final class RagePS {
 
 
 
+
 		serviceBootstrap.group(loopGroup);
 		ChannelInitializer<SocketChannel> service = new ServiceChannelInitializer(handler);
 		serviceBootstrap.channel(NioServerSocketChannel.class);
@@ -194,7 +189,6 @@ public final class RagePS {
 		SocketAddress address = new InetSocketAddress(World.get().getEnvironment().getPort());
 
 		serviceBootstrap.bind(address);
-
 
 		ResourceLeakDetector.setLevel(World.get().getEnvironment().isDebug() ? PARANOID : DISABLED);
 	}
@@ -229,7 +223,7 @@ public final class RagePS {
 		launch.execute(new ShopLoader());
 		launch.execute(ClanRepository::loadChannels);
 		launch.execute(new WeaponPoisonLoader());
-		launch.execute(new PacketOpcodeLoader());
+		//launch.execute(new PacketOpcodeLoader());
 		launch.execute(new PacketSizeLoader());
 		launch.execute(new SlayerLocationLoader());
 		launch.execute(new ShieldAnimationLoader());

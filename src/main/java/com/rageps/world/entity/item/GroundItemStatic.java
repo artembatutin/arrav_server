@@ -1,13 +1,12 @@
 package com.rageps.world.entity.item;
 
-import com.rageps.net.packet.out.SendItemNode;
 import com.rageps.net.refactor.packet.out.model.ItemNodePacket;
 import com.rageps.world.World;
+import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.world.entity.EntityState;
 
 /**
  * The node implementation that represents an item everyone can see by default

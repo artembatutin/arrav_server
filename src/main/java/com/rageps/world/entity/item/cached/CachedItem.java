@@ -1,8 +1,8 @@
 package com.rageps.world.entity.item.cached;
 
+import com.rageps.util.rand.Chance;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import com.rageps.util.rand.Chance;
 
 /**
  * Data associated with an item which will be cached, and used to reward certain actions/minigames etc.

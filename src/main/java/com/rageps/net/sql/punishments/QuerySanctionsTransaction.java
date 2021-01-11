@@ -1,10 +1,10 @@
 package com.rageps.net.sql.punishments;
 
 import com.rageps.net.codec.login.LoginCode;
-import com.rageps.util.DateTimeUtil;
-import com.rageps.util.StringUtil;
 import com.rageps.net.sql.TableRepresentation;
 import com.rageps.net.sql.statement.NamedPreparedStatement;
+import com.rageps.util.DateTimeUtil;
+import com.rageps.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

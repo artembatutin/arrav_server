@@ -6,7 +6,6 @@ import com.rageps.net.sql.forum.account.ForumAccount;
 import com.rageps.net.sql.forum.account.ForumCredentials;
 import com.rageps.net.sql.forum.account.MultifactorAuthentication;
 import com.rageps.net.sql.statement.NamedPreparedStatement;
-import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerCredentials;
 
 import java.sql.Connection;

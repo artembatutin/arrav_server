@@ -2,13 +2,10 @@ package com.rageps.content.rewardslist;
 
 import com.rageps.content.itemBoxes.ItemBoxHandler;
 import com.rageps.content.rewardslist.impl.ItemBoxRewardable;
-import com.rageps.content.itemBoxes.ItemBoxHandler;
-import com.rageps.content.rewardslist.impl.ItemBoxRewardable;
 import com.rageps.world.entity.actor.player.Player;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import static com.rageps.content.itemBoxes.BoxConstants.*;
-import static com.rageps.content.rewardslist.RewardsListConstants.*;
 
 public class RewardListHandler {
 

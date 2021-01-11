@@ -1,25 +1,24 @@
 package com.rageps.content.scene.impl;
 
+import com.rageps.content.TabInterface;
 import com.rageps.content.clanchannel.channel.ClanChannelHandler;
 import com.rageps.content.dialogue.Dialogue;
 import com.rageps.content.dialogue.impl.GiveItemDialogue;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.dialogue.impl.StatementDialogue;
 import com.rageps.content.scene.Cutscene;
-import com.rageps.net.packet.out.*;
-import com.rageps.content.TabInterface;
 import com.rageps.net.host.HostListType;
 import com.rageps.net.host.HostManager;
 import com.rageps.net.refactor.packet.out.model.*;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Graphic;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 
 import java.util.Optional;
 

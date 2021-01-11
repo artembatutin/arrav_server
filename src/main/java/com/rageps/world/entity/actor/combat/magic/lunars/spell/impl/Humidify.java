@@ -1,13 +1,13 @@
 package com.rageps.world.entity.actor.combat.magic.lunars.spell.impl;
 
 import com.google.common.collect.ImmutableMap;
-import com.rageps.world.entity.actor.combat.magic.lunars.spell.LunarButtonSpell;
-import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.magic.MagicRune;
 import com.rageps.world.entity.actor.combat.magic.RequiredRune;
+import com.rageps.world.entity.actor.combat.magic.lunars.spell.LunarButtonSpell;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
+import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 
 import java.util.Optional;
 

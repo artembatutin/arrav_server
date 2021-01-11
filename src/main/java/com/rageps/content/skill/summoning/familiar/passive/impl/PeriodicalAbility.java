@@ -1,8 +1,8 @@
 package com.rageps.content.skill.summoning.familiar.passive.impl;
 
 import com.rageps.content.skill.summoning.familiar.passive.PassiveAbility;
-import com.rageps.world.World;
 import com.rageps.task.Task;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 
 import java.util.Optional;

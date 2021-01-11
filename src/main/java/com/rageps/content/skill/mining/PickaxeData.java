@@ -3,9 +3,9 @@ package com.rageps.content.skill.mining;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.rageps.content.skill.woodcutting.Hatchet;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
+import com.rageps.world.model.Animation;
 
 import java.util.EnumSet;
 import java.util.Optional;

@@ -1,19 +1,18 @@
 package com.rageps.content.teleport.impl;
 
 import com.rageps.content.achievements.Achievement;
-import com.rageps.content.teleport.TeleportSpell;
-import com.rageps.world.World;
 import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.content.skill.construction.Construction;
 import com.rageps.content.skill.magic.Spellbook;
+import com.rageps.content.teleport.TeleportSpell;
 import com.rageps.content.teleport.TeleportType;
 import com.rageps.task.Task;
 import com.rageps.util.ActionListener;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
 import com.rageps.world.locale.Position;
-import com.rageps.world.locale.loc.Area;
 import com.rageps.world.locale.loc.Locations;
 
 import java.util.Optional;

@@ -2,9 +2,9 @@ package com.rageps.content.skill.agility.obstacle.impl;
 
 import com.rageps.content.skill.agility.obstacle.ObstacleActivity;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
 
 /**
  * The climbable obstacle action which will move a player from a starting position to a new height

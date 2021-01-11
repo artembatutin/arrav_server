@@ -4,22 +4,21 @@ import com.google.common.collect.ImmutableMap;
 import com.rageps.content.achievements.Achievement;
 import com.rageps.content.dialogue.impl.PlayerDialogue;
 import com.rageps.content.dialogue.impl.StatementDialogue;
-import com.rageps.net.refactor.packet.out.model.ItemOnInterfaceSlotPacket;
-import com.rageps.world.entity.actor.player.PlayerAttributes;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
-import com.rageps.net.packet.out.SendGraphic;
-import com.rageps.net.packet.out.SendItemOnInterfaceSlot;
+import com.rageps.net.refactor.packet.out.model.GraphicPacket;
+import com.rageps.net.refactor.packet.out.model.ItemOnInterfaceSlotPacket;
 import com.rageps.task.LinkedTaskSequence;
 import com.rageps.task.Task;
 import com.rageps.util.TextUtils;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 
 import java.util.Optional;
 
@@ -130,7 +129,7 @@ public final class Smithing extends ProducingSkillAction {
 						player.closeWidget();
 						
 						player.animation(new Animation(898));
-						SendGraphic.local(player, 2123, object.getPosition().copy(), 50);
+						GraphicPacket.local(player, 2123, object.getPosition().copy(), 50);
 						LinkedTaskSequence seq = new LinkedTaskSequence();
 						seq.connect(3, () -> {
 							
@@ -171,7 +170,7 @@ public final class Smithing extends ProducingSkillAction {
 				return false;
 			}
 			player.animation(new Animation(898));
-			SendGraphic.local(player, 2123, object.getPosition().copy(), 50);
+			GraphicPacket.local(player, 2123, object.getPosition().copy(), 50);
 			player.getInventory().removeAll(new Item(11710), new Item(11712), new Item(11714));
 			player.getInventory().add(new Item(11690));
 			return true;
@@ -224,7 +223,7 @@ public final class Smithing extends ProducingSkillAction {
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			player.animation(new Animation(898));
-			SendGraphic.local(player, 2123, (Position) player.getAttributeMap().getObject(PlayerAttributes.SMITHING_POSITION), 50);
+			GraphicPacket.local(player, 2123, (Position) player.getAttributeMap().getObject(PlayerAttributes.SMITHING_POSITION), 50);
 			amount--;
 			if(amount < 1)
 				t.cancel();

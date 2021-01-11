@@ -1,8 +1,8 @@
 package com.rageps.world.entity.actor.combat.effect;
 
 import com.rageps.world.World;
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import com.rageps.world.entity.actor.Actor;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 
 import java.util.Collection;
 import java.util.Collections;

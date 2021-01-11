@@ -1,18 +1,18 @@
 package com.rageps.content.skill.mining;
 
-import com.rageps.content.achievements.Achievement;
-import com.rageps.world.World;
 import com.rageps.action.impl.ObjectAction;
+import com.rageps.content.achievements.Achievement;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.action.TransformableObject;
 import com.rageps.content.skill.action.impl.HarvestingSkillAction;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.DynamicObject;
 import com.rageps.world.entity.object.GameObject;
+import com.rageps.world.model.Animation;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;

@@ -1,10 +1,10 @@
 package com.rageps.world.entity.actor.move.path.impl;
 
-import com.rageps.world.entity.actor.move.path.PathFinder;
-import com.rageps.world.locale.Position;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.move.path.Path;
+import com.rageps.world.entity.actor.move.path.PathFinder;
+import com.rageps.world.locale.Position;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

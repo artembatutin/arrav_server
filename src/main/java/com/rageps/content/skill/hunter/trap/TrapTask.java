@@ -1,10 +1,10 @@
 package com.rageps.content.skill.hunter.trap;
 
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.content.skill.hunter.Hunter;
 import com.rageps.task.Task;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.actor.player.Player;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 /**
  * Represents a single task which will run for each trap.

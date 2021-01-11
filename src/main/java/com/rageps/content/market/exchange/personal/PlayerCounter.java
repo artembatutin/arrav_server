@@ -1,7 +1,7 @@
 package com.rageps.content.market.exchange.personal;
 
-import com.rageps.content.market.exchange.personal.impl.DemandSection;
 import com.rageps.content.market.exchange.item.ExchangeItem;
+import com.rageps.content.market.exchange.personal.impl.DemandSection;
 import com.rageps.world.entity.actor.player.Player;
 
 /**

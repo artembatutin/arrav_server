@@ -1,10 +1,10 @@
 package com.rageps.net.refactor.codec.handshake;
 
+import com.rageps.net.refactor.codec.login.LoginDecoder;
+import com.rageps.net.refactor.codec.login.LoginEncoder;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import com.rageps.net.refactor.codec.login.LoginDecoder;
-import com.rageps.net.refactor.codec.login.LoginEncoder;
 
 import java.util.List;
 import java.util.logging.Logger;

@@ -1,8 +1,8 @@
 package com.rageps.content.object.pit;
 
-import com.rageps.world.World;
 import com.rageps.GameConstants;
 import com.rageps.task.Task;
+import com.rageps.world.World;
 
 import java.util.Optional;
 

@@ -1,12 +1,12 @@
 package com.rageps.world.entity.actor.combat.weapon;
 
-import com.rageps.content.TabInterface;
 import com.rageps.combat.strategy.player.special.CombatSpecial;
-import com.rageps.world.entity.actor.player.Player;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import com.rageps.content.TabInterface;
 import com.rageps.net.refactor.packet.out.model.ConfigPacket;
 import com.rageps.world.entity.actor.combat.attack.FightType;
+import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 
 /**
  * The enumerated type whose elements represent the weapon interfaces.

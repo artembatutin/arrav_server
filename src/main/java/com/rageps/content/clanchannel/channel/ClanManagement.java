@@ -3,11 +3,7 @@ package com.rageps.content.clanchannel.channel;
 import com.google.gson.JsonObject;
 import com.rageps.content.clanchannel.ClanMember;
 import com.rageps.content.clanchannel.ClanRank;
-import com.rageps.net.packet.out.SendScrollbar;
-import com.rageps.net.packet.out.SendText;
-import com.rageps.net.packet.out.SendTooltip;
 import com.rageps.net.refactor.packet.out.model.InterfaceStringPacket;
-import com.rageps.net.refactor.packet.out.model.MessagePacket;
 import com.rageps.net.refactor.packet.out.model.ScrollBarPacket;
 import com.rageps.net.refactor.packet.out.model.TooltipPacket;
 import com.rageps.world.entity.actor.player.Player;
@@ -127,7 +123,7 @@ public class ClanManagement {
 		for (int index = 0; index < size; index++) {
 			boolean valid = index < channel.bannedMembers.size();
 			Optional<String> banned = valid ? Optional.of(channel.bannedMembers.get(index)) : Optional.empty();
-			player.send(new InterfaceStringPacket(banned.orElse(""), string));
+			player.interfaceText(banned.orElse(""), string);
 			player.send(new TooltipPacket(valid ? "Unban " + channel.bannedMembers.get(index) : "", string));
 			string++;
 		}

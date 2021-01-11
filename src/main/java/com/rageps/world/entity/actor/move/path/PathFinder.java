@@ -7,6 +7,7 @@ import com.rageps.world.model.Direction;
 /**
  * An algorithm used to find a path between two {@link Position}s.
  * @author Artem Batutin
+ * @author Major
  */
 public abstract class PathFinder {
 	/**

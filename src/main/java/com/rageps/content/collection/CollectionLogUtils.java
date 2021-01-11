@@ -1,7 +1,5 @@
 package com.rageps.content.collection;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-
 public class CollectionLogUtils {
 
     /**

@@ -3,10 +3,10 @@ package com.rageps.content.skill.agility.obstacle.impl;
 import com.rageps.content.skill.agility.obstacle.ObstacleActivity;
 import com.rageps.task.LinkedTaskSequence;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Animation;
 
 /**
  * The forced walkable obstacle action which will walk a player starting from the start position

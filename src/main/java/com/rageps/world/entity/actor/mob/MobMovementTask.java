@@ -1,14 +1,14 @@
 package com.rageps.world.entity.actor.mob;
 
+import com.rageps.task.Task;
+import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.move.path.Path;
 import com.rageps.world.entity.region.TraversalMap;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Direction;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.task.Task;
-import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Direction;
 
 /**
  * An implementation of a {@link Task} that handles randomized {@link Mob} movements.
@@ -47,7 +47,7 @@ public class MobMovementTask extends Task {
 			if(mob.getMovementQueue().isMovementDone()) {
 				if(!move.getBoundary().inside(mob.getPosition(), mob.size())) {
 					Path pathHome = World.getSmartPathfinder().find(mob.getPosition(), mob.getOriginalPosition(), mob.size());
-					if(pathHome != null && pathHome.isPossible())
+					if(!pathHome.getMoves().isEmpty() && pathHome.isPossible())
 						mob.getMovementQueue().walk(pathHome.getMoves());
 				} else {
 					Direction dir = Direction.random();

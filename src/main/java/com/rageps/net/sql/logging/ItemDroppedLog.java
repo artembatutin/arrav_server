@@ -1,12 +1,12 @@
 package com.rageps.net.sql.logging;
 
-import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.item.Item;
-import com.rageps.world.locale.Position;
 import com.rageps.net.sql.DatabaseTransaction;
 import com.rageps.net.sql.TableRepresentation;
 import com.rageps.net.sql.statement.NamedPreparedStatement;
 import com.rageps.util.DateTimeUtil;
+import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.entity.item.Item;
+import com.rageps.world.locale.Position;
 
 import java.sql.Connection;
 import java.sql.SQLException;

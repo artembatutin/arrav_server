@@ -1,13 +1,13 @@
 package com.rageps.world.entity.region;
 
+import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.World;
 import com.rageps.world.entity.object.*;
 import com.rageps.world.locale.Boundary;
 import com.rageps.world.locale.Position;
+import com.rageps.world.model.Direction;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Direction;
 
 import java.util.Optional;
 import java.util.function.Consumer;

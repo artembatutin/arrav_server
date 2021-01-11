@@ -3,18 +3,17 @@ package com.rageps.world.entity.actor.combat.magic;
 import com.rageps.content.skill.Skill;
 import com.rageps.content.skill.Skills;
 import com.rageps.content.skill.slayer.Slayer;
-import com.rageps.world.entity.actor.combat.formula.FormulaFactory;
-import com.rageps.world.entity.actor.player.Player;
-import com.rageps.net.packet.out.SendMessage;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.entity.actor.combat.PoisonType;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatImpact;
 import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.actor.combat.CombatUtil;
+import com.rageps.world.entity.actor.combat.PoisonType;
+import com.rageps.world.entity.actor.combat.formula.FormulaFactory;
 import com.rageps.world.entity.actor.combat.hit.CombatHit;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.mob.Mob;
+import com.rageps.world.entity.actor.player.Player;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.rageps.util;
 
+import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.world.locale.Position;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,8 +1,6 @@
 package com.rageps.content.object;
 
-import com.rageps.net.packet.out.SendForceTab;
 import com.rageps.content.TabInterface;
-import com.rageps.net.packet.out.SendMinimapState;
 import com.rageps.net.refactor.packet.out.model.ForceTabPacket;
 import com.rageps.net.refactor.packet.out.model.MinimapStatePacket;
 import com.rageps.world.entity.actor.player.Player;

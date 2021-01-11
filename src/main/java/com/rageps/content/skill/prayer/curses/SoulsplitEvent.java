@@ -2,11 +2,11 @@ package com.rageps.content.skill.prayer.curses;
 
 import com.rageps.content.skill.Skills;
 import com.rageps.task.Task;
-import com.rageps.world.model.Graphic;
-import com.rageps.world.model.Projectile;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.model.Graphic;
+import com.rageps.world.model.Projectile;
 
 /**
  * @author Omicron

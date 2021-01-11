@@ -5,11 +5,11 @@ import com.rageps.content.skill.construction.data.Constants;
 import com.rageps.content.skill.construction.room.Room;
 import com.rageps.content.skill.construction.room.RoomFurniture;
 import com.rageps.world.World;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.locale.InstanceManager;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 /**
  * Represents a {@link Construction} player's house.

@@ -1,12 +1,12 @@
 package com.rageps.content.skill.summoning.familiar.impl;
 
 import com.rageps.content.dialogue.impl.NpcDialogue;
-import com.rageps.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
-import com.rageps.content.skill.summoning.familiar.passive.PassiveAbility;
 import com.rageps.content.skill.summoning.Summoning;
 import com.rageps.content.skill.summoning.SummoningData;
 import com.rageps.content.skill.summoning.familiar.Familiar;
 import com.rageps.content.skill.summoning.familiar.FamiliarAbility;
+import com.rageps.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
+import com.rageps.content.skill.summoning.familiar.passive.PassiveAbility;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;

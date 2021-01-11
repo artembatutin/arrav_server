@@ -2,10 +2,10 @@ package com.rageps.world.entity.actor.combat.magic.lunars.spell.impl;
 
 import com.rageps.content.skill.cooking.Cooking;
 import com.rageps.content.skill.cooking.CookingData;
-import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.combat.magic.MagicRune;
 import com.rageps.world.entity.actor.combat.magic.RequiredRune;
 import com.rageps.world.entity.actor.combat.magic.lunars.spell.LunarItemSpell;
+import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 
 /**

@@ -1,12 +1,12 @@
 package com.rageps.util.log.impl;
 
+import com.rageps.util.TextUtils;
+import com.rageps.util.log.Log;
 import com.rageps.world.World;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.locale.Position;
-import com.rageps.util.TextUtils;
-import com.rageps.util.log.Log;
 
 import java.util.Optional;
 

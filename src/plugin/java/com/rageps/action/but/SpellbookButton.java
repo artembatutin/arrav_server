@@ -6,7 +6,6 @@ import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.content.teleport.TeleportType;
 import com.rageps.content.wilderness.WildernessActivity;
 import com.rageps.action.ActionInitializer;
-import com.rageps.net.packet.out.SendWildernessActivity;
 import com.rageps.net.refactor.packet.out.model.WildernessActivityPacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.locale.Position;

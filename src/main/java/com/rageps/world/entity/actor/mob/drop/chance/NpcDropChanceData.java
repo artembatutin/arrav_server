@@ -1,7 +1,7 @@
 package com.rageps.world.entity.actor.mob.drop.chance;
 
-import lombok.Data;
 import com.rageps.content.item.pets.PetData;
+import lombok.Data;
 
 /**
  * A data class with properties associated with drop modifiers.

@@ -1,10 +1,10 @@
 package com.rageps.net.sql.logging;
 
 import com.google.common.collect.ImmutableSet;
-import com.rageps.world.World;
 import com.rageps.net.sql.TableRepresentation;
 import com.rageps.net.sql.statement.NamedPreparedStatement;
 import com.rageps.util.DateTimeUtil;
+import com.rageps.world.World;
 
 import java.sql.Connection;
 import java.sql.SQLException;

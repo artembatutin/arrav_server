@@ -1,8 +1,8 @@
 package com.rageps.net.sql.starter;
 
 import com.rageps.net.sql.TableRepresentation;
-import com.rageps.world.entity.actor.player.assets.group.GameMode;
 import com.rageps.world.World;
+import com.rageps.world.entity.actor.player.assets.group.GameMode;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

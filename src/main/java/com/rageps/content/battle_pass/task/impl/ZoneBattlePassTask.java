@@ -3,7 +3,6 @@ package com.rageps.content.battle_pass.task.impl;
 
 import com.rageps.content.battle_pass.task.BattlePassTask;
 import com.rageps.content.battle_pass.task.BattlePassTaskType;
-import com.rageps.content.task.CompletableTask;
 import com.rageps.world.entity.actor.player.Player;
 
 public class ZoneBattlePassTask implements BattlePassTask {

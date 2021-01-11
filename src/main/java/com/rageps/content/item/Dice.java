@@ -1,15 +1,15 @@
 package com.rageps.content.item;
 
-import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.action.impl.ItemAction;
+import com.rageps.content.dialogue.impl.OptionDialogue;
 import com.rageps.task.LinkedTaskSequence;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.impl.Inventory;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 
 import java.util.concurrent.TimeUnit;
 

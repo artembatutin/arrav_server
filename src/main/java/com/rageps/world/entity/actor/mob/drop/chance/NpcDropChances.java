@@ -2,9 +2,9 @@ package com.rageps.world.entity.actor.mob.drop.chance;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import com.rageps.content.item.pets.PetData;
 import com.rageps.util.json.JsonLoader;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 
 /**

@@ -1,8 +1,8 @@
 package com.rageps.cache.decoder;
 
+import com.rageps.cache.FileSystem;
 import com.rageps.cache.archive.Archive;
 import com.rageps.world.entity.region.RegionDefinition;
-import com.rageps.cache.FileSystem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -3,12 +3,12 @@ package com.rageps.content.skill.prayer;
 import com.rageps.action.impl.ItemOnObjectAction;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.impl.DestructionSkillAction;
-import com.rageps.net.packet.out.SendGraphic;
+import com.rageps.net.refactor.packet.out.model.GraphicPacket;
 import com.rageps.task.Task;
-import com.rageps.world.model.Animation;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.object.GameObject;
+import com.rageps.world.model.Animation;
 
 import java.util.Optional;
 
@@ -64,7 +64,7 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 	public void onDestruct(Task t, boolean success) {
 		if(success) {
 			getPlayer().animation(new Animation(713));
-			position.ifPresent(c -> SendGraphic.local(getPlayer(), 624, c, 0));
+			position.ifPresent(c -> GraphicPacket.local(getPlayer(), 624, c, 0));
 			getPlayer().message("You offer the " + bone + " to the gods... they seem pleased.");
 		}
 	}

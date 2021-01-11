@@ -1,7 +1,6 @@
 package com.rageps.net.refactor.packet.out.encoder;
 
 import com.rageps.content.wilderness.WildernessActivity;
-import com.rageps.net.codec.game.GamePacketType;
 import com.rageps.net.refactor.codec.game.GamePacket;
 import com.rageps.net.refactor.codec.game.GamePacketBuilder;
 import com.rageps.net.refactor.meta.PacketType;

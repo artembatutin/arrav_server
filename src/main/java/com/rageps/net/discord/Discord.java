@@ -1,5 +1,6 @@
 package com.rageps.net.discord;
 
+import com.rageps.net.discord.cmd.CommandManager;
 import com.rageps.world.World;
 import com.rageps.world.env.Environment;
 import net.dv8tion.jda.core.JDA;
@@ -9,7 +10,6 @@ import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import com.rageps.net.discord.cmd.CommandManager;
 
 import java.util.List;
 

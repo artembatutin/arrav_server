@@ -1,11 +1,8 @@
 package com.rageps.content.minigame.nexchamber;
 
-import com.rageps.net.packet.out.SendFade;
-import com.rageps.net.refactor.packet.out.model.FadePacket;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.minigame.Minigame;
+import com.rageps.net.refactor.packet.out.model.FadePacket;
 import com.rageps.util.rand.RandomUtils;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.CombatType;
@@ -13,6 +10,8 @@ import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.object.GameObject;
 import com.rageps.world.locale.Position;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.Optional;
 

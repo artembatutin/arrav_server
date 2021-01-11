@@ -1,6 +1,5 @@
 package com.rageps.content.minigame.fightcaves;
 
-import com.rageps.world.World;
 import com.rageps.GameConstants;
 import com.rageps.action.impl.ObjectAction;
 import com.rageps.content.dialogue.impl.NpcDialogue;
@@ -9,6 +8,7 @@ import com.rageps.content.item.FoodConsumable;
 import com.rageps.content.item.PotionConsumable;
 import com.rageps.content.minigame.SequencedMinigame;
 import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.World;
 import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.mob.DefaultMob;
 import com.rageps.world.entity.actor.mob.Mob;

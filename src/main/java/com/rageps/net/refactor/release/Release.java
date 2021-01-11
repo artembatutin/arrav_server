@@ -1,9 +1,9 @@
 package com.rageps.net.refactor.release;
 
 import com.google.common.base.Preconditions;
-import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.meta.PacketMetaData;
 import com.rageps.net.refactor.meta.PacketMetaDataGroup;
+import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.packet.in.PacketDecoder;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
 

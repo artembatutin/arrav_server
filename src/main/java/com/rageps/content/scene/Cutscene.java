@@ -1,7 +1,7 @@
 package com.rageps.content.scene;
 
-import com.rageps.world.World;
 import com.rageps.task.Task;
+import com.rageps.world.World;
 
 import java.util.Optional;
 

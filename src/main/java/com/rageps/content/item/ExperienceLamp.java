@@ -1,11 +1,9 @@
 package com.rageps.content.item;
 
-import com.rageps.content.skill.Skills;
 import com.rageps.action.ActionInitializer;
 import com.rageps.action.impl.ButtonAction;
 import com.rageps.action.impl.ItemAction;
-import com.rageps.net.packet.out.SendCloseInterface;
-import com.rageps.net.packet.out.SendInterface;
+import com.rageps.content.skill.Skills;
 import com.rageps.net.refactor.packet.out.model.CloseInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.Item;

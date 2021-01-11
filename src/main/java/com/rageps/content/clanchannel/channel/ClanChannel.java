@@ -6,27 +6,19 @@ import com.rageps.content.clanchannel.ClanRank;
 import com.rageps.content.clanchannel.ClanRepository;
 import com.rageps.content.clanchannel.ClanType;
 import com.rageps.content.clanchannel.content.*;
-import com.rageps.net.packet.out.SendScrollbar;
-import com.rageps.net.packet.out.SendText;
-import com.rageps.net.packet.out.SendTooltip;
 import com.rageps.net.refactor.packet.out.model.InterfaceStringPacket;
-import com.rageps.net.refactor.packet.out.model.MessagePacket;
 import com.rageps.net.refactor.packet.out.model.ScrollBarPacket;
 import com.rageps.net.refactor.packet.out.model.TooltipPacket;
 import com.rageps.util.DateTimeUtil;
 import com.rageps.util.Difficulty;
 import com.rageps.util.StringUtil;
 import com.rageps.util.json.JsonLoader;
-import com.rageps.world.World;
-import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.item.Item;
-import com.rageps.world.entity.region.RegionManager;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -214,7 +206,7 @@ public class ClanChannel implements Comparable<ClanChannel> {
 			for (int idx = 0; idx < size; idx++) {
 				boolean valid = idx < bannedMembers.size();
 				Optional<String> banned = valid ? Optional.of(bannedMembers.get(idx)) : Optional.empty();
-				player.send(new InterfaceStringPacket(banned.orElse(""), string));
+				player.interfaceText(banned.orElse(""), string);
 				player.send(new TooltipPacket(valid ? "Unban " + bannedMembers.get(idx) : "", string));
 				string++;
 			}

@@ -1,7 +1,6 @@
 package com.rageps.content;
 
 import com.rageps.content.skill.summoning.Summoning;
-import com.rageps.net.packet.in.ItemInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;
 import com.rageps.world.entity.item.Item;

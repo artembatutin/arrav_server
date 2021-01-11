@@ -1,17 +1,17 @@
 package com.rageps.content.skill.summoning.familiar.impl;
 
 import com.rageps.content.dialogue.impl.NpcDialogue;
-import com.rageps.content.skill.summoning.familiar.impl.forager.ForagerRightClickAbility;
-import com.rageps.content.skill.summoning.familiar.passive.PassiveAbility;
 import com.rageps.content.skill.summoning.SummoningData;
 import com.rageps.content.skill.summoning.familiar.Familiar;
 import com.rageps.content.skill.summoning.familiar.FamiliarAbility;
+import com.rageps.content.skill.summoning.familiar.impl.forager.ForagerRightClickAbility;
+import com.rageps.content.skill.summoning.familiar.passive.PassiveAbility;
 import com.rageps.task.LinkedTaskSequence;
 import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Graphic;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Graphic;
 
 import java.util.Optional;
 

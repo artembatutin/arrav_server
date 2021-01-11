@@ -2,7 +2,6 @@ package com.rageps.net.refactor.packet.out.model;
 
 import com.rageps.net.refactor.packet.Packet;
 import com.rageps.world.entity.actor.player.Player;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 
 /**
  * @author Tamatea <tamateea@gmail.com>

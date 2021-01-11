@@ -2,12 +2,12 @@ package com.rageps.util.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.rageps.util.json.JsonLoader;
 import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.item.GroundItemPolicy;
 import com.rageps.world.entity.item.GroundItemStatic;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.locale.Position;
-import com.rageps.util.json.JsonLoader;
 
 import java.util.Objects;
 

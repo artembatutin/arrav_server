@@ -1,6 +1,5 @@
 package com.rageps.content;
 
-import com.rageps.net.packet.out.SendTab;
 import com.rageps.world.entity.actor.player.Player;
 
 /**

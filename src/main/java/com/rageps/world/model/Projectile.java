@@ -7,7 +7,6 @@ import com.rageps.world.entity.actor.combat.CombatType;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import com.rageps.net.packet.out.SendProjectile;
 
 /**
  * A container representing a graphic propelled through the air by some sort of

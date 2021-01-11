@@ -2,10 +2,10 @@ package com.rageps.content.skill.cooking;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
 import com.rageps.content.skill.SkillData;
 import com.rageps.content.skill.action.impl.ProducingSkillAction;
 import com.rageps.net.refactor.packet.out.model.EnterAmountPacket;
+import com.rageps.net.refactor.packet.out.model.ItemModelInterfacePacket;
 import com.rageps.task.Task;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.PlayerAttributes;

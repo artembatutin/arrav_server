@@ -1,26 +1,30 @@
 package com.rageps.world.entity.actor.combat;
 
+import com.rageps.combat.strategy.CombatStrategy;
 import com.rageps.content.minigame.Minigame;
 import com.rageps.content.minigame.MinigameHandler;
 import com.rageps.content.skill.prayer.Prayer;
+import com.rageps.content.skill.slayer.Slayer;
+import com.rageps.util.rand.RandomUtils;
+import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.effect.CombatEffect;
 import com.rageps.world.entity.actor.combat.effect.CombatEffectType;
 import com.rageps.world.entity.actor.combat.hit.CombatHit;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.combat.hit.HitIcon;
 import com.rageps.world.entity.actor.combat.hit.Hitsplat;
-import com.rageps.combat.strategy.CombatStrategy;
 import com.rageps.world.entity.actor.combat.weapon.WeaponInterface;
+import com.rageps.world.entity.actor.mob.Mob;
+import com.rageps.world.entity.actor.mob.MobDefinition;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.AntifireDetails;
-import com.rageps.net.packet.out.SendMessage;
-import com.rageps.util.rand.RandomUtils;
-import com.rageps.world.model.Animation;
-import com.rageps.world.model.Projectile;
-import com.rageps.world.entity.actor.Actor;
-import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.container.impl.Equipment;
+import com.rageps.world.entity.item.container.session.ExchangeSession;
+import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
+import com.rageps.world.entity.item.container.session.impl.DuelSession;
+import com.rageps.world.model.Animation;
+import com.rageps.world.model.Projectile;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -42,6 +46,75 @@ public final class CombatUtil {
 		throw new UnsupportedOperationException("This class cannot be instantiated!");
 	}
 
+
+	/**
+	 * Determines if {@code player} can make an attack on {@code mob}.
+	 * @param player the player attempting to make an attack.
+	 * @param mob the mob being attacked.
+	 * @return {@code true} if the player can make an attack, {@code false}
+	 * otherwise.
+	 */
+	public static boolean checkAttack(Player player, Mob mob) {
+		if(!MobDefinition.DEFINITIONS[mob.getId()].isAttackable())
+			return false;
+		if(!player.inMulti() && player.getCombat().isUnderAttack() && !player.getCombat().isUnderAttackBy(mob)) {
+			player.message("You are already under attack!");
+			player.getMovementQueue().reset();
+			return false;
+		}
+		return Slayer.canAttack(player, mob);
+	}
+
+
+	/**
+	 * Determines if an attack can be made by the {@code attacker} on
+	 * {@code victim}.
+	 * @param attacker the player that is trying to attack.
+	 * @param victim the player that is being targeted.
+	 * @return {@code true} if an attack can be made, {@code false} otherwise.
+	 */
+	public static boolean checkAttack(Player attacker, Player victim) {
+		if(victim == null || victim.same(attacker)) {
+			attacker.getMovementQueue().reset();
+			return false;
+		}
+		if(!attacker.isVisible()) {
+			attacker.message("You're invisible and unable to attack other players.");
+			return false;
+		}
+		if(!attacker.inMulti() && attacker.getCombat().isUnderAttack() && !attacker.getCombat().isUnderAttackBy(victim)) {
+			attacker.message("You are already under attack!");
+			attacker.getMovementQueue().reset();
+			return false;
+		}
+		if(attacker.getMinigame().isPresent() && attacker.getLocation().inWilderness()) {
+			attacker.message("Something went wrong there! You are still in a minigame, please re-log!");
+			return false;
+		}
+		if(attacker.getLocation().inDuelArena() && !attacker.getMinigame().isPresent()) {
+			ExchangeSessionManager.get().request(new DuelSession(attacker, victim, ExchangeSession.REQUEST));
+			attacker.getMovementQueue().reset();
+			return false;
+		}
+		Optional<Minigame> optional = MinigameHandler.getMinigame(attacker);
+		if(!optional.isPresent()) {
+			if(attacker.getLocation().inFunPvP() && victim.getLocation().inFunPvP()) {
+				return true;
+			}
+			if(!attacker.inWilderness() || !victim.inWilderness()) {
+				attacker.message("Both you and " + victim.getFormatUsername() + " need to be in the wilderness to fight!");
+				attacker.getMovementQueue().reset();
+				return false;
+			}
+			int combatDifference = CombatUtil.combatLevelDifference(attacker.determineCombatLevel(), victim.determineCombatLevel());
+			if(combatDifference > attacker.getWildernessLevel() || combatDifference > victim.getWildernessLevel()) {
+				attacker.message("Your combat level difference is too great to attack that player here.");
+				attacker.getMovementQueue().reset();
+				return false;
+			}
+		}
+		return true;
+	}
 
 	/** The rate at which accuracy will be reduced by combat protection prayer.
 	 * Currently at .255 meaning 25.5% percent chance of canceling damage when

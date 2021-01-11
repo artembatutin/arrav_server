@@ -4,11 +4,12 @@ import com.rageps.net.codec.login.LoginCode;
 import com.rageps.net.sql.DatabaseTransactionFuture;
 import com.rageps.net.sql.TableRepresentation;
 import com.rageps.net.sql.statement.NamedPreparedStatement;
-import com.rageps.util.DateTimeUtil;
 import com.rageps.world.entity.actor.player.Player;
 
-import java.sql.*;
-import java.time.Instant;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Creates and commits a session id, and other details

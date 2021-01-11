@@ -1,10 +1,10 @@
 package com.rageps.content.dialogue.test;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.rageps.content.dialogue.Dialogue;
 import com.rageps.content.dialogue.DialogueBuilder;
 import com.rageps.world.entity.actor.player.Player;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.List;
 
