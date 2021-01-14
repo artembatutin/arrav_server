@@ -28,6 +28,7 @@ import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.entity.region.RegionManager;
 import com.rageps.world.env.Environment;
+import com.rageps.world.env.JsonEnvironmentProvider;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import org.apache.logging.log4j.LogManager;
@@ -247,7 +248,7 @@ public final class World {
 	 * An implementation of the singleton pattern to prevent indirect
 	 * instantiation of this class file.
 	 */
-	private static final World singleton = RagePS.world;
+	private static World singleton;
 
 	/**
 	 * The release relating to this world.
@@ -468,7 +469,14 @@ public final class World {
 	public static MobMovementTask getNpcMovementTask() {
 		return NPC_MOVEMENT_TASK;
 	}
-	
+
+
+
+	public static void init() {
+		Environment env = JsonEnvironmentProvider.provide();
+		singleton = new World(env);
+	}
+
 	/**
 	 * Returns the singleton pattern implementation.
 	 * @return The returned implementation.

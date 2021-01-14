@@ -133,7 +133,9 @@ public final class RagePS {
 
 			Environment env = JsonEnvironmentProvider.provide();
 
-			world = new World(env);
+			World.init();
+			world = World.get();
+			//world = new World(env);
 			prepare();
 			bind();
 			initTasks();
@@ -198,7 +200,8 @@ public final class RagePS {
 
 		serviceBootstrap.bind(address);
 
-		ResourceLeakDetector.setLevel(world.getEnvironment().isDebug() ? PARANOID : DISABLED);
+		ResourceLeakDetector.setLevel(PARANOID);
+		//ResourceLeakDetector.setLevel(world.getEnvironment().isDebug() ? PARANOID : DISABLED);
 	}
 	
 	/**
@@ -229,6 +232,7 @@ public final class RagePS {
 		});
 		launch.execute(new AreaMultiLoader());
 		launch.execute(new ShopLoader());
+		if(world.getEnvironment().isSqlEnabled())
 		launch.execute(ClanRepository::loadChannels);
 		launch.execute(new WeaponPoisonLoader());
 		//launch.execute(new PacketOpcodeLoader());

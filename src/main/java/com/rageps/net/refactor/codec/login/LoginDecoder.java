@@ -1,6 +1,7 @@
 package com.rageps.net.refactor.codec.login;
 
 import com.google.common.net.InetAddresses;
+import com.rageps.GameConstants;
 import com.rageps.net.refactor.NetworkConstants;
 import com.rageps.net.refactor.security.IsaacRandom;
 import com.rageps.net.refactor.security.IsaacRandomPair;
@@ -11,6 +12,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
+import org.apache.logging.log4j.LogManager;
 
 import java.math.BigInteger;
 import java.net.InetSocketAddress;
@@ -28,7 +30,7 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 	/**
 	 * The logger for this class.
 	 */
-	private static final Logger logger = Logger.getLogger(LoginDecoder.class.getName());
+	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger();
 
 	/**
 	 * The secure random number generator.
@@ -64,6 +66,7 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out, LoginDecoderState state) {
+		System.out.println("decode state:"+state);
 		switch (state) {
 			case LOGIN_HANDSHAKE:
 				decodeHandshake(ctx, in, out);
@@ -88,12 +91,19 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 	 */
 	private void decodeHandshake(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) {
 		if (buffer.isReadable()) {
-			usernameHash = buffer.readUnsignedByte();
+
+			int build = buffer.readByte();
+			if(build != GameConstants.CLIENT_BUILD) {
+				writeResponseCode(ctx, LoginConstants.STATUS_GAME_UPDATED);
+				return;
+			}
+
+			//usernameHash = buffer.readUnsignedByte();
 			serverSeed = RANDOM.nextLong();
 
-			ByteBuf response = ctx.alloc().buffer(17);
+			ByteBuf response = ctx.alloc().buffer(9);
 			response.writeByte(LoginConstants.STATUS_EXCHANGE_DATA);
-			response.writeLong(0);
+			//response.writeLong(0);
 			response.writeLong(serverSeed);
 			ctx.channel().write(response);
 
@@ -109,11 +119,13 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 	 * @param out The {@link List} of objects to pass forward through the pipeline.
 	 */
 	private void decodeHeader(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) {
+		//System.out.println("readable:"+buffer.readableBytes());
 		if (buffer.readableBytes() >= 2) {
 			int type = buffer.readUnsignedByte();
+			System.out.println(type);
 
 			if (type != LoginConstants.TYPE_STANDARD && type != LoginConstants.TYPE_RECONNECTION) {
-				logger.fine("Failed to decode login header.");
+				logger.info("Failed to decode login header.");
 				writeResponseCode(ctx, LoginConstants.STATUS_LOGIN_SERVER_REJECTED_SESSION);
 				return;
 			}
@@ -141,7 +153,7 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 
 			int memoryStatus = payload.readUnsignedByte();
 			if (memoryStatus != 0 && memoryStatus != 1) {
-				logger.fine("Login memoryStatus (" + memoryStatus + ") not in expected range of [0, 1].");
+				logger.info("Login memoryStatus (" + memoryStatus + ") not in expected range of [0, 1].");
 				writeResponseCode(ctx, LoginConstants.STATUS_LOGIN_SERVER_REJECTED_SESSION);
 				return;
 			}
@@ -155,7 +167,7 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 
 			int length = payload.readUnsignedByte();
 			if (length != loginLength - 41) {
-				logger.fine("Login packet unexpected length (" + length + ")");
+				logger.info("Login packet unexpected length (" + length + ")");
 				writeResponseCode(ctx, LoginConstants.STATUS_LOGIN_SERVER_REJECTED_SESSION);
 				return;
 			}
@@ -168,7 +180,7 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 
 			int id = secure.readUnsignedByte();
 			if (id != 10) {
-				logger.fine("Unable to read id from secure payload.");
+				logger.info("Unable to read id from secure payload.");
 				writeResponseCode(ctx, LoginConstants.STATUS_LOGIN_SERVER_REJECTED_SESSION);
 				return;
 			}
@@ -176,7 +188,7 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 			long clientSeed = secure.readLong();
 			long reportedSeed = secure.readLong();
 			if (reportedSeed != serverSeed) {
-				logger.fine("Reported seed differed from server seed.");
+				logger.info("Reported seed differed from server seed.");
 				writeResponseCode(ctx, LoginConstants.STATUS_LOGIN_SERVER_REJECTED_SESSION);
 				return;
 			}
@@ -188,7 +200,7 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 			String hostAddress = InetAddresses.toAddrString(socketAddress.getAddress());
 
 			if (password.length() < 6 || password.length() > 20 || username.isEmpty() || username.length() > 12) {
-				logger.fine("Username ('" + username + "') or password did not pass validation.");
+				logger.info("Username ('" + username + "') or password did not pass validation.");
 				writeResponseCode(ctx, LoginConstants.STATUS_INVALID_CREDENTIALS);
 				return;
 			}

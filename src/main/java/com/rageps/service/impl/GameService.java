@@ -125,7 +125,7 @@ public final class GameService extends Service {
 		region.add(player);
 
 		if (!player.getSession().isReconnecting()) {
-			//player.sendInitialMessages();
+			//player.sendInitialMessages(); - todo check this out plz
 		}
 	}
 
