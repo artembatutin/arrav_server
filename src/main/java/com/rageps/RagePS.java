@@ -32,6 +32,8 @@ import com.rageps.util.Utility;
 import com.rageps.util.json.impl.*;
 import com.rageps.world.World;
 import com.rageps.world.attr.Attributes;
+import com.rageps.world.env.Environment;
+import com.rageps.world.env.JsonEnvironmentProvider;
 import com.rageps.world.locale.InstanceManager;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -81,6 +83,8 @@ public final class RagePS {
 	 */
 	private static final Logger LOGGER = LogManager.getLogger();
 
+	public static World world;
+
 
 	static {
 		//System.out.println("Lines in project: " + Utility.linesInProject(new File("./src/")));
@@ -126,12 +130,16 @@ public final class RagePS {
 		try {
 			long time = System.currentTimeMillis();
 			LOGGER.info("RagePS is being initialized...");
+
+			Environment env = JsonEnvironmentProvider.provide();
+
+			world = new World(env);
 			prepare();
 			bind();
 			initTasks();
 			launch.shutdown();
 			launch.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			World.get().getServices().startAll();
+			world.getServices().startAll();
 			InstanceManager.get().close(0);
 			TriviaTask.getBot().submit();
 			World.get().submit(World.getNpcMovementTask());
@@ -147,7 +155,7 @@ public final class RagePS {
 			});
 			time = System.currentTimeMillis() - time;
 			System.gc();//cleaning up startup.
-			LOGGER.info(World.get().getEnvironment().getName()+" is now online (" + time + ").");
+			LOGGER.info(env.getName()+" is now online (" + time + ").");
 			STARTING = false;
 		} catch(Exception e) {
 			LOGGER.fatal("An error occurred while binding the Bootstrap!", e);
@@ -184,13 +192,13 @@ public final class RagePS {
 		serviceBootstrap.channel(NioServerSocketChannel.class);
 		serviceBootstrap.childHandler(service);
 
-		LOGGER.info("Binding RagePs on port " + World.get().getEnvironment().getPort() + ".");
+		LOGGER.info("Binding RagePs on port " + world.getEnvironment() + ".");
 
-		SocketAddress address = new InetSocketAddress(World.get().getEnvironment().getPort());
+		SocketAddress address = new InetSocketAddress(world.getEnvironment().getPort());
 
 		serviceBootstrap.bind(address);
 
-		ResourceLeakDetector.setLevel(World.get().getEnvironment().isDebug() ? PARANOID : DISABLED);
+		ResourceLeakDetector.setLevel(world.getEnvironment().isDebug() ? PARANOID : DISABLED);
 	}
 	
 	/**
@@ -253,7 +261,7 @@ public final class RagePS {
 		MobAction.init();
 		ObjectAction.init();
 		ItemBoxHandler.init();
-		GameEventManager.loadEvents();
+		//GameEventManager.loadEvents();
 	}
 
 	public static void loadEvents() {

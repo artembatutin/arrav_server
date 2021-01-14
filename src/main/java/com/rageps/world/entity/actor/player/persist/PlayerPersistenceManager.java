@@ -54,7 +54,12 @@ public final class PlayerPersistenceManager {
 	/**
 	 * The method of persistence, will use {@link PlayerPersistDB} if SQL is enabled, otherwise {@link PlayerPersistFile}.
 	 */
-	private final PlayerPersistable PERSISTABLE =  World.get().getEnvironment().isSqlEnabled() ? new PlayerPersistDB() : new PlayerPersistFile();
+		public PlayerPersistable persistanceType() {
+			return World.get().getEnvironment().isSqlEnabled() ? new PlayerPersistDB() : new PlayerPersistFile();
+		}
+
+
+
 
 	/**
 	 * Attempts to save a player.
@@ -64,7 +69,7 @@ public final class PlayerPersistenceManager {
 		//if (player.isBot) {
 		//	return;
 		//}
-		PERSISTABLE.save(player);
+		persistanceType().save(player);
 	}
 
 	public PlayerLoaderResponse load(Player player) {
@@ -80,7 +85,7 @@ public final class PlayerPersistenceManager {
 		//if (player.isBot) {
 		//	return LoginCode.COULD_NOT_COMPLETE_LOGIN;
 		//}
-		return PERSISTABLE.load(player);
+		return persistanceType().load(player);
 	}
 
 	/**

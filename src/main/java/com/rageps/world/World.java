@@ -1,6 +1,7 @@
 package com.rageps.world;
 
 import com.rageps.GameConstants;
+import com.rageps.RagePS;
 import com.rageps.command.impl.UpdateCommand;
 import com.rageps.content.PlayerPanel;
 import com.rageps.net.discord.Discord;
@@ -24,11 +25,9 @@ import com.rageps.world.entity.actor.move.path.AStarPathFinder;
 import com.rageps.world.entity.actor.move.path.SimplePathChecker;
 import com.rageps.world.entity.actor.move.path.impl.SimplePathFinder;
 import com.rageps.world.entity.actor.player.Player;
-import com.rageps.world.entity.actor.player.persist.PlayerPersistenceManager;
 import com.rageps.world.entity.region.Region;
 import com.rageps.world.entity.region.RegionManager;
 import com.rageps.world.env.Environment;
-import com.rageps.world.env.JsonEnvironmentProvider;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import org.apache.logging.log4j.LogManager;
@@ -225,6 +224,18 @@ public final class World {
 		return false;
 	}
 
+	public World(Environment environment) {
+		World.environment = environment;
+		services = new ServiceManager(this);
+
+		if(environment.getType() == Environment.Type.LIVE)
+			discord = new Discord();
+
+		if(environment.isSqlEnabled())
+			databaseWorker = new DatabaseTransactionWorker();
+
+	}
+
 	/* CONSTANTS DECLARATIONS */
 
 	/**
@@ -236,7 +247,7 @@ public final class World {
 	 * An implementation of the singleton pattern to prevent indirect
 	 * instantiation of this class file.
 	 */
-	private static final World singleton = new World();
+	private static final World singleton = RagePS.world;
 
 	/**
 	 * The release relating to this world.
@@ -247,27 +258,22 @@ public final class World {
 	 * An environment provided with configuration related to the specific
 	 * environment the server is running on.
 	 */
-	private static final Environment ENVIRONMENT = JsonEnvironmentProvider.provide();
+	private static Environment environment;
 
 	/**
 	 * This Discord for this World
 	 */
-	private static final Discord discord = new Discord();
+	private static Discord discord;
 
 	/**
 	 * The service manager.
 	 */
-	private final ServiceManager services = new ServiceManager(this);
+	private final ServiceManager services;
 
 	/**
 	 * Responsible for asynchronously executing all database transactions.
 	 */
-	private static final DatabaseTransactionWorker DATABASE_WORKER = new DatabaseTransactionWorker();
-
-	/**
-	 * Responsible for all saving/loading of character files using it's delegated method.
-	 */
-	private static final PlayerPersistenceManager PERSISTENCE_MANAGER = new PlayerPersistenceManager();
+	private DatabaseTransactionWorker databaseWorker;
 
 	/**
 	 * World attributes.
@@ -476,7 +482,7 @@ public final class World {
 	 * @return The returned environment.
 	 */
 	public Environment getEnvironment() {
-		return ENVIRONMENT;
+		return environment;
 	}
 
 
@@ -485,13 +491,8 @@ public final class World {
 	 * @return The returned worker.
 	 */
 	public DatabaseTransactionWorker getDatabaseWorker() {
-		return DATABASE_WORKER;
+		return databaseWorker;
 	}
-
-	public PlayerPersistenceManager getPersistenceManager() {
-		return PERSISTENCE_MANAGER;
-	}
-
 
 	/**
 	 * Get's the logger used by the world to log various happenings.

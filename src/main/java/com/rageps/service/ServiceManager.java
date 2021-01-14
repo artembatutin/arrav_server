@@ -38,8 +38,7 @@ public final class ServiceManager {
 	 * @throws Exception If there is an error creating the Services.
 	 */
 	public ServiceManager(World world) {
-			game = new GameService(world);
-		System.out.println(world == null);
+		game = new GameService(world);
 		login = new LoginService(world);
 	}
 

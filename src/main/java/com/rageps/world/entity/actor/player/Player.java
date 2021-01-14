@@ -970,7 +970,7 @@ public final class Player extends Actor {
 	 * Saves the character file for this player.
 	 */
 	private void save() {
-		World.get().getPersistenceManager().save(this);
+		World.get().getLoginService().submitSaveRequest(session, this);
 	}
 	
 	/**

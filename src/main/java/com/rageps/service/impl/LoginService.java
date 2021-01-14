@@ -37,9 +37,9 @@ public final class LoginService extends Service {
 	private final ExecutorService executor = Executors.newCachedThreadPool(ThreadUtil.create("LoginService"));
 
 	/**
-	 * The current {@link PlayerPersistenceManager}.
+	 * Responsible for all saving/loading of character files using it's delegated method.
 	 */
-	private final PlayerPersistenceManager serializer = World.get().getPersistenceManager();
+	private final PlayerPersistenceManager serializer;
 
 	/**
 	 * Creates the login service.
@@ -49,6 +49,8 @@ public final class LoginService extends Service {
 	 */
 	public LoginService(World world)  {
 		this.world = world;
+
+		this.serializer = new PlayerPersistenceManager();
 	}
 
 	@Override
@@ -86,6 +88,9 @@ public final class LoginService extends Service {
 		executor.submit(new PlayerSaverWorker(serializer, session, player));
 	}
 
+	public PlayerPersistenceManager getSerializer() {
+		return serializer;
+	}
 
 	/**
 	 * Checks if an update is required whenever a {@link Player} submits a login request.
