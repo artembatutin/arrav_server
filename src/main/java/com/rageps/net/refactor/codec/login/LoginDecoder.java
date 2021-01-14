@@ -57,6 +57,8 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 	 */
 	private int usernameHash;
 
+	private int clientBuild;
+
 	/**
 	 * Creates the login decoder with the default initial state.
 	 */
@@ -66,7 +68,7 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out, LoginDecoderState state) {
-		System.out.println("decode state:"+state);
+		System.out.println("decode state:"+state+" size:"+in.readableBytes());
 		switch (state) {
 			case LOGIN_HANDSHAKE:
 				decodeHandshake(ctx, in, out);
@@ -147,23 +149,23 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 	private void decodePayload(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) {
 		if (buffer.readableBytes() >= loginLength) {
 			ByteBuf payload = buffer.readBytes(loginLength);
-			int version = 255 - payload.readUnsignedByte();
+			//int version = 255 - payload.readUnsignedByte();
 
-			int release = payload.readUnsignedShort();
+			//clientBuild = payload.readUnsignedShort();
 
-			int memoryStatus = payload.readUnsignedByte();
-			if (memoryStatus != 0 && memoryStatus != 1) {
-				logger.info("Login memoryStatus (" + memoryStatus + ") not in expected range of [0, 1].");
-				writeResponseCode(ctx, LoginConstants.STATUS_LOGIN_SERVER_REJECTED_SESSION);
-				return;
-			}
+			//int memoryStatus = payload.readUnsignedByte();
+			//if (memoryStatus != 0 && memoryStatus != 1) {
+			//	logger.info("Login memoryStatus (" + memoryStatus + ") not in expected range of [0, 1].");
+			//	writeResponseCode(ctx, LoginConstants.STATUS_LOGIN_SERVER_REJECTED_SESSION);
+			//	return;
+			//}
+//
+			//boolean lowMemory = memoryStatus == 1;
 
-			boolean lowMemory = memoryStatus == 1;
-
-			int[] crcs = new int[9];
-			for (int index = 0; index < 9; index++) {
-				crcs[index] = payload.readInt();
-			}
+			//int[] crcs = new int[9];
+			//for (int index = 0; index < 9; index++) {
+			//	crcs[index] = payload.readInt();
+			//}
 
 			int length = payload.readUnsignedByte();
 			if (length != loginLength - 41) {
@@ -221,7 +223,7 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 			PlayerCredentials credentials = new PlayerCredentials(username, password, usernameHash, mac, hostAddress);
 			IsaacRandomPair randomPair = new IsaacRandomPair(encodingRandom, decodingRandom);
 
-			out.add(new LoginRequest(credentials, randomPair, reconnecting, lowMemory, release, crcs, version));
+			out.add(new LoginRequest(credentials, randomPair, reconnecting, clientBuild));
 		}
 	}
 
