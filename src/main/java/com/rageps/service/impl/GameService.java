@@ -120,13 +120,13 @@ public final class GameService extends Service {
 	 */
 	public synchronized void finalizePlayerRegistration(Player player) {
 		//world.register(player);
-		System.out.println("player nulled:"+(player == null));
+		//System.out.println("player nulled:"+(player == null));
 		world.getPlayers().add(player);
 		Region region = player.getRegion();
 		region.add(player);
 
 		if (!player.getSession().isReconnecting()) {
-			//player.sendInitialMessages(); - todo check this out plz
+			// maybe do some stuff if they've just reconnected
 		}
 	}
 

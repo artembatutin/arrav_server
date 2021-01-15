@@ -3,6 +3,7 @@ package com.rageps.net.refactor.codec.game;
 import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
 import com.rageps.net.refactor.release.Release;
+import com.rageps.world.World;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
 
@@ -38,6 +39,8 @@ public final class GameMessageEncoder extends MessageToMessageEncoder<Packet> {
 				out.add(encoder.coordinatePacket(packet));
 			if(encoder.onSent(packet))
 				out.add(encoder.encode(packet));
+		} else {
+			World.getLogger().warn("{} has no encoder!", packet.getClass().getSimpleName());
 		}
 	}
 

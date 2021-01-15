@@ -2,6 +2,10 @@ package com.rageps.net.refactor.release;
 
 import com.rageps.net.refactor.meta.PacketMetaDataGroup;
 import com.rageps.net.refactor.packet.in.decoder.IdleStatePacketPacketDecoder;
+import com.rageps.net.refactor.packet.out.encoder.MapRegionPacketEncoder;
+import com.rageps.net.refactor.packet.out.encoder.MessagePacketEncoder;
+import com.rageps.net.refactor.packet.out.model.MapRegionPacket;
+import com.rageps.net.refactor.packet.out.model.MessagePacket;
 
 /**
  * A {@link Release} implementation for the 317 protocol.
@@ -188,6 +192,8 @@ public final class Release317 extends Release {
 		register(OpenSidebarMessage.class, new OpenSidebarMessageEncoder());
 		register(OpenOverlayMessage.class, new OpenOverlayMessageEncoder());
 		register(OpenDialogueOverlayMessage.class, new OpenDialogueOverlayMessageEncoder());*/
+		register(MessagePacket.class, new MessagePacketEncoder());
+		register(MapRegionPacket.class, new MapRegionPacketEncoder());
 	}
 
 }
