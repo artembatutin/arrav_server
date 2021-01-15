@@ -67,9 +67,9 @@ public final class LoginService extends Service {
 	public void submitLoadRequest(LoginSession session, LoginRequest request) throws IOException {
 		int response = LoginConstants.STATUS_OK;
 
-		if (requiresUpdate(request)) {
-			response = LoginConstants.STATUS_GAME_UPDATED;
-		}
+		//if (requiresUpdate(request)) {
+		//	response = LoginConstants.STATUS_GAME_UPDATED;
+		//}
 
 		if (response == LoginConstants.STATUS_OK) {
 			executor.submit(new PlayerLoaderWorker(serializer, session, request));

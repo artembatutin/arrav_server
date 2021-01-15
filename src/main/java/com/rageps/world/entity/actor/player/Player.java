@@ -596,9 +596,9 @@ public final class Player extends Actor {
 	@Override
 	public void register() {
 		boolean bot = false;
-		if(World.get().getEnvironment().isDebug() && getFormatUsername().startsWith("Bot")) {
-			bot = true;
-		}
+		//if(World.get().getEnvironment().isDebug() && getFormatUsername().startsWith("Bot")) {
+		//	bot = true;
+		//}
 		setLastRegion(getPosition().copy());
 		setUpdates(true, false);
 		setUpdateRegion(true);

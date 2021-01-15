@@ -209,6 +209,8 @@ public final class GameService extends Service {
 
 		ActorList<Player> players = world.getPlayers();
 		for (Player player : players) {
+			if(player == null)
+				continue;
 			GameSession session = player.getSession();
 
 			if (session != null) {

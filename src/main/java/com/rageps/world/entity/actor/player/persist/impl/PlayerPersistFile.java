@@ -88,7 +88,8 @@ public final class PlayerPersistFile implements PlayerPersistable {
 
 			if (!Files.exists(path)) {
 				//player.firstLogin = true; todo fix
-				return new PlayerLoaderResponse(LoginConstants.STATUS_OK);
+				Player player = new Player(credentials);
+				return new PlayerLoaderResponse(LoginConstants.STATUS_OK, player);
 			}
 			Player player = new Player(credentials);
 			PlayerLoaderResponse response = new PlayerLoaderResponse(LoginConstants.STATUS_OK, player);

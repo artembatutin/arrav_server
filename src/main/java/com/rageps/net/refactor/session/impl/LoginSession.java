@@ -55,7 +55,6 @@ public final class LoginSession extends Session {
 	 * @param response The response.
 	 */
 	public void handlePlayerLoaderResponse(LoginRequest request, PlayerLoaderResponse response) {
-		System.out.println("handle player loader");
 
 		this.request = request;
 		GameService service = World.get().getGameService();
@@ -70,7 +69,6 @@ public final class LoginSession extends Session {
 
 	@Override
 	public void messageReceived(Object message) throws Exception {
-		System.out.println("message received");
 		if (message.getClass() == LoginRequest.class) {
 			handleLoginRequest((LoginRequest) message);
 		}
@@ -82,7 +80,7 @@ public final class LoginSession extends Session {
 	 * @param status The failure status.
 	 */
 	public void sendLoginFailure(int status) {
-		System.out.println("login failure");
+		System.out.println("login failure "+status);
 
 		boolean flagged = false;
 		LoginResponse response = new LoginResponse(status, Rights.PLAYER, flagged);
@@ -124,7 +122,6 @@ public final class LoginSession extends Session {
 	 * @throws IOException If some I/O exception occurs.
 	 */
 	private void handleLoginRequest(LoginRequest request) throws IOException {
-		System.out.println("handle login request");
 		LoginService service = World.get().getLoginService();
 		service.submitLoadRequest(this, request);
 	}

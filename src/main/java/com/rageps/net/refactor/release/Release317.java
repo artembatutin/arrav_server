@@ -1,6 +1,7 @@
 package com.rageps.net.refactor.release;
 
 import com.rageps.net.refactor.meta.PacketMetaDataGroup;
+import com.rageps.net.refactor.packet.in.decoder.IdleStatePacketPacketDecoder;
 
 /**
  * A {@link Release} implementation for the 317 protocol.
@@ -54,6 +55,8 @@ public final class Release317 extends Release {
 	 */
 	private void init() {
 		// register decoders
+
+		register(0, new IdleStatePacketPacketDecoder());
 		/*WalkMessageDecoder walkMessageDecoder = new WalkMessageDecoder();
 		register(248, walkMessageDecoder);
 		register(164, walkMessageDecoder);
