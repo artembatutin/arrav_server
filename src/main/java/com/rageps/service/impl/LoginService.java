@@ -97,9 +97,8 @@ public final class LoginService extends Service {
 	 *
 	 * @param request The login request.
 	 * @return {@code true} if an update is required, otherwise return {@code false}.
-	 * @throws IOException If some I/O exception occurs.
 	 */
-	private boolean requiresUpdate(LoginRequest request) throws IOException {
+	private boolean requiresUpdate(LoginRequest request) {
 		return request.getClientVersion() != GameConstants.CLIENT_BUILD;
 	}
 

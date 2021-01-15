@@ -120,6 +120,7 @@ public final class GameService extends Service {
 	 */
 	public synchronized void finalizePlayerRegistration(Player player) {
 		//world.register(player);
+		System.out.println("player nulled:"+(player == null));
 		world.getPlayers().add(player);
 		Region region = player.getRegion();
 		region.add(player);
@@ -208,9 +209,12 @@ public final class GameService extends Service {
 
 
 		ActorList<Player> players = world.getPlayers();
+		//System.out.println(players.size());
 		for (Player player : players) {
-			if(player == null)
+			if(player == null) {
+			//System.out.println("null player");
 				continue;
+			}
 			GameSession session = player.getSession();
 
 			if (session != null) {
@@ -257,6 +261,7 @@ public final class GameService extends Service {
 	 * @param player The player.
 	 */
 	public void unregisterPlayer(Player player) {
+		Thread.dumpStack();
 		if(player.getCombat().inCombat())
 			player.getLogoutTimer().reset();
 		//player.setState(AWAITING_REMOVAL);

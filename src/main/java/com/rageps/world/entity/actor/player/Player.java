@@ -1167,6 +1167,7 @@ public final class Player extends Actor {
 			CollectionUtil.pollAll(queuedPackets, session::dispatchMessage);
 		}
 
+		System.out.println("sending packet:"+packet.getClass().getName());
 		session.dispatchMessage(packet);
 	}
 	

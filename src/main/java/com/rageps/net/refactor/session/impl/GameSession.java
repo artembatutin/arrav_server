@@ -82,6 +82,7 @@ public final class GameSession extends Session {
 	public void dispatchMessage(Packet packet) {
 		Channel channel = getChannel();
 		if (channel.isActive() && channel.isOpen()) {
+			System.out.println("sending packet:"+packet.getClass().getSimpleName()+" "+channel.toString());
 			ChannelFuture future = channel.writeAndFlush(packet);
 			if (packet.getClass() == LogoutPacket.class) {
 				future.addListener(ChannelFutureListener.CLOSE);
@@ -99,7 +100,7 @@ public final class GameSession extends Session {
 			Packet packet = packets.poll();
 
 			try {
-				chainSet.notify(player, packet);
+//				chainSet.notify(player, packet);
 			} catch (Exception reason) {
 				logger.fatal("Uncaught exception thrown while handling message: {}", packet, reason);
 			}

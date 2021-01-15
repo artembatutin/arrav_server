@@ -194,7 +194,7 @@ public final class RagePS {
 		serviceBootstrap.channel(NioServerSocketChannel.class);
 		serviceBootstrap.childHandler(service);
 
-		LOGGER.info("Binding RagePs on port " + world.getEnvironment() + ".");
+		LOGGER.info("Binding RagePs on port " + world.getEnvironment().getPort() + ".");
 
 		SocketAddress address = new InetSocketAddress(world.getEnvironment().getPort());
 
