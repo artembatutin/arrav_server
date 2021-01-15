@@ -1,11 +1,17 @@
 package com.rageps.net.refactor.release;
 
+import com.rageps.action.ActionInitializer;
 import com.rageps.net.refactor.meta.PacketMetaDataGroup;
+import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.packet.in.decoder.IdleStatePacketPacketDecoder;
-import com.rageps.net.refactor.packet.out.encoder.MapRegionPacketEncoder;
-import com.rageps.net.refactor.packet.out.encoder.MessagePacketEncoder;
-import com.rageps.net.refactor.packet.out.model.MapRegionPacket;
-import com.rageps.net.refactor.packet.out.model.MessagePacket;
+import com.rageps.net.refactor.packet.out.PacketEncoder;
+import com.rageps.net.refactor.packet.out.encoder.*;
+import com.rageps.net.refactor.packet.out.model.*;
+import org.reflections.Reflections;
+
+import java.lang.reflect.ParameterizedType;
+import java.util.Arrays;
+import java.util.Set;
 
 /**
  * A {@link Release} implementation for the 317 protocol.
@@ -136,64 +142,86 @@ public final class Release317 extends Release {
 		register(74, new RemoveIgnoreMessageDecoder());
 		register(126, new PrivateChatMessageDecoder());
 
-		register(218, new ReportAbuseMessageDecoder());
+		register(218, new ReportAbuseMessageDecoder());*/
 
 		// register encoders
-		register(IdAssignmentMessage.class, new IdAssignmentMessageEncoder());
-		register(RegionChangeMessage.class, new RegionChangeMessageEncoder());
-		register(ServerChatMessage.class, new ServerMessageMessageEncoder());
-		register(PlayerSynchronizationMessage.class, new PlayerSynchronizationMessageEncoder());
-		register(OpenInterfaceMessage.class, new OpenInterfaceMessageEncoder());
-		register(CloseInterfaceMessage.class, new CloseInterfaceMessageEncoder());
-		register(SwitchTabInterfaceMessage.class, new SwitchTabInterfaceMessageEncoder());
-		register(LogoutMessage.class, new LogoutMessageEncoder());
-		register(UpdateItemsMessage.class, new UpdateItemsMessageEncoder());
-		register(UpdateSlottedItemsMessage.class, new UpdateSlottedItemsMessageEncoder());
-		register(UpdateSkillMessage.class, new UpdateSkillMessageEncoder());
-		register(OpenInterfaceSidebarMessage.class, new OpenInterfaceSidebarMessageEncoder());
-		register(EnterAmountMessage.class, new EnterAmountMessageEncoder());
-		register(SetWidgetTextMessage.class, new SetWidgetTextMessageEncoder());
-		register(NpcSynchronizationMessage.class, new NpcSynchronizationMessageEncoder());
-
-		register(SetWidgetVisibilityMessage.class, new SetWidgetVisibilityMessageEncoder());
-		register(SetWidgetItemModelMessage.class, new SetWidgetItemModelMessageEncoder());
-		register(SetWidgetNpcModelMessage.class, new SetWidgetNpcModelMessageEncoder());
-		register(SetWidgetPlayerModelMessage.class, new SetWidgetPlayerModelMessageEncoder());
-		register(SetWidgetModelAnimationMessage.class, new SetWidgetModelAnimationMessageEncoder());
-		register(SetWidgetModelMessage.class, new SetWidgetModelMessageEncoder());
-
-		register(ConfigMessage.class, new ConfigMessageEncoder());
-		register(DisplayTabInterfaceMessage.class, new DisplayTabInterfaceMessageEncoder());
-		register(SetUpdatedRegionMessage.class, new SetUpdatedRegionMessageEncoder());
-		register(UpdateRunEnergyMessage.class, new UpdateRunEnergyMessageEncoder());
-		register(PrivacyOptionMessage.class, new PrivacyOptionMessageEncoder());
-		register(OpenDialogueInterfaceMessage.class, new OpenDialogueInterfaceMessageEncoder());
-		register(UpdateWeightMessage.class, new UpdateWeightMessageEncoder());
-		register(SetPlayerActionMessage.class, new SetPlayerActionMessageEncoder());
-		register(DisplayCrossbonesMessage.class, new DisplayCrossbonesMessageEncoder());
-
-		register(SendPublicTileItemMessage.class, new AddGlobalTileItemMessageEncoder());
-		register(SendTileItemMessage.class, new AddTileItemMessageEncoder());
-		register(UpdateTileItemMessage.class, new UpdateTileItemMessageEncoder());
-		register(RemoveTileItemMessage.class, new RemoveTileItemMessageEncoder());
-		register(SendObjectMessage.class, new SendObjectMessageEncoder());
-		register(RemoveObjectMessage.class, new RemoveObjectMessageEncoder());
-
-		register(GroupedRegionUpdateMessage.class, new GroupedRegionUpdateMessageEncoder(this));
-		register(ClearRegionMessage.class, new ClearRegionMessageEncoder());
-
-		register(ForwardPrivateChatMessage.class, new ForwardPrivateChatMessageEncoder());
-		register(FriendServerStatusMessage.class, new FriendServerStatusMessageEncoder());
-		register(IgnoreListMessage.class, new IgnoreListMessageEncoder());
-		register(SendFriendMessage.class, new SendFriendMessageEncoder());
-		register(MobHintIconMessage.class, new MobHintIconMessageEncoder());
-		register(PositionHintIconMessage.class, new PositionHintIconMessageEncoder());
-		register(FlashTabInterfaceMessage.class, new FlashTabInterfaceMessageEncoder());
-		register(OpenSidebarMessage.class, new OpenSidebarMessageEncoder());
-		register(OpenOverlayMessage.class, new OpenOverlayMessageEncoder());
-		register(OpenDialogueOverlayMessage.class, new OpenDialogueOverlayMessageEncoder());*/
-		register(MessagePacket.class, new MessagePacketEncoder());
+		register(InterfacePlayerModelPacket.class, new InterfacePlayerModelPacketEncoder());
+		register(MobUpdatePacket.class, new MobUpdatePacketEncoder());
+		register(ArrowPositionPacket.class, new ArrowPositionPacketEncoder());
+		register(EnterNamePacket.class, new EnterNamePacketEncoder());
+		register(ShopPricePacket.class, new ShopPricePacketEncoder());
 		register(MapRegionPacket.class, new MapRegionPacketEncoder());
+		register(InterfacePacket.class, new InterfacePacketEncoder());
+		register(ClearTextPacket.class, new ClearTextPacketEncoder());
+		register(ItemNodeRemovalPacket.class, new ItemNodeRemovalPacketEncoder());
+		register(CameraShakePacket.class, new CameraShakePacketEncoder());
+		register(CloseInterfacePacket.class, new CloseInterfacePacketEncoder());
+		register(AddIgnorePacket.class, new AddIgnorePacketEncoder());
+		register(MoveComponentPacket.class, new MoveComponentPacketEncoder());
+		register(EnterAmountPacket.class, new EnterAmountPacketEncoder());
+		register(MobDropPacket.class, new MobDropPacketEncoder());
+		register(InventoryInterfacePacket.class, new InventoryInterfacePacketEncoder());
+		register(InterfaceColorPacket.class, new InterfaceColorPacketEncoder());
+		register(ShopPacket.class, new ShopPacketEncoder());
+		register(TabPacket.class, new TabPacketEncoder());
+		register(InterfaceStringPacket.class, new InterfaceStringPacketEncoder());
+		register(ShopStockPacket.class, new ShopStockPacketEncoder());
+		register(LogoutPacket.class, new LogoutPacketEncoder());
+		register(YellPacket.class, new YellPacketEncoder());
+		register(ClanDetailsPacket.class, new ClanDetailsPacketEncoder());
+		register(UpdateSpecialPacket.class, new UpdateSpecialPacketEncoder());
+		register(PrivateMessagePacket.class, new PrivateMessagePacketEncoder());
+		register(CoordinatesPacket.class, new CoordinatesPacketEncoder());
+		register(PaletteMapPacket.class, new PaletteMapPacketEncoder());
+		register(ChatInterfacePacket.class, new ChatInterfacePacketEncoder());
+		register(InterfaceLayerPacket.class, new InterfaceLayerPacketEncoder());
+		register(LinkPacket.class, new LinkPacketEncoder());
+		register(AddFriendPacket.class, new AddFriendPacketEncoder());
+		register(CombatTargetPacket.class, new CombatTargetPacketEncoder());
+		register(ItemsOnInterfacePacket.class, new ItemsOnInterfacePacketEncoder());
+		register(RemoveObjectsPacket.class, new RemoveObjectsPacketEncoder());
+		register(PlayerUpdatePacket.class, new PlayerUpdatePacketEncoder());
+		register(InterfaceAnimationPacket.class, new InterfaceAnimationPacketEncoder());
+		register(ObjectsConstructionPacket.class, new ObjectsConstructionPacketEncoder());
+		register(ConfigPacket.class, new ConfigPacketEncoder());
+		register(ScrollBarPacket.class, new ScrollBarPacketEncoder());
+		register(ObjectAnimationPacket.class, new ObjectAnimationPacketEncoder());
+		register(SlotPacket.class, new SlotPacketEncoder());
+		register(ArrowEntityPacket.class, new ArrowEntityPacketEncoder());
+		register(ItemNodePacket.class, new ItemNodePacketEncoder());
+		register(TooltipPacket.class, new TooltipPacketEncoder());
+		register(InterfaceItemPacket.class, new InterfaceItemPacketEncoder());
+		register(FeedMessagePacket.class, new FeedMessagePacketEncoder());
+		register(WildernessActivityPacket.class, new WildernessActivityPacketEncoder());
+		register(ItemOnInterfaceSlotPacket.class, new ItemOnInterfaceSlotPacketEncoder());
+		register(EnergyPacket.class, new EnergyPacketEncoder());
+		register(FadePacket.class, new FadePacketEncoder());
+		register(ClanBannedPacket.class, new ClanBannedPacketEncoder());
+		register(CameraResetPacket.class, new CameraResetPacketEncoder());
+		register(PrivateMessageStatusPacket.class, new PrivateMessageStatusPacketEncoder());
+		register(ContextMenuPacket.class, new ContextMenuPacketEncoder());
+		register(SkillGoalPacket.class, new SkillGoalPacketEncoder());
+		register(FlashTabPacket.class, new FlashTabPacketEncoder());
+		register(MinimapStatePacket.class, new MinimapStatePacketEncoder());
+		register(MessagePacket.class, new MessagePacketEncoder());
+		register(TaskPacket.class, new TaskPacketEncoder());
+		register(ObjectRemovalPacket.class, new ObjectRemovalPacketEncoder());
+		register(WalkableInterfacePacket.class, new WalkableInterfacePacketEncoder());
+		register(ChatOptionPacket.class, new ChatOptionPacketEncoder());
+		register(CameraAnglePacket.class, new CameraAnglePacketEncoder());
+		register(SkillPacket.class, new SkillPacketEncoder());
+		register(CameraMovementPacket.class, new CameraMovementPacketEncoder());
+		register(MultiIconPacket.class, new MultiIconPacketEncoder());
+		register(ScorePacket.class, new ScorePacketEncoder());
+		register(ItemModelInterfacePacket.class, new ItemModelInterfacePacketEncoder());
+		register(PrivateFriendUpdatePacket.class, new PrivateFriendUpdatePacketEncoder());
+		register(ClearContainerPacket.class, new ClearContainerPacketEncoder());
+		register(ObjectPacket.class, new ObjectPacketEncoder());
+		register(ClanMessagePacket.class, new ClanMessagePacketEncoder());
+		register(InterfaceNpcModelPacket.class, new InterfaceNpcModelPacketEncoder());
+		register(BroadcastPacket.class, new BroadcastPacketEncoder());
+		register(ProjectilePacket.class, new ProjectilePacketEncoder());
+		register(GraphicPacket.class, new GraphicPacketEncoder());
+		register(ForceTabPacket.class, new ForceTabPacketEncoder());
 	}
-
 }
