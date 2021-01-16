@@ -15,6 +15,8 @@ import com.rageps.world.entity.actor.ActorList;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.item.GroundItem;
 import com.rageps.world.entity.region.Region;
+import com.rageps.world.entity.sync.ClientSynchronizer;
+import com.rageps.world.entity.sync.ParallelClientSynchronizer;
 import com.rageps.world.sync.Synchronizer;
 
 import java.util.Queue;
@@ -95,9 +97,11 @@ public final class GameService extends Service {
 	private PacketHandlerChainSet handlers;
 
 	/**
-	 * Main game synchronizer.
+	 * The {@link ClientSynchronizer}.
 	 */
-	private final Synchronizer sync = new Synchronizer();
+	private final ClientSynchronizer synchronizer = new ParallelClientSynchronizer();
+
+
 
 	/**
 	 * Creates the GameService.
@@ -182,9 +186,9 @@ public final class GameService extends Service {
 
 			//register
 
-			sync.preUpdate(world.getPlayers(), world.getMobRepository());
-			sync.update(world.getPlayers());
-			sync.postUpdate(world.getPlayers(), world.getMobRepository());
+			//sync.preUpdate(world.getPlayers(), world.getMobRepository());
+			//sync.update(world.getPlayers());
+			//sync.postUpdate(world.getPlayers(), world.getMobRepository());
 
 			//deregister
 
@@ -222,6 +226,7 @@ public final class GameService extends Service {
 			}
 		}
 		world.pulse();
+		synchronizer.synchronize(players, world.getMobRepository());
 	}
 
 	/**

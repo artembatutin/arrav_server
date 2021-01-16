@@ -246,5 +246,13 @@ public enum Direction {
 			}
 		}
 	}
-	
+
+	/**
+	 * Gets the direction as an integer which the client can understand.
+	 *
+	 * @return The movement as an integer.
+	 */
+	public int toInteger() {
+		return getId();
+	}
 }

@@ -56,6 +56,7 @@ import com.rageps.net.codec.game.GamePacket;
 import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.packet.out.model.*;
 import com.rageps.net.refactor.session.impl.GameSession;
+import com.rageps.net.sql.forum.account.MemberGroup;
 import com.rageps.net.sql.forum.account.MultifactorAuthentication;
 import com.rageps.task.Task;
 import com.rageps.util.*;
@@ -84,6 +85,7 @@ import com.rageps.world.entity.actor.player.assets.Rights;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.actor.player.assets.group.ExperienceRate;
 import com.rageps.world.entity.actor.player.assets.group.GameMode;
+import com.rageps.world.entity.actor.player.assets.group.PlayerPrivilege;
 import com.rageps.world.entity.actor.player.assets.relations.PlayerRelation;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.item.container.impl.Bank;
@@ -103,6 +105,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -156,6 +159,100 @@ public final class Player extends Actor {
 	 */
 	public final AtomicBoolean saved = new AtomicBoolean(false);
 
+
+	/**
+	 * A flag which indicates there are npcs that couldn't be added.
+	 */
+	private boolean excessiveNpcs;
+
+	/**
+	 * A flag which indicates there are players that couldn't be added.
+	 */
+	private boolean excessivePlayers;
+
+
+	/**
+	 * Resets the excessive players flag.
+	 */
+	public void resetExcessivePlayers() {
+		excessivePlayers = false;
+	}
+	/**
+	 * Sets the excessive npcs flag.
+	 */
+	public void flagExcessiveNpcs() {
+		excessiveNpcs = true;
+	}
+
+	/**
+	 * Checks if there are excessive npcs.
+	 *
+	 * @return {@code true} if so, {@code false} if not.
+	 */
+	public boolean isExcessiveNpcsSet() {
+		return excessiveNpcs;
+	}
+
+	/**
+	 * Checks if there are excessive players.
+	 *
+	 * @return {@code true} if so, {@code false} if not.
+	 */
+	public boolean isExcessivePlayersSet() {
+		return excessivePlayers;
+	}
+
+	/**
+	 * Sets the excessive players flag.
+	 */
+	public void flagExcessivePlayers() {
+		excessivePlayers = true;
+	}
+
+	/**
+	 * The current amount of appearance tickets.
+	 */
+	private static final AtomicInteger appearanceTicketCounter = new AtomicInteger(0);
+
+	/**
+	 * Generates the next appearance ticket.
+	 *
+	 * @return The next available appearance ticket.
+	 */
+	private static int nextAppearanceTicket() {
+		if (appearanceTicketCounter.incrementAndGet() == 0) {
+			appearanceTicketCounter.set(1);
+		}
+		return appearanceTicketCounter.get();
+	}
+
+	/**
+	 * This appearance tickets for this Player.
+	 */
+	private final int[] appearanceTickets = new int[2000];
+
+	/**
+	 * This Players appearance ticket.
+	 */
+	private int appearanceTicket = nextAppearanceTicket();
+
+	/**
+	 * Gets this Players appearance ticket.
+	 *
+	 * @return This Players appearance ticket.
+	 */
+	public int getAppearanceTicket() {
+		return appearanceTicket;
+	}
+
+	/**
+	 * Gets all of this Players appearance tickets.
+	 *
+	 * @return All of this Players appearance tickets.
+	 */
+	public int[] getAppearanceTickets() {
+		return appearanceTickets;
+	}
 
 	/**
 	 * Determines if this player is playing in iron man mode.
@@ -350,7 +447,17 @@ public final class Player extends Actor {
 	 * The amount of authority this player has over others.
 	 */
 	private Rights rights = Rights.PLAYER;
-	
+
+	private MemberGroup memberGroup = MemberGroup.MEMBER;
+
+	public MemberGroup getMemberGroup() {
+		return memberGroup;
+	}
+
+	public void setMemberGroup(MemberGroup memberGroup) {
+		this.memberGroup = memberGroup;
+	}
+
 	/**
 	 * The combat special that has been activated.
 	 */
@@ -819,6 +926,8 @@ public final class Player extends Actor {
 				setTeleportStage(0);
 		}
 		getCombat().tick();
+
+
 		//if(getSession() != null)
 		//	UpdateManager.prepare(this);
 	}

@@ -6,7 +6,11 @@ import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.packet.in.decoder.IdleStatePacketPacketDecoder;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
 import com.rageps.net.refactor.packet.out.encoder.*;
+import com.rageps.net.refactor.packet.out.encoder.update.NpcSynchronizationMessageEncoder;
+import com.rageps.net.refactor.packet.out.encoder.update.PlayerSynchronizationMessageEncoder;
 import com.rageps.net.refactor.packet.out.model.*;
+import com.rageps.net.refactor.packet.out.model.update.NpcSynchronizationPacket;
+import com.rageps.net.refactor.packet.out.model.update.PlayerSynchronizationPacket;
 import org.reflections.Reflections;
 
 import java.lang.reflect.ParameterizedType;
@@ -223,5 +227,8 @@ public final class Release317 extends Release {
 		register(ProjectilePacket.class, new ProjectilePacketEncoder());
 		register(GraphicPacket.class, new GraphicPacketEncoder());
 		register(ForceTabPacket.class, new ForceTabPacketEncoder());
+
+		register(PlayerSynchronizationPacket.class, new PlayerSynchronizationMessageEncoder());
+		register(NpcSynchronizationPacket.class, new NpcSynchronizationMessageEncoder());
 	}
 }

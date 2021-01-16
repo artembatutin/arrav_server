@@ -23,6 +23,8 @@ import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.actor.update.UpdateFlagHolder;
 import com.rageps.world.entity.region.Region;
+import com.rageps.world.entity.sync.block.SynchronizationBlock;
+import com.rageps.world.entity.sync.block.SynchronizationBlockSet;
 import com.rageps.world.locale.Position;
 import com.rageps.world.locale.loc.Locations;
 import com.rageps.world.model.Animation;
@@ -42,6 +44,27 @@ public abstract class Actor extends Entity {
 	private Hit primaryHit;
 
 	private Hit secondaryHit;
+
+	/**
+	 * This mob's set of synchronization blocks.
+	 */
+	protected SynchronizationBlockSet blockSet = new SynchronizationBlockSet();
+
+	/**
+	 * Resets this mob's block set.
+	 */
+	public final void resetBlockSet() {
+		blockSet = new SynchronizationBlockSet();
+	}
+
+	/**
+	 * Gets this mob's {@link SynchronizationBlockSet}.
+	 *
+	 * @return The block set.
+	 */
+	public final SynchronizationBlockSet getBlockSet() {
+		return blockSet;
+	}
 	
 	/**
 	 * The current teleport stage that this player is in.
@@ -233,13 +256,14 @@ public abstract class Actor extends Entity {
 		needsRegionUpdate = false;
 		needsPlacement = false;
 		animation = null;
-		flags.clear();
+		//flags.clear();
+		resetBlockSet();
 		primaryHit = null;
 		secondaryHit = null;
 	}
 	
 	/**
-	 * Sets the value for {@link Entity#position}.
+	 * Sets the value for position.
 	 * @param position the new value to set.
 	 */
 	@Override
@@ -428,6 +452,8 @@ public abstract class Actor extends Entity {
 	public final void forceChat(String forcedText) {
 		this.forcedText = forcedText;
 		flags.flag(UpdateFlag.FORCE_CHAT);
+		blockSet.add(SynchronizationBlock.createForceChatBlock(forcedText));
+
 	}
 	
 	/**
@@ -1048,5 +1074,9 @@ public abstract class Actor extends Entity {
 
 	public void setLocation(Locations.Location location) {
 		this.location = location;
+	}
+
+	public Direction[] getDirections() {
+		return new Direction[] {getPrimaryDirection(), getSecondaryDirection()};
 	}
 }
