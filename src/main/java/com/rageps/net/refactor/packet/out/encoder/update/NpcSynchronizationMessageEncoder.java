@@ -50,7 +50,6 @@ public final class NpcSynchronizationMessageEncoder implements PacketEncoder<Npc
 		} else {
 			builder.switchToByteAccess();
 		}
-
 		return builder.toGamePacket();
 	}
 
@@ -69,7 +68,7 @@ public final class NpcSynchronizationMessageEncoder implements PacketEncoder<Npc
 		builder.putBits(5, other.getY() - npc.getY());
 		builder.putBits(5, other.getX() - npc.getX());
 		builder.putBits(1, 0); // discard walking queue
-		builder.putBits(12, seg.getNpcId());
+		builder.putBits(16, seg.getNpcId());
 		builder.putBits(1, updateRequired ? 1 : 0);
 	}
 
@@ -247,7 +246,8 @@ public final class NpcSynchronizationMessageEncoder implements PacketEncoder<Npc
 	 * @param builder The builder.
 	 */
 	private static void putRemoveMobUpdate(GamePacketBuilder builder) {
-		builder.putBits(1, 1);
+		//builder.putBits(1, 1);
+		builder.putBit(true);
 		builder.putBits(2, 3);
 	}
 

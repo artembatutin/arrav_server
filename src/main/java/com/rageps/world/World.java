@@ -204,7 +204,6 @@ public final class World {
 	 */
 	public boolean logout(Player player) {
 		try {
-			//Thread.dumpStack();
 			// If the player x-logged, don't log the player out. Keep the
 			// player queued until they are out of combat to prevent x-logging.
 			if(player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getCombat().isUnderAttack() && UpdateCommand.inProgess != 2) {

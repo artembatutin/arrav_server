@@ -13,6 +13,7 @@ public class MobUpdatePacketEncoder implements PacketEncoder<MobUpdatePacket> {
     @Override
     public GamePacket encode(MobUpdatePacket message) {
         GamePacketBuilder builder = new GamePacketBuilder(0);
+        Thread.dumpStack();
         return builder.toGamePacket();
     }
 }
