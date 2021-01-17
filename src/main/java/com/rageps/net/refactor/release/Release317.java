@@ -4,6 +4,9 @@ import com.rageps.action.ActionInitializer;
 import com.rageps.net.refactor.meta.PacketMetaDataGroup;
 import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.packet.in.decoder.*;
+import com.rageps.net.refactor.packet.in.handler.InterfaceClickPacketPacketHandler;
+import com.rageps.net.refactor.packet.in.model.InterfaceActionPacketPacket;
+import com.rageps.net.refactor.packet.in.model.InterfaceClickPacketPacket;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
 import com.rageps.net.refactor.packet.out.encoder.*;
 import com.rageps.net.refactor.packet.out.encoder.update.NpcSynchronizationMessageEncoder;
@@ -71,16 +74,60 @@ public final class Release317 extends Release {
 	private void init() {
 		// register decoders
 
-		register(0, new IdleStatePacketPacketDecoder());
+		//register(0, new IdleStatePacketPacketDecoder());
 
 		MovementQueuePacketPacketDecoder movementPacket = new MovementQueuePacketPacketDecoder();
 		register(248, movementPacket);
 		register(164, movementPacket);
 		register(98, movementPacket);
-		register(185, new ClickButtonPacketPacketDecoder());
 
-		register(4, new ChatPacketPacketDecoder());
 		register(103, new CommandPacketPacketDecoder());
+
+		register(213, new InterfaceActionPacketPacketDecoder());
+		register(181, new MagicOnGroundItemPacketPacketDecoder());
+		register(232, new OperateEquipmentPacketPacketDecoder());
+		register(237, new MagicOnItemPacketPacketDecoder());
+		register(10, new ConstructionPacketPacketDecoder());
+		register(135, new InputXOptionPacketPacketDecoder());
+		register(208, new EnterAmountPacketPacketDecoder());
+		register(60, new EnterSyntaxPacketDecoder());
+		register(57, new ItemOnMobPacketPacketDecoder());
+		register(202, new IdleStatePacketPacketDecoder());
+		register(153, new AttackPlayerPacketPacketDecoder());
+//		register(249, new MagicOnPlayerPacketDecoder());
+		register(101, new CharacterSelectionPacketPacketDecoder());
+		register(186, new SummoningCreationPacketPacketDecoder());
+		register(3, new FocusChangePacketPacketDecoder());
+		register(4, new ChatPacketPacketDecoder());
+		register(185, new ClickButtonPacketPacketDecoder());
+		register(105, new MarketPacketPacketDecoder());
+
+		DefaultPacketPacketDecoder defaultDecoder = new DefaultPacketPacketDecoder();
+		register(0, defaultDecoder);
+		register(95, defaultDecoder);
+		register(241, defaultDecoder);
+		register(86, defaultDecoder);
+
+		register(40, new AdvanceDialoguePacketPacketDecoder());
+		register(87, new DropItemPacketPacketDecoder());
+		register(73, new FollowPlayerPacketPacketDecoder());
+		register(130, new InterfaceClickPacketDecoder());
+
+		register(139, new TradeRequestPacketPacketDecoder());
+		register(128, new DuelRequestPacketPacketDecoder());
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		/*WalkMessageDecoder walkMessageDecoder = new WalkMessageDecoder();
 		register(248, walkMessageDecoder);

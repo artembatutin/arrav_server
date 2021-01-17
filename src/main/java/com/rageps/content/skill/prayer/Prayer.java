@@ -140,7 +140,7 @@ public enum Prayer {
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MAGIC, PROTECT_FROM_MELEE, RETRIBUTION, REDEMPTION, SMITE});
 		}
-	}, PROTECT_FROM_MELEE(PrayerBook.NORMAL, new ProtectionPrayerListener(), 21247, 5, 0, 43, 97, 67068, 648) {
+	}, PROTECT_FROM_MELEE(PrayerBook.NORMAL, new ProtectionPrayerListener(), 5623, 5, 0, 43, 97, 67068, 648) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MAGIC, PROTECT_FROM_MISSILES, RETRIBUTION, REDEMPTION, SMITE});

@@ -32,6 +32,7 @@ public final class PlayerCredentials {
 
 	public PlayerCredentials(String username, String password, long usernameHash, String mac, String hostAddress) {
 		this.username = username;
+		this.formattedUsername = TextUtils.capitalize(username);
 		this.password = password;
 		this.usernameHash = usernameHash;
 		this.macAddress = mac;

@@ -7,6 +7,7 @@ import com.rageps.net.refactor.security.IsaacRandom;
 import com.rageps.net.refactor.security.IsaacRandomPair;
 import com.rageps.util.BufferUtil;
 import com.rageps.util.StatefulFrameDecoder;
+import com.rageps.util.TextUtils;
 import com.rageps.world.entity.actor.player.PlayerCredentials;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -214,7 +215,7 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState> 
 			
 			String dummyMac= "";
 
-			PlayerCredentials credentials = new PlayerCredentials(username, password, usernameHash, dummyMac, hostAddress);
+			PlayerCredentials credentials = new PlayerCredentials(username, password, TextUtils.nameToHash(username), dummyMac, hostAddress);
 			IsaacRandomPair randomPair = new IsaacRandomPair(encodingRandom, decodingRandom);
 
 			out.add(new LoginRequest(credentials, randomPair, reconnecting, release));

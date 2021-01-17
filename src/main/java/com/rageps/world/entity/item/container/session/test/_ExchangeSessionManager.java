@@ -84,11 +84,13 @@ public final class _ExchangeSessionManager {
 			});
 			return true;
 		}
-		
-		player.message("Sending duel request...");
-		requested.message(player.getFormatUsername() + ":duelreq:");
-		
+		//System.out.println("here");
+		//player.message("Sending duel request...");
+		//requested.message(player.getFormatUsername() + ":tradereq:");
+
+
 		player.exchange_manager.last_requested = requested;
+		System.out.println(session.type.name());
 		session.onRequest(player, requested);
 		return true;
 	}

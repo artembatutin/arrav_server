@@ -45,7 +45,8 @@ public final class TradeSession extends _ExchangeSession {
 	 */
 	@Override
 	public void onRequest(Player player, Player requested) {
-	
+		player.message("Sending trade request...");
+		requested.message(player.getFormatUsername() + ":tradereq:");
 	}
 	
 	/**

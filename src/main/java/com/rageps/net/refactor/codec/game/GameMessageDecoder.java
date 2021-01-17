@@ -3,6 +3,7 @@ package com.rageps.net.refactor.codec.game;
 import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.packet.in.PacketDecoder;
 import com.rageps.net.refactor.release.Release;
+import com.rageps.world.World;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 
@@ -33,7 +34,11 @@ public final class GameMessageDecoder extends MessageToMessageDecoder<GamePacket
 	protected void decode(ChannelHandlerContext ctx, GamePacket packet, List<Object> out) {
 		PacketDecoder<?> decoder = release.getMessageDecoder(packet.getOpcode());
 		if (decoder != null) {
-			out.add(decoder.decode(packet));
+			try {
+				out.add(decoder.decode(packet));
+			}catch (Exception e) {
+				World.getLogger().warn("Error decoding packet {}, player {}", packet.getClass().getSimpleName(), ctx.channel().remoteAddress());
+			}
 		} else {
 			System.out.println("Unidentified packet received - opcode: " + packet.getOpcode() + ".");
 		}

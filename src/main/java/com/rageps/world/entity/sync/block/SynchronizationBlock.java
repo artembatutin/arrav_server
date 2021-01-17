@@ -39,7 +39,7 @@ public abstract class SynchronizationBlock {
 		int combat = player.determineCombatLevel();
 		int id = player.getPlayerNpc();
 		boolean ironman = player.isIronMan();
-		return new AppearanceBlock(StringUtil.stringToLong("cheeks"), player.getAppearance(), combat, player.getEquipment(), player.headIcon, player.skullIcon, id, ironman);
+		return new AppearanceBlock(player.credentials.usernameHash, player.getAppearance(), combat, player.getEquipment(), player.headIcon, player.skullIcon, id, ironman);
 	}
 
 	/**

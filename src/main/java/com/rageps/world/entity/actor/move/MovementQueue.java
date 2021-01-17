@@ -309,6 +309,7 @@ public final class MovementQueue {
 	 * @param leader the character being followed.
 	 */
 	public void follow(Actor leader) {
+		System.out.println(character.getFollowEntity()+" "+followTask.isPresent());
 		if(character.getFollowEntity() != null && character.getFollowEntity().same(leader)) {
 			return;
 		}
