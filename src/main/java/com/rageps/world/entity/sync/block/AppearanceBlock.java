@@ -46,10 +46,7 @@ public final class AppearanceBlock extends SynchronizationBlock {
 	 */
 	private final int headIcon;
 
-	/**
-	 * The player's total skill level (or 0).
-	 */
-	private final int skill;
+	private final boolean ironman;
 
 	/**
 	 * Creates the appearance block. Assumes that the player is not appearing as an npc.
@@ -57,13 +54,12 @@ public final class AppearanceBlock extends SynchronizationBlock {
 	 * @param name The player's username, encoded to base 37.
 	 * @param appearance The {@link PlayerAppearance}.
 	 * @param combat The player's combat.
-	 * @param skill The player's skill, or 0 if showing the combat level.
 	 * @param equipment The player's equipment.
 	 * @param headIcon The head icon id of the player.
 	 * @param skull Whether or not the player is skulled.
 	 */
-	AppearanceBlock(long name, PlayerAppearance appearance, int combat, int skill, ItemContainer equipment, int headIcon, int skull) {
-		this(name, appearance, combat, skill, equipment, headIcon, skull, -1);
+	AppearanceBlock(long name, PlayerAppearance appearance, int combat, ItemContainer equipment, int headIcon, int skull, boolean ironman) {
+		this(name, appearance, combat, equipment, headIcon, skull, -1, ironman);
 	}
 
 	/**
@@ -72,21 +68,20 @@ public final class AppearanceBlock extends SynchronizationBlock {
 	 * @param name The player's username, encoded to base 37.
 	 * @param appearance The {@link PlayerAppearance}.
 	 * @param combat The player's combat.
-	 * @param skill The player's skill, or 0 if showing the combat level.
 	 * @param equipment The player's equipment.
 	 * @param headIcon The prayer icon id of this player.
 	 * @param skull Whether or not the player is skulled.
 	 * @param npcId The npc id of the player, if they are appearing as an npc, (otherwise {@code -1}).
 	 */
-	AppearanceBlock(long name, PlayerAppearance appearance, int combat, int skill, ItemContainer equipment, int headIcon, int skull, int npcId) {
+	AppearanceBlock(long name, PlayerAppearance appearance, int combat, ItemContainer equipment, int headIcon, int skull, int npcId, boolean ironman) {
 		this.name = name;
 		this.appearance = appearance;
 		this.combat = combat;
-		this.skill = skill;
 		this.equipment = equipment;//equipment.duplicate(); todo - does it need to be cloned?
 		this.headIcon = headIcon;
 		this.skull = skull;
 		this.npcId = npcId;
+		this.ironman = ironman;
 	}
 
 	/**
@@ -161,13 +156,8 @@ public final class AppearanceBlock extends SynchronizationBlock {
 		return headIcon;
 	}
 
-	/**
-	 * Gets the player's skill level.
-	 *
-	 * @return The player's skill level.
-	 */
-	public int getSkillLevel() {
-		return skill;
-	}
 
+	public boolean isIronman() {
+		return ironman;
+	}
 }

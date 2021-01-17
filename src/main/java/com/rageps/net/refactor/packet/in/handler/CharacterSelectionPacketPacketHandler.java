@@ -20,7 +20,7 @@ public class CharacterSelectionPacketPacketHandler implements PacketHandler<Char
             return;
 
         player.getAppearance().setValues(packet.getValues());
-        player.getFlags().flag(UpdateFlag.APPEARANCE);
+        player.updateAppearance();
         player.closeWidget();
         if(player.getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) == 0) {
             player.getAttributeMap().set(PlayerAttributes.INTRODUCTION_STAGE, 1);

@@ -13,7 +13,7 @@ public final class TransformNpcCommand implements Command {
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		int id = Integer.parseInt(cmd[1]);
 		player.setPlayerNpc(id);
-		player.getFlags().flag(UpdateFlag.APPEARANCE);
+		player.updateAppearance();
 	}
 	
 }

@@ -112,7 +112,7 @@ public class ClanChannel implements Comparable<ClanChannel> {
 		player.clanChannel = this;
 		player.clanTag = getTag();
 		player.clanTagColor = details.level.getColor();
-		player.getFlags().flag(UpdateFlag.APPEARANCE);
+		player.updateAppearance();
 		if (player.lastClan.equals(details.owner)) {
 			player.lastClan = "";
 		}
@@ -146,7 +146,7 @@ public class ClanChannel implements Comparable<ClanChannel> {
 						ClanChannelHandler.clean(player);
 						player.clanTag = "";
 						player.clanChannel = null;
-						player.getFlags().flag(UpdateFlag.APPEARANCE);
+						player.updateAppearance();
 						player.send(new ScrollBarPacket(33530, 189));
 						player.message("You have disconnected from the clan chat channel.");
 					}
@@ -181,7 +181,7 @@ public class ClanChannel implements Comparable<ClanChannel> {
 					player.clanTag = "";
 					player.lastClan = details.owner;
 					player.clanChannel = null;
-					player.getFlags().flag(UpdateFlag.APPEARANCE);
+					player.updateAppearance();
 					player.message("You have been banned from the clan chat channel.");
 					member.player = Optional.empty();
 					refresh();
@@ -225,7 +225,7 @@ public class ClanChannel implements Comparable<ClanChannel> {
 			details.points += level.getPoints();
 			forPlayers(player -> {
 				player.clanTagColor = level.getColor();
-				player.getFlags().flag(UpdateFlag.APPEARANCE);
+				player.updateAppearance();
 			});
 			message("Woot! Our clan has leveled up to <col=255>" + StringUtil.formatEnumString(level.name())
 							+ "</col>! Total Experience: <col=255>" + StringUtil.formatDigits(details.experience),

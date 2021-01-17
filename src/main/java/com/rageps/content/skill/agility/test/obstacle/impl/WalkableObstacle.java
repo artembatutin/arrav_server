@@ -34,7 +34,7 @@ public class WalkableObstacle extends Obstacle {
 		player.setTurn90CWIndex(animation);
 		player.setTurn90CCWIndex(animation);
 		player.setTurnIndex(animation);
-		player.getFlags().flag(UpdateFlag.APPEARANCE);
+		player.updateAppearance();
 		player.getMovementQueue().walk(travelback() && player.getPosition().same(end) ? start[0] : end);
 	}
 	
@@ -48,6 +48,6 @@ public class WalkableObstacle extends Obstacle {
 		player.setTurn90CWIndex(animation);
 		player.setTurn90CCWIndex(animation);
 		player.setTurnIndex(animation);
-		player.getFlags().flag(UpdateFlag.APPEARANCE);
+		player.updateAppearance();
 	}
 }

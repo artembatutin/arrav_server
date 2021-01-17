@@ -461,7 +461,7 @@ public abstract class Minigame {
 		Prayer.deactivateAll(player);
 		Skills.restoreAll(player);
 		WeaponInterface.execute(player, player.getEquipment().get(Equipment.WEAPON_SLOT));
-		player.getFlags().flag(UpdateFlag.APPEARANCE);
+		player.updateAppearance();
 	}
 	
 	/**

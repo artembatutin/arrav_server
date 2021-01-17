@@ -5,6 +5,7 @@ import com.rageps.net.refactor.packet.PacketHandler;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.actor.update.UpdateFlag;
+import com.rageps.world.entity.sync.block.SynchronizationBlock;
 
 /**
  * @author Tamatea <tamateea@gmail.com>
@@ -22,7 +23,7 @@ public class ChatPacketPacketHandler implements PacketHandler<ChatPacketPacket> 
         player.setChatEffects(packet.getEffects());
         player.setChatColor(packet.getColor());
         player.setChatText(packet.getText());
-        player.getFlags().flag(UpdateFlag.CHAT);
+        player.getBlockSet().add(SynchronizationBlock.createChatBlock(player));
         player.getActivityManager().execute(ActivityManager.ActivityType.CHAT_MESSAGE);
     }
 }

@@ -237,7 +237,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		
 		Skills.restoreAll(getActor());
 		getActor().getActivityManager().enable();
-		getActor().getFlags().flag(UpdateFlag.APPEARANCE);
+		getActor().updateAppearance();
 		minigame.ifPresent(m -> m.postDeath(getActor()));
 	}
 	

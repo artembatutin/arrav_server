@@ -99,7 +99,7 @@ public final class GameSession extends Session {
 			Packet packet = packets.poll();
 
 			try {
-//				chainSet.notify(player, packet);
+				chainSet.notify(player, packet);
 			} catch (Exception reason) {
 				logger.fatal("Uncaught exception thrown while handling message: {}", packet, reason);
 			}

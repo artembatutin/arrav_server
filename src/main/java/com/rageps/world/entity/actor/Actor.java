@@ -91,7 +91,7 @@ public abstract class Actor extends Entity {
 	/**
 	 * An {@link UpdateFlagHolder} instance assigned to this {@code MobileEntity}.
 	 */
-	protected final UpdateFlagHolder flags = new UpdateFlagHolder();
+	//protected final UpdateFlagHolder flags = new UpdateFlagHolder();
 	
 	/**
 	 * The collection of stopwatches used for various timing operations.
@@ -421,7 +421,7 @@ public abstract class Actor extends Entity {
 			animation = new Animation(65535, Animation.AnimationPriority.HIGH);
 		if(this.animation == null || this.animation.getPriority().getValue() <= animation.getPriority().getValue()) {
 			this.animation = animation.copy();
-			flags.flag(UpdateFlag.ANIMATION);
+			blockSet.add(SynchronizationBlock.createAnimationBlock(animation));
 		}
 	}
 	
@@ -438,7 +438,7 @@ public abstract class Actor extends Entity {
 			graphic = new Graphic(-1);
 		}
 		this.graphic = graphic.copy();
-		flags.flag(UpdateFlag.GRAPHIC);
+		blockSet.add(SynchronizationBlock.createGraphicBlock(graphic));
 	}
 	
 	public final void graphic(int graphic) {
@@ -451,9 +451,7 @@ public abstract class Actor extends Entity {
 	 */
 	public final void forceChat(String forcedText) {
 		this.forcedText = forcedText;
-		flags.flag(UpdateFlag.FORCE_CHAT);
 		blockSet.add(SynchronizationBlock.createForceChatBlock(forcedText));
-
 	}
 	
 	/**
@@ -462,7 +460,8 @@ public abstract class Actor extends Entity {
 	 */
 	public final void faceEntity(Actor entity) {
 		this.faceIndex = entity == null ? 65535 : entity.isPlayer() ? entity.slot + 32768 : entity.slot;
-		flags.flag(UpdateFlag.FACE_ENTITY);
+		//flags.flag(UpdateFlag.FACE_ENTITY);
+		//todo
 	}
 	
 	/**
@@ -477,7 +476,8 @@ public abstract class Actor extends Entity {
 			facePosition = new Position(0, 0);
 		else
 			facePosition = new Position(2 * position.getX() + 1, 2 * position.getY() + 1);
-		flags.flag(UpdateFlag.FACE_COORDINATE);
+		blockSet.add(SynchronizationBlock.createTurnToPositionBlock(facePosition));
+//		flags.flag(UpdateFlag.FACE_COORDINATE);
 	}
 	
 	/**
@@ -507,10 +507,10 @@ public abstract class Actor extends Entity {
 	public final void writeDamage(Hit hit) {
 		if(primaryHit == null) {
 			primaryHit = decrementHealth(hit);
-			getFlags().flag(UpdateFlag.PRIMARY_HIT);
+			blockSet.add(SynchronizationBlock.createHitUpdateBlock(hit.getDamage(), hit.getHitsplat().getId(), getCurrentHealth(), getMaxHP(), false));
 		} else if(secondaryHit == null) {
 			secondaryHit = decrementHealth(hit);
-			getFlags().flag(UpdateFlag.SECONDARY_HIT);
+			blockSet.add(SynchronizationBlock.createHitUpdateBlock(hit.getDamage(), hit.getHitsplat().getId(), getCurrentHealth(), getMaxHP(), true));
 		}
 	}
 	
@@ -896,13 +896,6 @@ public abstract class Actor extends Entity {
 	 */
 	public final MovementQueueListener getMovementListener() {
 		return movementListener;
-	}
-	
-	/**
-	 * @return The {@link UpdateFlagHolder} instance assigned to this {@code Actor}.
-	 */
-	public final UpdateFlagHolder getFlags() {
-		return flags;
 	}
 	
 	/**

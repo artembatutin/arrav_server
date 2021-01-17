@@ -87,7 +87,7 @@ public final class ViewingOrb {
 		player.getActivityManager().disable();
 		player.send(new MinimapStatePacket(2));
 		player.setPlayerNpc(2982);
-		player.getFlags().flag(UpdateFlag.APPEARANCE);
+		player.updateAppearance();
 		move("Centre", 15239, centre);
 	}
 	
@@ -101,7 +101,7 @@ public final class ViewingOrb {
 		player.setVisible(true);
 		player.getActivityManager().enable();
 		player.setPlayerNpc(-1);
-		player.getFlags().flag(UpdateFlag.APPEARANCE);
+		player.updateAppearance();
 		player.send(new MinimapStatePacket(0));
 		player.move(start);
 	}

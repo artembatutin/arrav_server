@@ -530,7 +530,7 @@ public enum Prayer {
 		player.send(new ConfigPacket(prayer.get().getConfig(), 1));
 		if(prayer.get().getHeadIcon() != -1) {
 			player.headIcon = prayer.get().getHeadIcon();
-			player.getFlags().flag(UpdateFlag.APPEARANCE);
+			player.updateAppearance();
 		}
 		return true;
 	}
@@ -634,7 +634,7 @@ public enum Prayer {
 		player.send(new ConfigPacket(config, 0));
 		if(headIcon != -1) {
 			player.headIcon = -1;
-			player.getFlags().flag(UpdateFlag.APPEARANCE);
+			player.updateAppearance();
 		}
 		if(player.getPrayerActive().isEmpty()) {
 			player.send(new ConfigPacket(175, 0));

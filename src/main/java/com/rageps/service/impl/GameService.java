@@ -3,6 +3,7 @@ package com.rageps.service.impl;
 import com.rageps.GameConstants;
 import com.rageps.GamePulseHandler;
 import com.rageps.GameShutdownHook;
+import com.rageps.net.packet.PacketHandlerChainSetParser;
 import com.rageps.net.refactor.codec.login.LoginConstants;
 import com.rageps.net.refactor.packet.PacketHandlerChainSet;
 import com.rageps.net.refactor.packet.out.model.LogoutPacket;
@@ -127,6 +128,7 @@ public final class GameService extends Service {
 		//System.out.println("player nulled:"+(player == null));
 		world.getPlayers().add(player);
 		Region region = player.getRegion();
+		if(region != null)
 		region.add(player);
 
 		if (!player.getSession().isReconnecting()) {
@@ -266,10 +268,8 @@ public final class GameService extends Service {
 	 * @param player The player.
 	 */
 	public void unregisterPlayer(Player player) {
-		Thread.dumpStack();
 		if(player.getCombat().inCombat())
 			player.getLogoutTimer().reset();
-		//player.setState(AWAITING_REMOVAL);
 		player.send(new LogoutPacket(player));
 		oldPlayers.add(player);
 	}
@@ -321,27 +321,8 @@ public final class GameService extends Service {
 	 * Initializes the game service.
 	 */
 	private void init() {
-		/*try (InputStream input = new FileInputStream("data/messages.xml")) {
-			MessageHandlerChainSetParser chainSetParser = new MessageHandlerChainSetParser(input);
-			handlers = chainSetParser.parse(world);
-		}
-
-		try (InputStream input = new FileInputStream("data/synchronizer.xml")) {
-			XmlParser parser = new XmlParser();
-			XmlNode root = parser.parse(input);
-
-			if (!root.getName().equals("synchronizer")) {
-				throw new IOException("Invalid root node name.");
-			}
-
-			XmlNode active = root.getChild("active");
-			if (active == null || !active.hasValue()) {
-				throw new IOException("No active node/value.");
-			}
-
-			Class<?> clazz = Class.forName(active.getValue());
-			synchronizer = (ClientSynchronizer) clazz.newInstance();
-		}*/
+		PacketHandlerChainSetParser parser = new PacketHandlerChainSetParser();
+		handlers = parser.parse();
 	}
 
 }

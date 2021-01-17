@@ -56,12 +56,12 @@ public class BarChair extends DynamicObject {
 		this.sitter = player;
 		player.sitting = this;
 		player.setStandIndex(SIT);
-		player.getFlags().flag(UpdateFlag.APPEARANCE);
+		player.updateAppearance();
 	}
 	
 	public void unsit() {
 		sitter.setStandIndex(-1);
-		sitter.getFlags().flag(UpdateFlag.APPEARANCE);
+		sitter.updateAppearance();
 		sitter.sitting = null;
 		sitter = null;
 	}

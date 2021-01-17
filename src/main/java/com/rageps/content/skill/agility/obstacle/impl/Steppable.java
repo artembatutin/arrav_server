@@ -115,7 +115,7 @@ public class Steppable extends ObstacleActivity {
 		player.setTurn90CWIndex(animation);
 		player.setTurn90CCWIndex(animation);
 		player.setTurnIndex(animation);
-		player.getFlags().flag(UpdateFlag.APPEARANCE);
+		player.updateAppearance();
 		player.move(getDestination());
 	}
 	

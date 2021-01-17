@@ -3,7 +3,7 @@ package com.rageps.net.refactor.release;
 import com.rageps.action.ActionInitializer;
 import com.rageps.net.refactor.meta.PacketMetaDataGroup;
 import com.rageps.net.refactor.packet.Packet;
-import com.rageps.net.refactor.packet.in.decoder.IdleStatePacketPacketDecoder;
+import com.rageps.net.refactor.packet.in.decoder.*;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
 import com.rageps.net.refactor.packet.out.encoder.*;
 import com.rageps.net.refactor.packet.out.encoder.update.NpcSynchronizationMessageEncoder;
@@ -11,6 +11,7 @@ import com.rageps.net.refactor.packet.out.encoder.update.PlayerSynchronizationMe
 import com.rageps.net.refactor.packet.out.model.*;
 import com.rageps.net.refactor.packet.out.model.update.NpcSynchronizationPacket;
 import com.rageps.net.refactor.packet.out.model.update.PlayerSynchronizationPacket;
+import org.apache.tools.ant.taskdefs.Move;
 import org.reflections.Reflections;
 
 import java.lang.reflect.ParameterizedType;
@@ -71,6 +72,16 @@ public final class Release317 extends Release {
 		// register decoders
 
 		register(0, new IdleStatePacketPacketDecoder());
+
+		MovementQueuePacketPacketDecoder movementPacket = new MovementQueuePacketPacketDecoder();
+		register(248, movementPacket);
+		register(164, movementPacket);
+		register(98, movementPacket);
+		register(185, new ClickButtonPacketPacketDecoder());
+
+		register(4, new ChatPacketPacketDecoder());
+		register(103, new CommandPacketPacketDecoder());
+
 		/*WalkMessageDecoder walkMessageDecoder = new WalkMessageDecoder();
 		register(248, walkMessageDecoder);
 		register(164, walkMessageDecoder);

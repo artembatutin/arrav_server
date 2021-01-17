@@ -4,6 +4,7 @@ import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.effect.CombatEffect;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.update.UpdateFlag;
+import com.rageps.world.entity.sync.block.SynchronizationBlock;
 
 /**
  * The combat effect applied when a player needs to be skulled.
@@ -27,7 +28,7 @@ public final class CombatSkullEffect extends CombatEffect {
 			}
 			player.playerData.getSkullTimer().set(3000);
 			player.skullIcon = Player.WHITE_SKULL;
-			player.getFlags().flag(UpdateFlag.APPEARANCE);
+			player.updateAppearance();
 			return true;
 		}
 		return false;
@@ -39,7 +40,7 @@ public final class CombatSkullEffect extends CombatEffect {
 			Player player = (Player) c;
 			if(player.playerData.getSkullTimer().get() <= 0) {
 				player.skullIcon = -1;
-				player.getFlags().flag(UpdateFlag.APPEARANCE);
+				player.updateAppearance();
 				return true;
 			}
 			return false;

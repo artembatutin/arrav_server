@@ -210,7 +210,7 @@ public final class Skills {
 				} else {
 					player.graphic(new Graphic(199));
 				}
-				player.getFlags().flag(UpdateFlag.APPEARANCE);
+				player.updateAppearance();
 				if(newLevel >= player.getSkills()[skill].getGoal()) {
 					player.getSkills()[skill].setGoal(0);
 					player.send(new SkillGoalPacket(skill, 0));

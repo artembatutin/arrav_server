@@ -6,6 +6,7 @@ import com.rageps.net.refactor.codec.game.*;
 import com.rageps.net.refactor.meta.PacketType;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
 import com.rageps.net.refactor.packet.out.model.update.PlayerSynchronizationPacket;
+import com.rageps.util.StringUtil;
 import com.rageps.world.entity.actor.player.PlayerAppearance;
 import com.rageps.world.entity.item.Item;
 import com.rageps.world.entity.item.ItemDefinition;
@@ -122,7 +123,8 @@ public final class PlayerSynchronizationMessageEncoder implements PacketEncoder<
 		GamePacketBuilder playerProperties = new GamePacketBuilder();
 
 		playerProperties.put(DataType.BYTE, appearance.getGender());
-		playerProperties.put(DataType.BYTE, 0);
+		playerProperties.put(DataType.BYTE, block.getHeadIcon());
+		playerProperties.put(DataType.BYTE, block.getSkull());
 
 		if (block.appearingAsNpc()) {
 			playerProperties.put(DataType.BYTE, 255);
@@ -215,9 +217,10 @@ public final class PlayerSynchronizationMessageEncoder implements PacketEncoder<
 		playerProperties.put(DataType.SHORT, 0x336); // turn 90 ccw
 		playerProperties.put(DataType.SHORT, 0x338); // run
 
+
 		playerProperties.put(DataType.LONG, block.getName());
 		playerProperties.put(DataType.BYTE, block.getCombatLevel());
-		playerProperties.put(DataType.SHORT, block.getSkillLevel());
+		playerProperties.put(DataType.BYTE, block.isIronman() ? 1 : 0);
 
 		builder.put(DataType.BYTE, DataTransformation.NEGATE, playerProperties.getLength());
 
@@ -343,7 +346,7 @@ public final class PlayerSynchronizationMessageEncoder implements PacketEncoder<
 		builder.put(DataType.BYTE, DataTransformation.SUBTRACT, block.getFinalY());
 		builder.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, block.getTravelDurationX());
 		builder.put(DataType.SHORT, DataTransformation.ADD, block.getTravelDurationY());
-		builder.put(DataType.BYTE, DataTransformation.SUBTRACT, block.getDirection().toInteger());
+		builder.put(DataType.BYTE, DataTransformation.SUBTRACT, block.getDirection().getId());
 	}
 
 	/**

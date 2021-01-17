@@ -1,0 +1,226 @@
+[
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.ConstructionPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.ConstructionPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.FocusChangePacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.FocusChangePacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.interface_actions.SecondItemInterfacePacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.interface_actions.SecondItemInterfacePacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.InterfaceActionPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.InterfaceActionPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.MagicOnItemPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.MagicOnItemPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.ShopAccessPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.ShopAccessPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.social.SendPMPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.social.SendPMPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.TradeRequestPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.TradeRequestPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.interface_actions.SwapSlotPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.interface_actions.SwapSlotPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.PrivacyOptionPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.PrivacyOptionPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.FirstItemActionPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.FirstItemActionPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.CommandPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.CommandPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.mob_actions.ThirdMobActionPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.mob_actions.ThirdMobActionPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.ClickButtonPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.ClickButtonPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.ItemOnMobPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.ItemOnMobPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.interface_actions.FourthItemInterfacePacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.interface_actions.FourthItemInterfacePacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.MovementQueuePacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.MovementQueuePacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.SocialPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.SocialPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.AdvanceDialoguePacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.AdvanceDialoguePacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.social.AddFriendPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.social.AddFriendPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.EnterSyntaxPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.EnterSyntaxPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.OperateEquipmentPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.OperateEquipmentPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.DuelRequestPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.DuelRequestPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.interface_actions.EquipItemPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.interface_actions.EquipItemPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.DropItemPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.DropItemPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.interface_actions.ThirdItemInterfacePacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.interface_actions.ThirdItemInterfacePacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.mob_actions.SecondMobActionPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.mob_actions.SecondMobActionPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.SummoningCreationPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.SummoningCreationPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.ItemOnItemNodePacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.ItemOnItemNodePacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.ItemOnObjectPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.ItemOnObjectPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.mob_actions.AttackMagicMobPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.mob_actions.AttackMagicMobActionPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.interface_actions.BankTabPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.interface_actions.BankTabPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.DefaultPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.DefaultPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.ThirdItemActionPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.ThirdItemPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.ItemOnPlayerPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.ItemOnPlayerPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.IdleStatePacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.IdleStatePacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.MagicOnGroundItemPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.MagicOnGroundItemPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.PickupItemPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.PickupItemPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.ChatPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.ChatPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.MarketPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.MarketPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.AttackPlayerPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.AttackPlayerPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.EnterAmountPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.EnterAmountPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.interface_actions.FirstItemInterfacePacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.interface_actions.FirstItemInterfacePacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.mob_actions.FirstMobActionPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.mob_actions.FirstMobActionPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.FollowPlayerPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.FollowPlayerPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.social.AddIgnorePacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.social.AddIgnorePacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.mob_actions.FourthMobActionPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.mob_actions.FourthMobActionPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.InputXOptionPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.InputXOptionPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.social.RemoveFriendPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.social.RemoveFriendPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.ItemOnItemPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.ItemOnItemPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.social.RemoveIgnorePacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.social.RemoveIgnorePacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.UpdateRegionPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.UpdateRegionPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.CharacterSelectionPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.CharacterSelectionPacketPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.SecondItemActionPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.SecondItemPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.mob_actions.AttackMobPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.mob_actions.AttackMobActionPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.InterfaceClickPacketPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.InterfaceClickPacketPacketHandler"
+   }
+]

@@ -43,7 +43,7 @@ public class Walkable extends ObstacleActivity {
 			player.setTurn90CWIndex(animation);
 			player.setTurn90CCWIndex(animation);
 			player.setTurnIndex(animation);
-			player.getFlags().flag(UpdateFlag.APPEARANCE);
+			player.updateAppearance();
 			player.getMovementQueue().walk(getDestination());
 		} else {
 			LinkedTaskSequence sequence = new LinkedTaskSequence();
@@ -56,7 +56,7 @@ public class Walkable extends ObstacleActivity {
 				player.setTurn90CWIndex(animation);
 				player.setTurn90CCWIndex(animation);
 				player.setTurnIndex(animation);
-				player.getFlags().flag(UpdateFlag.APPEARANCE);
+				player.updateAppearance();
 				player.getMovementQueue().walk(getDestination());
 			});
 			sequence.start();
@@ -81,6 +81,6 @@ public class Walkable extends ObstacleActivity {
 		player.setTurn90CWIndex(animation);
 		player.setTurn90CCWIndex(animation);
 		player.setTurnIndex(animation);
-		player.getFlags().flag(UpdateFlag.APPEARANCE);
+		player.updateAppearance();
 	}
 }

@@ -53,7 +53,6 @@ public final class PacketHandlerChain<M extends Packet> {
 	public boolean notify(Player player, M message) {
 		for (PacketHandler<M> handler : handlers) {
 			handler.handle(player, message);
-
 			if (message.terminated()) {
 				return false;
 			}

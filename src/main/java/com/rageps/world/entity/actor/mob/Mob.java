@@ -20,6 +20,7 @@ import com.rageps.world.entity.actor.mob.impl.godwars.KreeArra;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.update.UpdateFlag;
 import com.rageps.world.entity.region.Region;
+import com.rageps.world.entity.sync.block.SynchronizationBlock;
 import com.rageps.world.locale.Position;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 
@@ -284,7 +285,7 @@ public abstract class Mob extends Actor {
 	 */
 	public void transform(int id) {
 		transform = OptionalInt.of(id);
-		getFlags().flag(UpdateFlag.TRANSFORM);
+		blockSet.add(SynchronizationBlock.createTransformBlock(id));
 	}
 	
 	/**
@@ -292,7 +293,7 @@ public abstract class Mob extends Actor {
 	 */
 	public void untransform() {
 		transform = OptionalInt.empty();
-		getFlags().flag(UpdateFlag.TRANSFORM);
+		blockSet.add(SynchronizationBlock.createTransformBlock(-1));
 	}
 	
 	/**

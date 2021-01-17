@@ -1,5 +1,8 @@
 package com.rageps.world.entity.sync.block;
 
+import com.rageps.util.StringUtil;
+import com.rageps.world.entity.actor.combat.hit.Hit;
+import com.rageps.world.entity.actor.move.ForcedMovementDirection;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.sync.seg.SynchronizationSegment;
 import com.rageps.world.locale.Position;
@@ -35,7 +38,8 @@ public abstract class SynchronizationBlock {
 	public static SynchronizationBlock createAppearanceBlock(Player player) {
 		int combat = player.determineCombatLevel();
 		int id = player.getPlayerNpc();
-		return new AppearanceBlock(player.credentials.usernameHash, player.getAppearance(), combat, 0, player.getEquipment(), player.headIcon, player.skullIcon, id);
+		boolean ironman = player.isIronMan();
+		return new AppearanceBlock(StringUtil.stringToLong("cheeks"), player.getAppearance(), combat, player.getEquipment(), player.headIcon, player.skullIcon, id, ironman);
 	}
 
 	/**
@@ -68,7 +72,7 @@ public abstract class SynchronizationBlock {
 	 * @param direction The {@link Direction} the player should move.
 	 * @return The force movement block.
 	 */
-	public static SynchronizationBlock createForceMovementBlock(Position initialPosition, Position finalPosition, int travelDurationX, int travelDurationY, Direction direction) {
+	public static SynchronizationBlock createForceMovementBlock(Position initialPosition, Position finalPosition, int travelDurationX, int travelDurationY, ForcedMovementDirection direction) {
 		return new ForceMovementBlock(initialPosition, finalPosition, travelDurationX, travelDurationY, direction);
 	}
 

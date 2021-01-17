@@ -49,7 +49,7 @@
 //			values[cursor++] = value;
 //		}
 //		player.getAppearance().setValues(values);
-//		player.getFlags().flag(UpdateFlag.APPEARANCE);
+//		player.updateAppearance();
 //		player.closeWidget();
 //		if(player.getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) == 0) {
 //			player.getAttributeMap().set(PlayerAttributes.INTRODUCTION_STAGE, 1);

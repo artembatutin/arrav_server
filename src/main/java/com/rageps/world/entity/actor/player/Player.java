@@ -94,6 +94,7 @@ import com.rageps.world.entity.item.container.impl.Inventory;
 import com.rageps.world.entity.item.container.session.ExchangeSessionManager;
 import com.rageps.world.entity.item.container.session.test._ExchangeSessionManager;
 import com.rageps.world.entity.region.Region;
+import com.rageps.world.entity.sync.block.SynchronizationBlock;
 import com.rageps.world.locale.Position;
 import com.rageps.world.locale.loc.Locations;
 import com.rageps.world.model.Graphic;
@@ -709,7 +710,8 @@ public final class Player extends Actor {
 		setLastRegion(getPosition().copy());
 		setUpdates(true, false);
 		setUpdateRegion(true);
-		super.getFlags().flag(UpdateFlag.APPEARANCE);
+		updateAppearance();
+
 		Smelting.clearInterfaces(this);
 		//if(getAttributeMap().getInt(PlayerAttributes.INTRODUCTION_STAGE) == 3) {
 			sendDefaultSidebars();
@@ -730,6 +732,7 @@ public final class Player extends Actor {
 				World.get().submit(new CombatEffectTask(this, $it));
 		});
 		ExchangeSessionManager.get().resetRequests(this);
+		setRights(Rights.ADMINISTRATOR);
 		message("@blu@Welcome to "+World.get().getEnvironment().getName()+"!");
 		message("@blu@Report bugs with ::bug description");
 		if(UpdateCommand.inProgess == 1) {
@@ -945,6 +948,14 @@ public final class Player extends Actor {
 			//todo append player updating
 			//session.writeUpdate(new SendPlayerUpdate(), new SendMobUpdate());
 		}
+	}
+
+	/**
+	 * Updates the appearance for this Player.
+	 */
+	public void updateAppearance() {
+		appearanceTicket = nextAppearanceTicket();
+		blockSet.add(SynchronizationBlock.createAppearanceBlock(this));
 	}
 	
 	@Override

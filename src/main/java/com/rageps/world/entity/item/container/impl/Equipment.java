@@ -316,7 +316,7 @@ public final class Equipment extends ItemContainer {
 	 */
 	private void appearanceForIndex(int equipmentIndex) {
 		if(!NO_APPEARANCE.contains(equipmentIndex)) {
-			player.getFlags().flag(UpdateFlag.APPEARANCE);
+			player.updateAppearance();
 		}
 	}
 	

@@ -6,6 +6,7 @@ import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
 import com.rageps.world.entity.actor.update.UpdateFlag;
+import com.rageps.world.entity.sync.block.SynchronizationBlock;
 
 /**
  * Holds functionality for the 0x400 mask.
@@ -126,7 +127,7 @@ public final class ForcedMovementManager {
 			movement.getCharacter().getMovementQueue().reset();
 			if(movement.getAnimation() != null)
 				movement.getCharacter().animation(movement.getAnimation());
-			movement.getCharacter().getFlags().flag(UpdateFlag.FORCE_MOVEMENT);
+			movement.getCharacter().getBlockSet().add(SynchronizationBlock.createForceMovementBlock(movement.getFirst(), movement.getSecond(), movement.getFirstSpeed(), movement.getSecondSpeed(), movement.getDirection()));
 			movement.getCharacter().getMovementQueue().setLockMovement(true);
 		}
 		

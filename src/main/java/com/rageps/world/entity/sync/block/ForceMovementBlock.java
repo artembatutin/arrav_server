@@ -1,5 +1,6 @@
 package com.rageps.world.entity.sync.block;
 
+import com.rageps.world.entity.actor.move.ForcedMovementDirection;
 import com.rageps.world.locale.Position;
 import com.rageps.world.model.Direction;
 
@@ -17,7 +18,7 @@ public final class ForceMovementBlock extends SynchronizationBlock {
 	/**
 	 * The direction the player is moving.
 	 */
-	private final Direction direction;
+	private final ForcedMovementDirection direction;
 
 	/**
 	 * The {@link Position} the player is being moved to.
@@ -48,7 +49,7 @@ public final class ForceMovementBlock extends SynchronizationBlock {
 	 * @param travelDurationY The length of time (in game pulses) the player's movement along the Y-axis will last.
 	 * @param direction The direction the player should move.
 	 */
-	ForceMovementBlock(Position initialPosition, Position finalPosition, int travelDurationX, int travelDurationY, Direction direction) {
+	ForceMovementBlock(Position initialPosition, Position finalPosition, int travelDurationX, int travelDurationY, ForcedMovementDirection direction) {
 		this.initialPosition = initialPosition;
 		this.finalPosition = finalPosition;
 		this.travelDurationX = travelDurationX;
@@ -61,7 +62,7 @@ public final class ForceMovementBlock extends SynchronizationBlock {
 	 *
 	 * @return The direction.
 	 */
-	public Direction getDirection() {
+	public ForcedMovementDirection getDirection() {
 		return direction;
 	}
 

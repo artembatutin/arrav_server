@@ -131,7 +131,6 @@ public final class NpcSynchronizationTask extends SynchronizationTask {
 				}
 			}
 		}
-
 		player.send(new NpcSynchronizationPacket(playerPosition, segments, originalCount));
 	}
 
