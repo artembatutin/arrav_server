@@ -1,5 +1,6 @@
 bin/**
 out/**
+build/**
 data/logs/**
 .idea/**
 /bin
