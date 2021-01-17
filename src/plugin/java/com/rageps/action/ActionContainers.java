@@ -18,7 +18,7 @@ public class ActionContainers {
 
     public static final ActionContainer<ItemOnItemAction> ACTIONS = new ActionContainer<>();
 
-    public static final ActionContainer<ItemOnObjectAction> OBJECTS = new ActionContainer<>();
+    public static final ActionContainer<ItemOnObjectAction> ITEM_ON_OBJECT = new ActionContainer<>();
     public static final ActionContainer<ItemOnObjectAction> ITEMS = new ActionContainer<>();
 
     /*

@@ -19,7 +19,7 @@ import com.rageps.world.locale.Position;
 import java.util.Optional;
 
 import static com.rageps.action.ActionContainers.ITEMS;
-import static com.rageps.action.ActionContainers.OBJECTS;
+import static com.rageps.action.ActionContainers.ITEM_ON_OBJECT;
 
 /**
  * @author Tamatea <tamateea@gmail.com>
@@ -64,7 +64,7 @@ public class ItemOnObjectPacketPacketHandler implements PacketHandler<ItemOnObje
                 if(!MinigameHandler.execute(player, m -> m.onItemOnObject(player, object, item))) {
                     return;
                 }
-                ItemOnObjectAction a = OBJECTS.get(objectId);
+                ItemOnObjectAction a = ITEM_ON_OBJECT.get(objectId);
                 if(a != null) {
                     if(a.click(player, object, item, container, slot))
                         return;

@@ -1,9 +1,15 @@
 package com.rageps.net.refactor.release;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.rageps.action.ActionInitializer;
 import com.rageps.net.refactor.meta.PacketMetaDataGroup;
 import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.packet.in.decoder.*;
+import com.rageps.net.refactor.packet.in.decoder.interface_actions.*;
+import com.rageps.net.refactor.packet.in.decoder.mob_actions.*;
+import com.rageps.net.refactor.packet.in.decoder.object_actions.*;
+import com.rageps.net.refactor.packet.in.decoder.social.*;
 import com.rageps.net.refactor.packet.in.handler.InterfaceClickPacketPacketHandler;
 import com.rageps.net.refactor.packet.in.model.InterfaceActionPacketPacket;
 import com.rageps.net.refactor.packet.in.model.InterfaceClickPacketPacket;
@@ -14,6 +20,7 @@ import com.rageps.net.refactor.packet.out.encoder.update.PlayerSynchronizationMe
 import com.rageps.net.refactor.packet.out.model.*;
 import com.rageps.net.refactor.packet.out.model.update.NpcSynchronizationPacket;
 import com.rageps.net.refactor.packet.out.model.update.PlayerSynchronizationPacket;
+import com.rageps.util.json.JsonLoader;
 import org.apache.tools.ant.taskdefs.Move;
 import org.reflections.Reflections;
 
@@ -31,41 +38,43 @@ public final class Release317 extends Release {
 	/**
 	 * The incoming packet lengths array.
 	 */
-	public static final int[] PACKET_LENGTHS = {
-			0, 0, 0, 1, -1, 0, 0, 0, 0, 0, // 0
-			0, 0, 0, 0, 8, 0, 6, 2, 2, 0, // 10
-			0, 2, 0, 6, 0, 12, 0, 0, 0, 0, // 20
-			0, 0, 0, 0, 0, 8, 4, 0, 0, 2, // 30
-			2, 6, 0, 6, 0, -1, 0, 0, 0, 0, // 40
-			0, 0, 0, 12, 0, 0, 0, 8, 8, 0, // 50
-			0, 8, 0, 0, 0, 0, 0, 0, 0, 0, // 60
-			6, 0, 2, 2, 8, 6, 0, -1, 0, 6, // 70
-			0, 0, 0, 0, 0, 1, 4, 6, 0, 0, // 80
-			0, 0, 0, 0, 0, 3, 0, 0, -1, 0, // 90
-			0, 13, 0, -1, 0, 0, 0, 0, 0, 0, // 100
-			0, 0, 0, 0, 0, 0, 0, 6, 0, 0, // 110
-			1, 0, 6, 0, 0, 0, -1, 0, 2, 6, // 120
-			0, 4, 6, 8, 0, 6, 0, 0, 0, 2, // 130
-			0, 0, 0, 0, 0, 6, 0, 0, 0, 0, // 140
-			0, 0, 1, 2, 0, 2, 6, 0, 0, 0, // 150
-			0, 0, 0, 0, -1, -1, 0, 0, 0, 0, // 160
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 170
-			0, 8, 0, 3, 0, 2, 0, 0, 8, 1, // 180
-			0, 0, 12, 0, 0, 0, 0, 0, 0, 0, // 190
-			2, 0, 0, 0, 0, 0, 0, 0, 4, 0, // 200
-			4, 0, 0, 0, 7, 8, 0, 0, 10, 0, // 210
-			0, 0, 0, 0, 0, 0, -1, 0, 6, 0, // 220
-			1, 0, 0, 0, 6, 0, 6, 8, 1, 0, // 230
-			0, 4, 0, 0, 0, 0, -1, 0, -1, 4, // 240
-			0, 0, 6, 6, 0, 0, // 250
-	};
+	//public static final int[] PACKET_LENGTHS = {
+	//		0, 0, 0, 1, -1, 0, 0, 0, 0, 0, // 0
+	//		0, 0, 0, 0, 8, 0, 6, 2, 2, 0, // 10
+	//		0, 2, 0, 6, 0, 12, 0, 0, 0, 0, // 20
+	//		0, 0, 0, 0, 0, 8, 4, 0, 0, 2, // 30
+	//		2, 6, 0, 6, 0, -1, 0, 0, 0, 0, // 40
+	//		0, 0, 0, 12, 0, 0, 0, 8, 8, 0, // 50
+	//		0, 8, 0, 0, 0, 0, 0, 0, 0, 0, // 60
+	//		6, 0, 2, 2, 8, 6, 0, -1, 0, 6, // 70
+	//		0, 0, 0, 0, 0, 1, 4, 6, 0, 0, // 80
+	//		0, 0, 0, 0, 0, 3, 0, 0, -1, 0, // 90
+	//		0, 13, 0, -1, 0, 0, 0, 0, 0, 0, // 100
+	//		0, 0, 0, 0, 0, 0, 0, 6, 0, 0, // 110
+	//		1, 0, 6, 0, 0, 0, -1, 0, 2, 6, // 120
+	//		0, 4, 6, 8, 0, 6, 0, 0, 0, 2, // 130
+	//		0, 0, 0, 0, 0, 6, 0, 0, 0, 0, // 140
+	//		0, 0, 1, 2, 0, 2, 6, 0, 0, 0, // 150
+	//		0, 0, 0, 0, -1, -1, 0, 0, 0, 0, // 160
+	//		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 170
+	//		0, 8, 0, 3, 0, 2, 0, 0, 8, 1, // 180
+	//		0, 0, 12, 0, 0, 0, 0, 0, 0, 0, // 190
+	//		2, 0, 0, 0, 0, 0, 0, 0, 4, 0, // 200
+	//		4, 0, 0, 0, 7, 8, 0, 0, 10, 0, // 210
+	//		0, 0, 0, 0, 0, 0, -1, 0, 6, 0, // 220
+	//		1, 0, 0, 0, 6, 0, 6, 8, 1, 0, // 230
+	//		0, 4, 0, 0, 0, 0, -1, 0, -1, 4, // 240
+	//		0, 0, 6, 6, 0, 0, // 250
+	//};
+	public static int[] PACKET_LENGTHS  = new int[256];
 
 	/**
 	 * Creates and initialises this release.
 	 */
 	public Release317() {
-		super(317, PacketMetaDataGroup.createFromArray(PACKET_LENGTHS));
+		super(317);
 		init();
+		setIncomingPacketMetaData(PacketMetaDataGroup.createFromArray(PACKET_LENGTHS));
 	}
 
 	/**
@@ -76,10 +85,7 @@ public final class Release317 extends Release {
 
 		//register(0, new IdleStatePacketPacketDecoder());
 
-		MovementQueuePacketPacketDecoder movementPacket = new MovementQueuePacketPacketDecoder();
-		register(248, movementPacket);
-		register(164, movementPacket);
-		register(98, movementPacket);
+
 
 		register(103, new CommandPacketPacketDecoder());
 
@@ -94,7 +100,7 @@ public final class Release317 extends Release {
 		register(57, new ItemOnMobPacketPacketDecoder());
 		register(202, new IdleStatePacketPacketDecoder());
 		register(153, new AttackPlayerPacketPacketDecoder());
-//		register(249, new MagicOnPlayerPacketDecoder());
+		register(249, new MagicOnPlayerPacketDecoder());
 		register(101, new CharacterSelectionPacketPacketDecoder());
 		register(186, new SummoningCreationPacketPacketDecoder());
 		register(3, new FocusChangePacketPacketDecoder());
@@ -113,98 +119,58 @@ public final class Release317 extends Release {
 		register(73, new FollowPlayerPacketPacketDecoder());
 		register(130, new InterfaceClickPacketDecoder());
 
+
+		register(145, new FirstItemInterfacePacketDecoder());
+		register(117, new SecondItemInterfacePacketDecoder());
+		register(43, new ThirdItemInterfacePacketDecoder());
+		register(129, new FourthItemInterfacePacketDecoder());
+		register(41, new EquipItemPacketDecoder());
+		register(214, new SwapSlotPacketDecoder());
+		register(216, new BankTabPacketDecoder());
+		register(53, new ItemOnItemPacketPacketDecoder());
+		register(192, new ItemOnObjectPacketPacketDecoder());
+		register(14, new ItemOnPlayerPacketPacketDecoder());
+
+
+
 		register(139, new TradeRequestPacketPacketDecoder());
 		register(128, new DuelRequestPacketPacketDecoder());
 
+		MovementQueuePacketPacketDecoder movementPacket = new MovementQueuePacketPacketDecoder();
+		register(248, movementPacket);
+		register(164, movementPacket);
+		register(98, movementPacket);
+
+		register(72, new AttackMobPacketDecoder());
+		register(131, new AttackMobMagicPacketDecoder());
+		register(155, new FirstActionMobPacketDecoder());
+		register(17, new SecondActionMobPacketDecoder());
+		register(21, new ThirdActionMobPacketDecoder());
+		register(18, new FourthActionMobPacketDecoder());
 
 
+		register(132, new FirstActionObjectPacketDecoder());
+		register(252, new SecondActionObjectPacketDecoder());
+		register(70, new ThirdActionObjectPacketDecoder());
+		register(234, new FourthActionObjectPacketDecoder());
+		register(228, new FifthActionObjectPacketDecoder());
+		register(35, new SpellOnObjectPacketDecoder());
+
+		//object actions
+
+		register(253, new ItemOnItemNodePacketPacketDecoder());
+		register(236, new PickupItemPacketPacketDecoder());
+
+		register(188, new AddFriendPacketDecoder());
+		register(215, new RemoveFriendPacketDecoder());
+		register(133, new AddIgnorePacketDecoder());
+		register(74, new RemoveIgnorePacketDecoder());
+		register(126, new SendPMPacketDecoder());
+
+		register(121, new UpdateRegionPacketPacketDecoder());
+		register(20, new ShopAccessPacketPacketDecoder());
 
 
-
-
-
-
-
-
-
-
-
-		/*WalkMessageDecoder walkMessageDecoder = new WalkMessageDecoder();
-		register(248, walkMessageDecoder);
-		register(164, walkMessageDecoder);
-		register(98, walkMessageDecoder);
-
-		register(0, new KeepAliveMessageDecoder());
-		register(101, new PlayerDesignMessageDecoder());
-		register(4, new PublicChatMessageDecoder());
-		register(103, new CommandMessageDecoder());
-		register(214, new SwitchItemMessageDecoder());
-
-		register(132, new FirstObjectActionMessageDecoder());
-		register(252, new SecondObjectActionMessageDecoder());
-		register(70, new ThirdObjectActionMessageDecoder());
-
-		register(122, new FirstItemOptionMessageDecoder());
-		register(41, new SecondItemOptionMessageDecoder());
-		register(16, new ThirdItemOptionMessageDecoder());
-		register(75, new FourthItemOptionMessageDecoder());
-		register(87, new FifthItemOptionMessageDecoder());
-
-		register(145, new FirstItemActionMessageDecoder());
-		register(117, new SecondItemActionMessageDecoder());
-		register(43, new ThirdItemActionMessageDecoder());
-		register(129, new FourthItemActionMessageDecoder());
-		register(135, new FifthItemActionMessageDecoder());
-
-		register(185, new ButtonMessageDecoder());
-		register(130, new ClosedInterfaceMessageDecoder());
-		register(208, new EnteredAmountMessageDecoder());
-		register(40, new DialogueContinueMessageDecoder());
-		register(120, new FlashingTabClickedMessageDecoder());
-
-		register(53, new ItemOnItemMessageDecoder());
-		register(57, new ItemOnNpcMessageDecoder());
-		register(237, new MagicOnItemMessageDecoder());
-		register(249, new MagicOnPlayerMessageDecoder());
-		register(131, new MagicOnNpcMessageDecoder());
-
-		register(3, new FocusUpdateMessageDecoder());
-		register(45, new FlaggedMouseEventMessageDecoder());
-		register(241, new MouseClickedMessageDecoder());
-		register(86, new ArrowKeyMessageDecoder());
-		register(95, new PrivacyOptionMessageDecoder());
-
-		SpamPacketMessageDecoder spamMessageDecoder = new SpamPacketMessageDecoder();
-		register(77, spamMessageDecoder);
-		register(78, spamMessageDecoder);
-		register(165, spamMessageDecoder);
-		register(189, spamMessageDecoder);
-		register(210, spamMessageDecoder);
-		register(226, spamMessageDecoder);
-		register(121, spamMessageDecoder);
-
-		register(155, new FirstNpcActionMessageDecoder());
-		register(72, new SecondNpcActionMessageDecoder());
-		register(17, new ThirdNpcActionMessageDecoder());
-		register(21, new FourthNpcActionMessageDecoder());
-		register(18, new FifthNpcActionMessageDecoder());
-
-		register(236, new TakeTileItemMessageDecoder());
-		register(192, new ItemOnObjectMessageDecoder());
-
-		register(128, new FirstPlayerActionMessageDecoder());
-		register(153, new SecondPlayerActionMessageDecoder());
-		register(73, new ThirdPlayerActionMessageDecoder());
-		register(139, new FourthPlayerActionMessageDecoder());
-		register(39, new FifthPlayerActionMessageDecoder());
-
-		register(188, new AddFriendMessageDecoder());
-		register(133, new AddIgnoreMessageDecoder());
-		register(215, new RemoveFriendMessageDecoder());
-		register(74, new RemoveIgnoreMessageDecoder());
-		register(126, new PrivateChatMessageDecoder());
-
-		register(218, new ReportAbuseMessageDecoder());*/
 
 		// register encoders
 		register(InterfacePlayerModelPacket.class, new InterfacePlayerModelPacketEncoder());
@@ -288,5 +254,17 @@ public final class Release317 extends Release {
 
 		register(PlayerSynchronizationPacket.class, new PlayerSynchronizationMessageEncoder());
 		register(NpcSynchronizationPacket.class, new NpcSynchronizationMessageEncoder());
+
+
+		new JsonLoader("./data/def/packet/packet_sizes.json") {
+			@Override
+			public void load(JsonObject reader, Gson builder) {
+				int opcode = reader.get("opcode").getAsInt();
+				int size = reader.get("size").getAsInt();
+				PACKET_LENGTHS[opcode] = size;
+			}
+		}.load();
+
+
 	}
 }

@@ -222,5 +222,33 @@
    {
       "type": "com.rageps.net.refactor.packet.in.model.InterfaceClickPacketPacket",
       "handler": "com.rageps.net.refactor.packet.in.handler.InterfaceClickPacketPacketHandler"
-   }
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.object_actions.FirstActionObjectPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.object_actions.FirstObjectActionPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.object_actions.SecondActionObjectPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.object_actions.SecondObjectActionPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.object_actions.ThirdActionObjectPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.object_actions.ThirdObjectActionPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.object_actions.FourthActionObjectPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.object_actions.FourthObjectActionPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.object_actions.FifthActionObjectPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.object_actions.FifthObjectActionPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.object_actions.SpellOnObjectPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.object_actions.SpellOnObjectActionPacketHandler"
+   },
+   {
+      "type": "com.rageps.net.refactor.packet.in.model.MagicOnPlayerPacket",
+      "handler": "com.rageps.net.refactor.packet.in.handler.MagicOnPlayerPacketHandler"
+   },
 ]

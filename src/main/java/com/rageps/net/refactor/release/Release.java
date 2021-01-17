@@ -30,7 +30,7 @@ public abstract class Release {
 	/**
 	 * The incoming packet meta data.
 	 */
-	private final PacketMetaDataGroup incomingPacketMetaData;
+	private PacketMetaDataGroup incomingPacketMetaData;
 
 	/**
 	 * The release number, e.g. {@code 317}.
@@ -41,10 +41,16 @@ public abstract class Release {
 	 * Creates the release.
 	 *
 	 * @param releaseNumber The release number.
+	 */
+	public Release(int releaseNumber) {
+		this.releaseNumber = releaseNumber;
+	}
+
+	/**
+	 *	Set's the incoming packet meta data
 	 * @param incomingPacketMetaData The incoming packet meta data.
 	 */
-	public Release(int releaseNumber, PacketMetaDataGroup incomingPacketMetaData) {
-		this.releaseNumber = releaseNumber;
+	public void setIncomingPacketMetaData(PacketMetaDataGroup incomingPacketMetaData) {
 		this.incomingPacketMetaData = incomingPacketMetaData;
 	}
 
@@ -109,6 +115,10 @@ public abstract class Release {
 	 */
 	public final <M extends Packet> void register(int opcode, PacketDecoder<M> decoder) {
 		Preconditions.checkElementIndex(opcode, decoders.length, "Opcode out of bounds.");
+		if(decoders[opcode] != null) {
+			System.out.println("Packet "+opcode+" already mapped.");
+			return;
+		}
 		decoders[opcode] = decoder;
 	}
 

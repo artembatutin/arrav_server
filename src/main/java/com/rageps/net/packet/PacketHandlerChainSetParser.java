@@ -38,7 +38,7 @@ public final class PacketHandlerChainSetParser {
 	public PacketHandlerChainSet parse() {
 		PacketHandlerChainSet chainSet = new PacketHandlerChainSet();
 
-		new JsonLoader("./data/def/packets.json") {
+		new JsonLoader("./data/def/packets/packets.json") {
 			@Override
 			public void load(JsonObject reader, Gson builder) {
 

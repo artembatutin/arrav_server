@@ -54,7 +54,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		}
 		
 		CombatSpell spell = CombatSpell.get(spellId);
-		if(spell == null || index < 0 || index > World.get().getPlayers().capacity() || spellId < 0 || !checkAttack(player, victim)) {
+		if(spell == null || index < 0 || index > World.get().getPlayers().capacity() || spellId < 0 || !CombatUtil.checkAttack(player, victim)) {
 			return;
 		}
 		player.setSingleCast(spell);
@@ -70,61 +70,13 @@ public final class AttackPlayerPacket implements IncomingPacket {
 	private void attackOther(Player player, GamePacket buf) {
 		int index = buf.getShort(true, ByteOrder.LITTLE);
 		Player victim = World.get().getPlayers().get(index - 1);
-		if(index < 0 || index > World.get().getPlayers().capacity() || !checkAttack(player, victim))
+		if(index < 0 || index > World.get().getPlayers().capacity())
 			return;
-		if(!checkAttack(player, victim)) {
+		if(!CombatUtil.checkAttack(player, victim)) {
 			return;
 		}
 		player.getCombat().attack(victim);
 	}
 	
-	/**
-	 * Determines if an attack can be made by the {@code attacker} on
-	 * {@code victim}.
-	 * @param attacker the player that is trying to attack.
-	 * @param victim the player that is being targeted.
-	 * @return {@code true} if an attack can be made, {@code false} otherwise.
-	 */
-	private boolean checkAttack(Player attacker, Player victim) {
-		if(victim == null || victim.same(attacker)) {
-			attacker.getMovementQueue().reset();
-			return false;
-		}
-		if(!attacker.isVisible()) {
-			attacker.message("You're invisible and unable to attack other players.");
-			return false;
-		}
-		if(!attacker.inMulti() && attacker.getCombat().isUnderAttack() && !attacker.getCombat().isUnderAttackBy(victim)) {
-			attacker.message("You are already under attack!");
-			attacker.getMovementQueue().reset();
-			return false;
-		}
-		if(attacker.getMinigame().isPresent() && attacker.getLocation().inWilderness()) {
-			attacker.message("Something went wrong there! You are still in a minigame, please re-log!");
-			return false;
-		}
-		if(attacker.getLocation().inDuelArena() && !attacker.getMinigame().isPresent()) {
-			ExchangeSessionManager.get().request(new DuelSession(attacker, victim, ExchangeSession.REQUEST));
-			attacker.getMovementQueue().reset();
-			return false;
-		}
-		Optional<Minigame> optional = MinigameHandler.getMinigame(attacker);
-		if(!optional.isPresent()) {
-			if(attacker.getLocation().inFunPvP() && victim.getLocation().inFunPvP()) {
-				return true;
-			}
-			if(!attacker.inWilderness() || !victim.inWilderness()) {
-				attacker.message("Both you and " + victim.getFormatUsername() + " need to be in the wilderness to fight!");
-				attacker.getMovementQueue().reset();
-				return false;
-			}
-			int combatDifference = CombatUtil.combatLevelDifference(attacker.determineCombatLevel(), victim.determineCombatLevel());
-			if(combatDifference > attacker.getWildernessLevel() || combatDifference > victim.getWildernessLevel()) {
-				attacker.message("Your combat level difference is too great to attack that player here.");
-				attacker.getMovementQueue().reset();
-				return false;
-			}
-		}
-		return true;
-	}
+
 }
