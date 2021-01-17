@@ -45,7 +45,6 @@ public final class LoginSession extends Session {
 
 	@Override
 	public void destroy() {
-		System.out.println("destroy");
 	}
 
 	/**
