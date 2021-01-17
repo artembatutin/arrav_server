@@ -80,4 +80,10 @@ public final class SynchronizationBlockSet implements Cloneable {
 		return blocks.size();
 	}
 
+	@Override
+	public String toString() {
+		return "SynchronizationBlockSet{" +
+				"blocks=" + blocks +
+				'}';
+	}
 }

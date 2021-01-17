@@ -6,13 +6,9 @@ import com.rageps.net.refactor.codec.game.*;
 import com.rageps.net.refactor.meta.PacketType;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
 import com.rageps.net.refactor.packet.out.model.update.PlayerSynchronizationPacket;
-import com.rageps.util.StringUtil;
 import com.rageps.world.entity.actor.player.PlayerAppearance;
-import com.rageps.world.entity.item.Item;
-import com.rageps.world.entity.item.ItemDefinition;
 import com.rageps.world.entity.item.container.ItemContainer;
 import com.rageps.world.entity.item.container.impl.Equipment;
-import com.rageps.world.entity.item.container.impl.Inventory;
 import com.rageps.world.entity.sync.block.*;
 import com.rageps.world.entity.sync.seg.*;
 import com.rageps.world.locale.Position;
@@ -32,7 +28,6 @@ public final class PlayerSynchronizationMessageEncoder implements PacketEncoder<
 	public GamePacket encode(PlayerSynchronizationPacket message) {
 		GamePacketBuilder builder = new GamePacketBuilder(81, PacketType.VARIABLE_SHORT);
 		builder.switchToBitAccess();
-
 		GamePacketBuilder blockBuilder = new GamePacketBuilder();
 
 		putMovementUpdate(message.getSegment(), message, builder);

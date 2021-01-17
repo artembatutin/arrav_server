@@ -1069,7 +1069,22 @@ public abstract class Actor extends Entity {
 		this.location = location;
 	}
 
-	public Direction[] getDirections() {
-		return new Direction[] {getPrimaryDirection(), getSecondaryDirection()};
+	//public Direction[] getDirections() {
+	//	return new Direction[] { getSecondaryDirection(), getPrimaryDirection()};
+	//}
+
+
+	/**
+	 * Gets this mob's movement {@link Direction}s, as an array.
+	 *
+	 * @return A zero, one or two element array containing the directions (in order).
+	 */
+	public final Direction[] getDirections() {
+		if (primaryDirection != Direction.NONE) {
+			return secondaryDirection == Direction.NONE ? new Direction[]{primaryDirection}
+					: new Direction[]{primaryDirection, secondaryDirection};
+		}
+
+		return Direction.EMPTY_DIRECTION_ARRAY;
 	}
 }

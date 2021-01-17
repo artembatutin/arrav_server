@@ -58,6 +58,11 @@ public enum Direction {
 	 * No movement.
 	 */
 	NONE(-1, 0, 0, -1);
+
+	/**
+	 * An empty direction array.
+	 */
+	public static final Direction[] EMPTY_DIRECTION_ARRAY = new Direction[0];
 	
 	/**
 	 * The identification of this direction.
