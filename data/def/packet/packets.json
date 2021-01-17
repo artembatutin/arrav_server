@@ -250,5 +250,5 @@
    {
       "type": "com.rageps.net.refactor.packet.in.model.MagicOnPlayerPacket",
       "handler": "com.rageps.net.refactor.packet.in.handler.MagicOnPlayerPacketHandler"
-   },
+   }
 ]
