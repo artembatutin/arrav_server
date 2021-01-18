@@ -50,92 +50,92 @@ import java.util.Optional;
  */
 public enum Prayer {
 	/* REGULAR */
-	THICK_SKIN(PrayerBook.NORMAL, new ThickSkinListener(), 21233, 20, -1, 1, 83, 67050, 630) {
+	THICK_SKIN(PrayerBook.NORMAL, new ThickSkinListener(), 5609, 20, -1, 1, 83, 67050, 630) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{ROCK_SKIN, STEEL_SKIN});
 		}
-	}, BURST_OF_STRENGTH(PrayerBook.NORMAL, new BurstOfStrengthListener(), 21234, 20, -1, 4, 84, 67051, 631) {
+	}, BURST_OF_STRENGTH(PrayerBook.NORMAL, new BurstOfStrengthListener(), 5610, 20, -1, 4, 84, 67051, 631) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	}, CLARITY_OF_THOUGHT(PrayerBook.NORMAL, new ClarityOfThoughtListener(), 21235, 20, -1, 7, 85, 67052, 632) {
+	}, CLARITY_OF_THOUGHT(PrayerBook.NORMAL, new ClarityOfThoughtListener(), 5611, 20, -1, 7, 85, 67052, 632) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	}, SHARP_EYE(PrayerBook.NORMAL, new SharpListener(), 77100, 20, -1, 8, 700, 67053, 633) {
+	}, SHARP_EYE(PrayerBook.NORMAL, new SharpListener(), 19812, 20, -1, 8, 700, 67053, 633) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	}, MYSTIC_WILL(PrayerBook.NORMAL, new MysticWillListener(), 77102, 20, -1, 8, 701, 67054, 634) {
+	}, MYSTIC_WILL(PrayerBook.NORMAL, new MysticWillListener(), 19814, 20, -1, 8, 701, 67054, 634) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, SHARP_EYE, HAWK_EYE, EAGLE_EYE, MYSTIC_LORE, MYSTIC_MIGHT, CHIVALRY, PIETY});
 		}
-	}, ROCK_SKIN(PrayerBook.NORMAL, new RockSkinListener(), 21236, 10, -1, 10, 86, 67055, 635) {
+	}, ROCK_SKIN(PrayerBook.NORMAL, new RockSkinListener(), 5612, 10, -1, 10, 86, 67055, 635) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{THICK_SKIN, STEEL_SKIN});
 		}
-	}, SUPERHUMAN_STRENGTH(PrayerBook.NORMAL, new SuperhumanStrengthListener(), 21237, 10, -1, 13, 87, 67056, 636) {
+	}, SUPERHUMAN_STRENGTH(PrayerBook.NORMAL, new SuperhumanStrengthListener(), 5613, 10, -1, 13, 87, 67056, 636) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{BURST_OF_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	}, IMPROVED_REFLEXES(PrayerBook.NORMAL, new ImprovedReflexesListener(), 21238, 10, -1, 16, 88, 67057, 637) {
+	}, IMPROVED_REFLEXES(PrayerBook.NORMAL, new ImprovedReflexesListener(), 5614, 10, -1, 16, 88, 67057, 637) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, INCREDIBLE_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	}, RAPID_RESTORE(PrayerBook.NORMAL, 21239, 60, -1, 19, 89, 67058, 638) {
+	}, RAPID_RESTORE(PrayerBook.NORMAL, 5615, 60, -1, 19, 89, 67058, 638) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.empty();
 		}
-	}, RAPID_HEAL(PrayerBook.NORMAL, 21240, 30, -1, 22, 90, 67059, 639) {
+	}, RAPID_HEAL(PrayerBook.NORMAL, 5616, 30, -1, 22, 90, 67059, 639) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.empty();
 		}
-	}, PROTECT_ITEM(PrayerBook.NORMAL, 21241, 30, -1, 25, 91, 67060, 640) {
+	}, PROTECT_ITEM(PrayerBook.NORMAL, 5617, 30, -1, 25, 91, 67060, 640) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.empty();
 		}
-	}, HAWK_EYE(PrayerBook.NORMAL, new HawkEyeListener(), 77104, 10, -1, 6, 702, 67061, 641) {
+	}, HAWK_EYE(PrayerBook.NORMAL, new HawkEyeListener(), 19816, 10, -1, 6, 702, 67061, 641) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	}, MYSTIC_LORE(PrayerBook.NORMAL, new MysticLoreListener(), 77106, 10, -1, 6, 703, 67062, 642) {
+	}, MYSTIC_LORE(PrayerBook.NORMAL, new MysticLoreListener(), 19618, 10, -1, 6, 703, 67062, 642) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, SHARP_EYE, HAWK_EYE, EAGLE_EYE, MYSTIC_WILL, MYSTIC_MIGHT, CHIVALRY, PIETY});
 		}
-	}, STEEL_SKIN(PrayerBook.NORMAL, new SteelSkinListener(), 21242, 5, -1, 28, 92, 67063, 643) {
+	}, STEEL_SKIN(PrayerBook.NORMAL, new SteelSkinListener(), 5618, 5, -1, 28, 92, 67063, 643) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{THICK_SKIN, ROCK_SKIN});
 		}
-	}, ULTIMATE_STRENGTH(PrayerBook.NORMAL, new UltimateStrengthListener(), 21243, 5, -1, 31, 93, 67064, 644) {
+	}, ULTIMATE_STRENGTH(PrayerBook.NORMAL, new UltimateStrengthListener(), 5619, 5, -1, 31, 93, 67064, 644) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	}, INCREDIBLE_REFLEXES(PrayerBook.NORMAL, new IncredibleReflexesListener(), 21244, 5, -1, 34, 94, 67065, 645) {
+	}, INCREDIBLE_REFLEXES(PrayerBook.NORMAL, new IncredibleReflexesListener(), 5620, 5, -1, 34, 94, 67065, 645) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	}, PROTECT_FROM_MAGIC(PrayerBook.NORMAL, new ProtectionPrayerListener(), 21245, 5, 2, 37, 95, 67066, 646) {
+	}, PROTECT_FROM_MAGIC(PrayerBook.NORMAL, new ProtectionPrayerListener(), 5621, 5, 2, 37, 95, 67066, 646) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MISSILES, PROTECT_FROM_MELEE, RETRIBUTION, REDEMPTION, SMITE});
 		}
-	}, PROTECT_FROM_MISSILES(PrayerBook.NORMAL, new ProtectionPrayerListener(), 21246, 5, 1, 40, 96, 67067, 647) {
+	}, PROTECT_FROM_MISSILES(PrayerBook.NORMAL, new ProtectionPrayerListener(), 5622, 5, 1, 40, 96, 67067, 647) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MAGIC, PROTECT_FROM_MELEE, RETRIBUTION, REDEMPTION, SMITE});
@@ -145,37 +145,37 @@ public enum Prayer {
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MAGIC, PROTECT_FROM_MISSILES, RETRIBUTION, REDEMPTION, SMITE});
 		}
-	}, EAGLE_EYE(PrayerBook.NORMAL, new EagleEyeListener(), 77109, 5, -1, 44, 704, 67069, 649) {
+	}, EAGLE_EYE(PrayerBook.NORMAL, new EagleEyeListener(), 19821, 5, -1, 44, 704, 67069, 649) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, CHIVALRY, PIETY});
 		}
-	}, MYSTIC_MIGHT(PrayerBook.NORMAL, new MysticMightListener(), 77111, 5, -1, 45, 705, 67070, 650) {
+	}, MYSTIC_MIGHT(PrayerBook.NORMAL, new MysticMightListener(), 19823, 5, -1, 45, 705, 67070, 650) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, SHARP_EYE, HAWK_EYE, EAGLE_EYE, MYSTIC_LORE, MYSTIC_WILL, CHIVALRY, PIETY});
 		}
-	}, RETRIBUTION(PrayerBook.NORMAL, 2171, 20, 3, 46, 98, 67071, 651) {
+	}, RETRIBUTION(PrayerBook.NORMAL, 683, 20, 3, 46, 98, 67071, 651) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MELEE, PROTECT_FROM_MAGIC, PROTECT_FROM_MISSILES, REDEMPTION, SMITE});
 		}
-	}, REDEMPTION(PrayerBook.NORMAL, 2172, 10, 5, 49, 99, 67072, 652) {
+	}, REDEMPTION(PrayerBook.NORMAL, 684, 10, 5, 49, 99, 67072, 652) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MELEE, PROTECT_FROM_MAGIC, PROTECT_FROM_MISSILES, RETRIBUTION, SMITE});
 		}
-	}, SMITE(PrayerBook.NORMAL, 2173, 3, 4, 52, 100, 67073, 653) {
+	}, SMITE(PrayerBook.NORMAL, 685, 3, 4, 52, 100, 67073, 653) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MELEE, PROTECT_FROM_MAGIC, PROTECT_FROM_MISSILES, REDEMPTION, RETRIBUTION});
 		}
-	}, CHIVALRY(PrayerBook.NORMAL, new ChivalryListener(), 77113, 2.5, -1, 60, 706, 67074, 654) {
+	}, CHIVALRY(PrayerBook.NORMAL, new ChivalryListener(), 19825, 2.5, -1, 60, 706, 67074, 654) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{THICK_SKIN, ROCK_SKIN, STEEL_SKIN, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, EAGLE_EYE, HAWK_EYE, PIETY});
 		}
-	}, PIETY(PrayerBook.NORMAL, new PietyListener(), 77115, 2.5, -1, 70, 707, 67075, 655) {
+	}, PIETY(PrayerBook.NORMAL, new PietyListener(), 19827, 2.5, -1, 70, 707, 67075, 655) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{THICK_SKIN, ROCK_SKIN, STEEL_SKIN, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, EAGLE_EYE, HAWK_EYE, CHIVALRY});

@@ -233,7 +233,7 @@ public final class PotClaying extends ProducingSkillAction {
 		BOWL(34253, new PotPolicy(1791, 18), new PotPolicy(1923, 15), 8, 1),
 		BOWL5(34252, BOWL, 5),
 		BOWL10(34251, BOWL, 10),
-		BOWLX(34250, BOWL, -1),
+		BOWLX(8954, BOWL, -1),
 		
 		PLANT_POT(35001, new PotPolicy(5352, 20), new PotPolicy(5350, 17.5), 19, 1),
 		PLANT_POT5(35000, PLANT_POT, 5),

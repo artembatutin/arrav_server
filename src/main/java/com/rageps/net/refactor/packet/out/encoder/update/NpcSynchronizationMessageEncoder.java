@@ -142,7 +142,6 @@ public final class NpcSynchronizationMessageEncoder implements PacketEncoder<Npc
 				builder.put(DataType.BYTE, mask);
 			}
 
-			blockSet.printBlocks();
 
 			if(blockSet.contains(ForceMovementBlock.class)) {
 				putForceMovementBlock(blockSet.get(ForceMovementBlock.class), builder);

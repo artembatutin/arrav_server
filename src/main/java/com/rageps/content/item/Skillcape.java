@@ -127,7 +127,7 @@ public enum Skillcape {
 				return true;
 			}
 		};
-		b.register(74108);
+		b.register(19052);
 		for(Skillcape c : Skillcape.values()) {
 			MobAction e = new MobAction() {
 				@Override
