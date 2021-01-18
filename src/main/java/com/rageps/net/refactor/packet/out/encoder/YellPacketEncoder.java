@@ -15,7 +15,7 @@ public class YellPacketEncoder implements PacketEncoder<YellPacket> {
     public GamePacket encode(YellPacket message) {
         GamePacketBuilder builder = new GamePacketBuilder(210, PacketType.VARIABLE_BYTE);
         builder.putString(message.getAuthor());
-        builder.putString(message.getAuthor());
+        builder.putString(message.getMessage());
         builder.putShort(message.getRank().getProtocolValue());
         return builder.toGamePacket();
     }
