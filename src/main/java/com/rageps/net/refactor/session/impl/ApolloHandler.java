@@ -65,6 +65,8 @@ public final class ApolloHandler extends ChannelInboundHandlerAdapter {
 		if (session != null) {
 			session.messageReceived(message);
 			return;
+		} else {
+			System.out.println("session is null!! "+ctx.channel().remoteAddress());
 		}
 
 		// TODO: Perhaps let HandshakeMessage implement Message to remove this explicit check

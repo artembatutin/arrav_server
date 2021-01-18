@@ -272,7 +272,6 @@ public final class NpcSynchronizationMessageEncoder implements PacketEncoder<Npc
 	 * @param builder The builder.
 	 */
 	private static void putRemoveMobUpdate(GamePacketBuilder builder) {
-		//builder.putBits(1, 1);
 		builder.putBit(true);
 		builder.putBits(2, 3);
 	}
