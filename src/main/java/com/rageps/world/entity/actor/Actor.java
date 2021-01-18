@@ -181,7 +181,7 @@ public abstract class Actor extends Entity {
 	/**
 	 * The current location	of this entity.
 	 */
-	private Locations.Location location;
+	private Locations.Location location = Locations.Location.DEFAULT;
 	
 	/**
 	 * The current coordinates being face by this entity.
@@ -472,12 +472,17 @@ public abstract class Actor extends Entity {
 		if(this.isPlayer() && this.toPlayer().getActivityManager().contains(ActivityManager.ActivityType.FACE_POSITION)) {
 			return;
 		}
-		if(position == null)
-			facePosition = new Position(0, 0);
-		else
-			facePosition = new Position(2 * position.getX() + 1, 2 * position.getY() + 1);
+		//System.out.println(position);
+		//if(position == null)
+		//	facePosition = new Position(0, 0);
+		//else
+		//	facePosition = new Position(2 * position.getX() + 1, 2 * position.getY() + 1);
+		//todo what was this?
+		facePosition = position;
+
+		if(this.isPlayer())
+			this.toPlayer().getActivityManager().execute(ActivityManager.ActivityType.FACE_POSITION);
 		blockSet.add(SynchronizationBlock.createTurnToPositionBlock(facePosition));
-//		flags.flag(UpdateFlag.FACE_COORDINATE);
 	}
 	
 	/**
@@ -507,10 +512,10 @@ public abstract class Actor extends Entity {
 	public final void writeDamage(Hit hit) {
 		if(primaryHit == null) {
 			primaryHit = decrementHealth(hit);
-			blockSet.add(SynchronizationBlock.createHitUpdateBlock(hit.getDamage(), hit.getHitsplat().getId(), getCurrentHealth(), getMaxHP(), false));
+			blockSet.add(SynchronizationBlock.createHitUpdateBlock(hit, getCurrentHealth(), getMaxHP(), false, null));
 		} else if(secondaryHit == null) {
 			secondaryHit = decrementHealth(hit);
-			blockSet.add(SynchronizationBlock.createHitUpdateBlock(hit.getDamage(), hit.getHitsplat().getId(), getCurrentHealth(), getMaxHP(), true));
+			blockSet.add(SynchronizationBlock.createHitUpdateBlock(hit, getCurrentHealth(), getMaxHP(), true, null));
 		}
 	}
 	

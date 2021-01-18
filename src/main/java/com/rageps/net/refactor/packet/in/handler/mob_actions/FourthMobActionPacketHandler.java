@@ -45,7 +45,7 @@ public class FourthMobActionPacketHandler implements PacketHandler<FourthMobActi
                 }
             }
         });
-        if(player.getRights().greater(Rights.ADMINISTRATOR) && World.get().getEnvironment().isDebug())
+        if(player.getRights().greater(Rights.ADMINISTRATOR))
             player.message("[NPC4]:" + mob.toString());
         player.getActivityManager().execute(ActivityManager.ActivityType.NPC_ACTION);
 

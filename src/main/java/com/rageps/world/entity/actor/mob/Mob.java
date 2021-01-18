@@ -526,7 +526,7 @@ public abstract class Mob extends Actor {
 	
 	@Override
 	public String toString() {
-		return "NPC[slot= " + getSlot() + ", name=" + getDefinition().getName() + "]";
+		return "NPC[slot= " + getSlot() + ", name=" + getDefinition().getName() + ", position="+getPosition()+"]";
 	}
 	
 	private final Combat<Mob> mobCombat = new Combat<>(this);

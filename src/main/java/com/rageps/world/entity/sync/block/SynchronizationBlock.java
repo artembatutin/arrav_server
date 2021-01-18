@@ -1,6 +1,7 @@
 package com.rageps.world.entity.sync.block;
 
 import com.rageps.util.StringUtil;
+import com.rageps.world.entity.actor.Actor;
 import com.rageps.world.entity.actor.combat.hit.Hit;
 import com.rageps.world.entity.actor.move.ForcedMovementDirection;
 import com.rageps.world.entity.actor.player.Player;
@@ -90,15 +91,13 @@ public abstract class SynchronizationBlock {
 	 * Creates a {@link HitUpdateBlock} or {@link SecondaryHitUpdateBlock}, depending on the value of the
 	 * {@code secondary} flag.
 	 *
-	 * @param damage The damage dealt by the hit.
-	 * @param type The type of hit.
 	 * @param currentHealth The current health of the mob.
 	 * @param maximumHealth The maximum health of the mob.
 	 * @param secondary If the block is a secondary hit or not.
 	 * @return The hit update block.
 	 */
-	public static SynchronizationBlock createHitUpdateBlock(int damage, int type, int currentHealth, int maximumHealth, boolean secondary) {
-		return secondary ? new SecondaryHitUpdateBlock(damage, type, currentHealth, maximumHealth) : new HitUpdateBlock(damage, type, currentHealth, maximumHealth);
+	public static SynchronizationBlock createHitUpdateBlock(Hit hit, int currentHealth, int maximumHealth, boolean secondary, Actor source) {
+		return secondary ? new SecondaryHitUpdateBlock(hit, currentHealth, maximumHealth, source) : new HitUpdateBlock(hit, currentHealth, maximumHealth, source);
 	}
 
 	/**

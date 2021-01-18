@@ -1,5 +1,8 @@
 package com.rageps.world.entity.sync.block;
 
+import com.rageps.world.entity.actor.Actor;
+import com.rageps.world.entity.actor.combat.hit.Hit;
+
 /**
  * The secondary hit update {@link SynchronizationBlock}. This is used for when multiple attacks happen at once (for
  * example, the dragon-dagger special attack). Both players and npcs can utilise this block.
@@ -14,33 +17,35 @@ public final class SecondaryHitUpdateBlock extends SynchronizationBlock {
 	private final int currentHealth;
 
 	/**
-	 * The amount of damage the hit will do.
+	 * The hit.
 	 */
-	private final int damage;
+	private final Hit hit;
 
 	/**
 	 * The mob's maximum health.
 	 */
 	private final int maximumHealth;
 
-	/**
-	 * The type of hit (e.g. normal, poison).
-	 */
-	private final int type;
+	private final Actor source;
+
+
 
 	/**
 	 * Creates a new secondary hit update block.
 	 *
-	 * @param damage The damage dealt by the hit.
-	 * @param type The type of hit.
+	 * @param hit The hit being appended.
 	 * @param currentHealth The current health of the mob.
 	 * @param maximumHealth The maximum health of the mob.
 	 */
-	SecondaryHitUpdateBlock(int damage, int type, int currentHealth, int maximumHealth) {
-		this.damage = damage;
-		this.type = type;
+	SecondaryHitUpdateBlock(Hit hit, int currentHealth, int maximumHealth, Actor source) {
+		this.hit = hit;
 		this.currentHealth = currentHealth;
 		this.maximumHealth = maximumHealth;
+		this.source = source;
+	}
+
+	public Actor getSource() {
+		return source;
 	}
 
 	/**
@@ -52,14 +57,7 @@ public final class SecondaryHitUpdateBlock extends SynchronizationBlock {
 		return currentHealth;
 	}
 
-	/**
-	 * Gets the damage done by the hit.
-	 *
-	 * @return The damage.
-	 */
-	public int getDamage() {
-		return damage;
-	}
+
 
 	/**
 	 * Gets the maximum health of the mob.
@@ -71,12 +69,11 @@ public final class SecondaryHitUpdateBlock extends SynchronizationBlock {
 	}
 
 	/**
-	 * Gets the hit type.
+	 * Gets the hit.
 	 *
-	 * @return The type.
+	 * @return The hit.
 	 */
-	public int getType() {
-		return type;
+	public Hit getHit() {
+		return hit;
 	}
-
 }

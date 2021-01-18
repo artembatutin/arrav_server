@@ -33,7 +33,7 @@ public class Boundary {
 	 */
 	public Boundary(Position pos, int size) {
 		start = pos;
-		end = new Position(pos.getX() + size - 1, pos.getY() + size - 1);
+		end = new Position(pos.getX() + size - 1, pos.getY() + size - 1, pos.getZ());
 	}
 	
 	/**
@@ -47,6 +47,8 @@ public class Boundary {
 			return false;
 		if(start.getX() == other.getX() && start.getY() == other.getY())
 			return true;
+		if(other.getZ() != start.getZ())
+			return false;
 		final Position otherEnd = new Position(other.getX() + size - 1, other.getY() + size - 1);
 		return !(start.getX() - otherEnd.getX() > 0) && !(end.getX() - other.getX() < 0) && !(end.getY() - other.getY() < 0) && !(start.getY() - otherEnd.getY() > 0);
 	}
@@ -60,6 +62,9 @@ public class Boundary {
 	public boolean within(Position other, int size, int distance) {
 		if(other == null)
 			return false;
+		if(other.getZ() != start.getZ())
+			return false;
+
 		final Position otherEnd = new Position(other.getX() + size - 1, other.getY() + size - 1);
 		return !(start.getX() - otherEnd.getX() - distance > 0) && !(end.getX() - other.getX() + distance < 0) && !(end.getY() - other.getY() + distance < 0) && !(start.getY() - otherEnd.getY() - distance > 0);
 	}

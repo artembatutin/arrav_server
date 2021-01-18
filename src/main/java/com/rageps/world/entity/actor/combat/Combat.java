@@ -59,14 +59,16 @@ public class Combat<T extends Actor> {
 		
 		CombatStrategy<? super T> strategy = attacker.getStrategy();
 		within = strategy != null && strategy.withinDistance(attacker, defender);
-		
+
+		if(!within)
+			return;
+		attacker.faceEntity(defender);
+
 		if(!CombatUtil.canAttack(attacker, defender)) {
 			return;
 		}
-		
 		this.defender = defender;
 		this.lastDefender = defender;
-		attacker.faceEntity(defender);
 		attacker.getMovementQueue().follow(defender);
 	}
 	

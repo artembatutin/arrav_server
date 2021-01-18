@@ -173,6 +173,8 @@ public final class PlayerSynchronizationTask extends SynchronizationTask {
 		if (other.isTeleporting() || !other.active()) {
 			return true;
 		}
+		if(position.getZ() != other.getPosition().getZ())
+			return true;
 
 		Position otherPosition = other.getPosition();
 		return otherPosition.getLongestDelta(position) > distance || !otherPosition.withinDistance(position, distance);

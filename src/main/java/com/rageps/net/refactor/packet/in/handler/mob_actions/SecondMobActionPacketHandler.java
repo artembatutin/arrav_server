@@ -48,7 +48,7 @@ public class SecondMobActionPacketHandler implements PacketHandler<SecondMobActi
                 }
             }
         });
-        if(player.getRights().greater(Rights.ADMINISTRATOR) && World.get().getEnvironment().isDebug())
+        if(player.getRights().greater(Rights.ADMINISTRATOR))
             player.message("[NPC2]:" + mob.toString());
         player.getActivityManager().execute(ActivityManager.ActivityType.NPC_ACTION);
 

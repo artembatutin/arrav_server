@@ -56,8 +56,7 @@ public class FirstMobActionPacketHandler implements PacketHandler<FirstMobAction
                 }
             }
         });
-        if(player.getRights().greater(Rights.ADMINISTRATOR) && World.get().getEnvironment().isDebug())
-            player.message("[NPC1]:" + mob.toString());
+        player.message("[NPC1]:" + mob.toString());
         player.getActivityManager().execute(ActivityManager.ActivityType.NPC_ACTION);
 
     }

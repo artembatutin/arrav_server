@@ -49,6 +49,11 @@ public final class SynchronizationBlockSet implements Cloneable {
 		return blocks.containsKey(clazz);
 	}
 
+	public void printBlocks() {
+		blocks.forEach((aClass, synchronizationBlock) -> System.out.println("block:"+aClass.getSimpleName()));
+		System.out.println("===");
+	}
+
 	/**
 	 * Gets a {@link SynchronizationBlock} from this set.
 	 *

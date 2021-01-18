@@ -6,6 +6,8 @@ import com.rageps.net.refactor.codec.game.*;
 import com.rageps.net.refactor.meta.PacketType;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
 import com.rageps.net.refactor.packet.out.model.update.PlayerSynchronizationPacket;
+import com.rageps.world.entity.actor.combat.hit.Hit;
+import com.rageps.world.entity.actor.combat.hit.Hitsplat;
 import com.rageps.world.entity.actor.player.PlayerAppearance;
 import com.rageps.world.entity.item.container.ItemContainer;
 import com.rageps.world.entity.item.container.impl.Equipment;
@@ -233,6 +235,8 @@ public final class PlayerSynchronizationMessageEncoder implements PacketEncoder<
 		if (blockSet.size() > 0) {
 			int mask = 0;
 
+			//blockSet.printBlocks();
+
 			if (blockSet.contains(ForceMovementBlock.class)) {
 				mask |= 0x400;
 			}
@@ -356,18 +360,7 @@ public final class PlayerSynchronizationMessageEncoder implements PacketEncoder<
 		builder.put(DataType.INT, graphic.getHeight() << 16 | graphic.getDelay() & 0xFFFF);
 	}
 
-	/**
-	 * Puts a hit update block into the specified builder.
-	 *
-	 * @param block The block.
-	 * @param builder The builder.
-	 */
-	private static void putHitUpdateBlock(HitUpdateBlock block, GamePacketBuilder builder) {
-		builder.put(DataType.BYTE, block.getDamage());
-		builder.put(DataType.BYTE, DataTransformation.ADD, block.getType());
-		builder.put(DataType.BYTE, DataTransformation.NEGATE, block.getCurrentHealth());
-		builder.put(DataType.BYTE, block.getMaximumHealth());
-	}
+
 
 	/**
 	 * Puts an interacting mob block into the specified builder.
@@ -431,16 +424,41 @@ public final class PlayerSynchronizationMessageEncoder implements PacketEncoder<
 	}
 
 	/**
+	 * Puts a hit update block into the specified builder.
+	 *
+	 * @param block The block.
+	 * @param builder The builder.
+	 */
+	private static void putHitUpdateBlock(HitUpdateBlock block, GamePacketBuilder builder) {
+		Hit hit = block.getHit();
+		boolean local = (hit.hasSource() && hit.getSource() == block.getSource().getSlot());
+		builder.putShort(hit.getDamage());
+		//builder.put(hit.getHitsplat().getId() + (!local ? (hit.getHitsplat() != Hitsplat.NORMAL_LOCAL ? 5 : 0) : 0)); todo local
+		builder.put(hit.getHitsplat().getId());
+
+		builder.put(hit.getHitIcon().getId());
+		builder.putShort(hit.getSoak());
+		builder.putShort(block.getMaximumHealth() / 10);
+		builder.putShort(block.getCurrentHealth() / 10);
+	}
+
+	/**
 	 * Puts a Second Hit Update block into the specified builder.
 	 *
 	 * @param block The block.
 	 * @param builder The builder.
 	 */
 	private static void putSecondHitUpdateBlock(SecondaryHitUpdateBlock block, GamePacketBuilder builder) {
-		builder.put(DataType.BYTE, block.getDamage());
-		builder.put(DataType.BYTE, DataTransformation.SUBTRACT, block.getType());
-		builder.put(DataType.BYTE, block.getCurrentHealth());
-		builder.put(DataType.BYTE, DataTransformation.NEGATE, block.getMaximumHealth());
+		Hit hit = block.getHit();
+		boolean local = (hit.hasSource() && hit.getSource() == block.getSource().getSlot());
+		builder.putShort(hit.getDamage());
+		//builder.put(hit.getHitsplat().getId() + (!local ? (hit.getHitsplat() != Hitsplat.NORMAL_LOCAL ? 5 : 0) : 0));//todo local
+		builder.put(hit.getHitsplat().getId());
+
+		builder.put(hit.getHitIcon().getId());
+		builder.putShort(hit.getSoak());
+		builder.putShort(block.getMaximumHealth() / 10);
+		builder.putShort(block.getCurrentHealth() / 10);
 	}
 
 	/**

@@ -1,25 +1,21 @@
 package com.rageps.world.entity.sync.task;
 
 import com.rageps.net.refactor.packet.out.model.update.NpcSynchronizationPacket;
-import com.rageps.world.World;
 import com.rageps.world.entity.EntityState;
 import com.rageps.world.entity.actor.mob.Mob;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.region.Region;
-import com.rageps.world.entity.region.RegionManager;
 import com.rageps.world.entity.sync.seg.AddNpcSegment;
 import com.rageps.world.entity.sync.seg.MovementSegment;
 import com.rageps.world.entity.sync.seg.RemoveMobSegment;
 import com.rageps.world.entity.sync.seg.SynchronizationSegment;
 import com.rageps.world.locale.Position;
-import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * A {@link SynchronizationTask} which synchronizes npcs with the specified {@link Player}.
@@ -63,64 +59,27 @@ public final class NpcSynchronizationTask extends SynchronizationTask {
 
 		Set<Mob> locals = player.getLocalMobs();
 
+
 //
 		int originalCount = locals.size();
 		final Position playerPosition = player.getPosition();
 
 		Iterator<Mob> $it = locals.iterator();
 
-//
-		//int distance = player.getViewingDistance();
-		//for (Iterator<Mob> iterator = locals.iterator(); iterator.hasNext(); ) {
-		//	Mob npc = iterator.next();
-		//	Position position = npc.getPosition();
-//
-		//	if (!npc.isActive() || npc.isTeleporting() || position.getLongestDelta(playerPosition) > distance
-		//			|| !position.isWithinDistance(playerPosition, distance)) {
-		//		iterator.remove();
-//
-		//		segments.add(new RemoveMobSegment());
-		//	} else {
-		//		segments.add(new MovementSegment(npc.getBlockSet(), npc.getDirections()));
-		//	}
-		//}
-//
-		//int added = 0, count = locals.size();
-//
-		//RegionManager repository = World.getRegions();
-//
-		//Region current = repository.getRegion(playerPosition);
-//
-		//Set<RegionCoordinates> regions = current.getSurroundingRegions();
-//
-		//regions.add(current.getCoordinates());
-//
-		//Stream<Npc> npcs = regions.stream().map(repository::get)
-		//		.flatMap(region -> region.getEntities(EntityType.NPC));
-//
-		//Iterator<Npc> iterator = npcs.iterator();
-//
-		//while (iterator.hasNext()) {
-		//	if (count >= MAXIMUM_LOCAL_NPCS) {
-		//		player.flagExcessiveNpcs();
-		//		break;
-		//	} else if (added >= NEW_NPCS_PER_CYCLE) {
-		//		break;
-		//	}
-//
-		//	Mob npc = iterator.next();
-		//	Position position = npc.getPosition();
-		//	if (position.isWithinDistance(playerPosition, distance) && !locals.contains(npc)) {
-		//		locals.add(npc);
-		//		count++;
-		//		added++;
-//
-		//		npc.turnTo(npc.getFacingPosition());
-		//		segments.add(new AddNpcSegment(npc.getBlockSet(), npc.getIndex(), position, npc.getId()));
-		//	}
-		//}
+		while ($it.hasNext()) {
+			Mob mob = $it.next();
+			if(mob.getState() == EntityState.ACTIVE && mob.isVisible() && player.getInstance() == mob.getInstance() && mob.getPosition().isViewableFrom(player.getPosition()) && !mob.isNeedsPlacement()) {
+				segments.add(new MovementSegment(mob.getBlockSet(), mob.getDirections()));
 
-		int added = 0;
+			} else {
+				segments.add(new RemoveMobSegment());
+				$it.remove();
+			}
+		}
+
+
+
+			int added = 0;
 		Region r = player.getRegion();
 		if(r != null) {
 			processMobs(r, player, added, segments);
@@ -131,7 +90,6 @@ public final class NpcSynchronizationTask extends SynchronizationTask {
 				}
 			}
 		}
-		if(!segments.isEmpty())
 		player.send(new NpcSynchronizationPacket(playerPosition, segments, originalCount));
 	}
 
