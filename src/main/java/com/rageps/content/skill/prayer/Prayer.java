@@ -403,6 +403,7 @@ public enum Prayer {
 	 */
 	Prayer(PrayerBook type, int buttonId, double drainRate, int headIcon, int level, int config, int quickPrayer, int checkmark) {
 		this(type, null, buttonId, drainRate, headIcon, level, config, quickPrayer, checkmark);
+		//System.out.println(this.name()+" null");
 	}
 	
 	/**

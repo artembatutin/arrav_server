@@ -6,6 +6,8 @@ import com.rageps.net.refactor.meta.PacketMetaDataGroup;
 import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.packet.in.PacketDecoder;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
+import com.rageps.net.refactor.packet.out.encoder.CoordinatesPacketEncoder;
+import com.rageps.net.refactor.packet.out.model.CoordinatesPacket;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +23,8 @@ public abstract class Release {
 	 * The array of message decoders.
 	 */
 	private final PacketDecoder<?>[] decoders = new PacketDecoder<?>[256];
+
+	private PacketEncoder<CoordinatesPacket> coordinatesEncoder;
 
 	/**
 	 * The map of message classes to message encoders.
@@ -103,6 +107,8 @@ public abstract class Release {
 	 * @param encoder The message encoder.
 	 */
 	public final <M extends Packet> void register(Class<M> type, PacketEncoder<M> encoder) {
+		if(encoder instanceof CoordinatesPacketEncoder)
+			coordinatesEncoder = (PacketEncoder<CoordinatesPacket>) encoder;
 		encoders.put(type, encoder);
 	}
 
@@ -120,6 +126,10 @@ public abstract class Release {
 			return;
 		}
 		decoders[opcode] = decoder;
+	}
+
+	public PacketEncoder<CoordinatesPacket> getCoordinatesEncoder() {
+		return coordinatesEncoder;
 	}
 
 	@Override

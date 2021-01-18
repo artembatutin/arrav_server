@@ -2,6 +2,7 @@ package com.rageps.net.refactor.codec.game;
 
 import com.rageps.net.refactor.packet.Packet;
 import com.rageps.net.refactor.packet.out.PacketEncoder;
+import com.rageps.net.refactor.packet.out.model.CoordinatesPacket;
 import com.rageps.net.refactor.release.Release;
 import com.rageps.world.World;
 import io.netty.channel.ChannelHandlerContext;
@@ -35,8 +36,10 @@ public final class GameMessageEncoder extends MessageToMessageEncoder<Packet> {
 	protected void encode(ChannelHandlerContext ctx, Packet packet, List<Object> out) {
 		PacketEncoder<Packet> encoder = (PacketEncoder<Packet>) release.getMessageEncoder(packet.getClass());
 		if (encoder != null) {
-			if(encoder.coordinatePacket(packet) != null)
-				out.add(encoder.coordinatePacket(packet));
+			CoordinatesPacket coords = encoder.coordinatePacket(packet);
+			if(coords != null) {
+				out.add(release.getCoordinatesEncoder().encode(coords));
+			}
 			if(encoder.onSent(packet))
 				out.add(encoder.encode(packet));
 		} else {
