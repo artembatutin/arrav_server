@@ -135,7 +135,7 @@ public final class NpcSynchronizationMessageEncoder implements PacketEncoder<Npc
 				mask |= 0x20;
 			}
 
-			if(mask > 0x100) {
+			if(mask >= 0x100) {
 				mask |= 0x40;
 				builder.putShort(mask, DataOrder.LITTLE);
 			} else {
@@ -283,11 +283,15 @@ public final class NpcSynchronizationMessageEncoder implements PacketEncoder<Npc
 	 */
 	private static void putSecondHitUpdateBlock(SecondaryHitUpdateBlock block, GamePacketBuilder builder) {
 		Hit hit = block.getHit();
-		builder.putShort(hit.getDamage());
+		builder.putInt(hit.getDamage());
 		builder.put(hit.getHitsplat().getId());// todo local
 		builder.put(hit.getHitIcon().getId());
-		builder.putShort( (int) (block.getCurrentHealth() * 100.0 / block.getMaximumHealth()));
-		builder.put(101);//todo special percentage
+		builder.putInt(hit.getSoak());
+		builder.putInt(block.getMaximumHealth());
+		builder.putInt(block.getCurrentHealth());
+		builder.put(101);
+		//builder.putInt( (int) (block.getCurrentHealth() * 100.0 / block.getMaximumHealth()));
+		//builder.put(101);//todo special percentage
 	}
 
 	/**
@@ -298,11 +302,17 @@ public final class NpcSynchronizationMessageEncoder implements PacketEncoder<Npc
 	 */
 	private static void putHitUpdateBlock(HitUpdateBlock block, GamePacketBuilder builder) {
 		Hit hit = block.getHit();
-		builder.putShort(hit.getDamage());
+		builder.putInt(hit.getDamage());
 		builder.put(hit.getHitsplat().getId());// todo local
 		builder.put(hit.getHitIcon().getId());
-		builder.putShort( (int) (block.getCurrentHealth() * 100.0 / block.getMaximumHealth()));
-		builder.put(101);//todo special percentage
+		builder.putInt(hit.getSoak());
+		builder.putInt(block.getMaximumHealth());
+		builder.putInt(block.getCurrentHealth());
+		builder.put(101);
+//		builder.putInt( (int) (block.getCurrentHealth() * 100.0 / block.getMaximumHealth()));
+
+
+		//builder.put(101);//todo special percentage
 	}
 
 	/**

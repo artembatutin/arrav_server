@@ -460,8 +460,7 @@ public abstract class Actor extends Entity {
 	 */
 	public final void faceEntity(Actor entity) {
 		this.faceIndex = entity == null ? 65535 : entity.isPlayer() ? entity.slot + 32768 : entity.slot;
-		//flags.flag(UpdateFlag.FACE_ENTITY);
-		//todo
+		this.blockSet.add(SynchronizationBlock.createInteractingMobBlock(faceIndex));
 	}
 	
 	/**

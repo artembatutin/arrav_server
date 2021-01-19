@@ -244,16 +244,16 @@ public final class PlayerSynchronizationMessageEncoder implements PacketEncoder<
 				mask |= 0x100;
 			}
 			if (blockSet.contains(AnimationBlock.class)) {
-				mask |= 0x8;
+				mask |= 8;
 			}
 			if (blockSet.contains(ForceChatBlock.class)) {
-				mask |= 0x4;
+				mask |= 4;
 			}
 			if (blockSet.contains(ChatBlock.class)) {
 				mask |= 0x80;
 			}
 			if (blockSet.contains(InteractingMobBlock.class)) {
-				mask |= 0x1;
+				mask |= 1;
 			}
 			if (blockSet.contains(AppearanceBlock.class)) {
 				mask |= 0x10;
