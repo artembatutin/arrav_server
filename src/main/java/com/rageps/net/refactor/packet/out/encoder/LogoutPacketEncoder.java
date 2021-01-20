@@ -15,9 +15,8 @@ public class LogoutPacketEncoder implements PacketEncoder<LogoutPacket> {
 
     @Override
     public boolean onSent(LogoutPacket message) {
-        if(message.getPlayer().getState() != EntityState.AWAITING_REMOVAL && message.getPlayer().getState() != EntityState.INACTIVE)
-            //World.get().queueLogout(player);
-            World.get().getGameService().unregisterPlayer(message.getPlayer());
+        //if(message.getPlayer().getState() != EntityState.AWAITING_REMOVAL && message.getPlayer().getState() != EntityState.INACTIVE)
+        //    World.get().getGameService().unregisterPlayer(message.getPlayer());
 
         return true;
     }

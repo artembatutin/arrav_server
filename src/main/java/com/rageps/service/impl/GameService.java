@@ -26,6 +26,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static com.rageps.world.entity.EntityState.AWAITING_REMOVAL;
+
 /**
  * The {@link GameService} class schedules and manages the execution of the {@link GamePulseHandler} class.
  *
@@ -270,6 +272,7 @@ public final class GameService extends Service {
 	public void unregisterPlayer(Player player) {
 		if(player.getCombat().inCombat())
 			player.getLogoutTimer().reset();
+		player.setState(AWAITING_REMOVAL);
 		player.send(new LogoutPacket(player));
 		oldPlayers.add(player);
 	}
@@ -312,7 +315,6 @@ public final class GameService extends Service {
 			if (player == null) {
 				break;
 			}
-
 			loginService.submitSaveRequest(player.getSession(), player);
 		}
 	}

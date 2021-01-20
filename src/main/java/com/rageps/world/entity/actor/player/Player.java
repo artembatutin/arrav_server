@@ -905,7 +905,7 @@ public final class Player extends Actor {
 //		clan.ifPresent(c -> c.getClan().remove(this, true));
 		cannon.ifPresent(c -> c.pickup(true));
 		WildernessActivity.leave(this);
-		save();
+		//save(); todo do we need this?
 	}
 	
 	@Override
