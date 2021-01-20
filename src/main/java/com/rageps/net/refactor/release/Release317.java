@@ -120,6 +120,10 @@ public final class Release317 extends Release {
 		register(130, new InterfaceClickPacketDecoder());
 
 
+
+
+
+		register(122, new FirstItemPacketDecoder());
 		register(145, new FirstItemInterfacePacketDecoder());
 		register(117, new SecondItemInterfacePacketDecoder());
 		register(43, new ThirdItemInterfacePacketDecoder());

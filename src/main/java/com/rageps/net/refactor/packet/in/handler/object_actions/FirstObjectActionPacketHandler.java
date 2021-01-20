@@ -29,6 +29,7 @@ public class FirstObjectActionPacketHandler implements PacketHandler<FirstAction
         int objectX = packet.getObjectX();
         int objectY = packet.getObjectY();
 
+
         //Validating data.
         Position position = new Position(objectX, objectY, player.getPosition().getZ());
         if(objectId < 0 || objectX < 0 || objectY < 0)
