@@ -243,7 +243,7 @@ public class CombatFightButton extends ActionInitializer {
 				return true;
 			}
 		};
-		e.register(9125); // scimitar & longsword
+		e.register(2429); // scimitar & longsword
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
@@ -255,7 +255,7 @@ public class CombatFightButton extends ActionInitializer {
 				return true;
 			}
 		};
-		e.register(9128);
+		e.register(2432);
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
@@ -267,7 +267,7 @@ public class CombatFightButton extends ActionInitializer {
 				return true;
 			}
 		};
-		e.register(9127);
+		e.register(2431);
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {

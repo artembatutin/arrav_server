@@ -8,6 +8,7 @@ import com.rageps.content.skill.runecrafting.Runecrafting;
 import com.rageps.content.skill.runecrafting.pouch.PouchType;
 import com.rageps.content.skill.smithing.Smithing;
 import com.rageps.net.refactor.packet.PacketHandler;
+import com.rageps.net.refactor.packet.in.model.interface_actions.EquipItemPacket;
 import com.rageps.net.refactor.packet.in.model.interface_actions.FirstItemInterfacePacket;
 import com.rageps.world.entity.actor.player.Player;
 import com.rageps.world.entity.actor.player.assets.activity.ActivityManager;
@@ -23,10 +24,10 @@ import static com.rageps.action.ActionContainers.EQUIP;
 /**
  * todo - check verificiation if a player doesn't have item
  */
-public class EquipItemPacketHandler implements PacketHandler<FirstItemInterfacePacket> {
+public class EquipItemPacketHandler implements PacketHandler<EquipItemPacket> {
 
     @Override
-    public void handle(Player player, FirstItemInterfacePacket packet) {
+    public void handle(Player player, EquipItemPacket packet) {
         int interfaceId = packet.getInterfaceID();
         int slot = packet.getSlot();
         int itemId = packet.getItemId();
