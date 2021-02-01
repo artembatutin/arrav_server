@@ -10,6 +10,7 @@ import com.rageps.combat.listener.other.prayer.curses.leech.*;
 import com.rageps.combat.listener.other.prayer.regular.ChivalryListener;
 import com.rageps.combat.listener.other.prayer.regular.PietyListener;
 import com.rageps.combat.listener.other.prayer.regular.ProtectionPrayerListener;
+import com.rageps.combat.listener.other.prayer.regular.RetributionListener;
 import com.rageps.combat.listener.other.prayer.regular.attack.ClarityOfThoughtListener;
 import com.rageps.combat.listener.other.prayer.regular.attack.ImprovedReflexesListener;
 import com.rageps.combat.listener.other.prayer.regular.attack.IncredibleReflexesListener;
@@ -156,7 +157,7 @@ public enum Prayer {
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, SHARP_EYE, HAWK_EYE, EAGLE_EYE, MYSTIC_LORE, MYSTIC_WILL, CHIVALRY, PIETY});
 		}
-	}, RETRIBUTION(PrayerBook.NORMAL, 683, 20, 3, 46, 98, 17223, 651) {
+	}, RETRIBUTION(PrayerBook.NORMAL, new RetributionListener(), 683, 20, 3, 46, 98, 17223, 651) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MELEE, PROTECT_FROM_MAGIC, PROTECT_FROM_MISSILES, REDEMPTION, SMITE});

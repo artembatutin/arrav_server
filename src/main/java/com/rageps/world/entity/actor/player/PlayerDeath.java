@@ -63,56 +63,12 @@ public final class PlayerDeath extends ActorDeath<Player> {
 	public void preDeath() {
 		getActor().getCombat().reset(true, true);
 		getActor().getActivityManager().disable();
-		getActor().animation(new Animation(0x900, Animation.AnimationPriority.HIGH));
+		getActor().animation(new Animation(2304, Animation.AnimationPriority.HIGH));
 		getActor().setSkillAction(Optional.empty());
 		ExchangeSessionManager.get().reset(getActor());
 		
 		if(!MinigameHandler.getMinigame(getActor()).isPresent()) {
 			deathMessage = true;
-		}
-		
-		if(Prayer.isActivated(getActor(), Prayer.RETRIBUTION)) {
-			getActor().graphic(new Graphic(437));
-			final int hit = RandomUtils.inclusive(CombatConstants.MAXIMUM_RETRIBUTION_DAMAGE);
-			if(getActor().inMulti()) {
-				getActor().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getActor().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit, Hitsplat.NORMAL, HitIcon.NONE)));
-				if(getActor().inWilderness()) {
-					getActor().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getActor().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit, Hitsplat.NORMAL, HitIcon.NONE)));
-				}
-			} else {
-				Actor victim = getActor().getCombat().getLastDefender();
-				if(victim != null && victim.getPosition().withinDistance(getActor().getPosition(), 2)) {
-					victim.damage(new Hit(RandomUtils.inclusive(hit), Hitsplat.NORMAL, HitIcon.NONE));
-				}
-			}
-		}
-		
-		if(Prayer.isActivated(getActor(), Prayer.WRATH)) {
-			getActor().graphic(new Graphic(2259));
-			int x = getActor().getPosition().getX() - 3;
-			int y = getActor().getPosition().getY() - 2;
-			for(int i = 0; i < 25; i++) {
-				x++;
-				if(i == 5 || i == 10 || i == 15 || i == 20) {
-					x -= 5;
-					y++;
-				}
-				if(i % 2 == 1)
-					continue;
-				GraphicPacket.local(getActor(), 2260, new Position(x, y, getActor().getPosition().getZ()), 25);
-			}
-			int maxHit = (int) ((getActor().getSkills()[Skills.PRAYER].getCurrentLevel() / 100.D) * 25);
-			if(getActor().inMulti()) {
-				getActor().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getActor().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit), Hitsplat.NORMAL, HitIcon.NONE)));
-				if(getActor().inWilderness()) {
-					getActor().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getActor().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit), Hitsplat.NORMAL, HitIcon.NONE)));
-				}
-			} else {
-				Actor victim = getActor().getCombat().getLastDefender();
-				if(victim != null && victim.getPosition().withinDistance(getActor().getPosition(), 3)) {
-					victim.damage(new Hit(RandomUtils.inclusive(maxHit), Hitsplat.NORMAL, HitIcon.NONE));
-				}
-			}
 		}
 		
 		if(getActor().getLocation().inFunPvP()) {
