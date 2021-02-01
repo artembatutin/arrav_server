@@ -350,11 +350,6 @@ public final class Player extends Actor {
 	private final EnumSet<Prayer> prayerActive = EnumSet.noneOf(Prayer.class);
 	
 	/**
-	 * The array determining which quick prayers id are stored.
-	 */
-	private final ObjectList<Prayer> quickPrayers = new ObjectArrayList<>();
-	
-	/**
 	 * The array determining which quick prayers id are selected on the interface.
 	 */
 	private final ObjectList<Prayer> selectedQuickPrayers = new ObjectArrayList<>();
@@ -1430,7 +1425,7 @@ public final class Player extends Actor {
 	 * @return the ids that have been stored.
 	 */
 	public List<Prayer> getQuickPrayers() {
-		return quickPrayers;
+		return playerData.quickPrayers;
 	}
 	
 	/**

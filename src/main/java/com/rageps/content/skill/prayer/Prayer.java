@@ -554,6 +554,10 @@ public enum Prayer {
 					player.send(new ConfigPacket(175, 0));
 					player.getAttributeMap().reset(PlayerAttributes.QUICK_PRAY_ON);
 				} else {
+					if(player.getSkills()[Skills.PRAYER].getCurrentLevel() < 1) {
+						player.message("You need to recharge your prayer at an altar!");
+						return true;
+					}
 					player.getQuickPrayers().forEach(prayer -> Prayer.activate(player, false, prayer.buttonId));
 					player.send(new ConfigPacket(175, 1));
 					player.getAttributeMap().set(PlayerAttributes.QUICK_PRAY_ON, true);

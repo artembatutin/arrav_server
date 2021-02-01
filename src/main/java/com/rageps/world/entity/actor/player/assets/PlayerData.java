@@ -1,11 +1,15 @@
 package com.rageps.world.entity.actor.player.assets;
 
 import com.rageps.content.skill.magic.Spellbook;
+import com.rageps.content.skill.prayer.Prayer;
 import com.rageps.content.skill.prayer.PrayerBook;
 import com.rageps.content.skill.slayer.Slayer;
 import com.rageps.util.MutableNumber;
 import com.rageps.world.entity.actor.mob.Mob;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -24,6 +28,11 @@ public class PlayerData {
     public int ringOfRecoil = 400;
 
     public boolean venged, lockedXP;
+
+    /**
+     * The array determining which quick prayers id are stored.
+     */
+    public ArrayList<Prayer> quickPrayers = new ArrayList<>();
 
     /**
      * Holds an optional wrapped inside the Antifire details.
