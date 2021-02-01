@@ -56,7 +56,7 @@ public class FifthObjectActionPacketHandler implements PacketHandler<FifthAction
             return;
         final GameObject object = o.get();
         if(player.getRights().equals(Rights.ADMINISTRATOR))
-            player.message("[OBJ 1]:" + object.getId() + " - " + object.getPosition().toString());
+            player.message("[OBJ 5]:" + object.getId() + " - " + object.getPosition().toString());
         boolean distanceIgnore =  (objectId == 85584 || objectId == 85532 || objectId == 85534);
         Boundary boundary = new Boundary(position, object.getDefinition().getSize());
 

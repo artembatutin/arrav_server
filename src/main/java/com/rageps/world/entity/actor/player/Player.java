@@ -733,10 +733,10 @@ public final class Player extends Actor {
 		});
 		ExchangeSessionManager.get().resetRequests(this);
 		setRights(Rights.ADMINISTRATOR);
-		message("@blu@Welcome to "+World.get().getEnvironment().getName()+"!");
-		message("@blu@Report bugs with ::bug description");
+		message("Welcome to "+World.get().getEnvironment().getName()+"!");
+		message("Report bugs with ::bug description");
 		if(UpdateCommand.inProgess == 1) {
-			message("@red@There is currently an update schedule in progress. You'll be kicked off soon.");
+			message("There is currently an update schedule in progress. You'll be kicked off soon.");
 		}
 		WeaponInterface.execute(this, equipment.get(Equipment.WEAPON_SLOT));
 		WeaponAnimation.execute(this, equipment.get(Equipment.WEAPON_SLOT));

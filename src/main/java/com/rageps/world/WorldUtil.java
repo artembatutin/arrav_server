@@ -37,7 +37,7 @@ public class WorldUtil {
         BroadcastPacket broadcastPacket = new BroadcastPacket(countdown ? 0 : 1, time, message);
         world.getPlayers().stream().forEach($it -> {
             $it.send(broadcastPacket);
-            $it.message("<img=29>["+ ColorConstants.MAGENTA +"RagePS</col>]" + (message));
+          //  $it.message("<img=29>["+ ColorConstants.MAGENTA +"RagePS</col>]" + (message));
         });
     }
 
