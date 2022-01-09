@@ -1,0 +1,140 @@
+package com.rageps.net.refactor.release;
+
+import com.google.common.base.Preconditions;
+import com.rageps.net.refactor.meta.PacketMetaData;
+import com.rageps.net.refactor.meta.PacketMetaDataGroup;
+import com.rageps.net.refactor.packet.Packet;
+import com.rageps.net.refactor.packet.in.PacketDecoder;
+import com.rageps.net.refactor.packet.out.PacketEncoder;
+import com.rageps.net.refactor.packet.out.encoder.CoordinatesPacketEncoder;
+import com.rageps.net.refactor.packet.out.model.CoordinatesPacket;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * A {@link Release} is a distinct client version, e.g. {@code 317}.
+ *
+ * @author Graham
+ */
+public abstract class Release {
+
+	/**
+	 * The array of message decoders.
+	 */
+	private final PacketDecoder<?>[] decoders = new PacketDecoder<?>[256];
+
+	private PacketEncoder<CoordinatesPacket> coordinatesEncoder;
+
+	/**
+	 * The map of message classes to message encoders.
+	 */
+	private final Map<Class<? extends Packet>, PacketEncoder<?>> encoders = new HashMap<>();
+
+	/**
+	 * The incoming packet meta data.
+	 */
+	private PacketMetaDataGroup incomingPacketMetaData;
+
+	/**
+	 * The release number, e.g. {@code 317}.
+	 */
+	private final int releaseNumber;
+
+	/**
+	 * Creates the release.
+	 *
+	 * @param releaseNumber The release number.
+	 */
+	public Release(int releaseNumber) {
+		this.releaseNumber = releaseNumber;
+	}
+
+	/**
+	 *	Set's the incoming packet meta data
+	 * @param incomingPacketMetaData The incoming packet meta data.
+	 */
+	public void setIncomingPacketMetaData(PacketMetaDataGroup incomingPacketMetaData) {
+		this.incomingPacketMetaData = incomingPacketMetaData;
+	}
+
+	/**
+	 * Gets meta data for the specified incoming packet.
+	 *
+	 * @param opcode The opcode of the incoming packet.
+	 * @return The {@link PacketMetaData} object.
+	 */
+	public final PacketMetaData getIncomingPacketMetaData(int opcode) {
+		return incomingPacketMetaData.getMetaData(opcode);
+	}
+
+	/**
+	 * Gets the {@link PacketDecoder} for the specified opcode.
+	 *
+	 * @param opcode The opcode.
+	 * @return The message decoder.
+	 * @throws IndexOutOfBoundsException If the opcode is less than 0, or greater than 255.
+	 */
+	public final PacketDecoder<?> getMessageDecoder(int opcode) {
+		Preconditions.checkElementIndex(opcode, decoders.length, "Opcode out of bounds.");
+		return decoders[opcode];
+	}
+
+	/**
+	 * Gets the {@link PacketEncoder} for the specified message type.
+	 *
+	 * @param type The type of message.
+	 * @return The message encoder.
+	 */
+	@SuppressWarnings("unchecked")
+	public <M extends Packet> PacketEncoder<M> getMessageEncoder(Class<M> type) {
+		return (PacketEncoder<M>) encoders.get(type);
+	}
+
+	/**
+	 * Gets the release number.
+	 *
+	 * @return The release number.
+	 */
+	public final int getReleaseNumber() {
+		return releaseNumber;
+	}
+
+	/**
+	 * Registers a {@link PacketEncoder} for the specified message type.
+	 *
+	 * @param type The message type.
+	 * @param encoder The message encoder.
+	 */
+	public final <M extends Packet> void register(Class<M> type, PacketEncoder<M> encoder) {
+		if(encoder instanceof CoordinatesPacketEncoder)
+			coordinatesEncoder = (PacketEncoder<CoordinatesPacket>) encoder;
+		encoders.put(type, encoder);
+	}
+
+	/**
+	 * Registers a {@link PacketDecoder} for the specified opcode.
+	 *
+	 * @param opcode The opcode, between 0 and 255 inclusive.
+	 * @param decoder The message decoder.
+	 * @throws IndexOutOfBoundsException If the opcode is less than 0, or greater than 255.
+	 */
+	public final <M extends Packet> void register(int opcode, PacketDecoder<M> decoder) {
+		Preconditions.checkElementIndex(opcode, decoders.length, "Opcode out of bounds.");
+		if(decoders[opcode] != null) {
+			System.out.println("Packet "+opcode+" already mapped.");
+			return;
+		}
+		decoders[opcode] = decoder;
+	}
+
+	public PacketEncoder<CoordinatesPacket> getCoordinatesEncoder() {
+		return coordinatesEncoder;
+	}
+
+	@Override
+	public final String toString() {
+		return Release.class.getSimpleName() + " " + releaseNumber;
+	}
+
+}

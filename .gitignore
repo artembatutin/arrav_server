@@ -1,5 +1,6 @@
 bin/**
 out/**
+build/**
 data/logs/**
 .idea/**
 /bin
@@ -11,6 +12,7 @@ data/logs/**
 /out/
 /file_server/file_server.iml
 data/cache/
+data/*.log
 *.iml
 *.eml
 *.userlibraries
@@ -18,3 +20,4 @@ data/cache/
 map_editor/**
 data/players/**
 hs_err_pid12147.log
+/.gradle/**

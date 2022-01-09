@@ -1,5 +1,15 @@
 [
 	{
+		"id": 1,
+		"position": {
+			"x": 1953,
+			"y": 4061,
+			"z": 0
+		},
+		"random-walk": false,
+		"face": "WEST"
+	},
+	{
 		"id": 6537,
 		"position": {
 			"x": 3089,

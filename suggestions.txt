@@ -38,7 +38,7 @@ Ganodermic Beasts (95 Slayer) for Polypore Staff. It'd probably be for the best 
 
 I don't really care from which Minigames, but please include Battlemage, Trickster, and Vanguard Armours, as well as Halos in their rewards.
 
-Add the Rogue's Chest (84 Thieving) to the deep wilderness. Have either multiple chests or a quick respawn time, with maybe a daily limit as to how many times the chest can be looted. Give it rewards like Crystal Key halves, Torstols (remove from shop), and Dragon Bones. Maybe even allow us to loot small amounts of Pk Points. Give it one very good rewards (like an Uncut Onyx) that auto-triggers the daily limit and displays a unlimitedStock message to make it more dangerous.
+Add the Rogue's Chest (84 Thieving) to the deep wilderness. Have either multiple chests or a quick respawn time, with maybe a daily limit as to how many times the chest can be looted. Give it rewards like Crystal Key halves, Torstols (remove from shop), and Dragon Bones. Maybe even allow us to loot small amounts of Pk Points. Give it one very good rewards (like an Uncut Onyx) that auto-triggers the daily limit and displays a unlimitedStock packet to make it more dangerous.
 
 Add feathers to the Fletching shop so that we can make darts, because Fletching (including stringing the bows) leaves no logs for Firemaking.
 

@@ -377,11 +377,11 @@
   },
   {
 	"opcode": 94,
-	"size": 0
+	"size": 4
   },
   {
 	"opcode": 95,
-	"size": 3
+	"size": 4
   },
   {
 	"opcode": 96,
